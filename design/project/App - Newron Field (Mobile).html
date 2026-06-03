@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Newron Field — Mobile mockups</title>
+<link rel="stylesheet" href="assets/tokens.css" />
+<style>
+  html, body { background: #f0eee9; }
+  body { font-family: var(--font-sans); }
+
+  /* Top chrome strip — branded header above the canvas */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: saturate(160%) blur(16px);
+    -webkit-backdrop-filter: saturate(160%) blur(16px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  .topbar .left { display: flex; align-items: center; gap: 14px; }
+  .topbar .meta {
+    display: flex; align-items: center; gap: 18px;
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--ink-tertiary);
+  }
+  .topbar .meta b { color: var(--ink-primary); font-weight: 500; }
+  .topbar .actions { display: flex; align-items: center; gap: 12px; }
+
+  /* Intro band */
+  .intro {
+    max-width: 1240px; margin: 0 auto;
+    padding: 36px 32px 24px;
+    background: transparent;
+  }
+  .intro .eyebrow {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--violet-600); letter-spacing: 0.12em;
+    text-transform: uppercase; font-weight: 500;
+  }
+  .intro h1 {
+    margin: 12px 0 12px;
+    font-size: clamp(34px, 4vw, 52px);
+    letter-spacing: -0.025em; line-height: 1.05;
+    font-weight: 500; color: var(--ink-primary);
+    max-width: 22ch;
+  }
+  .intro p {
+    margin: 0; color: var(--ink-secondary);
+    font-size: 16px; line-height: 1.55; max-width: 64ch;
+  }
+  .intro .row {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .intro .stat {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 14px 18px;
+    background: white;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-lg);
+    min-width: 160px;
+  }
+  .intro .stat .k {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-tertiary);
+  }
+  .intro .stat .v {
+    font-family: var(--font-mono); font-size: 22px;
+    color: var(--ink-primary); font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .intro .stat .v .small { font-size: 13px; color: var(--ink-tertiary); margin-left: 4px; }
+
+  /* The design canvas root */
+  #canvas-root { padding-bottom: 80px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="left">
+    <a class="brand" href="index.html" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink-primary);font-weight:600;font-size:17px;letter-spacing:-0.02em;">
+      <span class="brand-mark" style="width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--violet-500),var(--violet-700));display:grid;place-items:center;color:white;font-family:var(--font-mono);font-weight:600;font-size:14px;box-shadow:inset 0 -1px 0 rgba(0,0,0,.18),0 1px 2px rgba(107,78,232,.25);">N</span>
+      Newron<span style="color: var(--violet-500); margin-left: -1px;">.</span><span style="font-weight:400; color: var(--ink-secondary);">ai</span>
+    </a>
+    <span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-tertiary);letter-spacing:0.04em;text-transform:uppercase;padding-left:14px;border-left:1px solid var(--border-subtle);">Mockup · App / Field SDK · v1.0</span>
+  </div>
+  <div class="meta">
+    <span><b>23</b> screens</span>
+    <span>Android · 412 × 892</span>
+    <span style="color: var(--success-500);">● Hi-fi</span>
+  </div>
+  <div class="actions">
+    <a class="btn btn-ghost btn-sm" href="App Guidelines.html">← Guidelines</a>
+    <a class="btn btn-ghost btn-sm" href="App - Underwriter Dashboard.html">Underwriter dashboard</a>
+    <a class="btn btn-violet btn-sm" href="Design System.html">Design system</a>
+  </div>
+</header>
+
+<section class="intro">
+  <span class="eyebrow">Mobile · for FedFina field staff</span>
+  <h1>Newron Field — the SDK that lives inside your lender's app.</h1>
+  <p>
+    A drop-in set of Android activities — sign-in, application list, FTR completeness, multi-party management, capture, in-person KYC, geo-tagged visit, co-applicant handover, and a closed-loop query thread with credit — that partner NBFCs embed via Intent. Each screen reuses the Newron design system, posts to the same evidence pipeline as the underwriter dashboard, and survives flaky 4G in branch offices and field visits.
+  </p>
+  <div class="row">
+    <div class="stat"><span class="k">SDK activities</span><span class="v">16</span></div>
+    <div class="stat"><span class="k">Background workers</span><span class="v">4</span></div>
+    <div class="stat"><span class="k">Net 6M FTR uplift</span><span class="v">+14<span class="small">pp</span></span></div>
+    <div class="stat"><span class="k">Offline-tolerant</span><span class="v" style="color: var(--success-700);">Yes</span></div>
+    <div class="stat"><span class="k">Auth</span><span class="v" style="font-size:14px;color:var(--ink-secondary);">OAuth · SSO · Google</span></div>
+  </div>
+</section>
+
+<div id="canvas-root"></div>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<!-- Shared components -->
+<script type="text/babel" src="android-frame.jsx"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+
+<!-- Mobile screens — split into 6 files to keep each manageable -->
+<script type="text/babel" src="mobile-screens.jsx"></script>
+<script type="text/babel" src="mobile-screens-b.jsx"></script>
+<script type="text/babel" src="mobile-screens-c.jsx"></script>
+<script type="text/babel" src="mobile-screens-d.jsx"></script>
+<script type="text/babel" src="mobile-screens-e.jsx"></script>
+<script type="text/babel" src="mobile-screens-f.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const {
+  ScrSplash, ScrSignIn, ScrAppList, ScrAppDetailMissing, ScrAppDetailDocs,
+  ScrCapture, ScrCapturePreview, ScrUploadQueue, ScrLoanPartyVerify, ScrNewApp,
+  ScrProfile,
+  ScrKycSelfie, ScrGeoVisit, ScrCoApplicantShare, ScrPushNotification,
+  ScrExtractionReview, ScrDocViewer, ScrActivityTimeline, ScrNotifInbox,
+  ScrFTRChecklist, ScrParties, ScrQueriesInbox, ScrQueryThread,
+} = window.MobileScreens;
+
+// Each artboard wraps a screen in the AndroidDevice frame.
+function Phone({ children, dark = false }) {
+  return (
+    <div style={{
+      width: '100%', height: '100%',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      background: '#f0eee9',
+    }}>
+      <AndroidDevice width={412} height={892} dark={dark}>
+        {children}
+      </AndroidDevice>
+    </div>
+  );
+}
+
+const AW = 460, AH = 940;
+const PinkBg = ({ children, screenLabel }) => (
+  <div data-screen-label={screenLabel} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    {children}
+  </div>
+);
+
+function App() {
+  return (
+    <DesignCanvas>
+      <DCSection id="onboarding" title="01 · Onboarding" subtitle="Splash + Sign-in. The first time a field officer opens the lender's app, these run from the Newron SDK.">
+        <DCArtboard id="splash" label="A · Splash" width={AW} height={AH}>
+          <PinkBg screenLabel="01 Splash"><Phone><ScrSplash /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="signin" label="B · Sign in" width={AW} height={AH}>
+          <PinkBg screenLabel="02 Sign in"><Phone><ScrSignIn /></Phone></PinkBg>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="workspace" title="02 · Workspace" subtitle="Application list with offline tolerance, plus the new-application creation flow and the field-officer's profile.">
+        <DCArtboard id="list" label="C · Application list" width={AW} height={AH}>
+          <PinkBg screenLabel="03 Application list"><Phone><ScrAppList /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="newapp" label="D · New application" width={AW} height={AH}>
+          <PinkBg screenLabel="04 New application"><Phone><ScrNewApp /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="profile" label="E · Profile & settings" width={AW} height={AH}>
+          <PinkBg screenLabel="05 Profile"><Phone><ScrProfile /></Phone></PinkBg>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="detail" title="03 · Application detail" subtitle="The heart of the field officer's day — fixing what's missing on a file, scanning what's there, and confirming Newron-classified parties.">
+        <DCArtboard id="missing" label="F · Missing (FTR fixlist)" width={AW} height={AH}>
+          <PinkBg screenLabel="06 Application detail · Missing"><Phone><ScrAppDetailMissing /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="docs" label="G · Documents" width={AW} height={AH}>
+          <PinkBg screenLabel="07 Application detail · Documents"><Phone><ScrAppDetailDocs /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="parties" label="H · Loan-party verify" width={AW} height={AH}>
+          <PinkBg screenLabel="08 Loan party verify"><Phone><ScrLoanPartyVerify /></Phone></PinkBg>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="ftr" title="03b · FTR completeness & parties" subtitle="The First-Time-Right matrix — every required document, per cross-cutting + per party (up to 5: primary, co-applicants, guarantor, karta). Where the field officer either wins or fails before the file leaves their hands.">
+        <DCArtboard id="ftr-check" label="T · FTR checklist" width={AW} height={AH}>
+          <PinkBg screenLabel="20 FTR checklist"><Phone><ScrFTRChecklist /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="parties-tab" label="U · Parties (manage 2–5)" width={AW} height={AH}>
+          <PinkBg screenLabel="21 Parties tab"><Phone><ScrParties /></Phone></PinkBg>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="capture" title="04 · Capture pipeline" subtitle="The pixel-grabbing path. Dark UI to settle eyes for camera framing, with multi-page support, in-line crop, and a transparent upload queue.">
+        <DCArtboard id="cam" label="I · Camera capture" width={AW} height={AH}>
+          <PinkBg screenLabel="09 Camera capture"><Phone dark><ScrCapture /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="preview" label="J · Crop & confirm" width={AW} height={AH}>
+          <PinkBg screenLabel="10 Crop & confirm"><Phone dark><ScrCapturePreview /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="queue" label="K · Upload queue" width={AW} height={AH}>
+          <PinkBg screenLabel="11 Upload queue"><Phone><ScrUploadQueue /></Phone></PinkBg>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="verify" title="05 · AI verification" subtitle="Where the field officer reviews what Newron extracted — page-by-page with the model's calls visible, plus a structured ‘please verify’ surface for low-confidence values.">
+        <DCArtboard id="extract" label="L · Extraction review" width={AW} height={AH}>
+          <PinkBg screenLabel="12 Extraction review"><Phone><ScrExtractionReview /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="docview" label="M · Document page viewer" width={AW} height={AH}>
+          <PinkBg screenLabel="13 Document viewer"><Phone dark><ScrDocViewer /></Phone></PinkBg>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="kyc" title="06 · In-person KYC & visit" subtitle="The compliance-critical moments of a field visit — face-match liveness, geo-tagged check-in, and handover to a self-service co-applicant flow.">
+        <DCArtboard id="selfie" label="N · Liveness selfie" width={AW} height={AH}>
+          <PinkBg screenLabel="14 KYC selfie"><Phone dark><ScrKycSelfie /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="geo" label="O · Visit check-in" width={AW} height={AH}>
+          <PinkBg screenLabel="15 Geo visit check-in"><Phone><ScrGeoVisit /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="coapp" label="P · Co-applicant share" width={AW} height={AH}>
+          <PinkBg screenLabel="16 Co-applicant share"><Phone><ScrCoApplicantShare /></Phone></PinkBg>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="signals" title="07 · Status & signals" subtitle="Where the file is in its lifecycle, what changed, and how the system tells the field officer about new work.">
+        <DCArtboard id="timeline" label="Q · Activity timeline" width={AW} height={AH}>
+          <PinkBg screenLabel="17 Activity timeline"><Phone><ScrActivityTimeline /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="inbox" label="R · Notifications inbox" width={AW} height={AH}>
+          <PinkBg screenLabel="18 Notifications inbox"><Phone><ScrNotifInbox /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="push" label="S · Push (lock screen)" width={AW} height={AH}>
+          <PinkBg screenLabel="19 Push notification"><Phone dark><ScrPushNotification /></Phone></PinkBg>
+        </DCArtboard>
+      </DCSection>
+      <DCSection id="queries" title="08 · Queries from credit" subtitle="The closed loop with credit — underwriting raises clarifications, the field officer responds with text, fresh captures, or re-extraction. Nothing gets stuck in email.">
+        <DCArtboard id="queries-inbox" label="V · Queries inbox" width={AW} height={AH}>
+          <PinkBg screenLabel="22 Queries inbox"><Phone><ScrQueriesInbox /></Phone></PinkBg>
+        </DCArtboard>
+        <DCArtboard id="query-thread" label="W · Query thread · respond" width={AW} height={AH}>
+          <PinkBg screenLabel="23 Query thread"><Phone><ScrQueryThread /></Phone></PinkBg>
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('canvas-root')).render(<App />);
+</script>
+
+</body>
+</html>

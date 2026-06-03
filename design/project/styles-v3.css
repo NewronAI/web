@@ -1,0 +1,360 @@
+/* =========================================================
+   Newron v3 — built on the Newron design system
+   Pulls tokens from tokens.css, aliases v2 variable names,
+   re-implements the v2 utility layer with DS values.
+   ========================================================= */
+
+@import url('tokens.css');
+
+:root {
+  /* ── v2 surface aliases → DS tokens ── */
+  --bg:        var(--surface-canvas);
+  --bg-2:      var(--surface-subtle);
+  --bg-3:      var(--surface-inset);
+  --line:      var(--border-default);
+  --line-soft: var(--border-subtle);
+  --hairline:  rgba(15, 14, 31, 0.06);
+
+  /* ── ink ── */
+  --ink:        var(--ink-primary);
+  --ink-soft:   var(--ink-secondary);
+  --ink-muted:  var(--ink-tertiary);
+
+  /* ── accent (DS brand violet) ── */
+  --accent:      var(--violet-500);
+  --accent-deep: var(--violet-700);
+  --accent-soft: var(--violet-50);
+  --brand-grad:  linear-gradient(120deg, var(--violet-400) 0%, var(--violet-500) 35%, var(--violet-700) 70%, var(--violet-900) 100%);
+
+  /* ── inverse (dark slabs on light pages) ── */
+  --inverse-bg:        var(--surface-ink);
+  --inverse-bg-2:      #16122F;
+  --inverse-ink:       #FFFFFF;
+  --inverse-ink-soft:  rgba(255,255,255,0.66);
+  --inverse-line:      rgba(255,255,255,0.10);
+
+  /* ── signal ── */
+  --green: var(--success-500);
+  --amber: var(--warning-500);
+  --slate: var(--ink-tertiary);
+
+  /* ── type stack: DS uses one sans (Geist). No serif italic. ── */
+  --font-display: var(--font-sans);
+  --font-italic:  var(--font-sans);
+
+  /* ── geometry (DS pill buttons, DS radii) ── */
+  --density: 1;
+  --r:    var(--r-sm);   /* 6px — small surfaces, inputs */
+  --r-lg: var(--r-lg);   /* 14px — cards */
+}
+
+[data-mode="dark"] {
+  --bg:        var(--surface-ink);
+  --bg-2:      #14112A;
+  --bg-3:      #1C1840;
+  --line:      rgba(255,255,255,0.10);
+  --line-soft: rgba(255,255,255,0.06);
+  --ink:       #FFFFFF;
+  --ink-soft:  rgba(255,255,255,0.72);
+  --ink-muted: rgba(255,255,255,0.50);
+  --hairline:  rgba(255,255,255,0.08);
+  --inverse-bg:       #FFFFFF;
+  --inverse-bg-2:     var(--surface-subtle);
+  --inverse-ink:      var(--ink-primary);
+  --inverse-ink-soft: var(--ink-secondary);
+  --inverse-line:     var(--border-default);
+}
+
+[data-density="compact"] { --density: 0.78; }
+[data-density="roomy"]   { --density: 1.22; }
+
+/* ── Optional surface palettes (kept for tweaks, mapped to DS tokens) ── */
+[data-surface="paper"] {
+  --bg:        var(--surface-canvas);
+  --bg-2:      var(--surface-subtle);
+  --bg-3:      var(--surface-inset);
+}
+[data-surface="mist"] {
+  --bg:        #ECEAF4;            /* DS border-subtle as canvas */
+  --bg-2:      #E2DFEF;
+  --bg-3:      #D8D4E7;
+  --line:      #C9C3DF;            /* DS border-strong */
+  --line-soft: #D8D4E7;
+}
+[data-surface="violet"] {
+  --bg:        var(--violet-50);
+  --bg-2:      var(--violet-100);
+  --bg-3:      #DAD0FB;
+  --line:      var(--violet-200);
+  --line-soft: var(--violet-100);
+}
+[data-surface="ink"] {
+  --bg:        var(--surface-ink);
+  --bg-2:      #14112A;
+  --bg-3:      #1C1840;
+  --line:      rgba(255,255,255,0.10);
+  --line-soft: rgba(255,255,255,0.06);
+  --ink:       #FFFFFF;
+  --ink-soft:  rgba(255,255,255,0.72);
+  --ink-muted: rgba(255,255,255,0.50);
+  --hairline:  rgba(255,255,255,0.08);
+}
+
+/* =========================================================
+   Base
+   ========================================================= */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-size: 15px;
+  line-height: 1.55;
+}
+a { color: inherit; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+section[id] { scroll-margin-top: 80px; }
+
+/* =========================================================
+   Layout shells
+   ========================================================= */
+.shell {
+  width: 100%;
+  max-width: var(--container-wide);    /* 1320 — DS wide container */
+  margin: 0 auto;
+  padding-inline: clamp(20px, 4vw, 64px);
+}
+.shell-narrow {
+  width: 100%;
+  max-width: var(--container-narrow);  /* 920 */
+  margin: 0 auto;
+  padding-inline: clamp(20px, 4vw, 64px);
+}
+.section {
+  padding-block: calc(120px * var(--density));
+  position: relative;
+}
+.section-tight {
+  padding-block: calc(64px * var(--density));
+}
+
+/* =========================================================
+   Type primitives — bridge v2 class names to DS tokens
+   ========================================================= */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tracking-eyebrow);  /* 0.12em */
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+/* "display" — DS uses Geist medium with tight tracking, no serif italic */
+.display {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: -0.028em;
+  line-height: 0.98;
+}
+
+/* v2 italic accent: keep the visual emphasis (violet) but drop serif italic,
+   per DS — "data over ornament". Slight tracking tighten to feel deliberate. */
+.display em, .italic {
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.028em;
+  color: var(--accent);
+}
+
+.mono { font-family: var(--font-mono); }
+
+/* v2 .tabular → DS .num pattern */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* Hairlines */
+.hr-top { border-top: 1px solid var(--line); }
+.hr-bot { border-bottom: 1px solid var(--line); }
+
+/* =========================================================
+   Buttons — DS pill buttons
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+.btn:active { transform: translateY(1px); }
+
+/* Primary = ink (DS default product CTA) */
+.btn-primary {
+  background: var(--ink-primary);
+  color: #FFFFFF;
+}
+.btn-primary:hover { background: #232038; }
+
+/* Violet = marketing CTA (DS recommendation) */
+.btn-violet {
+  background: var(--violet-500);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-violet);
+}
+.btn-violet:hover { background: var(--violet-600); }
+
+/* Ghost = bordered secondary */
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-primary);
+  border-color: var(--border-default);
+}
+.btn-ghost:hover {
+  background: var(--surface-subtle);
+  border-color: var(--border-strong);
+}
+
+/* Link — underlined inline link */
+.btn-link {
+  padding: 0; height: auto;
+  background: transparent;
+  color: var(--ink-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--border-default);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+  border-radius: 0;
+}
+.btn-link:hover {
+  text-decoration-color: var(--accent);
+  color: var(--accent);
+}
+
+/* When buttons live on a dark slab (CTA, governance), override surfaces */
+.on-dark .btn-ghost,
+[data-on-dark] .btn-ghost {
+  color: #FFFFFF;
+  border-color: var(--inverse-line);
+}
+.on-dark .btn-ghost:hover,
+[data-on-dark] .btn-ghost:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.20);
+}
+
+/* =========================================================
+   Tag — DS uppercase mono pill
+   ========================================================= */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--violet-700);
+  background: var(--violet-50);
+  border: 1px solid var(--violet-100);
+  text-transform: uppercase;
+}
+.tag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* =========================================================
+   Card — DS bordered surface, no shadow by default
+   ========================================================= */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+}
+
+/* =========================================================
+   Focus + selection
+   ========================================================= */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+::selection { background: var(--ink-primary); color: #FFFFFF; }
+
+/* =========================================================
+   Marquee drift keyframes
+   ========================================================= */
+@keyframes drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* =========================================================
+   Backdrops — soft dot grid + blueprint
+   ========================================================= */
+.dotgrid {
+  background-image: radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+.dotgrid-soft {
+  background-image: radial-gradient(circle at 1px 1px, var(--line-soft) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+.gridlines {
+  background-image:
+    linear-gradient(to right, var(--hairline) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* =========================================================
+   Responsive nav
+   ========================================================= */
+@media (max-width: 1180px) {
+  .nav-center a { padding: 8px 8px !important; font-size: 13px !important; }
+  .nav-cta-secondary { display: none !important; }
+}
+@media (max-width: 980px) {
+  .nav-center { display: none !important; }
+}
+
+/* =========================================================
+   Mark — DS uses violet-50 highlight, never raw yellow
+   ========================================================= */
+mark {
+  background: var(--violet-50);
+  color: var(--ink-primary);
+  padding: 0 3px;
+  border-radius: 2px;
+}

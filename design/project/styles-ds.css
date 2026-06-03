@@ -1,0 +1,208 @@
+/* ============ Newron — Design System override ============
+   Re-maps the existing token surface to the v1.0 Newron design system:
+   - Geist sans + Geist Mono
+   - White canvas, near-black ink (#0E0B1F)
+   - Violet 500 (#6B4EE8) primary
+   - Restrained shadows, pill buttons
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* Surfaces — clean white with subtle violet-tinted off-whites */
+  --bg:        #FFFFFF;
+  --bg-2:      #F8F7FC;
+  --bg-3:      #F2F0F9;
+  --line:      #E2DFEF;
+  --line-soft: #ECEAF4;
+
+  /* Ink — near-black with a hint of violet, never pure */
+  --ink:       #0E0B1F;
+  --ink-soft:  #4A4660;
+  --ink-muted: #807B96;
+
+  /* Inverse — deep ink for slabs */
+  --inverse-bg:        #0E0B1F;
+  --inverse-bg-2:      #1F1B36;
+  --inverse-ink:       #FFFFFF;
+  --inverse-ink-soft:  rgba(255,255,255,0.66);
+  --inverse-line:      rgba(255,255,255,0.10);
+
+  /* Accent — Newron violet (replaces emerald) */
+  --accent:      #6B4EE8;
+  --accent-soft: rgba(107,78,232,0.12);
+  --accent-ink:  #FFFFFF;
+
+  /* Signals */
+  --signal-teal:  #1D4ED8;
+  --signal-green: #15803D;
+  --signal-amber: #B45309;
+
+  /* Type — Geist throughout, no serif */
+  --font-display: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans:    'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:    'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Radii — softer, more confident */
+  --r-sm: 6px;
+  --r:    10px;
+  --r-lg: 14px;
+}
+
+/* Stronger override for sharp-direction variant if it appears via Tweaks */
+[data-direction="sharp"] {
+  --accent:      #6B4EE8;
+  --accent-soft: rgba(107,78,232,0.12);
+  --font-display: 'Geist', system-ui, sans-serif;
+  --bg:   #FFFFFF;
+  --bg-2: #F8F7FC;
+  --bg-3: #F2F0F9;
+  --line: #E2DFEF;
+}
+
+/* Dark mode (if toggled via Tweaks) — keep brand identity intact */
+[data-mode="dark"] {
+  --bg:    #0E0B1F;
+  --bg-2:  #181430;
+  --bg-3:  #1F1B36;
+  --line:  rgba(255,255,255,0.10);
+  --line-soft: rgba(255,255,255,0.06);
+  --ink:   #FFFFFF;
+  --ink-soft:  rgba(255,255,255,0.72);
+  --ink-muted: rgba(255,255,255,0.50);
+  --inverse-bg:    #F8F7FC;
+  --inverse-bg-2:  #FFFFFF;
+  --inverse-ink:   #0E0B1F;
+  --inverse-ink-soft: #4A4660;
+  --inverse-line:  #E2DFEF;
+}
+
+/* ============ Component refinements ============ */
+
+body {
+  font-feature-settings: normal;
+  letter-spacing: -0.005em;
+}
+
+/* Display gets weight rather than italic flourish (no serif now) */
+.display {
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+}
+.italic { font-style: normal; } /* neutralise serif-italic moments */
+
+/* Eyebrow — match design-system: violet-tinted, mono, tighter */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.inverse .eyebrow { color: rgba(255,255,255,0.72); }
+
+/* Buttons — pill-shaped, with violet primary in marketing surfaces */
+.btn {
+  border-radius: 999px;
+  height: 44px;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: transform 120ms cubic-bezier(0.22,1,0.36,1),
+              background 120ms cubic-bezier(0.22,1,0.36,1),
+              border-color 120ms cubic-bezier(0.22,1,0.36,1),
+              box-shadow 120ms cubic-bezier(0.22,1,0.36,1);
+}
+.btn:hover { transform: translateY(0); }
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: var(--ink);
+  color: #FFFFFF;
+}
+.btn-primary:hover { background: #232038; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.btn-ghost:hover {
+  background: var(--bg-2);
+  border-color: #C9C3DF;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(107,78,232,0.22);
+}
+.btn-accent:hover { background: #5638D4; }
+
+/* Tag — mono, uppercase, pill */
+.tag {
+  height: 26px;
+  padding: 0 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--bg-2);
+  color: var(--ink-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  font-weight: 500;
+}
+.tag-dot::before { background: var(--signal-green); }
+
+/* Card — bordered, not shadowed, by default (per design system) */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+/* Inverse / ink slab */
+.inverse { background: var(--inverse-bg); color: var(--inverse-ink); }
+.inverse .btn-ghost {
+  color: var(--inverse-ink);
+  border-color: rgba(255,255,255,0.18);
+}
+.inverse .btn-ghost:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.32);
+}
+.inverse .card {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.10);
+}
+.inverse .tag {
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.78);
+  border-color: rgba(255,255,255,0.12);
+}
+
+/* Selection — violet, not ink */
+::selection { background: var(--accent); color: #FFFFFF; }
+
+/* Focus ring — softer violet halo, matches design system */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Dot grid — subtle violet undertone */
+.dot-grid {
+  background-image: radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0);
+  background-size: 18px 18px;
+}
+
+/* Brand mark gradient — softer than the harsh-noir version */
+.brand-mark,
+[class*="brand-mark"] {
+  background: linear-gradient(135deg, #6B4EE8, #432AA8) !important;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.18), 0 1px 2px rgba(107,78,232,0.25) !important;
+}

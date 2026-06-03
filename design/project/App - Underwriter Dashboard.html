@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Newron — Underwriter Workbench</title>
+<link rel="stylesheet" href="assets/tokens.css" />
+<link rel="stylesheet" href="assets/app.css" />
+<style>
+  /* Sparkline + ai callout strip + queue widget */
+  .insight-row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 24px; }
+
+  .ai-insight {
+    background: linear-gradient(135deg, #18133A 0%, #0E0B1F 100%);
+    color: white; border-radius: var(--r-md);
+    padding: 20px 22px;
+    display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;
+    overflow: hidden; position: relative;
+  }
+  .ai-insight::before {
+    content: ''; position: absolute; inset: -1px; opacity: 0.25;
+    background:
+      radial-gradient(500px 200px at 100% 0%, var(--violet-500), transparent 60%),
+      radial-gradient(400px 200px at 0% 100%, var(--accent-500), transparent 60%);
+    pointer-events: none;
+  }
+  .ai-insight > * { position: relative; }
+  .ai-insight .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 4px 10px; border-radius: var(--r-pill);
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.85);
+  }
+  .ai-insight .badge::before { content: ''; width: 8px; height: 8px; border-radius: 2px; background: conic-gradient(from 180deg, var(--violet-300), var(--accent-500), var(--violet-300)); }
+  .ai-insight h3 { margin: 12px 0 4px; font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
+  .ai-insight p { margin: 0; color: rgba(255,255,255,0.7); font-size: 13.5px; line-height: 1.55; max-width: 56ch; }
+  .ai-insight .cta { display: flex; gap: 8px; }
+
+  .quick-card {
+    background: var(--surface-canvas);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-md);
+    padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .quick-card .ttl { font-size: 13.5px; font-weight: 500; }
+  .quick-card .item {
+    display: flex; align-items: center; gap: 10px; font-size: 13px;
+    padding: 8px 10px; border-radius: 6px;
+  }
+  .quick-card .item:hover { background: var(--surface-subtle); cursor: pointer; }
+  .quick-card .item .kk { font-family: var(--font-mono); font-size: 11px; color: var(--ink-tertiary); margin-left: auto; }
+
+  /* Sparkline svg */
+  .spark { width: 100%; height: 32px; }
+
+  /* "Today" panel right */
+  .right-rail { display: grid; grid-template-columns: 1fr 320px; gap: 16px; align-items: start; margin-bottom: 24px; }
+  @media (max-width: 1400px) { .right-rail { grid-template-columns: 1fr; } }
+
+  /* Insight row collapses earlier so the AI card never gets cramped */
+  @media (max-width: 1280px) { .insight-row { grid-template-columns: 1fr; } }
+
+  .activity-card {
+    background: var(--surface-canvas); border: 1px solid var(--border-default);
+    border-radius: var(--r-md); padding: 16px;
+  }
+  .activity-card h3 { margin: 0 0 12px; font-size: 13.5px; font-weight: 500; }
+  .activity {
+    display: grid; grid-template-columns: 64px 1fr; gap: 10px;
+    padding: 8px 0; border-top: 1px solid var(--border-subtle);
+    font-size: 12.5px;
+  }
+  .activity:first-child { border-top: 0; }
+  .activity .t { font-family: var(--font-mono); color: var(--ink-tertiary); font-size: 11px; }
+  .activity .a { color: var(--ink-secondary); line-height: 1.4; }
+  .activity .a strong { color: var(--ink-primary); font-weight: 500; }
+  .activity .a .who { color: var(--violet-700); }
+
+  /* row chips */
+  .doc-chips { display: flex; gap: 4px; flex-wrap: wrap; }
+  .doc-chip {
+    display: inline-flex; align-items: center;
+    padding: 2px 6px; border-radius: 4px;
+    background: var(--surface-subtle); border: 1px solid var(--border-default);
+    font-family: var(--font-mono); font-size: 10px; color: var(--ink-secondary);
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .doc-chip.ok { background: var(--success-50); color: var(--success-700); border-color: #BBF7D0; }
+  .doc-chip.warn { background: var(--warning-50); color: var(--warning-500); border-color: #FDE68A; }
+  .doc-chip.miss { background: var(--danger-50); color: var(--danger-500); border-color: #FECACA; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="app-side">
+    <div class="brand-row">
+      <a class="brand" href="index.html" style="font-size: 15px; gap: 8px;">
+        <span class="brand-mark" style="width: 22px; height: 22px; border-radius: 6px; font-size: 12px;">N</span>
+        Newron<span style="color: var(--violet-500); margin-left: -1px;">.</span><span style="font-weight:400; color: var(--ink-secondary);">ai</span>
+      </a>
+      <span class="tag tag-violet" style="height: 20px; padding: 0 6px; font-size: 9px;">Underwriter</span>
+    </div>
+
+    <div class="nav-section">
+      <h6>Workspace</h6>
+      <a class="nav-item active" href="App - Underwriter Dashboard.html" data-label="Queue">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="12" y="3" width="7" height="7" rx="1"/><rect x="3" y="12" width="7" height="7" rx="1"/><rect x="12" y="12" width="7" height="7" rx="1"/></svg></span>
+        Queue
+        <span class="count">24</span>
+      </a>
+      <a class="nav-item" href="App - Application Detail.html" data-label="Applications">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h10l4 4v10a2 2 0 01-2 2H4a2 2 0 01-2-2V4z"/><path d="M14 4v4h4M6 11h10M6 14h10M6 17h6"/></svg></span>
+        Applications
+        <span class="count">142</span>
+      </a>
+      <a class="nav-item" href="App - Application Detail.html" data-label="Flagged">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M11 6v6M11 16v.5"/></svg></span>
+        Flagged
+        <span class="count" style="background: var(--danger-50); color: var(--danger-500);">3</span>
+      </a>
+      <a class="nav-item" href="App - Application Detail.html" data-label="Escalations">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3l8 14H3z"/><path d="M11 9v4M11 16v.1"/></svg></span>
+        Escalations
+        <span class="count">2</span>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <h6>Configure</h6>
+      <a class="nav-item" href="App - Credit Policy.html" data-label="Credit policy">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="3"/><path d="M11 2v3M11 17v3M2 11h3M17 11h3M4.5 4.5l2 2M15.5 15.5l2 2M4.5 17.5l2-2M15.5 6.5l2-2"/></svg></span>
+        Credit policy
+      </a>
+      <a class="nav-item" href="App - Credit Policy.html" data-label="Models">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l4-4M4 11l4 4M4 11h13M14 5l4 6-4 6"/></svg></span>
+        Models
+      </a>
+      <a class="nav-item" href="App Guidelines.html#audit" data-label="Audit log">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="16" height="14" rx="2"/><path d="M7 8h8M7 12h8M7 16h5"/></svg></span>
+        Audit log
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <h6>Resources</h6>
+      <a class="nav-item" href="Design System.html" data-label="Design system">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="16" cy="6" r="3"/><circle cx="11" cy="16" r="3"/></svg></span>
+        Design system
+      </a>
+      <a class="nav-item" href="App Guidelines.html" data-label="App guidelines">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-4z"/></svg></span>
+        App guidelines
+      </a>
+    </div>
+
+    <div class="user-card">
+      <div class="av">RS</div>
+      <div style="flex: 1; min-width: 0;">
+        <div class="name">Ravi Sethia</div>
+        <div class="role">Senior credit · L3</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--ink-tertiary);"><path d="M5 8l6 6 6-6"/></svg>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="app-main">
+    <!-- TOPBAR -->
+    <div class="app-top">
+      <div class="crumbs">
+        <a href="App - Underwriter Dashboard.html">Workspace</a>
+        <span class="sep">/</span>
+        <span class="here">Underwriting queue</span>
+      </div>
+      <div class="search">
+        <svg width="14" height="14" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5L19 19"/></svg>
+        Search applications, borrowers, PAN…
+        <span class="kbd">⌘ K</span>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn">
+          <svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2v18M2 11h18"/></svg>
+        </button>
+        <button class="icon-btn">
+          <svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9a6 6 0 0112 0c0 6 2 7 2 7H3s2-1 2-7z"/><path d="M9 19a2 2 0 004 0"/></svg>
+          <span class="badge"></span>
+        </button>
+        <a class="btn btn-violet btn-sm" href="App - Application Detail.html">New application</a>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="app-content">
+
+      <!-- Page header -->
+      <div class="page-head">
+        <div class="h-l">
+          <div class="row" style="gap: 8px;">
+            <span class="section-eyebrow" style="color: var(--violet-600);">Workspace · Today</span>
+            <span class="tag tag-success tag-dot">System live</span>
+          </div>
+          <h1>Good morning, Ravi.</h1>
+          <p class="sub">24 applications waiting in your bucket · 6 high-priority, 3 flagged by fraud signals, 2 awaiting your override.</p>
+        </div>
+        <div class="h-actions">
+          <button class="btn btn-ghost btn-sm">Export CSV</button>
+          <button class="btn btn-ghost btn-sm">My filters</button>
+          <a class="btn btn-primary btn-sm" href="App - Application Detail.html">Pick up next case →</a>
+        </div>
+      </div>
+
+      <!-- AI insight strip -->
+      <div class="insight-row">
+        <div class="ai-insight">
+          <div>
+            <span class="badge">Newron · Daily intelligence</span>
+            <h3>3 applications match a fraud cluster surfaced overnight.</h3>
+            <p>Newron's fraud graph clustered 7 applications across 4 lenders this week sharing a forged-document fingerprint. Three of yours are in the cluster — pre-fetched for your review.</p>
+          </div>
+          <div class="cta">
+            <button class="btn btn-violet btn-sm">Review cluster <span class="arrow">→</span></button>
+          </div>
+        </div>
+
+        <div class="quick-card">
+          <div class="ttl">Pinned for you</div>
+          <div class="item">
+            <span class="tag tag-violet tag-dot" style="height: 20px; padding: 0 6px; font-size: 9px;">Override</span>
+            <span>NL-4521 · Anita Sharma</span>
+            <span class="kk">14:08</span>
+          </div>
+          <div class="item">
+            <span class="tag tag-warning tag-dot" style="height: 20px; padding: 0 6px; font-size: 9px;">Pending</span>
+            <span>NL-4517 · Mahesh Patel</span>
+            <span class="kk">11:42</span>
+          </div>
+          <div class="item">
+            <span class="tag tag-danger tag-dot" style="height: 20px; padding: 0 6px; font-size: 9px;">Escalate</span>
+            <span>NL-4506 · A. Vyas &amp; Co</span>
+            <span class="kk">Mon</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="lbl">Applications · today</div>
+          <div class="v">142</div>
+          <div class="delta up">▲ 12% vs. yesterday</div>
+          <svg class="spark" viewBox="0 0 200 32" preserveAspectRatio="none"><polyline fill="none" stroke="var(--violet-500)" stroke-width="1.5" points="0,24 20,22 40,18 60,20 80,14 100,16 120,10 140,12 160,8 180,9 200,4"/></svg>
+        </div>
+        <div class="kpi">
+          <div class="lbl">Avg login TAT</div>
+          <div class="v">4.2 <span style="font-size: 14px; color: var(--ink-tertiary);">min</span></div>
+          <div class="delta up">▼ 38% vs. baseline</div>
+          <div class="sub">Baseline 6.8 min · pre-Newron</div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">Auto-approval rate</div>
+          <div class="v">62.4 <span style="font-size: 14px; color: var(--ink-tertiary);">%</span></div>
+          <div class="delta up">▲ 2.1 pts WoW</div>
+          <div class="sub">Within delegated authority</div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">Fraud caught · 7d</div>
+          <div class="v">11</div>
+          <div class="delta down">▼ 3 vs. last week</div>
+          <div class="sub">2 forged ITRs · 1 mule · 8 doc anomalies</div>
+        </div>
+      </div>
+
+      <!-- Main content split: queue + activity -->
+      <div class="right-rail">
+        <!-- QUEUE TABLE -->
+        <div>
+          <div class="tabs">
+            <a class="tab active">My bucket <span class="count">24</span></a>
+            <a class="tab">Team queue <span class="count">142</span></a>
+            <a class="tab">Flagged <span class="count">3</span></a>
+            <a class="tab">Recently approved <span class="count">38</span></a>
+            <a class="tab">Audit needed <span class="count">5</span></a>
+          </div>
+
+          <div class="tbl-wrap">
+            <div class="tbl-tools">
+              <span class="filter active">All products</span>
+              <span class="filter">SME</span>
+              <span class="filter">Consumer</span>
+              <span class="filter">Secured</span>
+              <span class="filter">High priority</span>
+              <div class="right">
+                <span class="filter">Sort: oldest first ↓</span>
+                <span class="filter">Density: comfortable</span>
+              </div>
+            </div>
+
+            <table class="tbl">
+              <thead>
+                <tr>
+                  <th style="width: 32px;"></th>
+                  <th>Application</th>
+                  <th>Borrower</th>
+                  <th>Amount</th>
+                  <th>Stage</th>
+                  <th>Newron rec.</th>
+                  <th>Docs</th>
+                  <th>Risk</th>
+                  <th>SLA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="row" onclick="location.href='App - Application Detail.html'">
+                  <td><span class="row-check"></span></td>
+                  <td class="num">NL-4521</td>
+                  <td>
+                    <div class="who"><div class="av">AS</div>
+                      <div><div style="font-weight: 500;">Anita Sharma</div><div class="caption">SME · Working capital</div></div>
+                    </div>
+                  </td>
+                  <td class="num">₹ 12,50,000</td>
+                  <td><span class="tag tag-violet tag-dot">In review</span></td>
+                  <td><span style="color: var(--success-700); font-weight: 500;">Approve</span> <span class="caption">· 0.94</span></td>
+                  <td><div class="doc-chips"><span class="doc-chip ok">PAN</span><span class="doc-chip ok">BANK</span><span class="doc-chip ok">GST</span><span class="doc-chip ok">ITR</span></div></td>
+                  <td><div class="risk-bar low"><div class="b"><span></span><span></span><span></span><span></span><span></span></div>Low</div></td>
+                  <td class="num" style="color: var(--success-500);">4h 12m</td>
+                </tr>
+
+                <tr class="row">
+                  <td><span class="row-check"></span></td>
+                  <td class="num">NL-4519</td>
+                  <td>
+                    <div class="who"><div class="av" style="background: #FFE5D6; color: var(--accent-600);">RK</div>
+                      <div><div style="font-weight: 500;">R. Krishnan</div><div class="caption">Used vehicle</div></div>
+                    </div>
+                  </td>
+                  <td class="num">₹ 4,80,000</td>
+                  <td><span class="tag tag-success tag-dot">Approved</span></td>
+                  <td><span style="color: var(--success-700); font-weight: 500;">Approve</span> <span class="caption">· 0.91</span></td>
+                  <td><div class="doc-chips"><span class="doc-chip ok">PAN</span><span class="doc-chip ok">RC</span><span class="doc-chip ok">INS</span></div></td>
+                  <td><div class="risk-bar med"><div class="b"><span></span><span></span><span></span><span></span><span></span></div>Medium</div></td>
+                  <td class="num">Closed</td>
+                </tr>
+
+                <tr class="row">
+                  <td><span class="row-check"></span></td>
+                  <td class="num">NL-4517</td>
+                  <td>
+                    <div class="who"><div class="av" style="background: #FEE2BC; color: var(--warning-500);">MP</div>
+                      <div><div style="font-weight: 500;">Mahesh Patel</div><div class="caption">Secured business</div></div>
+                    </div>
+                  </td>
+                  <td class="num">₹ 38,00,000</td>
+                  <td><span class="tag tag-warning tag-dot">Pending docs</span></td>
+                  <td><span style="color: var(--warning-500); font-weight: 500;">Review</span> <span class="caption">· 0.71</span></td>
+                  <td><div class="doc-chips"><span class="doc-chip ok">PAN</span><span class="doc-chip warn">BANK</span><span class="doc-chip miss">PROP</span><span class="doc-chip ok">GST</span></div></td>
+                  <td><div class="risk-bar med"><div class="b"><span></span><span></span><span></span><span></span><span></span></div>Medium</div></td>
+                  <td class="num" style="color: var(--warning-500);">8h 04m</td>
+                </tr>
+
+                <tr class="row">
+                  <td><span class="row-check"></span></td>
+                  <td class="num">NL-4516</td>
+                  <td>
+                    <div class="who"><div class="av" style="background: #DFF6E8; color: var(--success-500);">PD</div>
+                      <div><div style="font-weight: 500;">Pranati Devi</div><div class="caption">Personal loan</div></div>
+                    </div>
+                  </td>
+                  <td class="num">₹ 2,10,000</td>
+                  <td><span class="tag tag-violet tag-dot">In review</span></td>
+                  <td><span style="color: var(--success-700); font-weight: 500;">Approve</span> <span class="caption">· 0.88</span></td>
+                  <td><div class="doc-chips"><span class="doc-chip ok">PAN</span><span class="doc-chip ok">AAD</span><span class="doc-chip ok">BANK</span><span class="doc-chip ok">SAL</span></div></td>
+                  <td><div class="risk-bar low"><div class="b"><span></span><span></span><span></span><span></span><span></span></div>Low</div></td>
+                  <td class="num" style="color: var(--success-500);">6h 21m</td>
+                </tr>
+
+                <tr class="row" style="background: var(--danger-50);">
+                  <td><span class="row-check"></span></td>
+                  <td class="num">NL-4515</td>
+                  <td>
+                    <div class="who"><div class="av" style="background: #FEE2E2; color: var(--danger-500);">AV</div>
+                      <div><div style="font-weight: 500;">A. Vyas &amp; Co</div><div class="caption">SME · Term loan</div></div>
+                    </div>
+                  </td>
+                  <td class="num">₹ 24,00,000</td>
+                  <td><span class="tag tag-danger tag-dot">Fraud cluster</span></td>
+                  <td><span style="color: var(--danger-500); font-weight: 500;">Reject</span> <span class="caption">· 0.96</span></td>
+                  <td><div class="doc-chips"><span class="doc-chip miss">ITR</span><span class="doc-chip warn">BANK</span><span class="doc-chip ok">PAN</span></div></td>
+                  <td><div class="risk-bar high"><div class="b"><span></span><span></span><span></span><span></span><span></span></div>High</div></td>
+                  <td class="num" style="color: var(--danger-500);">SLA breached</td>
+                </tr>
+
+                <tr class="row">
+                  <td><span class="row-check"></span></td>
+                  <td class="num">NL-4514</td>
+                  <td>
+                    <div class="who"><div class="av">SK</div>
+                      <div><div style="font-weight: 500;">Sanjay Kumar</div><div class="caption">Used vehicle</div></div>
+                    </div>
+                  </td>
+                  <td class="num">₹ 6,40,000</td>
+                  <td><span class="tag tag-violet tag-dot">In review</span></td>
+                  <td><span style="color: var(--success-700); font-weight: 500;">Approve</span> <span class="caption">· 0.89</span></td>
+                  <td><div class="doc-chips"><span class="doc-chip ok">PAN</span><span class="doc-chip ok">RC</span><span class="doc-chip ok">BANK</span></div></td>
+                  <td><div class="risk-bar low"><div class="b"><span></span><span></span><span></span><span></span><span></span></div>Low</div></td>
+                  <td class="num" style="color: var(--success-500);">2h 58m</td>
+                </tr>
+
+                <tr class="row">
+                  <td><span class="row-check"></span></td>
+                  <td class="num">NL-4513</td>
+                  <td>
+                    <div class="who"><div class="av" style="background: #E8E2FD; color: var(--violet-700);">NB</div>
+                      <div><div style="font-weight: 500;">N. Bhattacharya</div><div class="caption">Personal loan</div></div>
+                    </div>
+                  </td>
+                  <td class="num">₹ 5,00,000</td>
+                  <td><span class="tag tag-warning tag-dot">Bureau delay</span></td>
+                  <td><span style="color: var(--ink-tertiary); font-weight: 500;">Waiting</span></td>
+                  <td><div class="doc-chips"><span class="doc-chip ok">PAN</span><span class="doc-chip ok">AAD</span><span class="doc-chip ok">SAL</span></div></td>
+                  <td><div class="risk-bar low"><div class="b"><span></span><span></span><span></span><span></span><span></span></div>Low</div></td>
+                  <td class="num">12h 11m</td>
+                </tr>
+
+                <tr class="row">
+                  <td><span class="row-check"></span></td>
+                  <td class="num">NL-4511</td>
+                  <td>
+                    <div class="who"><div class="av" style="background: #FFE5D6; color: var(--accent-600);">JV</div>
+                      <div><div style="font-weight: 500;">Jaya Vishwakarma</div><div class="caption">SME · Working capital</div></div>
+                    </div>
+                  </td>
+                  <td class="num">₹ 18,75,000</td>
+                  <td><span class="tag tag-violet tag-dot">CAM ready</span></td>
+                  <td><span style="color: var(--success-700); font-weight: 500;">Approve</span> <span class="caption">· 0.92</span></td>
+                  <td><div class="doc-chips"><span class="doc-chip ok">PAN</span><span class="doc-chip ok">GST</span><span class="doc-chip ok">ITR</span><span class="doc-chip ok">BANK</span></div></td>
+                  <td><div class="risk-bar low"><div class="b"><span></span><span></span><span></span><span></span><span></span></div>Low</div></td>
+                  <td class="num" style="color: var(--success-500);">3h 47m</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ACTIVITY RAIL -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="activity-card">
+            <h3>Today's activity</h3>
+            <div class="activity">
+              <div class="t">14:08</div>
+              <div class="a"><span class="who">You</span> overrode FOIR cap on <strong>NL-4521</strong></div>
+            </div>
+            <div class="activity">
+              <div class="t">13:54</div>
+              <div class="a"><span class="who">CAM v3.2</span> generated for <strong>NL-4519</strong></div>
+            </div>
+            <div class="activity">
+              <div class="t">13:32</div>
+              <div class="a"><span class="who">Artha</span> extracted Bank Statement for <strong>NL-4523</strong> · conf 0.99</div>
+            </div>
+            <div class="activity">
+              <div class="t">12:58</div>
+              <div class="a"><span class="who">Fraud graph</span> flagged <strong>NL-4515</strong> as part of overnight cluster</div>
+            </div>
+            <div class="activity">
+              <div class="t">11:42</div>
+              <div class="a"><span class="who">System</span> notified Setu&amp;Co of approval on <strong>NL-4512</strong></div>
+            </div>
+            <div class="activity">
+              <div class="t">11:08</div>
+              <div class="a"><span class="who">You</span> approved <strong>NL-4509</strong> · ₹ 8.4L</div>
+            </div>
+            <div class="activity">
+              <div class="t">09:30</div>
+              <div class="a"><span class="who">System</span> auto-approved 7 applications within delegated authority</div>
+            </div>
+          </div>
+
+          <div class="activity-card">
+            <h3>Model health</h3>
+            <div style="display: grid; gap: 14px; margin-top: 6px;">
+              <div>
+                <div class="between" style="margin-bottom: 4px;"><span class="caption">CAM v3.2</span><span class="caption num">conf 0.91 · ok</span></div>
+                <div style="height: 4px; background: var(--surface-inset); border-radius: 999px; overflow: hidden;"><div style="width: 91%; height: 100%; background: var(--success-500);"></div></div>
+              </div>
+              <div>
+                <div class="between" style="margin-bottom: 4px;"><span class="caption">Artha · doc extraction</span><span class="caption num">conf 0.94 · ok</span></div>
+                <div style="height: 4px; background: var(--surface-inset); border-radius: 999px; overflow: hidden;"><div style="width: 94%; height: 100%; background: var(--success-500);"></div></div>
+              </div>
+              <div>
+                <div class="between" style="margin-bottom: 4px;"><span class="caption">Fraud graph v1.7</span><span class="caption num">conf 0.83 · watch</span></div>
+                <div style="height: 4px; background: var(--surface-inset); border-radius: 999px; overflow: hidden;"><div style="width: 83%; height: 100%; background: var(--warning-500);"></div></div>
+              </div>
+              <div>
+                <div class="between" style="margin-bottom: 4px;"><span class="caption">Bureau adapter</span><span class="caption num">p95 8.2s · slow</span></div>
+                <div style="height: 4px; background: var(--surface-inset); border-radius: 999px; overflow: hidden;"><div style="width: 60%; height: 100%; background: var(--warning-500);"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="activity-card" style="background: var(--surface-ink); color: white; border-color: var(--surface-ink);">
+            <h3 style="color: white;">Your impact · this month</h3>
+            <div style="display: grid; gap: 12px; margin-top: 4px;">
+              <div class="between"><span style="color: rgba(255,255,255,0.7); font-size: 12.5px;">Cases reviewed</span><span class="num" style="font-weight: 500;">218</span></div>
+              <div class="between"><span style="color: rgba(255,255,255,0.7); font-size: 12.5px;">Avg time / case</span><span class="num" style="font-weight: 500;">24 min</span></div>
+              <div class="between"><span style="color: rgba(255,255,255,0.7); font-size: 12.5px;">Approval rate</span><span class="num" style="font-weight: 500;">71.6 %</span></div>
+              <div class="between"><span style="color: rgba(255,255,255,0.7); font-size: 12.5px;">Overrides</span><span class="num" style="font-weight: 500;">14 (6.4%)</span></div>
+            </div>
+            <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: rgba(255,255,255,0.6);">
+              You're 2.3× faster than the team median for SME working capital files.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

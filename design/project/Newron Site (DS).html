@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Newron.ai — AI-native infrastructure for lending in India</title>
+<meta name="description" content="Newron builds the AI infrastructure layer powering modern lending in India — underwriting, risk, fraud, and decision intelligence for banks and NBFCs." />
+<link rel="stylesheet" href="assets/tokens.css" />
+<style>
+  /* =========================================================
+     Page-local styles
+     ========================================================= */
+  .hero {
+    position: relative;
+    padding: 96px 0 88px;
+    overflow: hidden;
+    background:
+      radial-gradient(900px 460px at 85% -10%, rgba(107,78,232,0.18), transparent 65%),
+      radial-gradient(700px 380px at 0% 0%, rgba(242,106,63,0.07), transparent 60%),
+      var(--surface-canvas);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: auto 0 0 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.35fr 1fr; gap: var(--s-16);
+    align-items: end;
+  }
+  .hero h1 {
+    margin: 18px 0 var(--s-6);
+    font-size: clamp(44px, 6.6vw, 92px);
+    line-height: 0.98; letter-spacing: -0.035em; font-weight: 500;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--violet-600) 0%, var(--violet-400) 70%, var(--accent-500) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .lede {
+    max-width: 600px; font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.55; color: var(--ink-secondary);
+    text-wrap: pretty;
+  }
+  .hero-actions { display: flex; gap: var(--s-3); margin-top: var(--s-8); flex-wrap: wrap; }
+  .hero-meta {
+    display: flex; align-items: center; gap: var(--s-2);
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--ink-tertiary); letter-spacing: 0.02em;
+  }
+  .hero-aside {
+    display: flex; flex-direction: column; gap: var(--s-4);
+  }
+  .live-card {
+    background: var(--surface-card); border: 1px solid var(--border-default);
+    border-radius: var(--r-lg); padding: var(--s-5);
+    box-shadow: var(--shadow-md);
+  }
+  .live-card .between { padding-bottom: var(--s-4); margin-bottom: var(--s-4); border-bottom: 1px dashed var(--border-default); }
+  .live-card .label { color: var(--ink-tertiary); font-size: 12px; font-family: var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; }
+  .live-card .v { font-size: 28px; letter-spacing: -0.02em; font-weight: 500; }
+  .live-card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .live-card li { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+  .live-card li .k { color: var(--ink-secondary); }
+  .live-card li .n { font-family: var(--font-mono); font-weight: 500; color: var(--ink-primary); }
+
+  @media (max-width: 880px) {
+    .hero { padding: 64px 0 48px; }
+    .hero-grid { grid-template-columns: 1fr; gap: var(--s-10); }
+  }
+
+  /* ----- ticker / logo strip ----- */
+  .logo-strip {
+    padding: var(--s-10) 0; border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle); background: var(--surface-subtle);
+  }
+  .logo-strip-inner {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--s-8);
+    flex-wrap: wrap;
+  }
+  .logo-strip .label {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase; color: var(--ink-tertiary); flex: 0 0 auto;
+  }
+  .logos { display: flex; align-items: center; gap: var(--s-8); flex-wrap: wrap; opacity: .75; }
+  .logos .l {
+    font-weight: 600; letter-spacing: -0.015em; color: var(--ink-secondary);
+    font-size: 18px;
+  }
+  .logos .l small { font-weight: 400; color: var(--ink-tertiary); margin-left: 2px; font-size: 11px; }
+
+  /* ----- metrics ----- */
+  .metric-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border: 1px solid var(--border-default); border-radius: var(--r-lg);
+    background: var(--surface-card); overflow: hidden;
+  }
+  .metric {
+    padding: var(--s-8) var(--s-6);
+    border-right: 1px solid var(--border-default);
+  }
+  .metric:last-child { border-right: 0; }
+  .metric .label {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase; color: var(--ink-tertiary); margin-bottom: var(--s-4);
+  }
+  .metric .v {
+    font-size: clamp(36px, 4.5vw, 54px); line-height: 1; letter-spacing: -0.03em;
+    font-weight: 500; color: var(--ink-primary);
+  }
+  .metric .sub { margin-top: var(--s-3); font-size: 13px; color: var(--ink-secondary); }
+  @media (max-width: 880px) {
+    .metric-grid { grid-template-columns: repeat(2, 1fr); }
+    .metric { border-right: 0; border-bottom: 1px solid var(--border-default); }
+    .metric:nth-child(odd) { border-right: 1px solid var(--border-default); }
+    .metric:nth-last-child(-n+2) { border-bottom: 0; }
+  }
+
+  /* ----- structural shift ----- */
+  .shift {
+    background: var(--surface-subtle);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .shift-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-6);
+    align-items: stretch;
+  }
+  .shift-col { display: flex; flex-direction: column; height: 100%; }
+  .shift-col .head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: var(--s-4);
+  }
+  .shift-col .head .ttl { font-size: var(--t-lg); font-weight: 500; letter-spacing: -0.01em; }
+  .shift-card {
+    flex: 1;
+    background: var(--surface-card); border: 1px solid var(--border-default);
+    border-radius: var(--r-lg); padding: var(--s-6);
+  }
+  .shift-card.legacy { background: var(--surface-card); }
+  .shift-card.aint   { background: linear-gradient(180deg, #0E0B1F 0%, #1A1432 100%); color: white; border-color: #0E0B1F; }
+  .shift-card.aint .meta, .shift-card.aint h4 { color: white; }
+  .shift-card.aint .layer-row { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.10); }
+  .shift-card.aint .layer-row .sub { color: rgba(255,255,255,0.66); }
+  .shift-card.aint .layer-row.highlight { background: linear-gradient(135deg, var(--violet-600), var(--violet-500)); border-color: var(--violet-500); }
+
+  .layer-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px;
+    border: 1px solid var(--border-default); border-radius: 10px;
+    background: var(--surface-subtle);
+    margin-bottom: 10px;
+  }
+  .layer-row:last-child { margin-bottom: 0; }
+  .layer-row .lbl { font-weight: 500; }
+  .layer-row .sub { color: var(--ink-tertiary); font-size: 12px; font-family: var(--font-mono); }
+
+  .shift-list {
+    list-style: none; padding: 0; margin: var(--s-5) 0 0;
+    display: grid; gap: 10px;
+  }
+  .shift-list li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: var(--t-sm); color: var(--ink-secondary);
+  }
+  .shift-list .x, .shift-list .ck {
+    flex: 0 0 18px; width: 18px; height: 18px; border-radius: 999px;
+    display: grid; place-items: center; margin-top: 2px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+  }
+  .shift-list .x  { background: #FEE2E2; color: #B91C1C; }
+  .shift-list .ck { background: var(--violet-100); color: var(--violet-700); }
+  .shift-card.aint .shift-list .ck { background: rgba(255,255,255,0.12); color: white; }
+  .shift-card.aint .shift-list li { color: rgba(255,255,255,0.82); }
+
+  @media (max-width: 880px) {
+    .shift-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ----- impact table ----- */
+  .impact {
+    display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--s-12);
+    align-items: start;
+  }
+  .impact-tbl {
+    border: 1px solid var(--border-default); border-radius: var(--r-lg);
+    overflow: hidden;
+    background: var(--surface-card);
+  }
+  .impact-row {
+    display: grid; grid-template-columns: 1.2fr 1fr 64px;
+    align-items: center; gap: var(--s-4);
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .impact-row:last-child { border-bottom: 0; }
+  .impact-row .area { font-weight: 500; font-size: 15px; }
+  .impact-row .area small { display: block; color: var(--ink-tertiary); font-weight: 400; font-size: 12px; font-family: var(--font-mono); margin-top: 2px; letter-spacing: 0.02em; }
+  .impact-row .val { font-family: var(--font-mono); font-size: 15px; color: var(--violet-700); font-weight: 500; }
+  .impact-row .bar { height: 6px; background: var(--surface-inset); border-radius: 999px; overflow: hidden; }
+  .impact-row .bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--violet-500), var(--violet-400)); border-radius: 999px; }
+
+  .impact-head .eyebrow { color: var(--violet-600); }
+  @media (max-width: 880px) {
+    .impact { grid-template-columns: 1fr; gap: var(--s-8); }
+    .impact-row { grid-template-columns: 1fr; padding: 16px; gap: 8px; }
+    .impact-row .bar { display: none; }
+  }
+
+  /* ----- 7-step flow ----- */
+  .flow {
+    background: linear-gradient(180deg, var(--surface-canvas) 0%, var(--surface-subtle) 100%);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .flow-board {
+    background: var(--surface-card);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    padding: var(--s-8);
+    box-shadow: var(--shadow-md);
+  }
+  .flow-rail {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--s-3);
+    counter-reset: step;
+  }
+  .flow-step {
+    padding: var(--s-4);
+    background: var(--surface-subtle);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-md);
+    position: relative;
+    min-height: 130px;
+  }
+  .flow-step .n {
+    font-family: var(--font-mono); font-size: 11px; color: var(--violet-700);
+    letter-spacing: 0.04em;
+  }
+  .flow-step .ttl { font-size: 14px; font-weight: 500; margin-top: 8px; line-height: 1.3; letter-spacing: -0.01em; }
+  .flow-step .sub { font-size: 12px; color: var(--ink-tertiary); margin-top: 6px; line-height: 1.5; }
+  .flow-step.highlight {
+    background: linear-gradient(135deg, var(--violet-600), var(--violet-500));
+    color: white; border-color: var(--violet-500);
+    box-shadow: var(--shadow-violet);
+  }
+  .flow-step.highlight .n   { color: rgba(255,255,255,0.7); }
+  .flow-step.highlight .sub { color: rgba(255,255,255,0.78); }
+  .flow-summary {
+    display: grid; grid-template-columns: 1fr auto auto; gap: var(--s-6);
+    align-items: center; margin-top: var(--s-6);
+    padding-top: var(--s-6); border-top: 1px dashed var(--border-default);
+  }
+  .flow-summary .l { color: var(--ink-secondary); font-size: 14px; }
+  .flow-summary .m { display: flex; align-items: baseline; gap: 8px; }
+  .flow-summary .m .v { font-family: var(--font-mono); font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
+  .flow-summary .m .k { font-size: 11px; text-transform: uppercase; letter-spacing: var(--tracking-eyebrow); color: var(--ink-tertiary); font-family: var(--font-mono); }
+  @media (max-width: 980px) {
+    .flow-rail { grid-template-columns: repeat(2, 1fr); }
+    .flow-summary { grid-template-columns: 1fr; gap: var(--s-3); }
+  }
+
+  /* ----- leadership ----- */
+  .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-4); }
+  .person {
+    background: var(--surface-card);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-lg);
+    padding: var(--s-5);
+    display: flex; flex-direction: column; gap: var(--s-4);
+  }
+  .avatar {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--violet-200), var(--violet-100));
+    color: var(--violet-800);
+    display: grid; place-items: center;
+    font-family: var(--font-mono); font-weight: 600; font-size: 15px;
+    letter-spacing: -0.02em;
+    border: 1px solid var(--violet-100);
+  }
+  .avatar.b { background: linear-gradient(135deg, #FFD3BD, #FFE5D6); color: var(--accent-600); border-color: var(--accent-100); }
+  .avatar.c { background: linear-gradient(135deg, #DFF6E8, #EEFCF4); color: var(--success-500); border-color: #BBF7D0; }
+  .avatar.d { background: linear-gradient(135deg, #FEE2BC, #FFF6E6); color: var(--warning-500); border-color: #FDE68A; }
+  .person .name { font-size: 17px; font-weight: 500; letter-spacing: -0.01em; }
+  .person .role { font-size: 13px; color: var(--violet-700); font-family: var(--font-mono); letter-spacing: 0.02em; }
+  .person .alma { font-size: 12px; color: var(--ink-tertiary); margin-top: 2px; }
+  .person p { font-size: 13.5px; color: var(--ink-secondary); margin: 0; line-height: 1.55; text-wrap: pretty; }
+  @media (max-width: 980px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .team-grid { grid-template-columns: 1fr; } }
+
+  /* ----- team summary card ----- */
+  .team-summary {
+    margin-top: var(--s-6);
+    background: var(--surface-ink); color: white;
+    border-radius: var(--r-lg); padding: var(--s-6);
+    display: grid; grid-template-columns: 1fr auto auto auto; gap: var(--s-8);
+    align-items: center;
+  }
+  .team-summary .ttl { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
+  .team-summary .ttl small { display: block; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 400; margin-top: 4px; font-family: var(--font-mono); letter-spacing: 0.02em; }
+  .team-summary .stat { text-align: right; }
+  .team-summary .stat .v { font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
+  .team-summary .stat .k { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; font-family: var(--font-mono); color: rgba(255,255,255,0.6); margin-top: 2px; }
+  @media (max-width: 880px) { .team-summary { grid-template-columns: 1fr 1fr; gap: var(--s-4); } }
+
+  /* ----- governance band ----- */
+  .gov-band {
+    background: var(--surface-ink);
+    color: white;
+    border-radius: var(--r-xl);
+    padding: var(--s-12);
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-12);
+  }
+  .gov-band h2 { color: white; }
+  .gov-band .muted { color: rgba(255,255,255,0.66); }
+  .gov-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: var(--r-pill);
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+    font-size: 13px; font-family: var(--font-mono); letter-spacing: 0.02em;
+    color: rgba(255,255,255,0.85);
+  }
+  .gov-chip::before { content: ''; width: 6px; height: 6px; border-radius: 999px; background: var(--violet-300); }
+  .gov-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  @media (max-width: 880px) { .gov-band { grid-template-columns: 1fr; padding: var(--s-8); gap: var(--s-6); } }
+
+  /* ----- CTA ----- */
+  .cta {
+    text-align: center;
+    padding: 120px 24px;
+    background:
+      radial-gradient(800px 400px at 50% 100%, rgba(107,78,232,0.22), transparent 60%),
+      radial-gradient(600px 300px at 50% 0%, rgba(242,106,63,0.05), transparent 60%),
+      var(--surface-canvas);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .cta h2 { font-size: clamp(36px, 5.5vw, 72px); line-height: 1.02; letter-spacing: -0.03em; font-weight: 500; margin: 0 auto var(--s-5); max-width: 14ch; }
+  .cta p { color: var(--ink-secondary); max-width: 540px; margin: 0 auto var(--s-8); font-size: 17px; }
+  .cta-actions { display: inline-flex; gap: var(--s-3); }
+  @media (max-width: 720px) {
+    .cta { padding: 80px 16px; }
+    .cta-actions { flex-direction: column; }
+  }
+
+  /* ----- in-page anchors for the system docs ----- */
+  .system-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4);
+  }
+  .system-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-lg);
+    padding: var(--s-6);
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; gap: var(--s-4);
+    transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .system-card:hover { border-color: var(--violet-300); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .system-card .h { display: flex; align-items: center; justify-content: space-between; }
+  .system-card .ttl { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
+  .system-card .sub { color: var(--ink-secondary); font-size: 13.5px; line-height: 1.55; }
+  .system-card .arrow { color: var(--violet-600); }
+  @media (max-width: 880px) { .system-grid { grid-template-columns: 1fr; } }
+
+  /* small util */
+  .section-header { display: grid; grid-template-columns: 1fr auto; gap: var(--s-6); align-items: end; margin-bottom: var(--s-10); }
+  .section-header h2 { margin: var(--s-3) 0 0; font-size: clamp(28px, 3.5vw, 44px); letter-spacing: -0.02em; line-height: 1.1; max-width: 18ch; font-weight: 500; }
+  .section-header p { color: var(--ink-secondary); max-width: 38ch; margin: 0; }
+  @media (max-width: 720px) {
+    .section-header { grid-template-columns: 1fr; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">N</span>
+      Newron<span style="color: var(--violet-500); margin-left: -1px;">.</span><span style="font-weight:400; color: var(--ink-secondary);">ai</span>
+    </a>
+    <nav class="nav-links">
+      <a class="nav-link active" href="Newron Site.html">Platform</a>
+      <a class="nav-link" href="App - Underwriter Dashboard.html">Product</a>
+      <a class="nav-link" href="Design System.html">Design system</a>
+      <a class="nav-link" href="App Guidelines.html">Guidelines</a>
+    </nav>
+    <div class="row">
+      <a class="btn btn-ghost btn-sm hidden-mobile" href="#contact">Talk to sales</a>
+      <a class="btn btn-violet btn-sm" href="#demo">Book a demo <span class="arrow">→</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="row">
+          <span class="tag tag-violet tag-dot">Production · Live across 15 lenders</span>
+        </div>
+        <h1>
+          The AI infrastructure<br />
+          layer powering <em>modern lending</em> in India.
+        </h1>
+        <p class="lede">
+          Newron builds AI-native operating systems for regulated lending. Underwriting,
+          risk, fraud, and decision intelligence — engineered for banks, NBFCs and
+          embedded-finance rails.
+        </p>
+        <div class="hero-actions">
+          <a href="#demo" class="btn btn-violet btn-lg">Book a demo <span class="arrow">→</span></a>
+          <a href="Newron Site.html#impact" class="btn btn-ghost btn-lg">See the impact</a>
+        </div>
+        <div style="margin-top: var(--s-8); display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap;">
+          <span class="hero-meta"><span class="dot dot-live"></span> System live · 50,000+ applications processed</span>
+          <span class="hero-meta">RBI · DPDP · India Stack ready</span>
+        </div>
+      </div>
+
+      <aside class="hero-aside">
+        <div class="live-card">
+          <div class="between">
+            <div>
+              <div class="label">Workflows enabled</div>
+              <div class="v num">₹ 1,00,000 Cr+</div>
+            </div>
+            <span class="tag tag-success tag-dot">Live</span>
+          </div>
+          <ul>
+            <li><span class="k">Applications processed</span><span class="n">50,000</span></li>
+            <li><span class="k">Documents processed</span><span class="n">10,00,000+</span></li>
+            <li><span class="k">AI agents deployed</span><span class="n">63</span></li>
+            <li><span class="k">Enterprise clients</span><span class="n">15</span></li>
+          </ul>
+        </div>
+
+        <div class="live-card" style="background: var(--surface-ink); color: white; border-color: var(--surface-ink);">
+          <div class="row" style="margin-bottom: 12px;">
+            <span class="tag" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.10); color: rgba(255,255,255,0.8);">Quote</span>
+          </div>
+          <p style="font-size: 15px; line-height: 1.55; margin: 0; color: rgba(255,255,255,0.92);">
+            “Traditional systems digitised workflows. Newron is building the AI
+            infrastructure layer powering modern lending in India.”
+          </p>
+          <div style="margin-top: 16px; font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.04em;">
+            — RAJESH KAMRA · CEO &amp; CO-FOUNDER
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LOGO STRIP ===== -->
+<section class="logo-strip">
+  <div class="container logo-strip-inner">
+    <div class="label">Trusted across India's lending ecosystem</div>
+    <div class="logos">
+      <span class="l">Aurum<small> NBFC</small></span>
+      <span class="l">Setu&amp;Co</span>
+      <span class="l">Vyāpāra Bank</span>
+      <span class="l">CredX</span>
+      <span class="l">Udhaar<small> Capital</small></span>
+      <span class="l">Bharat Finserv</span>
+      <span class="l">Lakshmi NBFC</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== METRICS ===== -->
+<section class="section" id="metrics">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">Operating scale</span>
+        <h2>Live across real lending environments today.</h2>
+      </div>
+      <p>Numbers refreshed from production deployments across 15 enterprise lenders — not pilots, not sandboxes.</p>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="label">Applications processed</div>
+        <div class="v num">50,000</div>
+        <div class="sub">Across retail, SME and secured lending products.</div>
+      </div>
+      <div class="metric">
+        <div class="label">Documents processed</div>
+        <div class="v num">10 Lakh+</div>
+        <div class="sub">PAN, Aadhaar, ITRs, bank statements, GSTRs and more.</div>
+      </div>
+      <div class="metric">
+        <div class="label">Workflows enabled</div>
+        <div class="v num">₹1 L Cr+</div>
+        <div class="sub">Disbursement value flowing through Newron infrastructure.</div>
+      </div>
+      <div class="metric">
+        <div class="label">AI agents in production</div>
+        <div class="v num">63</div>
+        <div class="sub">Spanning ingestion, validation, underwriting and audit layers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STRUCTURAL SHIFT ===== -->
+<section class="section shift" id="shift">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">The structural shift</span>
+        <h2>Existing stacks were built for forms — not intelligence.</h2>
+      </div>
+      <p>The lending stack in India is undergoing a generational rewrite. The next decade will be built on AI-native primitives, not workflow tooling.</p>
+    </div>
+
+    <div class="shift-grid">
+      <!-- LEGACY -->
+      <div class="shift-col">
+        <div class="head">
+          <span class="tag">Legacy stack</span>
+          <span class="dim" style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;">Yesterday</span>
+        </div>
+        <div class="shift-card legacy">
+          <h4 class="heading-4" style="margin: 0 0 var(--s-4);">Designed for digitisation, not decisions.</h4>
+          <div class="layer-row"><span class="lbl">CBS</span><span class="sub">Core banking</span></div>
+          <div class="layer-row"><span class="lbl">LOS</span><span class="sub">Loan origination</span></div>
+          <div class="layer-row"><span class="lbl">Manual ops</span><span class="sub">Spreadsheets · email</span></div>
+          <div class="layer-row"><span class="lbl">Credit teams</span><span class="sub">Human bottlenecks</span></div>
+
+          <ul class="shift-list">
+            <li><span class="x">×</span> Cannot do AI-native underwriting at scale</li>
+            <li><span class="x">×</span> No embedded-finance primitives</li>
+            <li><span class="x">×</span> Limited real-time borrower intelligence</li>
+            <li><span class="x">×</span> Fraud handled reactively, in silos</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- AI-NATIVE -->
+      <div class="shift-col">
+        <div class="head">
+          <span class="tag tag-violet">AI-native stack</span>
+          <span class="dim" style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--violet-600);">What we build</span>
+        </div>
+        <div class="shift-card aint">
+          <h4 class="heading-4" style="margin: 0 0 var(--s-4); color: white;">Built as an intelligence layer above the core.</h4>
+          <div class="layer-row"><span class="lbl">Digital Public Infrastructure</span><span class="sub">AA · DigiLocker · OCEN</span></div>
+          <div class="layer-row highlight"><span class="lbl">Newron AI Lending Infrastructure</span><span class="sub" style="color: rgba(255,255,255,0.85);">Agents · Decisioning · Governance</span></div>
+          <div class="layer-row"><span class="lbl">LOS / Core Banking</span><span class="sub">Plugs into existing systems</span></div>
+
+          <ul class="shift-list">
+            <li><span class="ck">✓</span> AI-native underwriting and CAM generation</li>
+            <li><span class="ck">✓</span> Embedded finance, ready out of the box</li>
+            <li><span class="ck">✓</span> Real-time borrower &amp; risk intelligence</li>
+            <li><span class="ck">✓</span> Fraud infrastructure across the lifecycle</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IMPACT ===== -->
+<section class="section" id="impact">
+  <div class="container">
+    <div class="impact">
+      <div class="impact-head">
+        <span class="section-eyebrow">Operational impact</span>
+        <h2 style="font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -0.025em; line-height: 1.05; margin: var(--s-4) 0 var(--s-5); font-weight: 500;">Measurable lift, on the lender's own P&amp;L.</h2>
+        <p class="muted body-lg" style="max-width: 44ch;">
+          Newron is not a model demo. Every number below is from production deployment with a real lender, audited month-on-month against their pre-Newron baseline.
+        </p>
+        <div class="row" style="margin-top: var(--s-6); gap: 10px; flex-wrap: wrap;">
+          <span class="tag tag-success tag-dot">System live</span>
+          <span class="tag">Audited monthly</span>
+          <span class="tag">RBI-aligned</span>
+        </div>
+      </div>
+
+      <div class="impact-tbl">
+        <div class="impact-row">
+          <div class="area">Login TAT<small>Time from application to verification</small></div>
+          <div class="val">30–40% faster</div>
+          <div class="bar"><i style="width: 40%;"></i></div>
+        </div>
+        <div class="impact-row">
+          <div class="area">Underwriting prep<small>Doc collation · analyst-ready file</small></div>
+          <div class="val">60–80% faster</div>
+          <div class="bar"><i style="width: 78%;"></i></div>
+        </div>
+        <div class="impact-row">
+          <div class="area">CAM generation<small>Credit appraisal memo</small></div>
+          <div class="val">Days → &lt; 1 hour</div>
+          <div class="bar"><i style="width: 92%;"></i></div>
+        </div>
+        <div class="impact-row">
+          <div class="area">Fraud validation<small>Document &amp; identity</small></div>
+          <div class="val">50–70% reduction</div>
+          <div class="bar"><i style="width: 65%;"></i></div>
+        </div>
+        <div class="impact-row">
+          <div class="area">Credit analyst productivity<small>Files / analyst / day</small></div>
+          <div class="val">2–3× improvement</div>
+          <div class="bar"><i style="width: 80%;"></i></div>
+        </div>
+        <div class="impact-row">
+          <div class="area">Conversion velocity<small>Application → disbursal</small></div>
+          <div class="val">Materially improved</div>
+          <div class="bar"><i style="width: 55%;"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FLOW (Infrastructure in action) ===== -->
+<section class="section flow" id="how">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">Infrastructure in action</span>
+        <h2>How an AI-native lending operating model runs.</h2>
+      </div>
+      <p>Seven coordinated layers, end to end. Every step automated, every decision auditable.</p>
+    </div>
+
+    <div class="flow-board">
+      <div class="flow-rail">
+        <div class="flow-step"><div class="n">01</div><div class="ttl">Borrower application</div><div class="sub">Multi-channel intake — web, partner, API.</div></div>
+        <div class="flow-step"><div class="n">02</div><div class="ttl">AI ingestion &amp; structuring</div><div class="sub">Artha extracts and normalises every doc.</div></div>
+        <div class="flow-step"><div class="n">03</div><div class="ttl">Fraud &amp; trust signals</div><div class="sub">Forgery, mule, identity, device.</div></div>
+        <div class="flow-step"><div class="n">04</div><div class="ttl">Financial intelligence</div><div class="sub">Bank, GST, ITR, bureau — unified view.</div></div>
+        <div class="flow-step"><div class="n">05</div><div class="ttl">Borrower validation</div><div class="sub">PAN · Aadhaar · DigiLocker · KYC.</div></div>
+        <div class="flow-step highlight"><div class="n">06</div><div class="ttl">AI-assisted underwriting</div><div class="sub">CAM generation in under an hour.</div></div>
+        <div class="flow-step"><div class="n">07</div><div class="ttl">Governance &amp; audit</div><div class="sub">Explainability, monitoring, human-in-loop.</div></div>
+      </div>
+
+      <div class="flow-summary">
+        <div class="l">End-to-end automation with human override at every consequential decision.</div>
+        <div class="m"><span class="v num">&lt; 1 hr</span><span class="k">Processing time</span></div>
+        <div class="m"><span class="v num">99.5%</span><span class="k">Document accuracy</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GOVERNANCE ===== -->
+<section class="section" id="governance">
+  <div class="container">
+    <div class="gov-band">
+      <div>
+        <span class="section-eyebrow" style="color: var(--violet-300);">Governance &amp; India Stack</span>
+        <h2 style="font-size: clamp(28px, 3.5vw, 44px); letter-spacing: -0.02em; line-height: 1.1; margin: var(--s-4) 0 var(--s-5);">Built for India's regulated lending ecosystem — from day one.</h2>
+        <p class="muted body-lg" style="max-width: 50ch;">
+          Newron is engineered the way a regulator would want it built. RBI-aligned workflows,
+          DPDP-aware architecture, model monitoring, fairness controls and a complete audit
+          trail for every decision the system participates in.
+        </p>
+      </div>
+      <div>
+        <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: var(--s-4);">— Compliance &amp; controls</div>
+        <div class="gov-chips" style="margin-bottom: var(--s-6);">
+          <span class="gov-chip">RBI-aligned workflows</span>
+          <span class="gov-chip">DPDP-aware architecture</span>
+          <span class="gov-chip">Decision explainability</span>
+          <span class="gov-chip">Complete audit trails</span>
+          <span class="gov-chip">Model monitoring</span>
+          <span class="gov-chip">Fairness controls</span>
+          <span class="gov-chip">Human-in-loop approvals</span>
+        </div>
+
+        <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: var(--s-4);">— India Stack integrations</div>
+        <div class="gov-chips">
+          <span class="gov-chip">Account Aggregator</span>
+          <span class="gov-chip">DigiLocker</span>
+          <span class="gov-chip">PAN · Aadhaar</span>
+          <span class="gov-chip">Bureau systems</span>
+          <span class="gov-chip">GST · ITR</span>
+          <span class="gov-chip">OCEN ready</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LEADERSHIP ===== -->
+<section class="section" id="team">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">Leadership</span>
+        <h2>The team building the future of lending infrastructure.</h2>
+      </div>
+      <p>Operators with two decades of fintech and AI engineering, supported by 35+ senior engineers and domain specialists.</p>
+    </div>
+
+    <div class="team-grid">
+      <article class="person">
+        <div class="avatar">RK</div>
+        <div>
+          <div class="name">Rajesh Kamra</div>
+          <div class="role">CEO &amp; Co-Founder</div>
+          <div class="alma">IIT Kanpur</div>
+        </div>
+        <p>Entrepreneur across tech &amp; commerce. Founder of Koovs (LSE-listed) and Tradila; led BNPL and embedded-finance initiatives at Rupifi.</p>
+      </article>
+
+      <article class="person">
+        <div class="avatar b">SS</div>
+        <div>
+          <div class="name">Sandeep Singh</div>
+          <div class="role">CTO &amp; Co-Founder</div>
+          <div class="alma">IIT Kanpur</div>
+        </div>
+        <p>15+ years in distributed systems. Previously VP Engineering at CarDekho, Director of Engineering at Walmart Global Tech, former engineer at Yahoo.</p>
+      </article>
+
+      <article class="person">
+        <div class="avatar c">SR</div>
+        <div>
+          <div class="name">Shubham Rai</div>
+          <div class="role">CBO &amp; Co-Founder</div>
+          <div class="alma">IMT</div>
+        </div>
+        <p>Built and scaled fintech partnerships for SMEs at Khatabook. Diverse B2B and B2C experience across consumer tech and fintech.</p>
+      </article>
+
+      <article class="person">
+        <div class="avatar d">RS</div>
+        <div>
+          <div class="name">Ravi Sethia</div>
+          <div class="role">Chief Product Officer</div>
+          <div class="alma">IIT Guwahati</div>
+        </div>
+        <p>12+ years across fintech (Udhaar, consumer lending), OfferXP rewards and data-science systems. Leads client engagement and product strategy.</p>
+      </article>
+    </div>
+
+    <div class="team-summary">
+      <div class="ttl">
+        Plus 35+ senior AI engineers, product and domain specialists across BFSI.
+        <small>Hiring across applied ML, distributed systems, and lending domain.</small>
+      </div>
+      <div class="stat"><div class="v num">35+</div><div class="k">Engineers</div></div>
+      <div class="stat"><div class="v num">IIT</div><div class="k">BITS · VIT · IIM</div></div>
+      <div class="stat"><a class="btn btn-violet btn-sm" href="#contact">Open roles <span class="arrow">→</span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SYSTEM LINKS ===== -->
+<section class="section section-sm" style="background: var(--surface-subtle); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);" id="system">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">Design &amp; product system</span>
+        <h2 style="font-size: clamp(24px, 2.6vw, 32px);">Inside the system that powers everything you see.</h2>
+      </div>
+      <p>Tokens, components, app screens and product guidelines — all consistent with what you're reading right now.</p>
+    </div>
+
+    <div class="system-grid">
+      <a class="system-card" href="Design System.html">
+        <div class="h"><span class="tag tag-violet">01 — Foundations</span><span class="arrow">→</span></div>
+        <div class="ttl">Design system</div>
+        <div class="sub">Color, type, spacing, elevation, motion and component primitives. The visual contract of Newron.</div>
+      </a>
+      <a class="system-card" href="App Guidelines.html">
+        <div class="h"><span class="tag tag-violet">02 — Patterns</span><span class="arrow">→</span></div>
+        <div class="ttl">Product app guidelines</div>
+        <div class="sub">Information density, decision UI, signals, alerts and human-in-loop patterns for lending workflows.</div>
+      </a>
+      <a class="system-card" href="App - Underwriter Dashboard.html">
+        <div class="h"><span class="tag tag-violet">03 — In product</span><span class="arrow">→</span></div>
+        <div class="ttl">Underwriter app</div>
+        <div class="sub">Dashboard, application detail, and credit-policy configuration — the system in production.</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta" id="demo">
+  <div class="container">
+    <span class="section-eyebrow center" style="display: inline-flex;">Talk to us</span>
+    <h2>Put Newron inside your lending stack.</h2>
+    <p>30-minute walkthrough with a Newron solutions engineer. See the underwriter app, the model benchmarks, and a live document run on your own sample files.</p>
+    <div class="cta-actions">
+      <a class="btn btn-violet btn-lg" href="#contact">Book a demo <span class="arrow">→</span></a>
+      <a class="btn btn-ghost btn-lg" href="#contact">Talk to sales</a>
+    </div>
+    <div style="margin-top: 32px; font-family: var(--font-mono); font-size: 11px; letter-spacing: var(--tracking-eyebrow); color: var(--ink-tertiary); text-transform: uppercase;">
+      Trusted by 15 lenders · System live in production
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer" id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom: var(--s-4);">
+          <span class="brand-mark">N</span>
+          Newron<span style="color: var(--violet-500); margin-left: -1px;">.</span><span style="font-weight:400; color: var(--ink-secondary);">ai</span>
+        </a>
+        <p style="max-width: 36ch; margin: var(--s-4) 0 0;">Building AI-native infrastructure for lending in India. Underwriting, risk, fraud and decision intelligence for banks and NBFCs.</p>
+      </div>
+      <div>
+        <h5>Platform</h5>
+        <ul>
+          <li><a href="#metrics">Operating scale</a></li>
+          <li><a href="#shift">Structural shift</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#governance">Governance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="App - Underwriter Dashboard.html">Underwriter app</a></li>
+          <li><a href="App - Application Detail.html">Application detail</a></li>
+          <li><a href="App - Credit Policy.html">Credit policy</a></li>
+          <li><a href="App Guidelines.html">App guidelines</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#team">Leadership</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#contact">Careers</a></li>
+          <li><a href="Design System.html">Design system</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Newron AI Technologies · Confidential</div>
+      <div>Bangalore · Delhi · Mumbai</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

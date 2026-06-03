@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Newron — Company Preface</title>
+  <link rel="stylesheet" href="fonts/poppins.css" />
+  <style>
+    /* ============================================================
+       Newron.ai Design System — applied to the preface.
+       Light background retained per request; everything else
+       (Poppins type, indigo→orange brand gradients, zinc ink,
+       indigo accents) comes from the Newron DS tokens.
+       ============================================================ */
+    :root {
+      /* neutrals */
+      --zinc-900:#18181b; --zinc-800:#27272a; --zinc-700:#3f3f46;
+      --zinc-600:#52525b; --zinc-500:#71717a; --zinc-400:#a1a1aa;
+      --zinc-300:#d4d4d8; --zinc-200:#e4e4e7; --white:#ffffff;
+      /* indigo (primary brand hue) */
+      --indigo-400:#818cf8; --indigo-500:#6366f1; --indigo-600:#4f46e5;
+      --indigo-700:#4338ca; --indigo-800:#3730a3;
+      /* orange (accent / energy) */
+      --orange-400:#fb923c; --orange-500:#f97316; --orange-brand:#f17953;
+      /* blue + green */
+      --blue-400:#60a5fa; --green-700:#15803d; --green-800:#166534;
+
+      /* signature gradients */
+      --gradient-primary: linear-gradient(to bottom right, var(--indigo-800), var(--orange-400));
+      --gradient-secondary: linear-gradient(to bottom right, var(--blue-400), var(--indigo-600));
+      --gradient-divider: linear-gradient(to right, transparent, var(--zinc-300), transparent);
+
+      /* type */
+      --font-sans:'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --font-display:'Poppins', var(--font-sans);
+      --weight-light:300; --weight-normal:400; --weight-medium:500; --weight-semibold:600;
+      --radius-sm:2px; --radius-full:9999px;
+
+      /* LIGHT theme semantics (background retained) */
+      --bg:#ffffff;
+      --ink:#0d0c1d;            /* near-black headings */
+      --ink-soft:#3f3f46;       /* zinc-700 body */
+      --ink-muted:#71717a;      /* zinc-500 captions */
+      --line:#e4e4e7;           /* zinc-200 hairline */
+      --brand:var(--indigo-600);
+      --accent:var(--orange-500);
+      --link:var(--indigo-600);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink-soft);
+      font-family: var(--font-sans);
+      font-weight: var(--weight-light);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    img, svg { display: block; max-width: 100%; }
+
+    .shell { width: 100%; max-width: 1100px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 64px); }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      font-weight: var(--weight-medium);
+      font-family: var(--font-sans);
+    }
+    /* DS eyebrow gradient text (indigo→orange) */
+    .eyebrow-grad {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    .preface-wrap { padding-block: clamp(40px, 6vw, 88px) clamp(48px, 7vw, 104px); }
+
+    /* masthead */
+    .pf-masthead {
+      display: grid; grid-template-columns: auto 1fr auto; align-items: center;
+      gap: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--line);
+    }
+    .pf-mark { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+    .pf-mark span { font-family: var(--font-display); font-size: 22px; font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: 1; }
+    .pf-masthead .pf-doc { text-align: right; }
+
+    /* eyebrow strip */
+    .pf-strip {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center;
+      gap: 16px; padding-block: 16px; border-bottom: 1px solid var(--line);
+    }
+    .pf-strip .eyebrow:nth-child(2) { text-align: center; }
+    .pf-strip .eyebrow:nth-child(3) { text-align: right; }
+
+    /* headline */
+    .pf-headline { margin: clamp(48px, 7vw, 96px) 0 clamp(40px, 5vw, 72px); }
+    .pf-headline h1 {
+      margin: 0; max-width: 16ch;
+      font-family: var(--font-display);
+      font-weight: var(--weight-semibold);
+      color: var(--ink);
+      font-size: clamp(40px, 5.6vw, 76px);
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      text-wrap: balance;
+    }
+    /* accent emphasis — DS primary gradient clipped to text (reads on light bg) */
+    .pf-headline h1 em {
+      font-style: normal;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    /* body grid */
+    .pf-body {
+      display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+      gap: clamp(40px, 6vw, 88px); align-items: start;
+    }
+    .pf-prose { max-width: 60ch; }
+    .pf-prose .lede {
+      font-family: var(--font-display);
+      font-weight: var(--weight-normal);
+      font-size: clamp(20px, 2vw, 26px);
+      line-height: 1.42;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 0 0 28px;
+      text-wrap: pretty;
+    }
+    .pf-prose p {
+      font-size: 16px; line-height: 1.7; color: var(--ink-soft);
+      font-weight: var(--weight-light);
+      margin: 0 0 20px; text-wrap: pretty;
+    }
+    .pf-prose p strong { color: var(--ink); font-weight: var(--weight-medium); }
+
+    em.accent { color: var(--brand); font-style: normal; font-weight: var(--weight-medium); }
+
+    /* sign-off */
+    .pf-signoff {
+      margin-top: 38px; padding-top: 20px; border-top: 1px solid var(--line);
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .pf-signoff .name { font-family: var(--font-display); font-weight: var(--weight-medium); font-size: 18px; color: var(--ink); }
+    .pf-signoff .role { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); }
+
+    /* side rail */
+    .pf-rail { position: sticky; top: 32px; display: flex; flex-direction: column; gap: 0; }
+    .pf-fact {
+      display: grid; grid-template-columns: auto 1fr; gap: 18px;
+      padding: 16px 0; border-top: 1px solid var(--line); align-items: baseline;
+    }
+    .pf-fact:last-of-type { border-bottom: 1px solid var(--line); }
+    .pf-fact dt { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); white-space: nowrap; font-weight: var(--weight-medium); }
+    .pf-fact dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink); text-align: right; font-weight: var(--weight-normal); }
+
+    /* stat trio */
+    .pf-stats {
+      margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+    }
+    .pf-stat { padding: 18px 0 0; }
+    .pf-stat + .pf-stat { border-left: 1px solid var(--line); padding-left: 18px; }
+    .pf-stat .v {
+      font-family: var(--font-display); font-weight: var(--weight-semibold);
+      font-size: clamp(28px, 3vw, 40px); line-height: 0.95; letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .pf-stat .v em {
+      font-style: normal;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .pf-stat .k { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-top: 12px; font-weight: var(--weight-medium); }
+
+    @media (max-width: 860px) {
+      .pf-body { grid-template-columns: 1fr; gap: 48px; }
+      .pf-rail { position: static; }
+      .pf-masthead { grid-template-columns: auto 1fr; }
+      .pf-masthead .pf-doc { display: none; }
+    }
+    @media print {
+      .preface-wrap { padding-block: 0; }
+      .pf-rail { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <main class="preface-wrap">
+    <div class="shell">
+
+      <!-- masthead -->
+      <div class="pf-masthead">
+        <a class="pf-mark" href="v3.html">
+          <img src="newron-logo.png" alt="" width="26" height="26" />
+          <span>Newron</span>
+        </a>
+        <div></div>
+        <div class="pf-doc">
+          <div class="eyebrow eyebrow-grad">Company Preface</div>
+          <div style="font-size: 11px; color: var(--ink-muted); letter-spacing: 0.08em; margin-top: 4px;">EST. 2023 · v1 · 2026</div>
+        </div>
+      </div>
+
+      <!-- strip -->
+      <div class="pf-strip">
+        <div class="eyebrow">Newron · Bengaluru</div>
+        <div class="eyebrow">Applied AI for regulated industries</div>
+        <div class="eyebrow">NVIDIA Inception · ISO 27001</div>
+      </div>
+
+      <!-- headline -->
+      <div class="pf-headline">
+        <h1>Some decisions can't be taken back. We build the intelligence <em>behind them.</em></h1>
+      </div>
+
+      <!-- body -->
+      <div class="pf-body">
+        <div class="pf-prose">
+          <p class="lede">Newron is an applied-AI company. We build production systems for the institutions that operate under regulation — India's banks, NBFCs, insurers, and state bodies — where a wrong answer is never just a bug report.</p>
+
+          <p>In a credit office, an error is a mis-priced loan. In a claims queue, it's a family left waiting. At a grievance desk, it's a citizen who couldn't be heard. These are the rooms we chose to work in, and that constraint shapes everything we make. We would rather ship a system that says <strong>"I'm not sure, here's the policy clause"</strong> than one that guesses with confidence.</p>
+
+          <p>We began in Bengaluru with a narrow conviction: that the distance between a frontier model and a deployable one is engineering, not magic. Our team comes from research and platform backgrounds, and we sit inside our customers' teams — designing the data pipelines, the evaluation harnesses, and the inference path until the work survives contact with production. Most engagements reach it inside a single quarter.</p>
+
+          <p>Today that work runs across three surfaces — <strong>lending, insurance, and governance</strong> — and beneath them, a custom-model and automation practice for the problems the product doesn't cover yet. Every Newron system is API-first and deploys where the data lives: your VPC, on-premise, or fully air-gapped. Compliance teams get the audit trail; your engineers keep the keys. As an NVIDIA Inception Partner, we train on Indian financial data with explicit residency commitments, and our custom models score within striking distance of frontier systems at a fraction of the cost.</p>
+
+          <p>None of this is theoretical. It is running today — drafting credit memos at banks and NBFCs, settling claims for insurers, and answering citizens in their own language for the Government of Karnataka. This document is an introduction to that work: what we build, who we build it for, and the principles we won't trade away.</p>
+
+          <div class="pf-signoff">
+            <span class="name">The Newron team</span>
+            <span class="role">Bengaluru, India · 2026</span>
+          </div>
+        </div>
+
+        <!-- rail -->
+        <aside class="pf-rail">
+          <dl style="margin: 0;">
+            <div class="pf-fact"><dt>Founded</dt><dd>2023 · Bengaluru</dd></div>
+            <div class="pf-fact"><dt>Discipline</dt><dd>Applied AI for regulated industries</dd></div>
+            <div class="pf-fact"><dt>Practice</dt><dd>Lending · Insurance · Governance</dd></div>
+            <div class="pf-fact"><dt>Deployment</dt><dd>VPC · On-prem · Air-gapped</dd></div>
+            <div class="pf-fact"><dt>Partner</dt><dd>NVIDIA Inception</dd></div>
+            <div class="pf-fact"><dt>Compliance</dt><dd>SOC 2 (applied) · ISO 27001</dd></div>
+          </dl>
+
+          <div class="pf-stats">
+            <div class="pf-stat">
+              <div class="v">66<em>%</em></div>
+              <div class="k">TAT reduction</div>
+            </div>
+            <div class="pf-stat">
+              <div class="v">200<em>%</em></div>
+              <div class="k">Productivity uplift</div>
+            </div>
+            <div class="pf-stat">
+              <div class="v">65k<em>+</em></div>
+              <div class="k">Hours saved</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

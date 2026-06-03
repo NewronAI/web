@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Newron — Credit Policy · SME Working Capital v3.2</title>
+<link rel="stylesheet" href="assets/tokens.css" />
+<link rel="stylesheet" href="assets/app.css" />
+<style>
+  .pol-head { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; }
+  .pol-head h1 { margin: 4px 0; font-size: 28px; letter-spacing: -0.02em; font-weight: 500; line-height: 1.15; }
+  .pol-head .sub { color: var(--ink-secondary); font-size: 14px; }
+  .pol-head .meta-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .pol-head .actions { display: flex; gap: 8px; align-items: center; }
+
+  .pol-grid { display: grid; grid-template-columns: 220px minmax(0,1fr) 320px; gap: 20px; align-items: start; }
+  @media (max-width: 1440px) { .pol-grid { grid-template-columns: 200px minmax(0,1fr) 300px; gap: 16px; } }
+  @media (max-width: 1280px) { .pol-grid { grid-template-columns: 200px 1fr; } .right-pol { grid-column: 1 / -1; } }
+  @media (max-width: 880px) { .pol-grid { grid-template-columns: 1fr; } }
+
+  /* Rule rows wrap on narrower screens */
+  @media (max-width: 1100px) {
+    .rule-row { grid-template-columns: 32px 1fr; gap: 12px; }
+    .rule-row .cond, .rule-row .verdict-mini, .rule-row .more { grid-column: 2 / -1; }
+    .rule-row .cond { justify-self: start; }
+  }
+
+  /* Threshold blocks stack at narrow */
+  @media (max-width: 1100px) {
+    .thresh-block { grid-template-columns: 1fr; gap: 12px; }
+  }
+
+  .pol-side { background: white; border: 1px solid var(--border-default); border-radius: var(--r-md); overflow: hidden; position: sticky; top: 76px; }
+  .pol-side .head { padding: 12px 14px; border-bottom: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-tertiary); }
+  .pol-side .item { display: flex; align-items: center; gap: 8px; padding: 8px 14px; font-size: 13px; color: var(--ink-secondary); cursor: pointer; border-left: 2px solid transparent; }
+  .pol-side .item:hover { background: var(--surface-subtle); color: var(--ink-primary); }
+  .pol-side .item.active { background: var(--violet-50); color: var(--violet-800); border-left-color: var(--violet-500); font-weight: 500; }
+  .pol-side .item .n { font-family: var(--font-mono); font-size: 10px; color: var(--ink-tertiary); margin-left: auto; }
+  .pol-side .item.active .n { color: var(--violet-700); }
+
+  .pol-section { background: white; border: 1px solid var(--border-default); border-radius: var(--r-md); }
+  .pol-section + .pol-section { margin-top: 16px; }
+  .pol-section .head { padding: 16px 20px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; }
+  .pol-section .head h3 { margin: 0; font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+  .pol-section .head h3 .n { font-family: var(--font-mono); font-size: 11px; color: var(--ink-tertiary); letter-spacing: 0.04em; }
+  .pol-section .head .desc { font-size: 12.5px; color: var(--ink-tertiary); }
+  .pol-section .body { padding: 18px 20px; }
+
+  /* rule rows */
+  .rule-row {
+    display: grid; grid-template-columns: 32px 1fr 220px 140px 40px;
+    gap: 14px; align-items: center;
+    padding: 14px 0; border-top: 1px solid var(--border-subtle);
+  }
+  .rule-row:first-child { border-top: 0; padding-top: 4px; }
+  .rule-row:last-child { padding-bottom: 4px; }
+  .rule-row .switch { width: 32px; height: 18px; background: var(--violet-500); border-radius: 999px; position: relative; flex: 0 0 auto; }
+  .rule-row .switch::after { content: ''; position: absolute; right: 2px; top: 2px; width: 14px; height: 14px; border-radius: 999px; background: white; box-shadow: var(--shadow-xs); }
+  .rule-row .switch.off { background: var(--border-strong); }
+  .rule-row .switch.off::after { right: auto; left: 2px; }
+  .rule-row .nm { font-size: 14px; font-weight: 500; }
+  .rule-row .desc { font-size: 12.5px; color: var(--ink-tertiary); margin-top: 2px; }
+  .rule-row .cond { font-family: var(--font-mono); font-size: 12px; background: var(--surface-subtle); border: 1px solid var(--border-default); padding: 6px 8px; border-radius: 6px; color: var(--ink-primary); }
+  .rule-row .verdict-mini { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .rule-row .more { color: var(--ink-tertiary); cursor: pointer; text-align: center; }
+
+  /* threshold control */
+  .thresh-block {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    padding: 14px 0; border-top: 1px solid var(--border-subtle);
+  }
+  .thresh-block:first-child { border-top: 0; padding-top: 0; }
+  .thresh-block .info .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-tertiary); }
+  .thresh-block .info .nm { font-size: 15px; font-weight: 500; margin-top: 4px; }
+  .thresh-block .info .desc { font-size: 12.5px; color: var(--ink-secondary); margin-top: 4px; }
+  .thresh-block .control { display: flex; flex-direction: column; gap: 10px; }
+  .thresh-track {
+    height: 6px; background: linear-gradient(90deg, var(--success-500) 0%, var(--success-500) 33%, var(--warning-500) 33%, var(--warning-500) 66%, var(--danger-500) 66%, var(--danger-500) 100%);
+    border-radius: 999px; position: relative;
+  }
+  .thresh-track .handle {
+    position: absolute; top: 50%; transform: translate(-50%, -50%);
+    width: 18px; height: 18px; border-radius: 999px; background: white;
+    border: 2px solid var(--violet-500); box-shadow: var(--shadow-sm);
+  }
+  .thresh-track .handle::after {
+    content: attr(data-v);
+    position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-mono); font-size: 11px;
+    background: var(--ink-primary); color: white;
+    padding: 2px 6px; border-radius: 4px;
+    white-space: nowrap;
+  }
+  .thresh-labels { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: var(--ink-tertiary); }
+  .thresh-vals { display: flex; gap: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-tertiary); margin-top: 6px; }
+  .thresh-vals span b { color: var(--ink-primary); font-weight: 500; }
+
+  /* routing diagram */
+  .routing {
+    display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr; gap: 0;
+    align-items: stretch; padding: 8px 0;
+  }
+  .route-col { display: flex; flex-direction: column; gap: 8px; }
+  .route-card {
+    background: var(--surface-canvas); border: 1px solid var(--border-default);
+    border-radius: var(--r-md); padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .route-card .lbl { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-tertiary); }
+  .route-card .nm { font-size: 14px; font-weight: 500; }
+  .route-card .desc { font-size: 12px; color: var(--ink-secondary); line-height: 1.5; }
+  .route-card.start { background: var(--violet-50); border-color: var(--violet-200); }
+  .route-card.start .lbl { color: var(--violet-700); }
+  .route-card.approve { border-color: var(--success-500); background: var(--success-50); }
+  .route-card.review { border-color: var(--warning-500); background: var(--warning-50); }
+  .route-card.reject { border-color: var(--danger-500); background: var(--danger-50); }
+  .route-card.escalate { border-color: var(--violet-500); background: var(--violet-50); }
+  .arrow-col { display: grid; place-items: center; color: var(--ink-tertiary); }
+  @media (max-width: 1200px) { .routing { grid-template-columns: 1fr; gap: 8px; } .arrow-col { transform: rotate(90deg); padding: 4px 0; } }
+
+  /* sim card */
+  .sim-card { background: white; border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 16px; }
+  .sim-card h3 { margin: 0 0 8px; font-size: 13px; font-family: var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-tertiary); font-weight: 500; }
+  .sim-row { display: flex; justify-content: space-between; padding: 8px 0; border-top: 1px solid var(--border-subtle); font-size: 13px; }
+  .sim-row:first-of-type { border-top: 0; }
+  .sim-row .v { font-family: var(--font-mono); font-weight: 500; }
+  .sim-row .v.up   { color: var(--success-500); }
+  .sim-row .v.down { color: var(--danger-500); }
+
+  /* version sidebar */
+  .versions {
+    background: white; border: 1px solid var(--border-default); border-radius: var(--r-md);
+    overflow: hidden;
+  }
+  .versions .v-row { padding: 12px 14px; border-top: 1px solid var(--border-subtle); display: flex; gap: 10px; align-items: flex-start; }
+  .versions .v-row:first-child { border-top: 0; }
+  .versions .v-row .dot { width: 10px; height: 10px; border-radius: 999px; margin-top: 6px; background: var(--ink-tertiary); flex: 0 0 10px; }
+  .versions .v-row.current .dot { background: var(--success-500); box-shadow: 0 0 0 4px rgba(21,128,61,0.15); }
+  .versions .v-row .meta { font-size: 12.5px; }
+  .versions .v-row .v-num { font-family: var(--font-mono); font-weight: 500; }
+  .versions .v-row .when { color: var(--ink-tertiary); font-size: 11.5px; font-family: var(--font-mono); }
+  .versions .v-row .note { color: var(--ink-secondary); font-size: 12.5px; margin-top: 4px; line-height: 1.45; }
+
+  /* policy footer save bar */
+  .save-bar {
+    position: sticky; bottom: 0;
+    background: var(--surface-ink); color: white;
+    border-radius: var(--r-md);
+    padding: 14px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 24px;
+    box-shadow: var(--shadow-lg);
+  }
+  .save-bar .l { display: flex; align-items: center; gap: 12px; font-size: 13.5px; }
+  .save-bar .l .ic { width: 22px; height: 22px; border-radius: 6px; background: rgba(255,255,255,0.08); display: grid; place-items: center; color: var(--accent-500); font-family: var(--font-mono); font-weight: 600; font-size: 11px; }
+  .save-bar .l .dim { color: rgba(255,255,255,0.6); }
+  .save-bar .r { display: flex; gap: 8px; }
+  .save-bar .btn-ghost { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); color: white; }
+  .save-bar .btn-ghost:hover { background: rgba(255,255,255,0.12); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="app-side">
+    <div class="brand-row">
+      <a class="brand" href="index.html" style="font-size: 15px; gap: 8px;">
+        <span class="brand-mark" style="width: 22px; height: 22px; border-radius: 6px; font-size: 12px;">N</span>
+        Newron<span style="color: var(--violet-500); margin-left: -1px;">.</span><span style="font-weight:400; color: var(--ink-secondary);">ai</span>
+      </a>
+      <span class="tag tag-violet" style="height: 20px; padding: 0 6px; font-size: 9px;">Underwriter</span>
+    </div>
+
+    <div class="nav-section">
+      <h6>Workspace</h6>
+      <a class="nav-item" href="App - Underwriter Dashboard.html" data-label="Queue">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="12" y="3" width="7" height="7" rx="1"/><rect x="3" y="12" width="7" height="7" rx="1"/><rect x="12" y="12" width="7" height="7" rx="1"/></svg></span>
+        Queue<span class="count">24</span>
+      </a>
+      <a class="nav-item" href="App - Application Detail.html" data-label="Applications">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h10l4 4v10a2 2 0 01-2 2H4a2 2 0 01-2-2V4z"/><path d="M14 4v4h4M6 11h10M6 14h10M6 17h6"/></svg></span>
+        Applications<span class="count">142</span>
+      </a>
+      <a class="nav-item" href="App - Application Detail.html" data-label="Flagged">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M11 6v6M11 16v.5"/></svg></span>
+        Flagged<span class="count" style="background: var(--danger-50); color: var(--danger-500);">3</span>
+      </a>
+      <a class="nav-item" data-label="Escalations">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3l8 14H3z"/><path d="M11 9v4M11 16v.1"/></svg></span>
+        Escalations<span class="count">2</span>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <h6>Configure</h6>
+      <a class="nav-item active" href="App - Credit Policy.html" data-label="Credit policy">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="3"/><path d="M11 2v3M11 17v3M2 11h3M17 11h3M4.5 4.5l2 2M15.5 15.5l2 2M4.5 17.5l2-2M15.5 6.5l2-2"/></svg></span>
+        Credit policy
+      </a>
+      <a class="nav-item" data-label="Models">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l4-4M4 11l4 4M4 11h13M14 5l4 6-4 6"/></svg></span>
+        Models
+      </a>
+      <a class="nav-item" data-label="Audit log">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="16" height="14" rx="2"/><path d="M7 8h8M7 12h8M7 16h5"/></svg></span>
+        Audit log
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <h6>Resources</h6>
+      <a class="nav-item" href="Design System.html" data-label="Design system">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="16" cy="6" r="3"/><circle cx="11" cy="16" r="3"/></svg></span>
+        Design system
+      </a>
+      <a class="nav-item" href="App Guidelines.html" data-label="App guidelines">
+        <span class="ic"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-4z"/></svg></span>
+        App guidelines
+      </a>
+    </div>
+
+    <div class="user-card">
+      <div class="av">RS</div>
+      <div style="flex: 1; min-width: 0;">
+        <div class="name">Ravi Sethia</div>
+        <div class="role">Senior credit · L3</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--ink-tertiary);"><path d="M5 8l6 6 6-6"/></svg>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="app-main">
+    <!-- TOP -->
+    <div class="app-top">
+      <div class="crumbs">
+        <a href="App - Underwriter Dashboard.html">Workspace</a>
+        <span class="sep">/</span>
+        <span>Configure</span>
+        <span class="sep">/</span>
+        <a href="#">Credit policy</a>
+        <span class="sep">/</span>
+        <span class="here">SME · Working capital</span>
+      </div>
+      <div class="search">
+        <svg width="14" height="14" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5L19 19"/></svg>
+        Search rules, signals, thresholds…
+        <span class="kbd">⌘ K</span>
+      </div>
+      <div class="top-actions">
+        <button class="btn btn-ghost btn-sm">Compare to v3.1</button>
+        <button class="icon-btn"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9a6 6 0 0112 0c0 6 2 7 2 7H3s2-1 2-7z"/><path d="M9 19a2 2 0 004 0"/></svg></button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="app-content">
+      <!-- HEADER -->
+      <div class="pol-head">
+        <div>
+          <div class="meta-row">
+            <span class="section-eyebrow" style="color: var(--violet-600);">Credit policy · SME · Working capital</span>
+            <span class="tag tag-success tag-dot">Live</span>
+            <span class="tag">v3.2 · since 02 May 2026</span>
+          </div>
+          <h1>Working capital · SME proprietor</h1>
+          <p class="sub">21 active rules · auto-approves 62.4% of applications within delegated authority · 14 reviewers on policy.</p>
+        </div>
+        <div class="actions">
+          <button class="btn btn-ghost btn-sm">Discard changes</button>
+          <button class="btn btn-ghost btn-sm">Run simulation</button>
+          <button class="btn btn-primary btn-sm">Publish v3.3 draft →</button>
+        </div>
+      </div>
+
+      <!-- GRID -->
+      <div class="pol-grid">
+
+        <!-- Left section nav -->
+        <aside class="pol-side">
+          <div class="head">Policy sections</div>
+          <div class="item active">Eligibility <span class="n">6</span></div>
+          <div class="item">Bureau &amp; behaviour <span class="n">4</span></div>
+          <div class="item">Income &amp; cash flow <span class="n">5</span></div>
+          <div class="item">Fraud &amp; trust <span class="n">7</span></div>
+          <div class="item">Decision routing <span class="n">3</span></div>
+          <div class="item">Pricing &amp; limits <span class="n">4</span></div>
+          <div class="item">Override matrix <span class="n">5</span></div>
+          <div class="item">Audit &amp; alerts <span class="n">—</span></div>
+        </aside>
+
+        <!-- Center -->
+        <div>
+
+          <!-- Eligibility -->
+          <div class="pol-section">
+            <div class="head">
+              <h3><span class="n">01</span> Eligibility</h3>
+              <span class="desc">Hard gates · application is rejected if any rule fails</span>
+            </div>
+            <div class="body">
+
+              <div class="rule-row">
+                <span class="switch"></span>
+                <div>
+                  <div class="nm">Minimum business vintage</div>
+                  <div class="desc">UDYAM start date used when available, else GST registration date</div>
+                </div>
+                <span class="cond">vintage ≥ <b>3 years</b></span>
+                <span class="verdict-mini" style="color: var(--success-700);">Pass-through</span>
+                <span class="more">⋯</span>
+              </div>
+
+              <div class="rule-row">
+                <span class="switch"></span>
+                <div>
+                  <div class="nm">Acceptable entity types</div>
+                  <div class="desc">Loan available to these legal entities</div>
+                </div>
+                <span class="cond">Proprietor · LLP · Pvt Ltd</span>
+                <span class="verdict-mini" style="color: var(--success-700);">Pass-through</span>
+                <span class="more">⋯</span>
+              </div>
+
+              <div class="rule-row">
+                <span class="switch"></span>
+                <div>
+                  <div class="nm">Loan amount band</div>
+                  <div class="desc">Outside this band routes to a different product</div>
+                </div>
+                <span class="cond">₹ 2 L ≤ amt ≤ ₹ 50 L</span>
+                <span class="verdict-mini" style="color: var(--success-700);">Pass-through</span>
+                <span class="more">⋯</span>
+              </div>
+
+              <div class="rule-row">
+                <span class="switch"></span>
+                <div>
+                  <div class="nm">PAN ↔ Aadhaar match</div>
+                  <div class="desc">Live verified via UIDAI &amp; Income Tax APIs</div>
+                </div>
+                <span class="cond">match = <b>true</b></span>
+                <span class="verdict-mini" style="color: var(--success-700);">Pass-through</span>
+                <span class="more">⋯</span>
+              </div>
+
+              <div class="rule-row">
+                <span class="switch off"></span>
+                <div>
+                  <div class="nm">Geographic eligibility</div>
+                  <div class="desc">PIN-code allowlist · currently disabled (national rollout)</div>
+                </div>
+                <span class="cond">pincode in <i>allowlist</i></span>
+                <span class="verdict-mini" style="color: var(--ink-tertiary);">Disabled</span>
+                <span class="more">⋯</span>
+              </div>
+
+              <div class="rule-row">
+                <span class="switch"></span>
+                <div>
+                  <div class="nm">Existing customer override</div>
+                  <div class="desc">3+ repaid loans bypasses vintage &amp; FOIR rules</div>
+                </div>
+                <span class="cond">repaid_loans ≥ 3 → <b>skip</b></span>
+                <span class="verdict-mini" style="color: var(--violet-700);">Soft path</span>
+                <span class="more">⋯</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Bureau & behavioural -->
+          <div class="pol-section">
+            <div class="head">
+              <h3><span class="n">02</span> Bureau &amp; behaviour</h3>
+              <span class="desc">Quantitative thresholds · drag handles to adjust</span>
+            </div>
+            <div class="body">
+
+              <div class="thresh-block">
+                <div class="info">
+                  <div class="lbl">CIBIL Commercial</div>
+                  <div class="nm">Minimum bureau score</div>
+                  <div class="desc">Refreshed within 30 days. Scores ≤ 700 auto-reject without review.</div>
+                </div>
+                <div class="control">
+                  <div class="thresh-track">
+                    <div class="handle" data-v="700" style="left: 33%;"></div>
+                  </div>
+                  <div class="thresh-labels"><span>500</span><span>650</span><span>800</span><span>900</span></div>
+                  <div class="thresh-vals">
+                    <span><b>Reject</b> &lt; 700</span><span><b>Review</b> 700–739</span><span><b>Auto</b> ≥ 740</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="thresh-block">
+                <div class="info">
+                  <div class="lbl">FOIR</div>
+                  <div class="nm">Fixed obligation to income</div>
+                  <div class="desc">Existing EMI + proposed EMI ÷ disposable income. L3 reviewer may override up to 55%.</div>
+                </div>
+                <div class="control">
+                  <div class="thresh-track" style="background: linear-gradient(90deg, var(--success-500) 0%, var(--success-500) 60%, var(--warning-500) 60%, var(--warning-500) 80%, var(--danger-500) 80%, var(--danger-500) 100%);">
+                    <div class="handle" data-v="0.50" style="left: 60%;"></div>
+                  </div>
+                  <div class="thresh-labels"><span>0.20</span><span>0.45</span><span>0.55</span><span>0.65</span></div>
+                  <div class="thresh-vals">
+                    <span><b>Auto</b> ≤ 0.50</span><span><b>L3 only</b> 0.50–0.55</span><span><b>Reject</b> &gt; 0.55</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="thresh-block">
+                <div class="info">
+                  <div class="lbl">Recent enquiries</div>
+                  <div class="nm">Bureau enquiries · 90 d</div>
+                  <div class="desc">More than 3 hard pulls in 90 days indicates credit hunger.</div>
+                </div>
+                <div class="control">
+                  <div class="thresh-track" style="background: linear-gradient(90deg, var(--success-500) 0%, var(--success-500) 50%, var(--warning-500) 50%, var(--warning-500) 75%, var(--danger-500) 75%, var(--danger-500) 100%);">
+                    <div class="handle" data-v="3" style="left: 50%;"></div>
+                  </div>
+                  <div class="thresh-labels"><span>0</span><span>3</span><span>5</span><span>10</span></div>
+                  <div class="thresh-vals">
+                    <span><b>Auto</b> ≤ 3</span><span><b>Review</b> 4–5</span><span><b>Reject</b> ≥ 6</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="thresh-block">
+                <div class="info">
+                  <div class="lbl">DPDs</div>
+                  <div class="nm">No 30+ DPD in last 12 months</div>
+                  <div class="desc">Days past due. Hard-stop rule.</div>
+                </div>
+                <div class="control">
+                  <div class="thresh-track" style="background: linear-gradient(90deg, var(--success-500) 0%, var(--success-500) 25%, var(--danger-500) 25%, var(--danger-500) 100%);">
+                    <div class="handle" data-v="0" style="left: 12%;"></div>
+                  </div>
+                  <div class="thresh-labels"><span>0</span><span>1</span><span>3</span><span>5+</span></div>
+                  <div class="thresh-vals">
+                    <span><b>Auto</b> 0</span><span><b>Reject</b> ≥ 1</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Decision routing -->
+          <div class="pol-section">
+            <div class="head">
+              <h3><span class="n">05</span> Decision routing</h3>
+              <span class="desc">Where applications go after policy + model recommendation</span>
+            </div>
+            <div class="body">
+              <div class="routing">
+                <div class="route-col">
+                  <div class="route-card start">
+                    <span class="lbl">01 · Input</span>
+                    <span class="nm">Application + CAM v3.2</span>
+                    <span class="desc">All evidence ingested, model recommendation produced.</span>
+                  </div>
+                </div>
+                <div class="arrow-col">
+                  <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h13M14 5l4 6-4 6"/></svg>
+                </div>
+                <div class="route-col">
+                  <div class="route-card">
+                    <span class="lbl">02 · Gate</span>
+                    <span class="nm">Policy evaluation</span>
+                    <span class="desc">21 rules across eligibility, bureau, income, fraud.</span>
+                  </div>
+                  <div class="route-card" style="background: var(--surface-canvas);">
+                    <span class="lbl">02b · Score</span>
+                    <span class="nm">Risk tier</span>
+                    <span class="desc">Low · Medium · High based on score + signals.</span>
+                  </div>
+                </div>
+                <div class="arrow-col">
+                  <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h13M14 5l4 6-4 6"/></svg>
+                </div>
+                <div class="route-col">
+                  <div class="route-card approve">
+                    <span class="lbl">03a · Action</span>
+                    <span class="nm">Auto-approve</span>
+                    <span class="desc">All pass · risk Low · within delegated limits.</span>
+                  </div>
+                  <div class="route-card review">
+                    <span class="lbl">03b · Action</span>
+                    <span class="nm">L2 review</span>
+                    <span class="desc">Soft signals or FOIR 0.45–0.50.</span>
+                  </div>
+                  <div class="route-card escalate">
+                    <span class="lbl">03c · Action</span>
+                    <span class="nm">L3 review · override</span>
+                    <span class="desc">FOIR 0.50–0.55 · loan > ₹25 L · model conf &lt; 0.85.</span>
+                  </div>
+                  <div class="route-card reject">
+                    <span class="lbl">03d · Action</span>
+                    <span class="nm">Auto-reject</span>
+                    <span class="desc">Hard-gate failure · fraud-cluster hit · CIBIL &lt; 700.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Override matrix -->
+          <div class="pol-section">
+            <div class="head">
+              <h3><span class="n">07</span> Override matrix</h3>
+              <span class="desc">Who can override what · written reason required, logged to audit</span>
+            </div>
+            <div class="body" style="padding: 0;">
+              <table class="tbl" style="font-size: 13px;">
+                <thead><tr><th>Rule</th><th>L2 credit</th><th>L3 senior</th><th>L4 committee</th><th>Max override</th></tr></thead>
+                <tbody>
+                  <tr><td>FOIR cap</td><td>—</td><td><span class="tag tag-success" style="height: 22px; padding: 0 8px;">Allowed</span></td><td><span class="tag tag-success" style="height: 22px; padding: 0 8px;">Allowed</span></td><td class="num">0.55</td></tr>
+                  <tr><td>Bureau ≥ 700</td><td>—</td><td>—</td><td><span class="tag tag-success" style="height: 22px; padding: 0 8px;">Allowed</span></td><td class="num">680 (committee only)</td></tr>
+                  <tr><td>Loan amount cap</td><td>—</td><td><span class="tag tag-success" style="height: 22px; padding: 0 8px;">Allowed</span></td><td><span class="tag tag-success" style="height: 22px; padding: 0 8px;">Allowed</span></td><td class="num">+ 25 % above tier</td></tr>
+                  <tr><td>Geographic gate</td><td>—</td><td><span class="tag tag-success" style="height: 22px; padding: 0 8px;">Allowed</span></td><td><span class="tag tag-success" style="height: 22px; padding: 0 8px;">Allowed</span></td><td>Any allowed PIN</td></tr>
+                  <tr><td>Fraud-cluster hit</td><td>—</td><td>—</td><td>—</td><td><span style="color: var(--danger-500); font-weight: 500;">Never</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- save bar -->
+          <div class="save-bar">
+            <div class="l">
+              <span class="ic">!</span>
+              <div>
+                <div>You have <strong>4 unsaved changes</strong> in this draft.</div>
+                <div class="dim" style="font-size: 12px; margin-top: 2px;">FOIR threshold · Recent enquiries · 2 routing edges. Estimated impact applied on the right.</div>
+              </div>
+            </div>
+            <div class="r">
+              <button class="btn btn-ghost btn-sm">View diff</button>
+              <button class="btn btn-violet btn-sm">Submit for approval</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: simulation -->
+        <div class="right-pol" style="display: flex; flex-direction: column; gap: 16px;">
+
+          <div class="sim-card">
+            <h3>Simulation · last 30 days</h3>
+            <p class="caption" style="margin: 0 0 12px;">Re-running 4,218 historical applications under the v3.3 draft.</p>
+            <div class="sim-row"><span class="dim">Applications</span><span class="v num">4,218</span></div>
+            <div class="sim-row"><span class="dim">Auto-approval rate</span><span class="v up">62.4% → 65.1 %  ▲</span></div>
+            <div class="sim-row"><span class="dim">Auto-reject rate</span><span class="v up">8.1% → 8.0 %  ▼</span></div>
+            <div class="sim-row"><span class="dim">Sent to L3</span><span class="v down">11.2% → 12.4 %  ▲</span></div>
+            <div class="sim-row"><span class="dim">Estimated disbursal</span><span class="v up">+ ₹ 18.4 Cr</span></div>
+            <div class="sim-row"><span class="dim">Expected default rate</span><span class="v down">2.1% → 2.3 %</span></div>
+            <button class="btn btn-ghost btn-sm" style="width: 100%; margin-top: 12px;">Open full simulation →</button>
+          </div>
+
+          <div class="sim-card">
+            <h3>Change impact (v3.3 vs v3.2)</h3>
+            <div style="display: grid; gap: 12px;">
+              <div>
+                <div class="between" style="font-size: 12.5px; margin-bottom: 4px;"><span>FOIR cap 0.45 → 0.50</span><span class="num" style="color: var(--success-500);">+ 187 approvals</span></div>
+                <div style="height: 4px; background: var(--surface-inset); border-radius: 999px; overflow: hidden;"><div style="width: 72%; height: 100%; background: var(--success-500);"></div></div>
+              </div>
+              <div>
+                <div class="between" style="font-size: 12.5px; margin-bottom: 4px;"><span>Enquiries threshold 5 → 3</span><span class="num" style="color: var(--danger-500);">− 42 approvals</span></div>
+                <div style="height: 4px; background: var(--surface-inset); border-radius: 999px; overflow: hidden;"><div style="width: 18%; height: 100%; background: var(--danger-500);"></div></div>
+              </div>
+              <div>
+                <div class="between" style="font-size: 12.5px; margin-bottom: 4px;"><span>L3 override allowed for FOIR</span><span class="num" style="color: var(--success-500);">+ 91 approvals</span></div>
+                <div style="height: 4px; background: var(--surface-inset); border-radius: 999px; overflow: hidden;"><div style="width: 34%; height: 100%; background: var(--violet-500);"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="versions">
+            <div style="padding: 12px 14px; border-bottom: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-tertiary);">Version history</div>
+            <div class="v-row">
+              <div class="dot" style="background: var(--violet-500); box-shadow: 0 0 0 4px rgba(107,78,232,0.15);"></div>
+              <div class="meta">
+                <div class="between" style="gap: 12px;"><span class="v-num">v3.3 · draft</span><span class="when">14 May · 13:02</span></div>
+                <div class="note">FOIR cap raised. Enquiries threshold tightened. L3 override added.</div>
+                <div style="margin-top: 6px;"><span class="tag tag-violet" style="height: 18px; padding: 0 6px; font-size: 9px;">Editing</span> <span class="caption">by you</span></div>
+              </div>
+            </div>
+            <div class="v-row current">
+              <div class="dot"></div>
+              <div class="meta">
+                <div class="between" style="gap: 12px;"><span class="v-num">v3.2 · live</span><span class="when">02 May · 16:18</span></div>
+                <div class="note">Added fraud-graph hard gate. Adjusted entity allowlist.</div>
+                <div style="margin-top: 6px;"><span class="tag tag-success tag-dot" style="height: 18px; padding: 0 6px; font-size: 9px;">Live</span> <span class="caption">by Manish Goel</span></div>
+              </div>
+            </div>
+            <div class="v-row">
+              <div class="dot"></div>
+              <div class="meta">
+                <div class="between" style="gap: 12px;"><span class="v-num">v3.1</span><span class="when">12 Apr · 11:40</span></div>
+                <div class="note">Initial L3 delegated authority introduced.</div>
+              </div>
+            </div>
+            <div class="v-row">
+              <div class="dot"></div>
+              <div class="meta">
+                <div class="between" style="gap: 12px;"><span class="v-num">v3.0</span><span class="when">21 Mar · 09:14</span></div>
+                <div class="note">Replaced rule engine v2 with CAM v3.0 + policy v3.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
