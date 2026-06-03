@@ -1,0 +1,496 @@
+/* =========================================================
+   Newron — Poppins (self-hosted brand typeface), curated weights
+   ========================================================= */
+@font-face { font-family:'Poppins'; font-style:normal; font-weight:300; font-display:swap;
+  src:url('/fonts/Poppins-Light.ttf') format('truetype'); }
+@font-face { font-family:'Poppins'; font-style:normal; font-weight:400; font-display:swap;
+  src:url('/fonts/Poppins-Regular.ttf') format('truetype'); }
+@font-face { font-family:'Poppins'; font-style:normal; font-weight:500; font-display:swap;
+  src:url('/fonts/Poppins-Medium.ttf') format('truetype'); }
+@font-face { font-family:'Poppins'; font-style:italic; font-weight:500; font-display:swap;
+  src:url('/fonts/Poppins-MediumItalic.ttf') format('truetype'); }
+@font-face { font-family:'Poppins'; font-style:normal; font-weight:600; font-display:swap;
+  src:url('/fonts/Poppins-SemiBold.ttf') format('truetype'); }
+@font-face { font-family:'Poppins'; font-style:normal; font-weight:700; font-display:swap;
+  src:url('/fonts/Poppins-Bold.ttf') format('truetype'); }
+@font-face { font-family:'Poppins'; font-style:normal; font-weight:800; font-display:swap;
+  src:url('/fonts/Poppins-ExtraBold.ttf') format('truetype'); }
+
+/* =========================================================
+   Newron v4 — built on the NEWRON.AI DESIGN SYSTEM
+   Poppins type · indigo→orange brand gradients · zinc neutrals
+   crisp DS radii · authentic NVIDIA-green capsule.
+   Light page + dark Newron-black slabs retained (per request).
+   ========================================================= */
+
+:root {
+  /* ---------- Newron DS palette ---------- */
+  --zinc-900:#18181b; --zinc-800:#27272a; --zinc-700:#3f3f46;
+  --zinc-600:#52525b; --zinc-500:#71717a; --zinc-400:#a1a1aa;
+  --zinc-300:#d4d4d8; --zinc-200:#e4e4e7; --zinc-100:#f4f4f5; --white:#ffffff;
+
+  --indigo-400:#818cf8; --indigo-500:#6366f1; --indigo-600:#4f46e5;
+  --indigo-700:#4338ca; --indigo-800:#3730a3;
+
+  --orange-400:#fb923c; --orange-500:#f97316; --orange-brand:#f17953;
+  --blue-400:#60a5fa;
+  --green-100:#dcfce7; --green-700:#15803d; --green-800:#166534; --green-900:#14532d;
+
+  /* ---------- signature gradients ---------- */
+  --gradient-primary:   linear-gradient(120deg, var(--indigo-800) 0%, var(--indigo-600) 45%, var(--orange-400) 120%);
+  --gradient-secondary: linear-gradient(120deg, var(--blue-400), var(--indigo-600));
+  --gradient-headline:  linear-gradient(120deg, var(--green-100), var(--indigo-400));
+  --gradient-divider:   linear-gradient(to right, transparent, var(--zinc-300), transparent);
+
+  /* ---------- surfaces (LIGHT page retained) ---------- */
+  --bg:        #ffffff;
+  --bg-2:      #f7f7f9;
+  --bg-3:      #efeff2;
+  --line:      var(--zinc-200);
+  --line-soft: #f0f0f2;
+  --hairline:  rgba(15, 14, 31, 0.06);
+
+  /* ---------- ink ---------- */
+  --ink:       #111014;
+  --ink-soft:  var(--zinc-700);
+  --ink-muted: var(--zinc-500);
+
+  /* ---------- accent (DS indigo primary, orange energy) ---------- */
+  --accent:      var(--indigo-600);
+  --accent-deep: var(--indigo-800);
+  --accent-soft: color-mix(in oklab, var(--indigo-600) 10%, transparent);
+  --brand-grad:  var(--gradient-primary);
+
+  /* ---------- inverse: true Newron-black slabs ---------- */
+  --inverse-bg:       #060507;
+  --inverse-bg-2:     #111013;
+  --inverse-ink:      #ffffff;
+  --inverse-ink-soft: rgba(255,255,255,0.62);
+  --inverse-line:     rgba(255,255,255,0.12);
+
+  /* ---------- signal ---------- */
+  --green: var(--green-700);
+  --amber: var(--orange-500);
+  --slate: var(--ink-muted);
+
+  /* ---------- type: Poppins everywhere; mono kept for product chrome ---------- */
+  --font-sans:    'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Poppins', var(--font-sans);
+  --font-italic:  var(--font-sans);
+  --font-mono:    ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;
+
+  --tracking-eyebrow: 0.14em;
+
+  /* ---------- geometry (DS: crisp, squared) ---------- */
+  --density: 1;
+  --r-sm:   3px;
+  --r:      4px;
+  --r-lg:   6px;
+  --r-pill: 9999px;
+
+  --container-wide:   1320px;
+  --container-narrow: 920px;
+
+  --dur-fast: 160ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --shadow-sm:     0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md:     0 10px 30px -14px rgba(17,16,20,0.22);
+  --shadow-violet: 0 10px 30px -10px rgba(79,70,229,0.40);
+}
+
+/* ---------- dark mode → pure Newron canvas ---------- */
+[data-mode="dark"] {
+  --bg:        #000000;
+  --bg-2:      #0c0b10;
+  --bg-3:      #141318;
+  --line:      rgba(255,255,255,0.12);
+  --line-soft: rgba(255,255,255,0.06);
+  --ink:       #ffffff;
+  --ink-soft:  var(--zinc-300);
+  --ink-muted: var(--zinc-500);
+  --hairline:  rgba(255,255,255,0.08);
+  --accent-soft: color-mix(in oklab, var(--indigo-500) 22%, transparent);
+  --inverse-bg:       #ffffff;
+  --inverse-bg-2:     #f7f7f9;
+  --inverse-ink:      #111014;
+  --inverse-ink-soft: var(--zinc-600);
+  --inverse-line:     var(--zinc-200);
+}
+
+[data-density="compact"] { --density: 0.78; }
+[data-density="roomy"]   { --density: 1.22; }
+
+/* ---------- surface palettes (tweakable) ---------- */
+[data-surface="paper"] { --bg:#fafafa; --bg-2:#f4f4f5; --bg-3:#ececee; }
+[data-surface="mist"]  {
+  --bg:#eef0f6; --bg-2:#e6e8f2; --bg-3:#dde0ee;
+  --line:#cfd3e6; --line-soft:#dde0ee;
+}
+[data-surface="violet"] {
+  --bg:#f4f3ff; --bg-2:#ecebfe; --bg-3:#e0defc;
+  --line:#dcd9fb; --line-soft:#ecebfe;
+}
+[data-surface="ink"] {
+  --bg:#000000; --bg-2:#0c0b10; --bg-3:#141318;
+  --line:rgba(255,255,255,0.12); --line-soft:rgba(255,255,255,0.06);
+  --ink:#ffffff; --ink-soft:var(--zinc-300); --ink-muted:var(--zinc-500);
+  --hairline:rgba(255,255,255,0.08);
+}
+
+/* =========================================================
+   Base
+   ========================================================= */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-size: 15px;
+  line-height: 1.6;
+}
+a { color: inherit; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+strong, b { font-weight: 500; }
+section[id] { scroll-margin-top: 80px; }
+
+/* =========================================================
+   Layout shells
+   ========================================================= */
+.shell {
+  width: 100%; max-width: var(--container-wide);
+  margin: 0 auto; padding-inline: clamp(20px, 4vw, 64px);
+}
+.shell-narrow {
+  width: 100%; max-width: var(--container-narrow);
+  margin: 0 auto; padding-inline: clamp(20px, 4vw, 64px);
+}
+.section       { padding-block: calc(120px * var(--density)); position: relative; }
+.section-tight { padding-block: calc(64px * var(--density)); }
+
+/* =========================================================
+   Type primitives
+   ========================================================= */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+/* DS signature: indigo→orange clipped eyebrow */
+.eyebrow-grad {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
+
+/* "display" — Poppins semibold, tight tracking */
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 0.98;
+}
+/* accent emphasis words — solid accent (responds to Accent tweak) */
+.display em, .italic {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  color: var(--accent);
+}
+
+.mono { font-family: var(--font-mono); }
+.tabular { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum'; }
+
+.hr-top { border-top: 1px solid var(--line); }
+.hr-bot { border-bottom: 1px solid var(--line); }
+
+/* =========================================================
+   Buttons — DS: gradient primary, crisp corners
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px; height: 44px; padding: 0 18px;
+  border-radius: var(--r);
+  font-family: var(--font-sans); font-size: 14px; font-weight: 500;
+  letter-spacing: -0.005em;
+  border: 1px solid transparent; cursor: pointer; text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    filter var(--dur-fast) var(--ease-out);
+}
+.btn:active { transform: translateY(1px); }
+
+/* Primary = DS indigo→orange gradient */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-violet);
+}
+.btn-primary:hover { filter: brightness(1.07) saturate(1.05); }
+
+/* Secondary gradient = blue→indigo */
+.btn-violet {
+  background: var(--gradient-secondary);
+  color: #ffffff;
+  box-shadow: var(--shadow-violet);
+}
+.btn-violet:hover { filter: brightness(1.07); }
+
+/* Ghost = bordered */
+.btn-ghost {
+  background: transparent; color: var(--ink);
+  border-color: var(--line);
+}
+.btn-ghost:hover { background: var(--bg-2); border-color: var(--zinc-300); }
+
+/* Link */
+.btn-link {
+  padding: 0; height: auto; background: transparent;
+  color: var(--ink); text-decoration: underline;
+  text-decoration-color: var(--line); text-underline-offset: 6px;
+  text-decoration-thickness: 1px; border-radius: 0;
+}
+.btn-link:hover { text-decoration-color: var(--accent); color: var(--accent); }
+
+/* buttons on dark slabs */
+.on-dark .btn-ghost, [data-on-dark] .btn-ghost {
+  color: #fff; border-color: var(--inverse-line);
+}
+.on-dark .btn-ghost:hover, [data-on-dark] .btn-ghost:hover {
+  background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.22);
+}
+
+/* =========================================================
+   Tag — authentic NVIDIA-green capsule
+   ========================================================= */
+.tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 26px; padding: 0 12px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--green-100);
+  background: var(--green-900);
+  border: 1px solid var(--green-800);
+  text-transform: uppercase;
+}
+.tag::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: #4ade80;
+}
+
+/* =========================================================
+   Card — DS crisp bordered surface
+   ========================================================= */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+}
+
+/* =========================================================
+   Focus + selection
+   ========================================================= */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+::selection { background: var(--indigo-600); color: #fff; }
+
+/* =========================================================
+   Marquee drift + blink + pulse
+   ========================================================= */
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* =========================================================
+   Backdrops
+   ========================================================= */
+.dotgrid {
+  background-image: radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+.dotgrid-soft {
+  background-image: radial-gradient(circle at 1px 1px, var(--line-soft) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+.gridlines {
+  background-image:
+    linear-gradient(to right, var(--hairline) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* =========================================================
+   Responsive nav
+   ========================================================= */
+@media (max-width: 1180px) {
+  .nav-center a { padding: 8px 8px !important; font-size: 13px !important; }
+  .nav-cta-secondary { display: none !important; }
+}
+@media (max-width: 980px) {
+  .nav-center { display: none !important; }
+}
+
+/* =========================================================
+   Mark — indigo highlight
+   ========================================================= */
+mark {
+  background: var(--accent-soft);
+  color: var(--ink);
+  padding: 0 3px;
+  border-radius: 2px;
+}
+
+/* =========================================================
+   Newron — editorial layer for footer-link pages.
+   Loaded after the v4 system. Adds lead/prose/FAQ helpers.
+   ========================================================= */
+
+.page-lead {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+/* ---------- prose (legal + long-form) ---------- */
+.prose { max-width: 74ch; }
+.prose > *:first-child { margin-top: 0; }
+.prose h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(26px, 2.4vw, 34px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 56px 0 16px;
+}
+.prose h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 36px 0 10px;
+}
+.prose h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  margin: 26px 0 6px;
+}
+.prose p {
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--ink-soft);
+  font-weight: 300;
+  margin: 0 0 16px;
+  text-wrap: pretty;
+}
+.prose ul, .prose ol {
+  margin: 0 0 20px;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.prose li {
+  display: flex;
+  gap: 12px;
+  font-size: 15.5px;
+  line-height: 1.62;
+  color: var(--ink-soft);
+  font-weight: 300;
+}
+.prose ul > li::before {
+  content: "";
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 10px;
+  flex: none;
+}
+.prose ol { counter-reset: li; }
+.prose ol > li { counter-increment: li; }
+.prose ol > li::before {
+  content: counter(li);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  margin-top: 3px;
+  flex: none;
+  min-width: 18px;
+}
+.prose strong { color: var(--ink); font-weight: 500; }
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.prose a:hover { color: var(--accent-deep); }
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 40px 0;
+}
+.prose .lede {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+
+/* policy meta table */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 24px;
+  font-size: 14px;
+}
+.prose th, .prose td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  color: var(--ink-soft);
+}
+.prose th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+/* ---------- FAQ chevron ---------- */
+details[open] .faq-plus { transform: rotate(45deg); }
+.faq-plus { transition: transform var(--dur-fast) var(--ease-out); font-size: 22px; line-height: 1; }
+summary::-webkit-details-marker { display: none; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .pg-split { grid-template-columns: 1fr !important; }
+  .pg-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .pg-hero-grid > *:last-child { order: -1; max-width: 420px; }
+}
