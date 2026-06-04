@@ -6,14 +6,7 @@
    mapped to Next routes via route().
    ========================================================= */
 import React, { useState, useEffect, type ReactNode, type CSSProperties } from "react";
-
-/* map a design-bundle href (e.g. "foo.html#x") to a Next route ("/foo#x") */
-function route(href: string): string {
-  if (href.startsWith("#") || href.startsWith("http")) return href;
-  const [file, hash] = href.split("#");
-  const base = file === "v4.html" ? "/" : "/" + file.replace(/\.html$/, "");
-  return hash ? `${base}#${hash}` : base;
-}
+import { route } from "@/lib/route";
 
 // ── footer link map (single source of truth) ─────────────
 const FOOTER_COLS: { h: string; links: [string, string][] }[] = [

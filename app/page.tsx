@@ -1,6 +1,5 @@
-import { redirect } from "next/navigation";
+import Home from "@/components/home";
 
-export default function Home() {
-  // The exported deliverable is the Lending intelligence page.
-  redirect("/lending-intelligence");
+export default function Page() {
+  return <Home />;
 }
