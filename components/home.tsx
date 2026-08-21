@@ -72,7 +72,7 @@ function Nav() {
       borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",
       transition: "background 0.2s, border-color 0.2s"
     }}>
-      <div className="shell" style={{ height: 68, display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "clamp(16px, 3vw, 48px)" }}>
+      <div className="shell" style={{ height: "var(--nav-h)", display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "clamp(16px, 3vw, 48px)" }}>
         <Wordmark />
         <nav className="nav-center" style={{ display: "flex", justifyContent: "center", gap: 2 }}>
           {[["Lending", "#lending"], ["Insurance", "#insurance"], ["Governance", "#governance"], ["Services", "#services"], ["Customers", "#customers"], ["Company", "#company"]].map(([l, h]) =>
@@ -87,22 +87,30 @@ function Nav() {
 }
 
 // ───────────────────────────────────────────────── hero
+/* The headline / copy / CTA form one viewport-height "stage" (.hero-stage);
+   the contents index follows *after* that stage. Layout, type scale and
+   breakpoints live in globals.css under "Homepage hero" so the hero can
+   respond to width AND height — a 1366×768 or 1512×854 laptop is height-
+   constrained, not width-constrained. Line breaks are left to the browser
+   (text-wrap: balance) rather than hard <br>, which could not survive the
+   1320px shell cap at any headline size above ~72px. */
 function Hero({ sub }: { sub: string }) {
   return (
-    <section id="top" className="dotgrid-soft" style={{ paddingBlock: "calc(72px * var(--density)) calc(96px * var(--density))", position: "relative" }}>
+    <section id="top" className="dotgrid-soft hero">
       <div className="shell" style={{ position: "relative" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 5fr) minmax(0, 3fr)", gap: 80, alignItems: "end" }}>
-          <h1 className="display" style={{ margin: 0, fontSize: "clamp(56px, 8vw, 124px)", lineHeight: 0.94, letterSpacing: "-0.028em" }}>
-            Intelligence, built<br />for the institutions<br />that <em className="italic" style={{ color: "var(--accent)" }}>can&apos;t get it&nbsp;wrong.</em>
-          </h1>
-          <div style={{ display: "flex", flexDirection: "column", gap: 36 }}>
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.08em", color: "var(--ink-muted)", borderTop: "1px solid var(--line)", paddingTop: 14 }}>
-              FOR REGULATED INDUSTRIES
-            </div>
-            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.55, color: "var(--ink-soft)", maxWidth: 420 }}>{sub}</p>
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <a className="btn btn-primary" href="#contact">Book a demo <Arrow /></a>
-              <a className="btn btn-ghost" href="#lending">See the lending suite</a>
+        <div className="hero-stage">
+          <div className="hero-grid">
+            <h1 className="display hero-title">
+              Intelligence, built for the institutions that{" "}
+              <em className="italic" style={{ color: "var(--accent)" }}>can&apos;t get it&nbsp;wrong.</em>
+            </h1>
+            <div className="hero-aside">
+              <div className="hero-eyebrow">FOR REGULATED INDUSTRIES</div>
+              <p className="hero-sub">{sub}</p>
+              <div className="hero-actions">
+                <a className="btn btn-primary" href="#contact">Book a demo <Arrow /></a>
+                <a className="btn btn-ghost" href="#lending">See the lending suite</a>
+              </div>
             </div>
           </div>
         </div>
@@ -118,14 +126,14 @@ function ContentsIndex() {
     { n: "03", l: "Governance AI", d: "Citizen services in regional languages", href: "#governance" },
     { n: "04", l: "Custom AI engineering", d: "Foundational models · automation · platform", href: "#services" }];
   return (
-    <div style={{ marginTop: 96, borderTop: "1px solid var(--line)" }}>
+    <div className="contents-index">
       {rows.map((r) =>
-        <a key={r.n} href={r.href} style={{ display: "grid", gridTemplateColumns: "100px minmax(0, 3fr) minmax(0, 5fr) auto", alignItems: "center", gap: 32, padding: "26px 0", borderBottom: "1px solid var(--line)", color: "var(--ink)", textDecoration: "none", transition: "padding 0.2s, color 0.2s" }}
+        <a key={r.n} className="ci-row" href={r.href}
           onMouseEnter={(e) => { e.currentTarget.style.paddingLeft = "12px"; }}
           onMouseLeave={(e) => { e.currentTarget.style.paddingLeft = "0"; }}>
-          <div className="mono" style={{ fontSize: 12, letterSpacing: "0.1em", color: "var(--ink-muted)" }}>{r.n}</div>
-          <div style={{ fontFamily: "var(--font-display)", fontSize: 28, letterSpacing: "-0.012em" }}>{r.l}</div>
-          <div style={{ fontSize: 14, color: "var(--ink-soft)" }}>{r.d}</div>
+          <div className="mono ci-n">{r.n}</div>
+          <div className="ci-l">{r.l}</div>
+          <div className="ci-d">{r.d}</div>
           <Arrow size={16} />
         </a>)}
     </div>);
@@ -133,7 +141,7 @@ function ContentsIndex() {
 
 // ───────────────────────────────────────────────── logo marquee
 function LogoMarquee() {
-  const logos = ["Kotak", "Walmart", "Karnataka Govt.", "ABCL", "Sattva", "Artpark", "TCI", "Bajaj Allianz", "Yes Bank", "HDB Financial"];
+  const logos = ["Walmart", "IISc", "Karnataka Govt.", "Google", "ABCL", "HDFC Credilla", "Sattva", "Fusion", "Artpark"];
   const row = [...logos, ...logos];
   return (
     <section className="section-tight hr-top hr-bot" style={{ overflow: "hidden", paddingBlock: 36 }}>
@@ -758,7 +766,7 @@ function SectionHead({ tag, eyebrow, title, kicker, inverse }: { tag: string; ey
 }
 
 // ───────────────────────────────────────────────── Page
-const HERO_SUB = "Newron is the applied-AI partner to India's banks, NBFCs, insurers and state institutions — building production systems that underwrite faster, settle claims sooner, and serve citizens in their own language.";
+const HERO_SUB = "Newron is the applied-AI partner to India's banks, NBFCs, insurers and Government — building production systems that underwrite faster, settle claims sooner, serve citizens in their own language & many more";
 const CTA_COPY = "See Newron on your data, in a week.";
 
 export default function Home() {

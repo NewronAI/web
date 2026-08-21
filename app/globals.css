@@ -91,6 +91,22 @@
   --container-wide:   1320px;
   --container-narrow: 920px;
 
+  /* ---------- homepage hero (see "Homepage hero" below) ---------- */
+  --nav-h:           68px;
+  --hero-pad-top:    calc(72px * var(--density));
+  --hero-pad-bottom: calc(96px * var(--density));
+  --hero-gap:        56px;
+  --hero-aside-gap:  32px;
+  --hero-index-gap:  88px;
+  /* the stage stops short of the fold so the first index row peeks through —
+     scroll affordance, instead of a hero ending exactly at the viewport edge
+     with nothing below it. Derived from the gap so every breakpoint shows the
+     same sliver of row 1 without restating the number. */
+  --hero-peek:       calc(var(--hero-index-gap) + 52px);
+  /* height-aware: laptops (1366x768, 1512x854) are height-constrained, so the
+     vertical term wins there and the vw term only takes over on tall screens. */
+  --hero-title:      clamp(44px, min(6.4vw, 9.4svh), 80px);
+
   --dur-fast: 160ms;
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
   --shadow-sm:     0 1px 2px rgba(0,0,0,0.05);
@@ -330,6 +346,123 @@ section[id] { scroll-margin-top: 80px; }
     linear-gradient(to right, var(--hairline) 1px, transparent 1px),
     linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
   background-size: 64px 64px;
+}
+
+/* =========================================================
+   Homepage hero — one viewport-height stage, index after it
+   The headline/copy/CTA must always fit above the fold; the contents
+   index deliberately starts at the fold. Everything vertical is a token
+   so the breakpoints below can compress the stage without re-stating
+   the layout.
+   ========================================================= */
+.hero { position: relative; }
+
+.hero-stage {
+  display: grid;
+  align-content: center;
+  min-height: calc(100svh - var(--nav-h) - var(--hero-peek));
+  padding-block: var(--hero-pad-top) var(--hero-pad-bottom);
+}
+
+.hero-grid {
+  display: grid;
+  /* 7fr/3fr: the headline needs the room; the aside bottoms out at ~360px */
+  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+  gap: var(--hero-gap);
+  align-items: end;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: var(--hero-title);
+  line-height: 0.96;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+}
+
+.hero-aside { display: flex; flex-direction: column; gap: var(--hero-aside-gap); }
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.hero-sub {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 420px;
+}
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ---------- contents index ---------- */
+.contents-index {
+  margin-top: var(--hero-index-gap);
+  border-top: 1px solid var(--line);
+}
+.ci-row {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 3fr) minmax(0, 5fr) auto;
+  align-items: center;
+  gap: 32px;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  transition: padding var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.ci-row:hover { color: var(--accent); }
+.ci-n { font-size: 12px; letter-spacing: 0.1em; color: var(--ink-muted); }
+.ci-l { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.012em; }
+.ci-d { font-size: 14px; color: var(--ink-soft); }
+
+/* ---------- laptop: 1366x768 / 1512x854 ---------- */
+@media (max-width: 1600px) {
+  :root {
+    --hero-pad-top:    calc(52px * var(--density));
+    --hero-pad-bottom: calc(60px * var(--density));
+    --hero-gap:        44px;
+    --hero-aside-gap:  24px;
+    --hero-index-gap:  60px;
+  }
+  .hero-sub { font-size: 16px; }
+  .ci-row { grid-template-columns: 72px minmax(0, 3fr) minmax(0, 5fr) auto; gap: 24px; padding: 22px 0; }
+  .ci-l { font-size: 24px; }
+}
+
+/* ---------- small laptop / large tablet ---------- */
+@media (max-width: 1180px) {
+  :root {
+    --hero-title:      clamp(38px, min(5.8vw, 8.6svh), 60px);
+    --hero-gap:        36px;
+    --hero-aside-gap:  22px;
+    --hero-index-gap:  48px;
+  }
+  .hero-grid { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+  .ci-row { grid-template-columns: 56px minmax(0, 3fr) minmax(0, 4fr) auto; gap: 20px; }
+  .ci-l { font-size: 21px; }
+  .ci-d { font-size: 13px; }
+}
+
+/* ---------- stack: the four-column index rows collapse ---------- */
+@media (max-width: 900px) {
+  :root {
+    --hero-title:      clamp(34px, 8.2vw, 56px);
+    --hero-pad-top:    calc(40px * var(--density));
+    --hero-pad-bottom: calc(48px * var(--density));
+    --hero-index-gap:  40px;
+  }
+  /* stacked content sets its own height — never pad it out to the viewport */
+  .hero-stage { min-height: 0; align-content: start; }
+  .hero-grid { grid-template-columns: 1fr; gap: 30px; align-items: start; }
+  .hero-title { text-wrap: pretty; }
+  .hero-aside { max-width: 520px; }
+  .ci-row { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 18px; padding: 20px 0; }
+  .ci-n, .ci-l, .ci-d { grid-column: 1; }
+  .ci-row > svg { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
 }
 
 /* =========================================================
