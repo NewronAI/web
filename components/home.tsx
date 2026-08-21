@@ -75,7 +75,7 @@ function Nav() {
       <div className="shell" style={{ height: "var(--nav-h)", display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "clamp(16px, 3vw, 48px)" }}>
         <Wordmark />
         <nav className="nav-center" style={{ display: "flex", justifyContent: "center", gap: 2 }}>
-          {[["Lending", "#lending"], ["Insurance", "#insurance"], ["Governance", "#governance"], ["Services", "#services"], ["Customers", "#customers"], ["Company", "#company"]].map(([l, h]) =>
+          {[["Lending", "#lending"], ["Artha", "#artha"], ["Insurance", "#insurance"], ["Governance", "#governance"], ["Services", "#services"], ["Customers", "#customers"], ["Company", "#company"]].map(([l, h]) =>
             <a key={l} href={h} style={{ textDecoration: "none", color: "var(--ink)", padding: "8px 10px", fontSize: 13.5, fontWeight: 500, borderRadius: 4, whiteSpace: "nowrap" }}>{l}</a>)}
         </nav>
         <div className="nav-cta" style={{ display: "flex", gap: 8 }}>
@@ -92,8 +92,13 @@ function Nav() {
    breakpoints live in globals.css under "Homepage hero" so the hero can
    respond to width AND height — a 1366×768 or 1512×854 laptop is height-
    constrained, not width-constrained. Line breaks are left to the browser
-   (text-wrap: balance) rather than hard <br>, which could not survive the
-   1320px shell cap at any headline size above ~72px. */
+   (text-wrap: balance) rather than hard <br>.
+
+   The headline runs the full width of the shell and the supporting block
+   sits underneath it as a rule-topped band (label · statement · action),
+   which echoes SectionHead's rail/content/kicker rhythm. Splitting them
+   side-by-side capped the headline at ~800px and left dead space between
+   the two columns. */
 function Hero({ sub }: { sub: string }) {
   return (
     <section id="top" className="dotgrid-soft hero">
@@ -104,13 +109,13 @@ function Hero({ sub }: { sub: string }) {
               Intelligence, built for the institutions that{" "}
               <em className="italic" style={{ color: "var(--accent)" }}>can&apos;t get it&nbsp;wrong.</em>
             </h1>
-            <div className="hero-aside">
+            <div className="hero-band">
               <div className="hero-eyebrow">FOR REGULATED INDUSTRIES</div>
               <p className="hero-sub">{sub}</p>
-              <div className="hero-actions">
-                <a className="btn btn-primary" href="#contact">Book a demo <Arrow /></a>
-                <a className="btn btn-ghost" href="#lending">See the lending suite</a>
-              </div>
+            </div>
+            <div className="hero-actions">
+              <a className="btn btn-primary" href="#contact">Book a demo <Arrow /></a>
+              <a className="btn btn-ghost" href="#lending">See the lending suite</a>
             </div>
           </div>
         </div>
@@ -122,9 +127,10 @@ function Hero({ sub }: { sub: string }) {
 function ContentsIndex() {
   const rows = [
     { n: "01", l: "Lending intelligence", d: "CAM, statement & policy analysis · Video PD", href: "#lending" },
-    { n: "02", l: "Insurance AI", d: "Claim eligibility, filing & denial remediation", href: "#insurance" },
-    { n: "03", l: "Governance AI", d: "Citizen services in regional languages", href: "#governance" },
-    { n: "04", l: "Custom AI engineering", d: "Foundational models · automation · platform", href: "#services" }];
+    { n: "02", l: "Artha models", d: "Document VLMs · licensable & self-hostable", href: "#artha" },
+    { n: "03", l: "Insurance AI", d: "Claim eligibility, filing & denial remediation", href: "#insurance" },
+    { n: "04", l: "Governance AI", d: "Citizen services in regional languages", href: "#governance" },
+    { n: "05", l: "Custom AI engineering", d: "Foundational models · automation · platform", href: "#services" }];
   return (
     <div className="contents-index">
       {rows.map((r) =>
@@ -141,7 +147,7 @@ function ContentsIndex() {
 
 // ───────────────────────────────────────────────── logo marquee
 function LogoMarquee() {
-  const logos = ["Walmart", "IISc", "Karnataka Govt.", "Google", "ABCL", "HDFC Credilla", "Sattva", "Fusion", "Artpark"];
+  const logos = ["Walmart", "IISc", "Karnataka Govt.", "Google", "ABCL", "HDFC Credila", "Sattva", "Fusion", "Artpark"];
   const row = [...logos, ...logos];
   return (
     <section className="section-tight hr-top hr-bot" style={{ overflow: "hidden", paddingBlock: 36 }}>
@@ -459,12 +465,222 @@ function Outcomes() {
     </div>);
 }
 
+// ───────────────────────────────────────────── Artha pipeline animation
+/* Four phases — ingest → classify → extract → map — advanced on a timer while
+   on screen. The stage is keyed on `${phase}-${step}` so React remounts it on
+   every change and the CSS keyframes replay from zero; no animation state is
+   tracked in JS. The rail is clickable (same affordance as the Lending suite
+   aside) which also pauses autoplay, so every phase is reachable by hand —
+   that is the accessible path when the viewer prefers reduced motion. */
+const AF_DOCS = [
+  { id: "bank", short: "BANK", type: "Bank statement", pages: "p. 01–06", conf: "0.99", party: "R. Iyer", role: "Applicant",
+    fields: [["Bank", "HDFC Bank · 50100•••2291"], ["Period", "Apr–Jun 2026"], ["Avg. balance", "₹ 8,41,905"], ["Net inflow", "₹ 31,20,448"]] },
+  { id: "pan", short: "PAN", type: "PAN card", pages: "p. 07", conf: "0.99", party: "R. Iyer", role: "Applicant",
+    fields: [["Name", "Rohit Iyer"], ["Father's name", "Krishnan Iyer"], ["PAN", "ABZPI•••7K"], ["DOB", "22-04-1971"]] },
+  { id: "itr", short: "ITR", type: "ITR + computation", pages: "p. 08–11", conf: "0.98", party: "Iyer Traders", role: "Entity",
+    fields: [["Assessment year", "AY 2025–26"], ["Gross total income", "₹ 62,40,180"], ["Tax paid", "₹ 14,88,204"]] },
+  { id: "aadhaar", short: "AADHAAR", type: "Aadhaar", pages: "p. 12", conf: "0.99", party: "S. Iyer", role: "Co-applicant",
+    fields: [["Name", "Sunita Iyer"], ["Address", "14, 3rd Cross, Whitefield, Bengaluru 560066"], ["Aadhaar no.", "XXXX XXXX 4417"]] },
+  { id: "deed", short: "DEED", type: "Sale deed", pages: "p. 13–24", conf: "0.97", party: "Collateral", role: "Property",
+    fields: [["Property", "Whitefield, Bengaluru"], ["Extent", "2,150 sq ft"], ["Consideration", "₹ 2,45,00,000"]] },
+  { id: "gst", short: "GST", type: "GST returns", pages: "p. 25–30", conf: "0.98", party: "Iyer Traders", role: "Entity",
+    fields: [["GSTIN", "29AAFCI•••Q1Z5"], ["Period", "FY 2025–26"], ["Turnover", "₹ 4,18,60,900"]] }];
+
+type AfDoc = (typeof AF_DOCS)[number];
+
+/* one column per resolved party, in the order the parties first appear */
+const AF_PARTIES = AF_DOCS.reduce((acc, d) => {
+  const hit = acc.find((p) => p.party === d.party);
+  if (hit) hit.docs.push(d); else acc.push({ party: d.party, role: d.role, docs: [d] });
+  return acc;
+}, [] as { party: string; role: string; docs: AfDoc[] }[]);
+
+const AF_PHASES = ["Ingest", "Classify", "Extract", "Map"];
+/* scatter origins for the converging documents, in px at full spread */
+const AF_SCATTER = [[-196, -74, -9], [176, -86, 7], [-214, 8, 4], [200, 16, -6], [-124, 84, -3], [136, 90, 8]];
+const vars = (o: Record<string, string>) => o as CSSProperties;
+
+function ArthaFlow() {
+  const [phase, setPhase] = useState(0);
+  const [step, setStep] = useState(0);
+  const [auto, setAuto] = useState(true);
+  const [live, setLive] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // don't animate off-screen, and don't autoplay for reduced-motion viewers
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setAuto(false);
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setLive(e.isIntersecting), { threshold: 0.2 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!live || !auto) return;
+    const HOLD = [2600, 3800, 1600, 4400];
+    // the extract phase steps through one document at a time before moving on
+    if (phase === 2 && step < AF_DOCS.length - 1) {
+      const t = setTimeout(() => setStep((v) => v + 1), HOLD[2]);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => { setPhase((v) => (v + 1) % AF_PHASES.length); setStep(0); }, HOLD[phase]);
+    return () => clearTimeout(t);
+  }, [phase, step, live, auto]);
+
+  const go = (i: number) => { setAuto(false); setPhase(i); setStep(0); };
+
+  return (
+    <div ref={ref} className="af">
+      <div className="af-head">
+        <span className="mono af-dim">ARTHA · INTAKE BATCH-2026-04417</span>
+        <button className="mono af-run" onClick={() => setAuto((v) => !v)} aria-label={auto ? "Pause" : "Play"}>
+          {auto ? "● RUNNING" : "❙❙ PAUSED"}
+        </button>
+      </div>
+      <div className="af-rail">
+        {AF_PHASES.map((p, i) =>
+          <button key={p} className={"af-rail-btn" + (i === phase ? " is-on" : "")} onClick={() => go(i)}>
+            <span className="mono af-rail-n">0{i + 1}</span>
+            <span className="af-rail-l">{p}</span>
+          </button>)}
+      </div>
+      <div className="af-stage" key={`${phase}-${step}`}>
+        {phase === 0 && <AfIngest />}
+        {phase === 1 && <AfClassify />}
+        {phase === 2 && <AfExtract i={step} />}
+        {phase === 3 && <AfMap />}
+      </div>
+    </div>);
+}
+
+/* 01 — loose documents converge into a single upload */
+function AfIngest() {
+  return (
+    <div className="af-ingest">
+      {AF_SCATTER.map(([x, y, r], i) =>
+        <div key={i} className="af-fly"
+          style={{ ...vars({ "--x": `${x}px`, "--y": `${y}px`, "--r": `${r}deg` }), animationDelay: `${i * 95}ms` }}>
+          <span className="mono af-fly-t">{AF_DOCS[i].short}</span>
+          <span className="af-bar" /><span className="af-bar is-short" /><span className="af-bar" />
+        </div>)}
+      <div className="af-pile">
+        <span className="mono af-dim">1 UPLOAD</span>
+        <span className="af-pile-n">30 pages</span>
+        <span className="mono af-dim">6 DOCUMENTS · UNSORTED · NO COVER SHEET</span>
+      </div>
+      <div className="af-sent mono">↓ SENT TO ARTHA</div>
+    </div>);
+}
+
+/* 02 — every document named, including the ones batched into one scan */
+function AfClassify() {
+  return (
+    <div className="af-list">
+      {AF_DOCS.map((d, i) =>
+        <div key={d.id} className="af-row" style={{ animationDelay: `${i * 105}ms` }}>
+          <span className="mono af-dim">{d.pages}</span>
+          <span className="af-badge">{d.type}</span>
+          <span className="mono af-conf">{d.conf}</span>
+        </div>)}
+    </div>);
+}
+
+/* 03 — one classified document at a time, with what was read out of it */
+function AfExtract({ i }: { i: number }) {
+  const d = AF_DOCS[i];
+  return (
+    <div className="af-extract">
+      <div className="af-ex-doc">
+        <span className="mono af-dim">{d.pages}</span>
+        <div className="af-ex-type">{d.type}</div>
+        <div className="mono af-ex-count">{i + 1} / {AF_DOCS.length} CLASSIFIED</div>
+      </div>
+      <div className="af-ex-fields">
+        {d.fields.map(([k, v], j) =>
+          <div key={k} className="af-field" style={{ animationDelay: `${130 + j * 130}ms` }}>
+            <span className="mono af-dim">{k.toUpperCase()}</span>
+            <span className="af-field-v">{v}</span>
+          </div>)}
+      </div>
+    </div>);
+}
+
+/* 04 — documents land under the party each one actually belongs to */
+function AfMap() {
+  return (
+    <div className="af-map">
+      {AF_PARTIES.map((p, i) =>
+        <div key={p.party} className="af-party" style={{ animationDelay: `${i * 110}ms` }}>
+          <div className="mono af-dim">{p.role.toUpperCase()}</div>
+          <div className="af-party-name">{p.party}</div>
+          <div className="af-chips">
+            {p.docs.map((d, j) =>
+              <span key={d.id} className="af-chip" style={{ animationDelay: `${320 + i * 110 + j * 120}ms` }}>{d.type}</span>)}
+          </div>
+        </div>)}
+    </div>);
+}
+
+// ───────────────────────────────────────────────── Artha models
+/* Dark slab, so it reads as the model layer under the product sections
+   rather than another vertical. Sits between two light sections to keep
+   the page's light/dark/light rhythm. */
+function Artha() {
+  const caps = [
+    { n: "01", k: "Classification", d: "Names every document in the file — and splits a single batched upload into its constituent documents before any extraction runs.", meta: "1 UPLOAD → 6 DOCS" },
+    { n: "02", k: "Extraction", d: "Reads the fields credit actually underwrites on — issuer, period, balances, identifiers — from scans, phone photographs and regional-language forms.", meta: "0-SHOT · NO TEMPLATES" },
+    { n: "03", k: "Party mapping", d: "Resolves every party in the file and attaches each document to the right one, so applicant, co-applicant, guarantor and entity never blur together.", meta: "4 PARTIES RESOLVED" }];
+  const pillars = [
+    ["Zero-shot", "No per-client fine-tune and no template library. Point Artha at a file it has never seen."],
+    ["Frontier-grade", "Matches or beats frontier LLMs on classification, extraction and party mapping."],
+    ["≈1/8 the cost", "Small, task-tuned models — a fraction of the frontier inference bill, per document."],
+    ["Yours to run", "Licensable and self-hostable. Your VPC, on-prem, or fully air-gapped."]];
+  return (
+    <section id="artha" className="section" data-on-dark="1" style={{ background: "var(--inverse-bg)", color: "var(--inverse-ink)" }}>
+      <div className="shell">
+        <SectionHead inverse tag="02" eyebrow="Artha models"
+          title={<>The models <em className="italic" style={{ color: "var(--accent)" }}>underneath</em> Indian credit.</>}
+          kicker="Artha is Newron's suite of vision-language models, built for the paperwork Indian banks and NBFCs actually process. Zero-shot, on documents no template was written for." />
+        <div className="artha-grid" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.3fr)", gap: 64, alignItems: "start" }}>
+          <div>
+            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginBottom: 24 }}>
+              ARTHA · अर्थ — WEALTH, MEANING, PURPOSE
+            </div>
+            {caps.map((c, i) =>
+              <div key={c.n} style={{ display: "grid", gridTemplateColumns: "44px 1fr", gap: 16, borderTop: "1px solid var(--inverse-line)", borderBottom: i === caps.length - 1 ? "1px solid var(--inverse-line)" : "none", padding: "22px 0" }}>
+                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.1em", color: "var(--accent)", paddingTop: 5 }}>{c.n}</div>
+                <div>
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: 22, lineHeight: 1.15, color: "var(--inverse-ink)" }}>{c.k}</div>
+                  <div style={{ fontSize: 13.5, color: "var(--inverse-ink-soft)", marginTop: 8, lineHeight: 1.55 }}>{c.d}</div>
+                  <div className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginTop: 12 }}>{c.meta}</div>
+                </div>
+              </div>)}
+          </div>
+          <ArthaFlow />
+        </div>
+        <div className="artha-pillars" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 0, borderTop: "1px solid var(--inverse-line)" }}>
+          {pillars.map(([k, v], i) =>
+            <div key={k} style={{ padding: "28px 24px 0", paddingLeft: i === 0 ? 0 : 24, borderLeft: i === 0 ? "none" : "1px solid var(--inverse-line)" }}>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: 19, color: "var(--inverse-ink)", lineHeight: 1.2 }}>{k}</div>
+              <div style={{ fontSize: 13, color: "var(--inverse-ink-soft)", marginTop: 10, lineHeight: 1.55 }}>{v}</div>
+            </div>)}
+        </div>
+        <div style={{ marginTop: 40, display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <a className="btn btn-primary" href="#contact">Evaluate Artha on your documents <Arrow /></a>
+          <a className="btn btn-ghost" href="#contact">Licensing & self-hosting</a>
+        </div>
+      </div>
+    </section>);
+}
+
 // ───────────────────────────────────────────────── Insurance / Governance
 function Insurance() {
   return (
     <section id="insurance" className="section" style={{ borderTop: "1px solid var(--line)" }}>
       <div className="shell">
-        <SectionHead tag="02" eyebrow="Insurance AI"
+        <SectionHead tag="03" eyebrow="Insurance AI"
           title={<>Settle claims <em className="italic" style={{ color: "var(--accent)" }}>before</em> they&apos;re filed.</>}
           kicker="Newron's claims models inspect documents, parse policy language, and predict denial risk the moment a claim is initiated — so adjusters spend their time on edge cases, not paperwork." />
         <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.4fr)", gap: 64 }}>
@@ -524,7 +740,7 @@ function Governance() {
   return (
     <section id="governance" className="section" data-on-dark="1" style={{ background: "var(--inverse-bg)", color: "var(--inverse-ink)" }}>
       <div className="shell">
-        <SectionHead inverse tag="03" eyebrow="Governance AI"
+        <SectionHead inverse tag="04" eyebrow="Governance AI"
           title={<>Citizen services<br />in <em className="italic" style={{ color: "var(--accent)" }}>their</em> language.</>}
           kicker="Built with the Government of Karnataka. Newron reads Kannada handwriting, speaks in regional dialects, and surfaces policy answers from documents that were never indexed — so grievance redressal works at the speed of a phone call." />
         <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.3fr)", gap: 64, alignItems: "start" }}>
@@ -584,7 +800,7 @@ function Services() {
   return (
     <section id="services" className="section">
       <div className="shell">
-        <SectionHead tag="04" eyebrow="Custom AI services"
+        <SectionHead tag="05" eyebrow="Custom AI services"
           title={<>When the product isn&apos;t enough,<br /><em className="italic" style={{ color: "var(--accent)" }}>we build it for you.</em></>}
           kicker="Newron is staffed by ex-research and ex-platform engineers. Most engagements ship to production inside one quarter." />
         <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
@@ -609,11 +825,16 @@ function Services() {
 }
 
 // ───────────────────────────────────────────────── Customers
+const CUSTOMERS: [string, string][] = [
+  ["Google", "Technology"], ["IISc", "Research"], ["Govt. of Karnataka", "State"],
+  ["HDFC Credila", "NBFC"], ["Fusion", "Microfinance"]];
+const CUST_TOP = 3;
+
 function Customers() {
   return (
     <section id="customers" className="section" style={{ borderTop: "1px solid var(--line)", background: "var(--bg-2)" }}>
       <div className="shell">
-        <SectionHead tag="05" eyebrow="Customers" title={<>In production at banks, NBFCs<br />and state institutions.</>} />
+        <SectionHead tag="06" eyebrow="Customers" title={<>In production at banks, NBFCs<br />and state institutions.</>} />
         <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.6fr)", gap: 56, alignItems: "start" }}>
           <div>
             <div className="eyebrow" style={{ marginBottom: 18 }}>Featured · NBFC, Tier-1 · Q3 2025</div>
@@ -623,12 +844,19 @@ function Customers() {
             <div style={{ marginTop: 24, fontSize: 13, color: "var(--ink-soft)" }}>Head of Credit · Tier-1 NBFC · ₹38,000 Cr AUM</div>
             <a href="#" className="btn btn-link" style={{ marginTop: 20, display: "inline-block" }}>Read the case study →</a>
           </div>
-          <div style={{ border: "1px solid var(--line)", borderRadius: 6, background: "var(--bg)", display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
-            {[["Kotak", "Bank"], ["Satya MicroCapital", "NBFC"], ["Govt. of Karnataka", "State"], ["PhonePe", "Fintech"], ["Akmedeus", "Health"], ["Truker", "Mobility"], ["TCI", "Logistics"], ["Bajaj Allianz", "Insurance"], ["HDB Financial", "NBFC"]].map((c, i) =>
-              <div key={i} style={{ padding: "32px 24px", borderRight: i % 3 !== 2 ? "1px solid var(--line)" : "none", borderBottom: i < 6 ? "1px solid var(--line)" : "none" }}>
-                <div className="eyebrow" style={{ fontSize: 10 }}>{c[1]}</div>
-                <div style={{ fontFamily: "var(--font-display)", fontSize: 22, marginTop: 8, lineHeight: 1.15 }}>{c[0]}</div>
-              </div>)}
+          <div style={{ border: "1px solid var(--line)", borderRadius: 6, background: "var(--bg)", display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}>
+            {CUSTOMERS.map((c, i) => {
+              /* three across the top, the remainder sharing the row below — a
+                 6-column track lets both rows stay flush without an empty cell */
+              const top = i < CUST_TOP;
+              const span = top ? 2 : Math.max(1, Math.round(6 / (CUSTOMERS.length - CUST_TOP)));
+              const lastInRow = top ? i === CUST_TOP - 1 : i === CUSTOMERS.length - 1;
+              return (
+                <div key={c[0]} style={{ gridColumn: `span ${span}`, padding: "32px 24px", borderRight: lastInRow ? "none" : "1px solid var(--line)", borderBottom: top ? "1px solid var(--line)" : "none" }}>
+                  <div className="eyebrow" style={{ fontSize: 10 }}>{c[1]}</div>
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: 22, marginTop: 8, lineHeight: 1.15 }}>{c[0]}</div>
+                </div>);
+            })}
           </div>
         </div>
       </div>
@@ -645,7 +873,7 @@ function Company() {
   return (
     <section id="company" className="section">
       <div className="shell">
-        <SectionHead tag="06" eyebrow="Why Newron" title={<>A platform built for the way<br /><em className="italic" style={{ color: "var(--accent)" }}>regulated industries</em> actually buy AI.</>} />
+        <SectionHead tag="07" eyebrow="Why Newron" title={<>A platform built for the way<br /><em className="italic" style={{ color: "var(--accent)" }}>regulated industries</em> actually buy AI.</>} />
         <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 0 }}>
           {pillars.map((p, i) =>
             <div key={p.k} style={{ padding: "32px 32px 32px 0", paddingLeft: i % 2 === 1 ? 32 : 0, borderTop: i < 2 ? "1px solid var(--line)" : "none", borderBottom: "1px solid var(--line)", borderLeft: i % 2 === 1 ? "1px solid var(--line)" : "none", display: "grid", gridTemplateColumns: "60px 1fr", gap: 16 }}>
@@ -755,7 +983,7 @@ function Footer() {
 // ───────────────────────────────────────────────── shared SectionHead
 function SectionHead({ tag, eyebrow, title, kicker, inverse }: { tag: string; eyebrow: ReactNode; title: ReactNode; kicker?: string; inverse?: boolean }) {
   return (
-    <header style={{ display: "grid", gridTemplateColumns: "80px minmax(0, 1.4fr) minmax(0, 1fr)", gap: 48, alignItems: "start", borderTop: `1px solid ${inverse ? "var(--inverse-line)" : "var(--line)"}`, paddingTop: 28 }}>
+    <header className="section-head" style={{ display: "grid", gridTemplateColumns: "80px minmax(0, 1.4fr) minmax(0, 1fr)", gap: 48, alignItems: "start", borderTop: `1px solid ${inverse ? "var(--inverse-line)" : "var(--line)"}`, paddingTop: 28 }}>
       <div className="mono" style={{ fontSize: 12, color: inverse ? "var(--inverse-ink-soft)" : "var(--ink-muted)", letterSpacing: "0.1em", paddingTop: 6 }}>{tag}</div>
       <div>
         <div className="eyebrow eyebrow-grad" style={{ marginBottom: 18 }}>{eyebrow}</div>
@@ -776,6 +1004,7 @@ export default function Home() {
       <Hero sub={HERO_SUB} />
       <LogoMarquee />
       <Lending />
+      <Artha />
       <Insurance />
       <Governance />
       <Services />

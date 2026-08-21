@@ -95,17 +95,26 @@
   --nav-h:           68px;
   --hero-pad-top:    calc(72px * var(--density));
   --hero-pad-bottom: calc(96px * var(--density));
-  --hero-gap:        56px;
-  --hero-aside-gap:  32px;
+  --hero-gap:        52px;   /* headline → band */
+  --hero-band-gap:   14px;   /* eyebrow → para → buttons */
   --hero-index-gap:  88px;
   /* the stage stops short of the fold so the first index row peeks through —
      scroll affordance, instead of a hero ending exactly at the viewport edge
      with nothing below it. Derived from the gap so every breakpoint shows the
      same sliver of row 1 without restating the number. */
   --hero-peek:       calc(var(--hero-index-gap) + 52px);
-  /* height-aware: laptops (1366x768, 1512x854) are height-constrained, so the
-     vertical term wins there and the vw term only takes over on tall screens. */
-  --hero-title:      clamp(44px, min(6.4vw, 9.4svh), 80px);
+  /* Full-width headline, so the vw term can be far more generous than it could
+     when the headline shared the row. The 122px ceiling is the width budget:
+     the shell caps at 1320px while its padding keeps growing, so the usable
+     line is ~1200px at every viewport above ~1350px, and 3 balanced lines of
+     this text need ~9.4x the font size in width. Concretely: the longest of the
+     three balanced lines measures 9.664x the font size, and the shell yields
+     1192-1211px, so 3 lines survive up to ~123px — going past that drops to 4.
+     The 120px ceiling deliberately leaves ~30px of slack rather than sitting on
+     that limit: only Chromium was measured, and a headline edit or a browser
+     that accumulates advances differently must not be able to force a 4th line.
+     The svh term is what keeps a short window from pushing the CTA past the fold. */
+  --hero-title:      clamp(40px, min(9.15vw, 15svh), 120px);
 
   --dur-fast: 160ms;
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
@@ -364,39 +373,45 @@ section[id] { scroll-margin-top: 80px; }
   padding-block: var(--hero-pad-top) var(--hero-pad-bottom);
 }
 
+/* headline on its own row, band underneath — both full width */
 .hero-grid {
   display: grid;
-  /* 7fr/3fr: the headline needs the room; the aside bottoms out at ~360px */
-  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--hero-gap);
-  align-items: end;
 }
 
 .hero-title {
   margin: 0;
   font-size: var(--hero-title);
-  line-height: 0.96;
-  letter-spacing: -0.028em;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
   text-wrap: balance;
 }
 
-.hero-aside { display: flex; flex-direction: column; gap: var(--hero-aside-gap); }
+/* rule-topped band: label over the paragraph, everything flush left, and the
+   paragraph running the same measure as the headline above it */
+.hero-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  gap: var(--hero-band-gap);
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
 .hero-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.08em;
   color: var(--ink-muted);
-  border-top: 1px solid var(--line);
-  padding-top: 14px;
 }
 .hero-sub {
   margin: 0;
   font-size: 17px;
   line-height: 1.55;
   color: var(--ink-soft);
-  max-width: 420px;
+  max-width: none;
 }
-.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
 
 /* ---------- contents index ---------- */
 .contents-index {
@@ -422,10 +437,10 @@ section[id] { scroll-margin-top: 80px; }
 /* ---------- laptop: 1366x768 / 1512x854 ---------- */
 @media (max-width: 1600px) {
   :root {
-    --hero-pad-top:    calc(52px * var(--density));
-    --hero-pad-bottom: calc(60px * var(--density));
-    --hero-gap:        44px;
-    --hero-aside-gap:  24px;
+    --hero-pad-top:    calc(48px * var(--density));
+    --hero-pad-bottom: calc(56px * var(--density));
+    --hero-gap:        40px;
+    --hero-band-gap:   12px;
     --hero-index-gap:  60px;
   }
   .hero-sub { font-size: 16px; }
@@ -436,12 +451,10 @@ section[id] { scroll-margin-top: 80px; }
 /* ---------- small laptop / large tablet ---------- */
 @media (max-width: 1180px) {
   :root {
-    --hero-title:      clamp(38px, min(5.8vw, 8.6svh), 60px);
-    --hero-gap:        36px;
-    --hero-aside-gap:  22px;
+    --hero-title:      clamp(38px, min(9.1vw, 15svh), 112px);
+    --hero-gap:        32px;
     --hero-index-gap:  48px;
   }
-  .hero-grid { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
   .ci-row { grid-template-columns: 56px minmax(0, 3fr) minmax(0, 4fr) auto; gap: 20px; }
   .ci-l { font-size: 21px; }
   .ci-d { font-size: 13px; }
@@ -450,19 +463,191 @@ section[id] { scroll-margin-top: 80px; }
 /* ---------- stack: the four-column index rows collapse ---------- */
 @media (max-width: 900px) {
   :root {
-    --hero-title:      clamp(34px, 8.2vw, 56px);
+    --hero-title:      clamp(34px, 8.8vw, 76px);
     --hero-pad-top:    calc(40px * var(--density));
     --hero-pad-bottom: calc(48px * var(--density));
     --hero-index-gap:  40px;
   }
   /* stacked content sets its own height — never pad it out to the viewport */
   .hero-stage { min-height: 0; align-content: start; }
-  .hero-grid { grid-template-columns: 1fr; gap: 30px; align-items: start; }
+  .hero-grid { gap: 28px; }
   .hero-title { text-wrap: pretty; }
-  .hero-aside { max-width: 520px; }
   .ci-row { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 18px; padding: 20px 0; }
   .ci-n, .ci-l, .ci-d { grid-column: 1; }
   .ci-row > svg { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
+}
+
+/* =========================================================
+   Shared SectionHead — the 80px/1.4fr/1fr rail leaves the headline a
+   ~100px column once the viewport gets narrow, while its font-size floor
+   is 48px. Stack it instead, and let the headline scale below that floor.
+   ========================================================= */
+@media (max-width: 900px) {
+  .section-head { grid-template-columns: 1fr !important; gap: 18px !important; }
+  .section-head h2 { font-size: clamp(30px, 7.6vw, 46px) !important; }
+  .section-head p { margin-top: 0 !important; }
+}
+
+/* =========================================================
+   Artha pipeline animation — dark-slab panel, four phases.
+   Every phase mounts fresh (React keys the stage), so the keyframes
+   below run once per phase change and need no JS animation state.
+   ========================================================= */
+.af {
+  background: var(--inverse-bg-2);
+  border: 1px solid var(--inverse-line);
+  border-radius: var(--r-lg);
+  padding: 20px;
+}
+.af-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+.af-dim { font-size: 10px; letter-spacing: 0.1em; color: var(--inverse-ink-soft); }
+.af-run {
+  background: transparent; border: 0; padding: 0; cursor: pointer;
+  font-size: 10px; letter-spacing: 0.1em; color: var(--accent); white-space: nowrap;
+}
+
+/* phase rail — same clickable-rail affordance as the Lending suite aside */
+.af-rail { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 20px; }
+.af-rail-btn {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 5px;
+  background: transparent; border: 0; border-top: 2px solid var(--inverse-line);
+  padding: 10px 0 0; cursor: pointer; text-align: left; color: var(--inverse-ink-soft);
+  transition: color var(--dur-fast) var(--ease-out), border-top-color var(--dur-fast) var(--ease-out);
+}
+.af-rail-btn:hover { color: var(--inverse-ink); }
+.af-rail-btn.is-on { border-top-color: var(--accent); color: var(--inverse-ink); }
+.af-rail-n { font-size: 9.5px; letter-spacing: 0.1em; }
+.af-rail-btn.is-on .af-rail-n { color: var(--accent); }
+.af-rail-l { font-family: var(--font-display); font-size: 14px; line-height: 1.1; }
+
+/* fixed stage so the panel never jumps between phases */
+.af-stage { position: relative; min-height: 332px; overflow: hidden; display: grid; align-content: center; }
+
+/* ---------- 01 ingest ---------- */
+.af-ingest { position: relative; min-height: 332px; display: grid; place-items: center; }
+.af-fly {
+  position: absolute;
+  width: 72px; height: 94px; padding: 10px 8px;
+  display: flex; flex-direction: column; gap: 7px;
+  border: 1px solid var(--inverse-line); border-radius: 3px;
+  background: color-mix(in oklab, var(--inverse-bg) 65%, transparent);
+  animation: af-converge 1000ms var(--ease-out) both;
+}
+.af-fly-t { font-size: 8px; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 2px; }
+.af-bar { height: 3px; border-radius: 2px; background: var(--inverse-line); }
+.af-bar.is-short { width: 58%; }
+@keyframes af-converge {
+  0%   { opacity: 0; transform: translate(calc(var(--x) * var(--af-spread, 1)), calc(var(--y) * var(--af-spread, 1))) rotate(var(--r)) scale(0.94); }
+  45%  { opacity: 1; }
+  100% { opacity: 0.16; transform: translate(0, 0) rotate(0deg) scale(0.78); }
+}
+.af-pile {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+  border: 1px solid var(--accent); border-radius: 4px;
+  padding: 20px 26px; background: var(--inverse-bg);
+  animation: af-pile-in 620ms 620ms var(--ease-out) both;
+}
+.af-pile-n { font-family: var(--font-display); font-size: 30px; line-height: 1; color: var(--inverse-ink); }
+@keyframes af-pile-in { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
+.af-sent {
+  position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+  font-size: 10px; letter-spacing: 0.1em; color: var(--accent); white-space: nowrap;
+  animation: af-fade-in 500ms 1150ms var(--ease-out) both;
+}
+@keyframes af-fade-in { from { opacity: 0; transform: translate(-50%, -6px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+/* ---------- 02 classify ---------- */
+.af-list { display: flex; flex-direction: column; }
+.af-row {
+  display: grid; grid-template-columns: 74px minmax(0, 1fr) 40px; gap: 12px; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid var(--inverse-line);
+  animation: af-row-in 520ms var(--ease-out) both;
+}
+.af-badge {
+  justify-self: start;
+  border: 1px solid var(--accent); border-radius: var(--r-pill);
+  padding: 4px 12px; font-size: 12.5px; color: var(--inverse-ink);
+}
+.af-conf { font-size: 10.5px; color: var(--green-100); text-align: right; }
+@keyframes af-row-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+
+/* ---------- 03 extract ---------- */
+.af-extract { display: grid; grid-template-columns: 168px minmax(0, 1fr); gap: 20px; align-items: start; }
+.af-ex-doc {
+  border: 1px solid var(--inverse-line); border-left: 2px solid var(--accent);
+  border-radius: 4px; padding: 14px;
+  animation: af-doc-in 420ms var(--ease-out) both;
+}
+.af-ex-type { font-family: var(--font-display); font-size: 17px; line-height: 1.2; color: var(--inverse-ink); margin-top: 6px; }
+.af-ex-count { font-size: 9.5px; letter-spacing: 0.1em; color: var(--inverse-ink-soft); margin-top: 14px; }
+.af-ex-fields { display: flex; flex-direction: column; }
+.af-field {
+  display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 14px;
+  padding: 10px 0; border-bottom: 1px solid var(--inverse-line);
+  animation: af-field-in 460ms var(--ease-out) both;
+}
+.af-field > .af-dim { padding-top: 3px; }
+.af-field-v { font-size: 13.5px; line-height: 1.4; color: var(--inverse-ink); }
+@keyframes af-doc-in { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: none; } }
+@keyframes af-field-in { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+
+/* ---------- 04 map ---------- */
+.af-map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.af-party { border-top: 2px solid var(--accent); padding-top: 12px; animation: af-party-in 480ms var(--ease-out) both; }
+.af-party-name { font-family: var(--font-display); font-size: 15.5px; line-height: 1.15; color: var(--inverse-ink); margin-top: 6px; }
+.af-chips { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
+.af-chip {
+  border: 1px solid var(--inverse-line); border-radius: 3px;
+  padding: 7px 9px; font-size: 11.5px; line-height: 1.25; color: var(--inverse-ink);
+  animation: af-chip-in 520ms var(--ease-out) both;
+}
+@keyframes af-party-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes af-chip-in { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+
+/* ---------- pipeline responsive ---------- */
+@media (max-width: 900px) {
+  .af-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 12px; }
+  .af-extract { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .af-field { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+  .af-field > .af-dim { padding-top: 0; }
+  .af-map { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+}
+@media (max-width: 700px) {
+  .af { padding: 16px; }
+  .af-stage, .af-ingest { min-height: 340px; }
+  .af-ingest { --af-spread: 0.4; }
+  .af-row { grid-template-columns: 62px minmax(0, 1fr) 36px; gap: 8px; }
+  .af-badge { font-size: 11.5px; padding: 4px 9px; }
+}
+
+/* motion-sensitive viewers: land on the end state, no travel. Autoplay is
+   also switched off in ArthaFlow, so the rail drives the phases by hand. */
+@media (prefers-reduced-motion: reduce) {
+  .af-fly, .af-pile, .af-sent, .af-row, .af-ex-doc, .af-field, .af-party, .af-chip {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+  }
+}
+
+/* =========================================================
+   Artha section — stack the split and the 4-up pillar strip
+   ========================================================= */
+@media (max-width: 1180px) {
+  .artha-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .artha-pillars { grid-template-columns: repeat(2, 1fr) !important; }
+  /* row 2 needs its own rule above it once the 4-up becomes 2x2 */
+  .artha-pillars > *:nth-child(n + 3) { border-top: 1px solid var(--inverse-line); margin-top: 4px; }
+  .artha-pillars > *:nth-child(odd) { border-left: none !important; padding-left: 0 !important; }
+}
+@media (max-width: 700px) {
+  .artha-pillars { grid-template-columns: 1fr !important; }
+  .artha-pillars > * {
+    border-left: none !important;
+    padding-left: 0 !important;
+    border-top: 1px solid var(--inverse-line);
+  }
+  .artha-pillars > *:first-child { border-top: none; }
 }
 
 /* =========================================================
