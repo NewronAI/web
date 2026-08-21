@@ -114,7 +114,7 @@
      that limit: only Chromium was measured, and a headline edit or a browser
      that accumulates advances differently must not be able to force a 4th line.
      The svh term is what keeps a short window from pushing the CTA past the fold. */
-  --hero-title:      clamp(40px, min(9.15vw, 15svh), 120px);
+  --hero-title:      clamp(40px, min(9.45vw, 15.4svh), 124px);
 
   --dur-fast: 160ms;
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
@@ -384,7 +384,10 @@ section[id] { scroll-margin-top: 80px; }
   margin: 0;
   font-size: var(--hero-title);
   line-height: 0.95;
-  letter-spacing: -0.03em;
+  /* tighter than the -0.028em of .display: at 120px+ the optical need is for
+     less tracking, and every 0.01em shaved off buys ~3px of font size back
+     within the same 3-line width budget */
+  letter-spacing: -0.042em;
   text-wrap: balance;
 }
 
@@ -451,7 +454,7 @@ section[id] { scroll-margin-top: 80px; }
 /* ---------- small laptop / large tablet ---------- */
 @media (max-width: 1180px) {
   :root {
-    --hero-title:      clamp(38px, min(9.1vw, 15svh), 112px);
+    --hero-title:      clamp(38px, min(9.4vw, 15.4svh), 116px);
     --hero-gap:        32px;
     --hero-index-gap:  48px;
   }
@@ -521,21 +524,25 @@ section[id] { scroll-margin-top: 80px; }
 .af-rail-l { font-family: var(--font-display); font-size: 14px; line-height: 1.1; }
 
 /* fixed stage so the panel never jumps between phases */
-.af-stage { position: relative; min-height: 332px; overflow: hidden; display: grid; align-content: center; }
+.af-stage { position: relative; min-height: 428px; overflow: hidden; display: grid; align-content: center; }
 
 /* ---------- 01 ingest ---------- */
-.af-ingest { position: relative; min-height: 332px; display: grid; place-items: center; }
+.af-ingest { position: relative; min-height: 428px; display: grid; place-items: center; }
 .af-fly {
   position: absolute;
-  width: 72px; height: 94px; padding: 10px 8px;
-  display: flex; flex-direction: column; gap: 7px;
+  width: 196px; padding: 11px 12px;
+  display: flex; flex-direction: column; gap: 5px;
   border: 1px solid var(--inverse-line); border-radius: 3px;
-  background: color-mix(in oklab, var(--inverse-bg) 65%, transparent);
+  background: color-mix(in oklab, var(--inverse-bg) 82%, transparent);
   animation: af-converge 1000ms var(--ease-out) both;
 }
-.af-fly-t { font-size: 8px; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 2px; }
-.af-bar { height: 3px; border-radius: 2px; background: var(--inverse-line); }
-.af-bar.is-short { width: 58%; }
+.af-fly-kind { font-size: 8.5px; letter-spacing: 0.1em; color: var(--accent); }
+/* filenames are long and arbitrary — clip rather than reflow the chip */
+.af-fly-name {
+  font-size: 12px; line-height: 1.25; color: var(--inverse-ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.af-fly-pp { font-size: 8.5px; letter-spacing: 0.08em; color: var(--inverse-ink-soft); }
 @keyframes af-converge {
   0%   { opacity: 0; transform: translate(calc(var(--x) * var(--af-spread, 1)), calc(var(--y) * var(--af-spread, 1))) rotate(var(--r)) scale(0.94); }
   45%  { opacity: 1; }
@@ -561,8 +568,13 @@ section[id] { scroll-margin-top: 80px; }
 .af-list { display: flex; flex-direction: column; }
 .af-row {
   display: grid; grid-template-columns: 74px minmax(0, 1fr) 40px; gap: 12px; align-items: center;
-  padding: 12px 0; border-bottom: 1px solid var(--inverse-line);
+  padding: 10px 0; border-bottom: 1px solid var(--inverse-line);
   animation: af-row-in 520ms var(--ease-out) both;
+}
+.af-row-mid { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; min-width: 0; max-width: 100%; }
+.af-row-src {
+  font-size: 9.5px; letter-spacing: 0.04em; color: var(--inverse-ink-soft);
+  max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .af-badge {
   justify-self: start;
@@ -615,8 +627,10 @@ section[id] { scroll-margin-top: 80px; }
 }
 @media (max-width: 700px) {
   .af { padding: 16px; }
-  .af-stage, .af-ingest { min-height: 340px; }
-  .af-ingest { --af-spread: 0.4; }
+  .af-stage, .af-ingest { min-height: 420px; }
+  .af-ingest { --af-spread: 0.34; }
+  .af-fly { width: 150px; padding: 9px 10px; }
+  .af-fly-name { font-size: 11px; }
   .af-row { grid-template-columns: 62px minmax(0, 1fr) 36px; gap: 8px; }
   .af-badge { font-size: 11.5px; padding: 4px 9px; }
 }
@@ -651,6 +665,108 @@ section[id] { scroll-margin-top: 80px; }
 }
 
 /* =========================================================
+   Site-wide responsive layout
+   Nearly all layout on this site is inline-styled, so these rules need
+   !important to win. The class names are shared between the homepage
+   sections and the site-chrome primitives wherever the pattern is the
+   same, so one rule fixes every page that uses it.
+   ========================================================= */
+
+/* card grids: 3-up (or 2-up) → 2-up → 1-up */
+@media (max-width: 1180px) {
+  .r-cards { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 760px) {
+  .r-cards { grid-template-columns: minmax(0, 1fr) !important; }
+}
+
+/* two-column content splits (copy beside a panel/mock) */
+@media (max-width: 1080px) {
+  .r-split { grid-template-columns: minmax(0, 1fr) !important; gap: 40px !important; }
+  .r-cta   { grid-template-columns: minmax(0, 1fr) !important; gap: 32px !important; }
+  .r-prose { grid-template-columns: minmax(0, 1fr) !important; gap: 40px !important; }
+}
+
+/* lead + stats strip: stack the lead, then let the figures share rows */
+@media (max-width: 1080px) {
+  .r-stats { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  .r-stats > *:first-child { grid-column: 1 / -1; padding: 0 0 24px !important; }
+  .r-stats > *:not(:first-child) { border-left: 1px solid var(--line); }
+  .r-stats > *:nth-child(2) { border-left: none; }
+}
+@media (max-width: 620px) {
+  .r-stats { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .r-stats > *:nth-child(odd):not(:first-child) { border-left: none; }
+}
+
+/* numbered pillar pairs → single column, and the borders that implied
+   two columns have to be re-drawn as simple stacked rules */
+@media (max-width: 900px) {
+  .r-pillars { grid-template-columns: minmax(0, 1fr) !important; }
+  .r-pillars > * {
+    padding: 26px 0 !important;
+    border-left: none !important;
+    border-top: none !important;
+    border-bottom: 1px solid var(--line) !important;
+  }
+  .r-pillars > *:first-child { border-top: 1px solid var(--line) !important; }
+}
+@media (max-width: 480px) {
+  .r-pillar { grid-template-columns: minmax(0, 1fr) !important; gap: 6px !important; }
+}
+
+/* 2-up / 3-up tile rows inside panels */
+@media (max-width: 900px) {
+  .r-2up { grid-template-columns: minmax(0, 1fr) !important; }
+  .r-2up > * { border-right: none !important; padding-left: 0 !important; }
+}
+@media (max-width: 520px) {
+  .r-3up { grid-template-columns: minmax(0, 1fr) !important; }
+}
+
+/* the lending suite: sidebar over the mock, and the mock scrolls rather
+   than being clipped — these are dense dashboards, not reflowable content */
+@media (max-width: 1080px) {
+  .r-suite { grid-template-columns: minmax(0, 1fr) !important; min-height: 0 !important; }
+  .r-suite > aside { border-right: none !important; border-bottom: 1px solid var(--line); }
+  .r-mock { min-height: 0 !important; overflow-x: auto !important; padding: 20px !important; }
+  .r-mock > * { min-width: 720px; }
+}
+
+/* customer cells: 3-then-2 becomes 2-up, then a single column */
+@media (max-width: 900px) {
+  .r-custgrid > * { grid-column: span 3 !important; }
+}
+@media (max-width: 560px) {
+  .r-custgrid > * { grid-column: span 6 !important; border-right: none !important; }
+  .r-custgrid > *:not(:last-child) { border-bottom: 1px solid var(--line) !important; }
+}
+
+/* footer: 5 columns → 2 → 1 */
+@media (max-width: 1080px) {
+  .r-footer { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 36px 24px !important; }
+  .r-footer > *:first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 620px) {
+  .r-footer { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+
+/* list rows with a fixed label rail (press coverage) */
+@media (max-width: 760px) {
+  .r-listrow { grid-template-columns: minmax(0, 1fr) auto !important; gap: 6px 16px !important; }
+  .r-listrow > *:first-child { grid-column: 1 / -1; }
+}
+
+/* vertical rhythm: 120px section padding is too much on a phone */
+@media (max-width: 900px) {
+  .section       { padding-block: calc(72px * var(--density)) !important; }
+  .section-tight { padding-block: calc(44px * var(--density)) !important; }
+}
+@media (max-width: 560px) {
+  .section { padding-block: calc(56px * var(--density)) !important; }
+}
+
+/* =========================================================
    Responsive nav
    ========================================================= */
 @media (max-width: 1180px) {
@@ -659,7 +775,43 @@ section[id] { scroll-margin-top: 80px; }
 }
 @media (max-width: 980px) {
   .nav-center { display: none !important; }
+  /* the inline links are gone at this width, so the menu is the only way
+     to reach the sections — it must appear exactly where they disappear */
+  .nav-toggle { display: inline-flex !important; }
 }
+
+/* menu button: two bars that cross into an X when open */
+.nav-toggle {
+  display: none;
+  flex-direction: column; justify-content: center; gap: 5px;
+  width: 40px; height: 40px; padding: 0 9px;
+  background: transparent; border: 1px solid var(--line); border-radius: var(--r);
+  cursor: pointer;
+}
+.nav-toggle > span {
+  display: block; height: 1.5px; width: 100%; background: var(--ink);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.nav-toggle > span.is-x:first-child { transform: translateY(3.25px) rotate(45deg); }
+.nav-toggle > span.is-x:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+
+.nav-panel {
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  max-height: calc(100svh - var(--nav-h));
+  overflow-y: auto;
+}
+.nav-panel .shell { display: flex; flex-direction: column; padding-block: 8px; }
+.nav-panel a {
+  padding: 14px 0;
+  font-size: 16px;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-soft);
+}
+.nav-panel a:last-child { border-bottom: none; color: var(--accent); }
+/* if the viewport widens while the menu is open, the inline links take over */
+@media (min-width: 981px) { .nav-panel { display: none; } }
 
 /* =========================================================
    Mark — indigo highlight

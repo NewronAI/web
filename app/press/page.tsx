@@ -22,7 +22,7 @@ function Releases() {
   return (
     <div style={{ marginTop: 48, borderTop: "1px solid var(--line)" }}>
       {RELEASES.map(([date, title, desc]) =>
-        <a key={title} href={route("v4.html#contact")} style={{ display: "grid", gridTemplateColumns: "140px 1fr auto", gap: 28, alignItems: "start", padding: "24px 0", borderBottom: "1px solid var(--line)", textDecoration: "none", color: "var(--ink)" }}>
+        <a key={title} className="r-listrow" href={route("v4.html#contact")} style={{ display: "grid", gridTemplateColumns: "140px 1fr auto", gap: 28, alignItems: "start", padding: "24px 0", borderBottom: "1px solid var(--line)", textDecoration: "none", color: "var(--ink)" }}>
           <span className="mono" style={{ fontSize: 12, color: "var(--ink-muted)", letterSpacing: "0.06em", paddingTop: 4 }}>{date.toUpperCase()}</span>
           <span>
             <span style={{ fontFamily: "var(--font-display)", fontWeight: 500, fontSize: 21, lineHeight: 1.2, display: "block" }}>{title}</span>
@@ -57,7 +57,7 @@ export default function Page() {
 
       <Band id="kit">
         <Head tag="03" eyebrow="Press kit" title={<>Brand & <em className="italic">media</em> resources.</>} kicker="Logos, the company description and approved imagery for editorial use." />
-        <div style={{ marginTop: 48, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+        <div className="r-cards" style={{ marginTop: 48, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
           {([["Logo & wordmark", "PNG + SVG · light and dark", "newron-logo.png"], ["Company boilerplate", "One-paragraph and one-line descriptions", "v4.html#contact"], ["Imagery", "Approved product and brand visuals", "v4.html#contact"]] as [string, string, string][]).map(([t, d, href]) =>
             <a key={t} className="card" href={route(href)} style={{ padding: 28, textDecoration: "none", color: "var(--ink)", display: "block" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

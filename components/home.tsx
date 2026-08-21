@@ -56,8 +56,14 @@ const Arrow = ({ size = 14 }: { size?: number }) =>
   </svg>;
 
 // ───────────────────────────────────────────────── nav
+const HOME_NAV: [string, string][] = [
+  ["Lending", "#lending"], ["Artha", "#artha"], ["Insurance", "#insurance"],
+  ["Governance", "#governance"], ["Services", "#services"],
+  ["Customers", "#customers"], ["Company", "#company"]];
+
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 8);
     window.addEventListener("scroll", on, { passive: true });
@@ -75,14 +81,26 @@ function Nav() {
       <div className="shell" style={{ height: "var(--nav-h)", display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "clamp(16px, 3vw, 48px)" }}>
         <Wordmark />
         <nav className="nav-center" style={{ display: "flex", justifyContent: "center", gap: 2 }}>
-          {[["Lending", "#lending"], ["Artha", "#artha"], ["Insurance", "#insurance"], ["Governance", "#governance"], ["Services", "#services"], ["Customers", "#customers"], ["Company", "#company"]].map(([l, h]) =>
+          {HOME_NAV.map(([l, h]) =>
             <a key={l} href={h} style={{ textDecoration: "none", color: "var(--ink)", padding: "8px 10px", fontSize: 13.5, fontWeight: 500, borderRadius: 4, whiteSpace: "nowrap" }}>{l}</a>)}
         </nav>
-        <div className="nav-cta" style={{ display: "flex", gap: 8 }}>
+        <div className="nav-cta" style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <a className="btn btn-ghost nav-cta-secondary" href="#contact">Talk to sales</a>
           <a className="btn btn-primary" href="#contact" style={{ whiteSpace: "nowrap" }}>Book a demo <Arrow /></a>
+          <button className="nav-toggle" aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}>
+            <span className={open ? "is-x" : ""} /><span className={open ? "is-x" : ""} />
+          </button>
         </div>
       </div>
+      {open &&
+        <div className="nav-panel">
+          <div className="shell">
+            {HOME_NAV.map(([l, h]) =>
+              <a key={l} href={h} onClick={() => setOpen(false)}>{l}</a>)}
+            <a href="#contact" onClick={() => setOpen(false)}>Talk to sales</a>
+          </div>
+        </div>}
     </header>);
 }
 
@@ -179,11 +197,11 @@ function Lending() {
         <SectionHead tag="01" eyebrow="Lending intelligence"
           title={<>The credit officer&apos;s<br /><em className="italic" style={{ color: "var(--accent)" }}>second brain.</em></>}
           kicker="A modular suite for the loan origination lifecycle — from intake and statement parsing to CAM generation, deviation handling, and verification. Configured to your policy, your format, your tier structure." />
-        <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16, marginBottom: 64 }}>
+        <div className="r-cards" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16, marginBottom: 64 }}>
           <CoverageCard label="Commercial" items={["Loan against property", "Overdraft", "Gold loan", "Equipment finance", "Revenue-based finance", "Line of credit"]} />
           <CoverageCard label="Consumer" items={["Home loan", "Auto loan", "Loan against securities", "Personal loan", "Education loan", "Credit card"]} />
         </div>
-        <div className="card" style={{ display: "grid", gridTemplateColumns: "280px 1fr", overflow: "hidden", minHeight: 560 }}>
+        <div className="card r-suite" style={{ display: "grid", gridTemplateColumns: "280px 1fr", overflow: "hidden", minHeight: 560 }}>
           <aside style={{ borderRight: "1px solid var(--line)", padding: 24, background: "var(--bg)" }}>
             <div className="eyebrow" style={{ marginBottom: 20 }}>In the suite</div>
             {screens.map((s) =>
@@ -198,7 +216,7 @@ function Lending() {
                 <div style={{ fontSize: 12, color: "var(--ink-muted)", marginTop: 4, lineHeight: 1.45 }}>{s.desc}</div>
               </button>)}
           </aside>
-          <div style={{ background: "var(--bg-2)", padding: 28, minHeight: 560 }}>
+          <div className="r-mock" style={{ background: "var(--bg-2)", padding: 28, minHeight: 560 }}>
             <ProductChrome title={`Newron · ${screens.find((s) => s.id === active)!.label}`}>
               {active === "cam" && <CAMScreen />}
               {active === "statement" && <StatementScreen />}
@@ -448,7 +466,7 @@ function Msg({ from, right, accent, children }: { from: string; right?: boolean;
 function Outcomes() {
   const o = [{ k: "Reduction in TAT", v: 66, suffix: "%" }, { k: "Productivity uplift", v: 200, suffix: "%" }, { k: "Hours saved", v: 65000, suffix: "+" }];
   return (
-    <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 2fr) repeat(3, 1fr)", gap: 0, borderTop: "1px solid var(--line)" }}>
+    <div className="r-stats" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 2fr) repeat(3, 1fr)", gap: 0, borderTop: "1px solid var(--line)" }}>
       <div style={{ padding: "32px 24px 0 0" }}>
         <div className="eyebrow">Measured across deployments</div>
         <div style={{ fontFamily: "var(--font-display)", fontSize: 22, marginTop: 8, lineHeight: 1.2 }}>
@@ -472,18 +490,30 @@ function Outcomes() {
    tracked in JS. The rail is clickable (same affordance as the Lending suite
    aside) which also pauses autoplay, so every phase is reachable by hand —
    that is the accessible path when the viewer prefers reduced motion. */
+/* What actually lands in an intake: files, not documents. No classes, no cover
+   sheet, filenames that say nothing, and one merged PDF holding several
+   documents — so the file count is lower than the document count and the
+   split has to be discovered. Pages are numbered across the assembled batch. */
+const AF_FILES = [
+  { kind: "MERGED PDF", name: "combined_scan.pdf", pp: "10 pp" },
+  { kind: "CAMERA", name: "IMG_20260412_094317.jpg", pp: "1 pp" },
+  { kind: "IMAGE", name: "WhatsApp Image 2026-04-12 at 09.51.jpeg", pp: "1 pp" },
+  { kind: "SCAN", name: "CamScanner 12-04-2026 09.45.pdf", pp: "12 pp" },
+  { kind: "PDF", name: "Scan_0007.pdf", pp: "6 pp" }];
+const AF_PAGES = 30;
+
 const AF_DOCS = [
-  { id: "bank", short: "BANK", type: "Bank statement", pages: "p. 01–06", conf: "0.99", party: "R. Iyer", role: "Applicant",
+  { id: "bank", type: "Bank statement", pages: "p. 01–06", src: "combined_scan.pdf", conf: "0.99", party: "R. Iyer", role: "Applicant",
     fields: [["Bank", "HDFC Bank · 50100•••2291"], ["Period", "Apr–Jun 2026"], ["Avg. balance", "₹ 8,41,905"], ["Net inflow", "₹ 31,20,448"]] },
-  { id: "pan", short: "PAN", type: "PAN card", pages: "p. 07", conf: "0.99", party: "R. Iyer", role: "Applicant",
-    fields: [["Name", "Rohit Iyer"], ["Father's name", "Krishnan Iyer"], ["PAN", "ABZPI•••7K"], ["DOB", "22-04-1971"]] },
-  { id: "itr", short: "ITR", type: "ITR + computation", pages: "p. 08–11", conf: "0.98", party: "Iyer Traders", role: "Entity",
+  { id: "itr", type: "ITR + computation", pages: "p. 07–10", src: "combined_scan.pdf", conf: "0.98", party: "Iyer Traders", role: "Entity",
     fields: [["Assessment year", "AY 2025–26"], ["Gross total income", "₹ 62,40,180"], ["Tax paid", "₹ 14,88,204"]] },
-  { id: "aadhaar", short: "AADHAAR", type: "Aadhaar", pages: "p. 12", conf: "0.99", party: "S. Iyer", role: "Co-applicant",
+  { id: "pan", type: "PAN card", pages: "p. 11", src: "IMG_20260412_094317.jpg", conf: "0.99", party: "R. Iyer", role: "Applicant",
+    fields: [["Name", "Rohit Iyer"], ["Father's name", "Krishnan Iyer"], ["PAN", "ABZPI•••7K"], ["DOB", "22-04-1971"]] },
+  { id: "aadhaar", type: "Aadhaar", pages: "p. 12", src: "WhatsApp Image 2026-04-12 at 09.51.jpeg", conf: "0.99", party: "S. Iyer", role: "Co-applicant",
     fields: [["Name", "Sunita Iyer"], ["Address", "14, 3rd Cross, Whitefield, Bengaluru 560066"], ["Aadhaar no.", "XXXX XXXX 4417"]] },
-  { id: "deed", short: "DEED", type: "Sale deed", pages: "p. 13–24", conf: "0.97", party: "Collateral", role: "Property",
+  { id: "deed", type: "Sale deed", pages: "p. 13–24", src: "CamScanner 12-04-2026 09.45.pdf", conf: "0.97", party: "Collateral", role: "Property",
     fields: [["Property", "Whitefield, Bengaluru"], ["Extent", "2,150 sq ft"], ["Consideration", "₹ 2,45,00,000"]] },
-  { id: "gst", short: "GST", type: "GST returns", pages: "p. 25–30", conf: "0.98", party: "Iyer Traders", role: "Entity",
+  { id: "gst", type: "GST returns", pages: "p. 25–30", src: "Scan_0007.pdf", conf: "0.98", party: "Iyer Traders", role: "Entity",
     fields: [["GSTIN", "29AAFCI•••Q1Z5"], ["Period", "FY 2025–26"], ["Turnover", "₹ 4,18,60,900"]] }];
 
 type AfDoc = (typeof AF_DOCS)[number];
@@ -497,7 +527,7 @@ const AF_PARTIES = AF_DOCS.reduce((acc, d) => {
 
 const AF_PHASES = ["Ingest", "Classify", "Extract", "Map"];
 /* scatter origins for the converging documents, in px at full spread */
-const AF_SCATTER = [[-196, -74, -9], [176, -86, 7], [-214, 8, 4], [200, 16, -6], [-124, 84, -3], [136, 90, 8]];
+const AF_SCATTER = [[-158, -88, -7], [152, -94, 6], [-172, 6, 4], [166, 16, -5], [-6, 100, 3]];
 const vars = (o: Record<string, string>) => o as CSSProperties;
 
 function ArthaFlow() {
@@ -555,33 +585,39 @@ function ArthaFlow() {
     </div>);
 }
 
-/* 01 — loose documents converge into a single upload */
+/* 01 — files arrive knowing nothing about themselves: a format and a filename.
+   No type is shown here on purpose; that is what phase 02 is for. */
 function AfIngest() {
   return (
     <div className="af-ingest">
       {AF_SCATTER.map(([x, y, r], i) =>
         <div key={i} className="af-fly"
           style={{ ...vars({ "--x": `${x}px`, "--y": `${y}px`, "--r": `${r}deg` }), animationDelay: `${i * 95}ms` }}>
-          <span className="mono af-fly-t">{AF_DOCS[i].short}</span>
-          <span className="af-bar" /><span className="af-bar is-short" /><span className="af-bar" />
+          <span className="mono af-fly-kind">{AF_FILES[i].kind}</span>
+          <span className="af-fly-name">{AF_FILES[i].name}</span>
+          <span className="mono af-fly-pp">{AF_FILES[i].pp} · UNCLASSIFIED</span>
         </div>)}
       <div className="af-pile">
-        <span className="mono af-dim">1 UPLOAD</span>
-        <span className="af-pile-n">30 pages</span>
-        <span className="mono af-dim">6 DOCUMENTS · UNSORTED · NO COVER SHEET</span>
+        <span className="mono af-dim">{AF_FILES.length} FILES RECEIVED</span>
+        <span className="af-pile-n">{AF_PAGES} pages</span>
+        <span className="mono af-dim">NO CLASSES · NO COVER SHEET · FILENAMES ONLY</span>
       </div>
       <div className="af-sent mono">↓ SENT TO ARTHA</div>
     </div>);
 }
 
-/* 02 — every document named, including the ones batched into one scan */
+/* 02 — every document named, and traced back to the file it came out of:
+   two of these were buried in the same merged PDF */
 function AfClassify() {
   return (
     <div className="af-list">
       {AF_DOCS.map((d, i) =>
         <div key={d.id} className="af-row" style={{ animationDelay: `${i * 105}ms` }}>
           <span className="mono af-dim">{d.pages}</span>
-          <span className="af-badge">{d.type}</span>
+          <span className="af-row-mid">
+            <span className="af-badge">{d.type}</span>
+            <span className="mono af-row-src">← {d.src}</span>
+          </span>
           <span className="mono af-conf">{d.conf}</span>
         </div>)}
     </div>);
@@ -629,7 +665,7 @@ function AfMap() {
    the page's light/dark/light rhythm. */
 function Artha() {
   const caps = [
-    { n: "01", k: "Classification", d: "Names every document in the file — and splits a single batched upload into its constituent documents before any extraction runs.", meta: "1 UPLOAD → 6 DOCS" },
+    { n: "01", k: "Classification", d: "Nothing arrives labelled — filenames are noise, and one PDF can hold four documents. Artha names each one and splits the batch before any extraction runs.", meta: "5 FILES → 6 DOCS" },
     { n: "02", k: "Extraction", d: "Reads the fields credit actually underwrites on — issuer, period, balances, identifiers — from scans, phone photographs and regional-language forms.", meta: "0-SHOT · NO TEMPLATES" },
     { n: "03", k: "Party mapping", d: "Resolves every party in the file and attaches each document to the right one, so applicant, co-applicant, guarantor and entity never blur together.", meta: "4 PARTIES RESOLVED" }];
   const pillars = [
@@ -683,7 +719,7 @@ function Insurance() {
         <SectionHead tag="03" eyebrow="Insurance AI"
           title={<>Settle claims <em className="italic" style={{ color: "var(--accent)" }}>before</em> they&apos;re filed.</>}
           kicker="Newron's claims models inspect documents, parse policy language, and predict denial risk the moment a claim is initiated — so adjusters spend their time on edge cases, not paperwork." />
-        <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.4fr)", gap: 64 }}>
+        <div className="r-split" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.4fr)", gap: 64 }}>
           <div>
             <ClaimStep n="01" title="Eligibility check, before submission" desc="Policy retrieval + document understanding flags missing artefacts and ineligible claims at intake." meta="ELIGIBLE · 0.94" metaColor="green" />
             <ClaimStep n="02" title="Automated claim filing" desc="Forms, supporting documents and metadata assembled into TPA-ready packets in under 90 seconds." meta="FILED · 00:01:24" metaColor="slate" />
@@ -699,7 +735,7 @@ function Insurance() {
                   </div>
                   <div className="mono" style={{ fontSize: 10, color: "var(--green)", letterSpacing: "0.08em" }}>● ELIGIBLE</div>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+                <div className="r-3up" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
                   {[["Policy fit", "0.98", "green"], ["Denial risk", "0.18", "amber"], ["Doc completeness", "11/11", "green"]].map(([k, v, c]) =>
                     <div key={k} style={{ border: "1px solid var(--line)", padding: 12, borderRadius: 4 }}>
                       <div className="eyebrow" style={{ fontSize: 10 }}>{k}</div>
@@ -743,9 +779,9 @@ function Governance() {
         <SectionHead inverse tag="04" eyebrow="Governance AI"
           title={<>Citizen services<br />in <em className="italic" style={{ color: "var(--accent)" }}>their</em> language.</>}
           kicker="Built with the Government of Karnataka. Newron reads Kannada handwriting, speaks in regional dialects, and surfaces policy answers from documents that were never indexed — so grievance redressal works at the speed of a phone call." />
-        <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.3fr)", gap: 64, alignItems: "start" }}>
+        <div className="r-split" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.3fr)", gap: 64, alignItems: "start" }}>
           <div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+            <div className="r-2up" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
               {[["Custom OCR · Kannada", "Handwriting + print, ledger forms"], ["Regional TTS", "Natural voices, low latency"], ["Grievance triage", "Routing + summary + draft response"], ["Policy discovery", "Surfaces clauses from PDFs at scale"]].map(([k, v], i) =>
                 <div key={k} style={{ borderTop: "1px solid var(--inverse-line)", borderRight: i % 2 === 0 ? "1px solid var(--inverse-line)" : "none", padding: "20px 24px 20px 0", paddingLeft: i % 2 === 1 ? 24 : 0 }}>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--inverse-ink)" }}>{k}</div>
@@ -803,7 +839,7 @@ function Services() {
         <SectionHead tag="05" eyebrow="Custom AI services"
           title={<>When the product isn&apos;t enough,<br /><em className="italic" style={{ color: "var(--accent)" }}>we build it for you.</em></>}
           kicker="Newron is staffed by ex-research and ex-platform engineers. Most engagements ship to production inside one quarter." />
-        <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+        <div className="r-cards" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
           {items.map((it, idx) =>
             <article key={it.title} className="card" style={{ padding: 28 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
@@ -835,7 +871,7 @@ function Customers() {
     <section id="customers" className="section" style={{ borderTop: "1px solid var(--line)", background: "var(--bg-2)" }}>
       <div className="shell">
         <SectionHead tag="06" eyebrow="Customers" title={<>In production at banks, NBFCs<br />and state institutions.</>} />
-        <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.6fr)", gap: 56, alignItems: "start" }}>
+        <div className="r-split" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.6fr)", gap: 56, alignItems: "start" }}>
           <div>
             <div className="eyebrow" style={{ marginBottom: 18 }}>Featured · NBFC, Tier-1 · Q3 2025</div>
             <blockquote style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "clamp(26px, 2.6vw, 36px)", lineHeight: 1.2, letterSpacing: "-0.012em" }}>
@@ -844,7 +880,7 @@ function Customers() {
             <div style={{ marginTop: 24, fontSize: 13, color: "var(--ink-soft)" }}>Head of Credit · Tier-1 NBFC · ₹38,000 Cr AUM</div>
             <a href="#" className="btn btn-link" style={{ marginTop: 20, display: "inline-block" }}>Read the case study →</a>
           </div>
-          <div style={{ border: "1px solid var(--line)", borderRadius: 6, background: "var(--bg)", display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}>
+          <div className="r-custgrid" style={{ border: "1px solid var(--line)", borderRadius: 6, background: "var(--bg)", display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}>
             {CUSTOMERS.map((c, i) => {
               /* three across the top, the remainder sharing the row below — a
                  6-column track lets both rows stay flush without an empty cell */
@@ -874,9 +910,9 @@ function Company() {
     <section id="company" className="section">
       <div className="shell">
         <SectionHead tag="07" eyebrow="Why Newron" title={<>A platform built for the way<br /><em className="italic" style={{ color: "var(--accent)" }}>regulated industries</em> actually buy AI.</>} />
-        <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 0 }}>
+        <div className="r-pillars" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 0 }}>
           {pillars.map((p, i) =>
-            <div key={p.k} style={{ padding: "32px 32px 32px 0", paddingLeft: i % 2 === 1 ? 32 : 0, borderTop: i < 2 ? "1px solid var(--line)" : "none", borderBottom: "1px solid var(--line)", borderLeft: i % 2 === 1 ? "1px solid var(--line)" : "none", display: "grid", gridTemplateColumns: "60px 1fr", gap: 16 }}>
+            <div key={p.k} className="r-pillar" style={{ padding: "32px 32px 32px 0", paddingLeft: i % 2 === 1 ? 32 : 0, borderTop: i < 2 ? "1px solid var(--line)" : "none", borderBottom: "1px solid var(--line)", borderLeft: i % 2 === 1 ? "1px solid var(--line)" : "none", display: "grid", gridTemplateColumns: "60px 1fr", gap: 16 }}>
               <div className="mono" style={{ fontSize: 11, color: "var(--ink-muted)", letterSpacing: "0.1em", marginTop: 6 }}>0{i + 1}</div>
               <div>
                 <div style={{ fontFamily: "var(--font-display)", fontSize: 26, lineHeight: 1.1 }}>{p.k}</div>
@@ -906,7 +942,7 @@ function CTA({ headline }: { headline: string }) {
   const [ticket, setTicket] = useState("");
   return (
     <section id="contact" className="section" data-on-dark="1" style={{ background: "var(--inverse-bg)", color: "var(--inverse-ink)" }}>
-      <div className="shell" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.3fr) minmax(0, 1fr)", gap: 80, alignItems: "end" }}>
+      <div className="shell r-cta" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.3fr) minmax(0, 1fr)", gap: 80, alignItems: "end" }}>
         <div>
           <div className="eyebrow" style={{ color: "var(--inverse-ink-soft)", marginBottom: 24 }}>Get started</div>
           <h2 className="display" style={{ margin: 0, fontSize: "clamp(48px, 7vw, 96px)", lineHeight: 0.96, color: "var(--inverse-ink)" }}>
@@ -950,7 +986,7 @@ function Footer() {
   return (
     <footer style={{ background: "var(--bg)", borderTop: "1px solid var(--line)", paddingBlock: 80 }}>
       <div className="shell">
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) repeat(4, minmax(0, 1fr))", gap: 32 }}>
+        <div className="r-footer" style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) repeat(4, minmax(0, 1fr))", gap: 32 }}>
           <div>
             <Wordmark />
             <p style={{ fontSize: 13, color: "var(--ink-soft)", maxWidth: 280, marginTop: 18, lineHeight: 1.55 }}>

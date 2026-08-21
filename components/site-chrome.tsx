@@ -58,6 +58,7 @@ export const Arrow = ({ size = 14 }: { size?: number }) =>
 // ── nav ──────────────────────────────────────────────────
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 8);
     on();
@@ -73,17 +74,29 @@ export function Nav() {
       borderBottom: "1px solid " + (scrolled ? "var(--line)" : "transparent"),
       transition: "background 0.2s, border-color 0.2s"
     }}>
-      <div className="shell" style={{ height: 68, display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "clamp(16px, 3vw, 48px)" }}>
+      <div className="shell" style={{ height: "var(--nav-h)", display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "clamp(16px, 3vw, 48px)" }}>
         <Wordmark />
         <nav className="nav-center" style={{ display: "flex", justifyContent: "center", gap: 2 }}>
           {NAV_LINKS.map(([l, h]) =>
             <a key={l} href={route(h)} style={{ textDecoration: "none", color: "var(--ink)", padding: "8px 10px", fontSize: 13.5, fontWeight: 500, borderRadius: 4, whiteSpace: "nowrap" }}>{l}</a>)}
         </nav>
-        <div className="nav-cta" style={{ display: "flex", gap: 8 }}>
+        <div className="nav-cta" style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <a className="btn btn-ghost nav-cta-secondary" href={route("v4.html#contact")}>Talk to sales</a>
           <a className="btn btn-primary" href={route("v4.html#contact")} style={{ whiteSpace: "nowrap" }}>Book a demo <Arrow /></a>
+          <button className="nav-toggle" aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}>
+            <span className={open ? "is-x" : ""} /><span className={open ? "is-x" : ""} />
+          </button>
         </div>
       </div>
+      {open &&
+        <div className="nav-panel">
+          <div className="shell">
+            {NAV_LINKS.map(([l, h]) =>
+              <a key={l} href={route(h)} onClick={() => setOpen(false)}>{l}</a>)}
+            <a href={route("v4.html#contact")} onClick={() => setOpen(false)}>Talk to sales</a>
+          </div>
+        </div>}
     </header>);
 }
 
@@ -92,7 +105,7 @@ export function Footer() {
   return (
     <footer style={{ background: "var(--bg)", borderTop: "1px solid var(--line)", paddingBlock: 80 }}>
       <div className="shell">
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) repeat(4, minmax(0, 1fr))", gap: 32 }}>
+        <div className="r-footer" style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) repeat(4, minmax(0, 1fr))", gap: 32 }}>
           <div>
             <Wordmark />
             <p style={{ fontSize: 13, color: "var(--ink-soft)", maxWidth: 280, marginTop: 18, lineHeight: 1.55 }}>
@@ -171,7 +184,7 @@ export function Head({ tag, eyebrow, title, kicker, inverse }: {
   tag?: ReactNode; eyebrow?: ReactNode; title?: ReactNode; kicker?: ReactNode; inverse?: boolean;
 }) {
   return (
-    <header style={{ display: "grid", gridTemplateColumns: "80px minmax(0, 1.4fr) minmax(0, 1fr)", gap: 48, alignItems: "start", borderTop: "1px solid " + (inverse ? "var(--inverse-line)" : "var(--line)"), paddingTop: 28 }}>
+    <header className="section-head" style={{ display: "grid", gridTemplateColumns: "80px minmax(0, 1.4fr) minmax(0, 1fr)", gap: 48, alignItems: "start", borderTop: "1px solid " + (inverse ? "var(--inverse-line)" : "var(--line)"), paddingTop: 28 }}>
       <div className="mono" style={{ fontSize: 12, color: inverse ? "var(--inverse-ink-soft)" : "var(--ink-muted)", letterSpacing: "0.1em", paddingTop: 6 }}>{tag}</div>
       <div>
         <div className="eyebrow eyebrow-grad" style={{ marginBottom: 18 }}>{eyebrow}</div>
@@ -185,7 +198,7 @@ export function Head({ tag, eyebrow, title, kicker, inverse }: {
 type Feature = { tag?: string; title: string; desc: string; points?: string[] };
 export function FeatureGrid({ items, cols = 3, top = 56 }: { items: Feature[]; cols?: number; top?: number }) {
   return (
-    <div style={{ marginTop: top, display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 16 }}>
+    <div className="r-cards" style={{ marginTop: top, display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 16 }}>
       {items.map((it, i) =>
         <article key={i} className="card" style={{ padding: 28 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
@@ -209,7 +222,7 @@ export function FeatureGrid({ items, cols = 3, top = 56 }: { items: Feature[]; c
 type Stat = { v: string; suffix?: string; k: string };
 export function StatBand({ lead, stats }: { lead?: ReactNode; stats: Stat[] }) {
   return (
-    <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: `minmax(0, 2fr) repeat(${stats.length}, 1fr)`, borderTop: "1px solid var(--line)" }}>
+    <div className="r-stats" style={{ marginTop: 56, display: "grid", gridTemplateColumns: `minmax(0, 2fr) repeat(${stats.length}, 1fr)`, borderTop: "1px solid var(--line)" }}>
       <div style={{ padding: "32px 24px 0 0" }}>
         <div className="eyebrow">Measured in production</div>
         <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 22, marginTop: 8, lineHeight: 1.2 }}>{lead}</div>
@@ -225,9 +238,9 @@ export function StatBand({ lead, stats }: { lead?: ReactNode; stats: Stat[] }) {
 // ── definition rows (two-column) ─────────────────────────
 export function SplitRows({ items, top = 56 }: { items: [string, string][]; top?: number }) {
   return (
-    <div style={{ marginTop: top, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 0 }}>
+    <div className="r-pillars" style={{ marginTop: top, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 0 }}>
       {items.map(([k, v], i) =>
-        <div key={k} style={{
+        <div key={k} className="r-pillar" style={{
           padding: "32px 32px 32px 0",
           paddingLeft: i % 2 === 1 ? 32 : 0,
           borderTop: i < 2 ? "1px solid var(--line)" : "none",
@@ -289,7 +302,7 @@ export function CTABand({ eyebrow = "Get started", headline, sub, primary = { la
 }) {
   return (
     <section className="section" data-on-dark="1" style={{ background: "var(--inverse-bg)", color: "var(--inverse-ink)" }}>
-      <div className="shell" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.3fr) minmax(0, 1fr)", gap: 64, alignItems: "end" }}>
+      <div className="shell r-cta" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.3fr) minmax(0, 1fr)", gap: 64, alignItems: "end" }}>
         <div>
           <div className="eyebrow eyebrow-grad" style={{ marginBottom: 22 }}>{eyebrow}</div>
           <h2 className="display" style={{ margin: 0, fontSize: "clamp(36px, 5vw, 68px)", lineHeight: 1.0, color: "var(--inverse-ink)" }}>{headline}</h2>
@@ -306,7 +319,7 @@ export function CTABand({ eyebrow = "Get started", headline, sub, primary = { la
 // ── prose wrapper (legal/editorial) ──────────────────────
 export function Prose({ children, aside }: { children?: ReactNode; aside?: ReactNode }) {
   return (
-    <div className="shell" style={{ paddingBlock: "calc(72px * var(--density))", display: "grid", gridTemplateColumns: aside ? "minmax(0, 3fr) minmax(0, 1fr)" : "1fr", gap: 64, alignItems: "start" }}>
+    <div className="shell r-prose" style={{ paddingBlock: "calc(72px * var(--density))", display: "grid", gridTemplateColumns: aside ? "minmax(0, 3fr) minmax(0, 1fr)" : "1fr", gap: 64, alignItems: "start" }}>
       <div className="prose">{children}</div>
       {aside && <aside style={{ position: "sticky", top: 96, fontSize: 13, color: "var(--ink-muted)" }}>{aside}</aside>}
     </div>);
