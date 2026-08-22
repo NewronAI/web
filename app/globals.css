@@ -122,7 +122,7 @@
      that limit: only Chromium was measured, and a headline edit or a browser
      that accumulates advances differently must not be able to force a 4th line.
      The svh term is what keeps a short window from pushing the CTA past the fold. */
-  --hero-title:      clamp(40px, min(9.45vw, 15.4svh), 124px);
+  --hero-title:      clamp(55px, min(9.45vw, 15.4svh), 124px);
 
   --dur-fast: 160ms;
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
