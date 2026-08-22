@@ -81,6 +81,14 @@
 
   --tracking-eyebrow: 0.14em;
 
+  /* ---------- small-type steps ----------
+     Authored sizes at desktop; the media query further down raises the floor
+     on narrow screens, where 10px mono labels are not readable. */
+  --fs-micro: 10px;   /* mono chrome labels */
+  --fs-label: 11px;   /* eyebrows, meta */
+  --fs-meta:  12px;   /* captions, tags */
+  --fs-small: 13.5px; /* secondary body */
+
   /* ---------- geometry (DS: crisp, squared) ---------- */
   --density: 1;
   --r-sm:   3px;
@@ -306,7 +314,7 @@ section[id] { scroll-margin-top: 80px; }
   display: inline-flex; align-items: center; gap: 8px;
   height: 26px; padding: 0 12px;
   border-radius: var(--r-pill);
-  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 500;
   letter-spacing: 0.08em;
   color: var(--green-100);
   background: var(--green-900);
@@ -485,10 +493,28 @@ section[id] { scroll-margin-top: 80px; }
    ~100px column once the viewport gets narrow, while its font-size floor
    is 48px. Stack it instead, and let the headline scale below that floor.
    ========================================================= */
+.section-head {
+  display: grid;
+  gap: clamp(16px, 2.6vw, 48px);
+  align-items: start;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  grid-template-columns: 80px minmax(0, 1.4fr) minmax(0, 1fr);
+}
+.section-head.is-inverse { border-top-color: var(--inverse-line); }
+.section-head.is-inverse .sh-tag { color: var(--inverse-ink-soft); }
+.section-head.is-inverse .sh-title { color: var(--inverse-ink); }
+.section-head.is-inverse .sh-kicker { color: var(--inverse-ink-soft); }
+.sh-tag { font-size: 12px; letter-spacing: 0.1em; color: var(--ink-muted); padding-top: 6px; }
+/* one fluid ramp instead of a desktop size plus a mobile override */
+.sh-title { margin: 0; font-size: clamp(30px, 5.6vw, 88px); line-height: 0.98; color: var(--ink); }
+.sh-kicker {
+  margin: clamp(0px, 2.4vw, 38px) 0 0;
+  font-size: 16px; line-height: 1.55; color: var(--ink-soft); max-width: 380px;
+}
+/* the 80px tag rail cannot survive a narrow column, so it folds away */
 @media (max-width: 900px) {
-  .section-head { grid-template-columns: 1fr !important; gap: 18px !important; }
-  .section-head h2 { font-size: clamp(30px, 7.6vw, 46px) !important; }
-  .section-head p { margin-top: 0 !important; }
+  .section-head { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* =========================================================
@@ -559,7 +585,7 @@ section[id] { scroll-margin-top: 80px; }
 @keyframes af-pile-in { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
 .af-sent {
   position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
-  font-size: 10px; letter-spacing: 0.1em; color: var(--accent); white-space: nowrap;
+  font-size: var(--fs-micro); letter-spacing: 0.1em; color: var(--accent); white-space: nowrap;
   animation: af-fade-in 500ms 1150ms var(--ease-out) both;
 }
 @keyframes af-fade-in { from { opacity: 0; transform: translate(-50%, -6px); } to { opacity: 1; transform: translate(-50%, 0); } }
@@ -630,7 +656,7 @@ section[id] { scroll-margin-top: 80px; }
   .af-stage, .af-ingest { min-height: 420px; }
   .af-ingest { --af-spread: 0.34; }
   .af-fly { width: 150px; padding: 9px 10px; }
-  .af-fly-name { font-size: 11px; }
+  .af-fly-name { font-size: var(--fs-meta); }
   .af-row { grid-template-columns: 62px minmax(0, 1fr) 36px; gap: 8px; }
   .af-badge { font-size: 11.5px; padding: 4px 9px; }
 }
@@ -647,131 +673,252 @@ section[id] { scroll-margin-top: 80px; }
 /* =========================================================
    Artha section — stack the split and the 4-up pillar strip
    ========================================================= */
-@media (max-width: 1180px) {
-  .artha-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-  .artha-pillars { grid-template-columns: repeat(2, 1fr) !important; }
-  /* row 2 needs its own rule above it once the 4-up becomes 2x2 */
-  .artha-pillars > *:nth-child(n + 3) { border-top: 1px solid var(--inverse-line); margin-top: 4px; }
-  .artha-pillars > *:nth-child(odd) { border-left: none !important; padding-left: 0 !important; }
+.artha-grid {
+  display: grid;
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
 }
-@media (max-width: 700px) {
-  .artha-pillars { grid-template-columns: 1fr !important; }
-  .artha-pillars > * {
-    border-left: none !important;
-    padding-left: 0 !important;
-    border-top: 1px solid var(--inverse-line);
-  }
-  .artha-pillars > *:first-child { border-top: none; }
+.artha-cap {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 44px minmax(0, 1fr);
+  border-top: 1px solid var(--inverse-line);
+  padding: 22px 0;
+}
+.artha-pillars {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  border-top: 1px solid var(--inverse-line);
+}
+/* dividers drawn per cell rather than per hard-coded column position, so
+   they stay right whatever column count auto-fit lands on */
+.artha-pillars > * { padding: 28px 24px 0; border-left: 1px solid var(--inverse-line); }
+.artha-pillars > *:first-child { padding-left: 0; border-left: none; }
+
+/* =========================================================
+   Site-wide layout — intrinsic, not breakpoint-patched.
+   These containers own their layout outright (the inline grid styles were
+   removed from the JSX), so nothing here needs !important. Column counts
+   come from auto-fit + minmax, which means they reflow continuously at
+   every width instead of snapping at hand-picked breakpoints.
+   The `min(Npx, 100%)` guard is what stops a track from ever exceeding
+   the viewport on a narrow screen.
+   ========================================================= */
+
+/* card grids — 1/2/3-up emerges from the available width */
+.r-cards {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min, min(280px, 100%)), 1fr));
+}
+
+/* copy beside a panel: side-by-side while both fit, stacked when not */
+.r-split {
+  display: grid;
+  gap: clamp(32px, 4vw, 64px);
+  grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+}
+.r-split.is-top { align-items: start; }
+
+/* lead + figures. The lead needs to span the row once the figures wrap,
+   which auto-fit alone cannot express — so this one keeps a query, and
+   it is the only layout query left in this block. */
+.r-stats {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  grid-template-columns: minmax(0, 2fr) repeat(auto-fit, minmax(120px, 1fr));
+}
+.r-stats > * { padding: 24px; border-left: 1px solid var(--line); }
+.r-stats > *:first-child { padding: 32px 24px 0 0; border-left: none; }
+@media (max-width: 900px) {
+  .r-stats { grid-template-columns: repeat(auto-fit, minmax(min(130px, 100%), 1fr)); }
+  .r-stats > *:first-child { grid-column: 1 / -1; padding: 32px 0 20px; }
+  .r-stats > *:nth-child(2) { border-left: none; }
+}
+
+/* numbered pillars: pairs while two fit, single file when not. The rules
+   are drawn per-row so they stay correct at any column count. */
+.r-pillars {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  border-top: 1px solid var(--line);
+}
+.r-pillar {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 560px) { .r-pillar { grid-template-columns: 60px minmax(0, 1fr); } }
+
+/* tile rows inside panels */
+.r-2up, .r-3up {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+}
+.r-2up { gap: 0; }
+.r-2up > * { padding: 20px 24px 20px 0; }
+
+/* the lending suite: sidebar + product mock. The mock is a dense dashboard
+   that cannot meaningfully reflow, so it scrolls inside its own panel —
+   with a visible edge fade so the affordance is not hidden. */
+.r-suite {
+  display: grid;
+  overflow: hidden;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+}
+.r-suite > aside { border-right: 1px solid var(--line); }
+.r-mock { background: var(--bg-2); padding: clamp(16px, 2vw, 28px); }
+@media (min-width: 1081px) {
+  .r-suite { grid-template-columns: 280px minmax(0, 1fr); min-height: 560px; }
+  .r-mock { min-height: 560px; }
+}
+@media (max-width: 1080px) {
+  .r-suite > aside { border-right: none; border-bottom: 1px solid var(--line); }
+  .r-mock { overflow-x: auto; overscroll-behavior-x: contain; }
+  .r-mock > * { min-width: 700px; }
+}
+
+/* customer cells */
+.r-custgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* footer: the brand block keeps a wider track, link columns fill the rest */
+.r-footer {
+  display: grid;
+  gap: 36px 24px;
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+}
+.r-footer > *:first-child { grid-column: 1 / -1; }
+@media (min-width: 1100px) {
+  .r-footer { grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr)); gap: 32px; }
+  .r-footer > *:first-child { grid-column: auto; }
+}
+
+/* CTA and prose splits */
+.r-cta {
+  display: grid;
+  gap: clamp(28px, 3vw, 64px);
+  align-items: end;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+}
+.r-prose {
+  display: grid;
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
+  padding-block: calc(72px * var(--density));
+  grid-template-columns: minmax(0, 1fr);
+}
+.r-prose.has-aside { grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr)); }
+
+/* press coverage rows */
+.r-listrow {
+  display: grid;
+  gap: 6px 28px;
+  align-items: start;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--ink);
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.r-listrow > *:first-child { grid-column: 1 / -1; }
+@media (min-width: 761px) {
+  .r-listrow { grid-template-columns: 140px minmax(0, 1fr) auto; padding: 24px 0; }
+  .r-listrow > *:first-child { grid-column: auto; }
 }
 
 /* =========================================================
-   Site-wide responsive layout
-   Nearly all layout on this site is inline-styled, so these rules need
-   !important to win. The class names are shared between the homepage
-   sections and the site-chrome primitives wherever the pattern is the
-   same, so one rule fixes every page that uses it.
+   Fluid type + touch targets
+   Small type was authored at desktop sizes and never scaled, leaving 10-11px
+   labels on a phone. These give the small steps a floor on narrow screens,
+   and bring interactive rows up to a 44px target.
    ========================================================= */
+.eyebrow { font-size: clamp(11px, 0.6rem + 0.2vw, 12px); }
+.page-lead, .prose p { text-wrap: pretty; }
 
-/* card grids: 3-up (or 2-up) → 2-up → 1-up */
-@media (max-width: 1180px) {
-  .r-cards { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-}
 @media (max-width: 760px) {
-  .r-cards { grid-template-columns: minmax(0, 1fr) !important; }
-}
-
-/* two-column content splits (copy beside a panel/mock) */
-@media (max-width: 1080px) {
-  .r-split { grid-template-columns: minmax(0, 1fr) !important; gap: 40px !important; }
-  .r-cta   { grid-template-columns: minmax(0, 1fr) !important; gap: 32px !important; }
-  .r-prose { grid-template-columns: minmax(0, 1fr) !important; gap: 40px !important; }
-}
-
-/* lead + stats strip: stack the lead, then let the figures share rows */
-@media (max-width: 1080px) {
-  .r-stats { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
-  .r-stats > *:first-child { grid-column: 1 / -1; padding: 0 0 24px !important; }
-  .r-stats > *:not(:first-child) { border-left: 1px solid var(--line); }
-  .r-stats > *:nth-child(2) { border-left: none; }
-}
-@media (max-width: 620px) {
-  .r-stats { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-  .r-stats > *:nth-child(odd):not(:first-child) { border-left: none; }
-}
-
-/* numbered pillar pairs → single column, and the borders that implied
-   two columns have to be re-drawn as simple stacked rules */
-@media (max-width: 900px) {
-  .r-pillars { grid-template-columns: minmax(0, 1fr) !important; }
-  .r-pillars > * {
-    padding: 26px 0 !important;
-    border-left: none !important;
-    border-top: none !important;
-    border-bottom: 1px solid var(--line) !important;
+  :root {
+    --fs-micro: 11.5px;
+    --fs-label: 12px;
+    --fs-meta:  13px;
+    --fs-small: 14.5px;
   }
-  .r-pillars > *:first-child { border-top: 1px solid var(--line) !important; }
-}
-@media (max-width: 480px) {
-  .r-pillar { grid-template-columns: minmax(0, 1fr) !important; gap: 6px !important; }
-}
-
-/* 2-up / 3-up tile rows inside panels */
-@media (max-width: 900px) {
-  .r-2up { grid-template-columns: minmax(0, 1fr) !important; }
-  .r-2up > * { border-right: none !important; padding-left: 0 !important; }
-}
-@media (max-width: 520px) {
-  .r-3up { grid-template-columns: minmax(0, 1fr) !important; }
+  body { font-size: 15.5px; }
+  .eyebrow { font-size: var(--fs-meta); letter-spacing: 0.1em; }
+  .ci-n { font-size: var(--fs-meta); }
+  .ci-d { font-size: var(--fs-small); }
+  .af-dim, .af-fly-kind, .af-fly-pp, .af-row-src, .af-ex-count, .af-run { font-size: var(--fs-micro); }
+  .af-conf, .af-rail-n { font-size: var(--fs-micro); }
+  .hero-eyebrow { font-size: var(--fs-meta); }
+  .artha-cap .mono { font-size: var(--fs-micro); }
+  .prose li { font-size: 15.5px; }
+  /* iOS zooms any focused field under 16px, which yanks the layout sideways */
+  input, textarea, select { font-size: 16px !important; }
 }
 
-/* the lending suite: sidebar over the mock, and the mock scrolls rather
-   than being clipped — these are dense dashboards, not reflowable content */
-@media (max-width: 1080px) {
-  .r-suite { grid-template-columns: minmax(0, 1fr) !important; min-height: 0 !important; }
-  .r-suite > aside { border-right: none !important; border-bottom: 1px solid var(--line); }
-  .r-mock { min-height: 0 !important; overflow-x: auto !important; padding: 20px !important; }
-  .r-mock > * { min-width: 720px; }
+.crumb-link { color: var(--ink-muted); text-decoration: none; }
+.xlink { color: var(--accent); text-decoration: none; }
+.job-loc {
+  font-size: var(--fs-meta); color: var(--ink-muted); letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+/* a 320px screen cannot hold the location on one line */
+@media (max-width: 420px) { .job-loc { white-space: normal; } }
+
+/* Defensive: one long word at display size must never punch out of its line
+   box. This is what put "consequences" past the viewport at 320px. */
+h1, h2, h3, .display, .sh-title, .hero-title, .page-lead, .prose h2, .prose h3 {
+  overflow-wrap: break-word;
+}
+.toc-link { color: var(--ink-soft); text-decoration: none; font-size: var(--fs-small); }
+.lang-chip {
+  font-family: var(--font-mono); font-size: var(--fs-micro);
+  letter-spacing: 0.08em; color: var(--accent);
+  border: 1px solid var(--line); border-radius: var(--r-pill); padding: 2px 8px;
 }
 
-/* customer cells: 3-then-2 becomes 2-up, then a single column */
-@media (max-width: 900px) {
-  .r-custgrid > * { grid-column: span 3 !important; }
-}
-@media (max-width: 560px) {
-  .r-custgrid > * { grid-column: span 6 !important; border-right: none !important; }
-  .r-custgrid > *:not(:last-child) { border-bottom: 1px solid var(--line) !important; }
-}
-
-/* footer: 5 columns → 2 → 1 */
-@media (max-width: 1080px) {
-  .r-footer { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 36px 24px !important; }
-  .r-footer > *:first-child { grid-column: 1 / -1; }
-}
-@media (max-width: 620px) {
-  .r-footer { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-}
-
-/* list rows with a fixed label rail (press coverage) */
-@media (max-width: 760px) {
-  .r-listrow { grid-template-columns: minmax(0, 1fr) auto !important; gap: 6px 16px !important; }
-  .r-listrow > *:first-child { grid-column: 1 / -1; }
+/* touch targets: any coarse pointer at any width, plus narrow windows —
+   so a phone, a tablet and a half-width desktop window all get them */
+@media (pointer: coarse), (max-width: 760px) {
+  .r-footer a, .nav-panel a, .prose a, .crumb-link, .toc-link, .xlink { min-height: 44px; display: inline-flex; align-items: center; }
+  .r-footer li { display: flex; }
+  .btn-link { min-height: 44px; display: inline-flex; align-items: center; }
+  .af-run { min-height: 44px; padding: 6px 4px; }
+  header a[href="#top"], header a[href="/"] { min-height: 44px; display: inline-flex; align-items: center; }
+  .af-rail-btn { padding-top: 12px; padding-bottom: 6px; }
 }
 
 /* vertical rhythm: 120px section padding is too much on a phone */
-@media (max-width: 900px) {
-  .section       { padding-block: calc(72px * var(--density)) !important; }
-  .section-tight { padding-block: calc(44px * var(--density)) !important; }
-}
-@media (max-width: 560px) {
-  .section { padding-block: calc(56px * var(--density)) !important; }
-}
+.section       { padding-block: clamp(56px, 8vw, calc(120px * var(--density))); }
+.section-tight { padding-block: clamp(40px, 5vw, calc(64px * var(--density))); }
 
 /* =========================================================
    Responsive nav
    ========================================================= */
+.nav-link {
+  text-decoration: none;
+  color: var(--ink);
+  padding: 8px clamp(6px, 0.7vw, 10px);
+  font-size: clamp(13px, 0.78rem + 0.1vw, 13.5px);
+  font-weight: 500;
+  border-radius: var(--r);
+  white-space: nowrap;
+}
 @media (max-width: 1180px) {
-  .nav-center a { padding: 8px 8px !important; font-size: 13px !important; }
-  .nav-cta-secondary { display: none !important; }
+  .nav-cta-secondary { display: none; }
 }
 @media (max-width: 980px) {
   .nav-center { display: none !important; }
@@ -960,8 +1107,18 @@ details[open] .faq-plus { transform: rotate(45deg); }
 summary::-webkit-details-marker { display: none; }
 
 /* ---------- responsive ---------- */
+.pg-hero-grid {
+  display: grid;
+  gap: clamp(32px, 4vw, 64px);
+  align-items: end;
+  grid-template-columns: minmax(0, 1fr);
+}
+.pg-hero-grid.has-aside {
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+}
+.pg-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr)); }
+/* illustration above the copy once stacked, and never oversized */
 @media (max-width: 900px) {
-  .pg-split { grid-template-columns: 1fr !important; }
-  .pg-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-  .pg-hero-grid > *:last-child { order: -1; max-width: 420px; }
+  .pg-hero-grid.has-aside > *:last-child { order: -1; max-width: 420px; }
 }

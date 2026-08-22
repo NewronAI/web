@@ -19,7 +19,7 @@ function Repos() {
           <span style={{ minWidth: 0 }}>
             <span style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <span className="mono" style={{ fontFamily: "var(--font-mono)", fontWeight: 500, fontSize: 18, color: "var(--ink)" }}>{name}</span>
-              <span style={{ fontSize: 10, fontFamily: "var(--font-mono)", letterSpacing: "0.08em", color: "var(--accent)", border: "1px solid var(--line)", borderRadius: 999, padding: "2px 8px" }}>{lang.toUpperCase()}</span>
+              <span className="lang-chip">{lang.toUpperCase()}</span>
             </span>
             <span style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 8, lineHeight: 1.55, display: "block", maxWidth: 620 }}>{desc}</span>
           </span>

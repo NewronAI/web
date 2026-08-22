@@ -26,7 +26,7 @@ function Roles() {
               onMouseEnter={(e) => { e.currentTarget.style.paddingLeft = "12px"; }}
               onMouseLeave={(e) => { e.currentTarget.style.paddingLeft = "0"; }}>
               <span style={{ fontFamily: "var(--font-display)", fontWeight: 500, fontSize: 19 }}>{title}</span>
-              <span className="mono" style={{ fontSize: 12, color: "var(--ink-muted)", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>{loc}</span>
+              <span className="mono job-loc">{loc}</span>
               <Arrow size={15} />
             </a>)}
         </div>)}

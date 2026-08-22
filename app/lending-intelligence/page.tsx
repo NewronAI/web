@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type CSSProperties } from "react";
 import {
   Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, Timeline, FAQ, CTABand, Quote,
 } from "@/components/site-chrome";
@@ -47,7 +47,7 @@ export default function Page() {
 
       <Band id="coverage" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="02" eyebrow="Coverage" title={<>Built for the products you <em className="italic">actually</em> originate.</>} kicker="Pre-trained on Indian commercial and consumer credit. New products onboard in days, not quarters." />
-        <div className="r-cards" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
+        <div className="r-cards" style={{ marginTop: 56, ...{ "--card-min": "min(400px, 100%)" } as CSSProperties }}>
           <Chips label="Commercial" items={["Loan against property", "Overdraft", "Gold loan", "Equipment finance", "Revenue-based finance", "Line of credit"]} />
           <Chips label="Consumer" items={["Home loan", "Auto loan", "Loan against securities", "Personal loan", "Education loan", "Credit card"]} />
         </div>

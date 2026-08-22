@@ -82,7 +82,7 @@ function Nav() {
         <Wordmark />
         <nav className="nav-center" style={{ display: "flex", justifyContent: "center", gap: 2 }}>
           {HOME_NAV.map(([l, h]) =>
-            <a key={l} href={h} style={{ textDecoration: "none", color: "var(--ink)", padding: "8px 10px", fontSize: 13.5, fontWeight: 500, borderRadius: 4, whiteSpace: "nowrap" }}>{l}</a>)}
+            <a key={l} className="nav-link" href={h}>{l}</a>)}
         </nav>
         <div className="nav-cta" style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <a className="btn btn-ghost nav-cta-secondary" href="#contact">Talk to sales</a>
@@ -197,11 +197,11 @@ function Lending() {
         <SectionHead tag="01" eyebrow="Lending intelligence"
           title={<>The credit officer&apos;s<br /><em className="italic" style={{ color: "var(--accent)" }}>second brain.</em></>}
           kicker="A modular suite for the loan origination lifecycle — from intake and statement parsing to CAM generation, deviation handling, and verification. Configured to your policy, your format, your tier structure." />
-        <div className="r-cards" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16, marginBottom: 64 }}>
+        <div className="r-cards" style={{ marginTop: 56, marginBottom: 64 }}>
           <CoverageCard label="Commercial" items={["Loan against property", "Overdraft", "Gold loan", "Equipment finance", "Revenue-based finance", "Line of credit"]} />
           <CoverageCard label="Consumer" items={["Home loan", "Auto loan", "Loan against securities", "Personal loan", "Education loan", "Credit card"]} />
         </div>
-        <div className="card r-suite" style={{ display: "grid", gridTemplateColumns: "280px 1fr", overflow: "hidden", minHeight: 560 }}>
+        <div className="card r-suite">
           <aside style={{ borderRight: "1px solid var(--line)", padding: 24, background: "var(--bg)" }}>
             <div className="eyebrow" style={{ marginBottom: 20 }}>In the suite</div>
             {screens.map((s) =>
@@ -211,12 +211,12 @@ function Lending() {
                 borderLeft: active === s.id ? "2px solid var(--accent)" : "2px solid transparent",
                 cursor: "pointer", fontFamily: "var(--font-sans)", color: "var(--ink)"
               }}>
-                <div className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", color: active === s.id ? "var(--accent)" : "var(--ink-muted)", marginBottom: 6 }}>{s.tag}</div>
+                <div className="mono" style={{ fontSize: "var(--fs-micro)", letterSpacing: "0.1em", color: active === s.id ? "var(--accent)" : "var(--ink-muted)", marginBottom: 6 }}>{s.tag}</div>
                 <div style={{ fontSize: 15, fontWeight: 500 }}>{s.label}</div>
-                <div style={{ fontSize: 12, color: "var(--ink-muted)", marginTop: 4, lineHeight: 1.45 }}>{s.desc}</div>
+                <div style={{ fontSize: "var(--fs-meta)", color: "var(--ink-muted)", marginTop: 4, lineHeight: 1.45 }}>{s.desc}</div>
               </button>)}
           </aside>
-          <div className="r-mock" style={{ background: "var(--bg-2)", padding: 28, minHeight: 560 }}>
+          <div className="r-mock">
             <ProductChrome title={`Newron · ${screens.find((s) => s.id === active)!.label}`}>
               {active === "cam" && <CAMScreen />}
               {active === "statement" && <StatementScreen />}
@@ -240,7 +240,7 @@ function CoverageCard({ label, items }: { label: string; items: string[] }) {
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
         {items.map((it) =>
-          <span key={it} style={{ padding: "6px 10px", border: "1px solid var(--line)", borderRadius: 999, fontSize: 12, color: "var(--ink-soft)", background: "var(--bg)" }}>{it}</span>)}
+          <span key={it} style={{ padding: "6px 10px", border: "1px solid var(--line)", borderRadius: 999, fontSize: "var(--fs-meta)", color: "var(--ink-soft)", background: "var(--bg)" }}>{it}</span>)}
       </div>
     </div>);
 }
@@ -251,12 +251,12 @@ function ProductChrome({ title, children }: { title: string; children: ReactNode
       <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "10px 16px", borderBottom: "1px solid var(--line)", background: "var(--bg)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
-          <span className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", color: "var(--ink)" }}>NEWRON</span>
+          <span className="mono" style={{ fontSize: "var(--fs-micro)", letterSpacing: "0.1em", color: "var(--ink)" }}>NEWRON</span>
         </div>
         <span style={{ width: 1, height: 12, background: "var(--line)" }} />
-        <span className="mono" style={{ fontSize: 11, color: "var(--ink-soft)" }}>{title}</span>
+        <span className="mono" style={{ fontSize: "var(--fs-label)", color: "var(--ink-soft)" }}>{title}</span>
         <div style={{ flex: 1 }} />
-        <span className="mono" style={{ fontSize: 10, color: "var(--green)", letterSpacing: "0.08em" }}>● LIVE</span>
+        <span className="mono" style={{ fontSize: "var(--fs-micro)", color: "var(--green)", letterSpacing: "0.08em" }}>● LIVE</span>
       </div>
       {children}
     </div>);
@@ -466,7 +466,7 @@ function Msg({ from, right, accent, children }: { from: string; right?: boolean;
 function Outcomes() {
   const o = [{ k: "Reduction in TAT", v: 66, suffix: "%" }, { k: "Productivity uplift", v: 200, suffix: "%" }, { k: "Hours saved", v: 65000, suffix: "+" }];
   return (
-    <div className="r-stats" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 2fr) repeat(3, 1fr)", gap: 0, borderTop: "1px solid var(--line)" }}>
+    <div className="r-stats" style={{ marginTop: 56 }}>
       <div style={{ padding: "32px 24px 0 0" }}>
         <div className="eyebrow">Measured across deployments</div>
         <div style={{ fontFamily: "var(--font-display)", fontSize: 22, marginTop: 8, lineHeight: 1.2 }}>
@@ -478,7 +478,7 @@ function Outcomes() {
           <div className="display" style={{ fontSize: "clamp(36px, 4vw, 56px)", lineHeight: 0.95 }}>
             <AnimatedNumber value={m.v} suffix={m.suffix} />
           </div>
-          <div className="mono" style={{ fontSize: 11, color: "var(--ink-muted)", letterSpacing: "0.08em", marginTop: 14 }}>{m.k.toUpperCase()}</div>
+          <div className="mono" style={{ fontSize: "var(--fs-label)", color: "var(--ink-muted)", letterSpacing: "0.08em", marginTop: 14 }}>{m.k.toUpperCase()}</div>
         </div>)}
     </div>);
 }
@@ -679,24 +679,24 @@ function Artha() {
         <SectionHead inverse tag="02" eyebrow="Artha models"
           title={<>The models <em className="italic" style={{ color: "var(--accent)" }}>underneath</em> Indian credit.</>}
           kicker="Artha is Newron's suite of vision-language models, built for the paperwork Indian banks and NBFCs actually process. Zero-shot, on documents no template was written for." />
-        <div className="artha-grid" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.3fr)", gap: 64, alignItems: "start" }}>
+        <div className="artha-grid" style={{ marginTop: 56 }}>
           <div>
-            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginBottom: 24 }}>
+            <div className="mono" style={{ fontSize: "var(--fs-micro)", letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginBottom: 24 }}>
               ARTHA · अर्थ — WEALTH, MEANING, PURPOSE
             </div>
             {caps.map((c, i) =>
-              <div key={c.n} style={{ display: "grid", gridTemplateColumns: "44px 1fr", gap: 16, borderTop: "1px solid var(--inverse-line)", borderBottom: i === caps.length - 1 ? "1px solid var(--inverse-line)" : "none", padding: "22px 0" }}>
-                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.1em", color: "var(--accent)", paddingTop: 5 }}>{c.n}</div>
+              <div key={c.n} className="artha-cap" style={{ borderBottom: i === caps.length - 1 ? "1px solid var(--inverse-line)" : "none" }}>
+                <div className="mono" style={{ fontSize: "var(--fs-label)", letterSpacing: "0.1em", color: "var(--accent)", paddingTop: 5 }}>{c.n}</div>
                 <div>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: 22, lineHeight: 1.15, color: "var(--inverse-ink)" }}>{c.k}</div>
                   <div style={{ fontSize: 13.5, color: "var(--inverse-ink-soft)", marginTop: 8, lineHeight: 1.55 }}>{c.d}</div>
-                  <div className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginTop: 12 }}>{c.meta}</div>
+                  <div className="mono" style={{ fontSize: "var(--fs-micro)", letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginTop: 12 }}>{c.meta}</div>
                 </div>
               </div>)}
           </div>
           <ArthaFlow />
         </div>
-        <div className="artha-pillars" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 0, borderTop: "1px solid var(--inverse-line)" }}>
+        <div className="artha-pillars" style={{ marginTop: 56 }}>
           {pillars.map(([k, v], i) =>
             <div key={k} style={{ padding: "28px 24px 0", paddingLeft: i === 0 ? 0 : 24, borderLeft: i === 0 ? "none" : "1px solid var(--inverse-line)" }}>
               <div style={{ fontFamily: "var(--font-display)", fontSize: 19, color: "var(--inverse-ink)", lineHeight: 1.2 }}>{k}</div>
@@ -719,7 +719,7 @@ function Insurance() {
         <SectionHead tag="03" eyebrow="Insurance AI"
           title={<>Settle claims <em className="italic" style={{ color: "var(--accent)" }}>before</em> they&apos;re filed.</>}
           kicker="Newron's claims models inspect documents, parse policy language, and predict denial risk the moment a claim is initiated — so adjusters spend their time on edge cases, not paperwork." />
-        <div className="r-split" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.4fr)", gap: 64 }}>
+        <div className="r-split" style={{ marginTop: 56 }}>
           <div>
             <ClaimStep n="01" title="Eligibility check, before submission" desc="Policy retrieval + document understanding flags missing artefacts and ineligible claims at intake." meta="ELIGIBLE · 0.94" metaColor="green" />
             <ClaimStep n="02" title="Automated claim filing" desc="Forms, supporting documents and metadata assembled into TPA-ready packets in under 90 seconds." meta="FILED · 00:01:24" metaColor="slate" />
@@ -733,17 +733,17 @@ function Insurance() {
                     <div className="eyebrow">Claim · CL-2026-9881</div>
                     <div style={{ fontFamily: "var(--font-display)", fontSize: 20, marginTop: 4 }}>Cardiac · Inpatient · ₹ 4.2L</div>
                   </div>
-                  <div className="mono" style={{ fontSize: 10, color: "var(--green)", letterSpacing: "0.08em" }}>● ELIGIBLE</div>
+                  <div className="mono" style={{ fontSize: "var(--fs-micro)", color: "var(--green)", letterSpacing: "0.08em" }}>● ELIGIBLE</div>
                 </div>
-                <div className="r-3up" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+                <div className="r-3up">
                   {[["Policy fit", "0.98", "green"], ["Denial risk", "0.18", "amber"], ["Doc completeness", "11/11", "green"]].map(([k, v, c]) =>
                     <div key={k} style={{ border: "1px solid var(--line)", padding: 12, borderRadius: 4 }}>
-                      <div className="eyebrow" style={{ fontSize: 10 }}>{k}</div>
+                      <div className="eyebrow" style={{ fontSize: "var(--fs-micro)" }}>{k}</div>
                       <div style={{ fontFamily: "var(--font-display)", fontSize: 22, color: `var(--${c})`, marginTop: 6 }}>{v}</div>
                     </div>)}
                 </div>
                 <div style={{ borderLeft: "2px solid var(--accent)", padding: 12, background: "var(--bg-2)", borderRadius: "0 4px 4px 0" }}>
-                  <div className="mono" style={{ fontSize: 10, color: "var(--accent)", letterSpacing: "0.1em", marginBottom: 6 }}>NEWRON · ADVISORY</div>
+                  <div className="mono" style={{ fontSize: "var(--fs-micro)", color: "var(--accent)", letterSpacing: "0.1em", marginBottom: 6 }}>NEWRON · ADVISORY</div>
                   <div style={{ fontSize: 13.5, lineHeight: 1.5 }}>
                     Claim is well within sub-limit. Recommend filing today via Star Allied TPA; historical SLA is 4.2 working days.
                   </div>
@@ -763,12 +763,12 @@ function Insurance() {
 function ClaimStep({ n, title, desc, meta, metaColor, last }: { n: string; title: string; desc: string; meta: string; metaColor: string; last?: boolean }) {
   return (
     <div style={{ paddingBlock: 22, borderBottom: last ? "none" : "1px solid var(--line)", display: "grid", gridTemplateColumns: "32px 1fr auto", gap: 16, alignItems: "start" }}>
-      <div className="mono" style={{ fontSize: 12, color: "var(--ink-muted)", letterSpacing: "0.1em", marginTop: 4 }}>{n}</div>
+      <div className="mono" style={{ fontSize: "var(--fs-meta)", color: "var(--ink-muted)", letterSpacing: "0.1em", marginTop: 4 }}>{n}</div>
       <div>
         <div style={{ fontFamily: "var(--font-display)", fontSize: 22, lineHeight: 1.2 }}>{title}</div>
         <div style={{ fontSize: 13.5, color: "var(--ink-soft)", marginTop: 6, lineHeight: 1.55, maxWidth: 380 }}>{desc}</div>
       </div>
-      <div className="mono" style={{ fontSize: 10, color: `var(--${metaColor})`, letterSpacing: "0.1em", whiteSpace: "nowrap", marginTop: 6 }}>{meta}</div>
+      <div className="mono" style={{ fontSize: "var(--fs-micro)", color: `var(--${metaColor})`, letterSpacing: "0.1em", whiteSpace: "nowrap", marginTop: 6 }}>{meta}</div>
     </div>);
 }
 
@@ -779,9 +779,9 @@ function Governance() {
         <SectionHead inverse tag="04" eyebrow="Governance AI"
           title={<>Citizen services<br />in <em className="italic" style={{ color: "var(--accent)" }}>their</em> language.</>}
           kicker="Built with the Government of Karnataka. Newron reads Kannada handwriting, speaks in regional dialects, and surfaces policy answers from documents that were never indexed — so grievance redressal works at the speed of a phone call." />
-        <div className="r-split" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.3fr)", gap: 64, alignItems: "start" }}>
+        <div className="r-split is-top" style={{ marginTop: 56 }}>
           <div>
-            <div className="r-2up" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+            <div className="r-2up">
               {[["Custom OCR · Kannada", "Handwriting + print, ledger forms"], ["Regional TTS", "Natural voices, low latency"], ["Grievance triage", "Routing + summary + draft response"], ["Policy discovery", "Surfaces clauses from PDFs at scale"]].map(([k, v], i) =>
                 <div key={k} style={{ borderTop: "1px solid var(--inverse-line)", borderRight: i % 2 === 0 ? "1px solid var(--inverse-line)" : "none", padding: "20px 24px 20px 0", paddingLeft: i % 2 === 1 ? 24 : 0 }}>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--inverse-ink)" }}>{k}</div>
@@ -791,12 +791,12 @@ function Governance() {
           </div>
           <div style={{ background: "var(--inverse-bg-2)", border: "1px solid var(--inverse-line)", borderRadius: 6, padding: 22 }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 14 }}>
-              <span className="mono" style={{ fontSize: 10, color: "var(--inverse-ink-soft)", letterSpacing: "0.1em" }}>GRIEVANCE · GOK-2026-118447</span>
-              <span className="mono" style={{ fontSize: 10, color: "var(--accent)", letterSpacing: "0.1em" }}>● LIVE</span>
+              <span className="mono" style={{ fontSize: "var(--fs-micro)", color: "var(--inverse-ink-soft)", letterSpacing: "0.1em" }}>GRIEVANCE · GOK-2026-118447</span>
+              <span className="mono" style={{ fontSize: "var(--fs-micro)", color: "var(--accent)", letterSpacing: "0.1em" }}>● LIVE</span>
             </div>
             <Bubble who="Citizen · Kannada audio">
               <span style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--inverse-ink)" }}>ನನ್ನ ರೇಶನ್ ಕಾರ್ಡ್ ಎರಡು ತಿಂಗಳಿಂದ ಬಂದಿಲ್ಲ.</span>
-              <div style={{ fontSize: 12, marginTop: 6, opacity: 0.65 }}>&quot;My ration card has not arrived for two months.&quot;</div>
+              <div style={{ fontSize: "var(--fs-meta)", marginTop: 6, opacity: 0.65 }}>&quot;My ration card has not arrived for two months.&quot;</div>
             </Bubble>
             <Bubble who="Newron · classification" accent>
               <span>Category: <strong style={{ color: "var(--inverse-ink)" }}>PDS — Card delivery</strong></span><br />
@@ -808,7 +808,7 @@ function Governance() {
             </Bubble>
             <Bubble who="Draft response · Kannada" accent>
               <span style={{ fontFamily: "var(--font-display)", fontSize: 16, color: "var(--inverse-ink)" }}>ನಿಮ್ಮ ರೇಶನ್ ಕಾರ್ಡ್ ಮಾರ್ಚ್ 12 ರಂದು ಮುದ್ರಿತವಾಗಿದೆ…</span>
-              <div style={{ marginTop: 10, display: "flex", gap: 16, fontSize: 10, fontFamily: "var(--font-mono)", letterSpacing: "0.08em" }}>
+              <div style={{ marginTop: 10, display: "flex", gap: 16, fontSize: "var(--fs-micro)", fontFamily: "var(--font-mono)", letterSpacing: "0.08em" }}>
                 <span style={{ color: "var(--green)" }}>● APPROVED</span>
                 <span style={{ color: "var(--inverse-ink-soft)" }}>SENT · TTS · 04:12s</span>
               </div>
@@ -822,7 +822,7 @@ function Governance() {
 function Bubble({ who, accent, children }: { who: string; accent?: boolean; children: ReactNode }) {
   return (
     <div style={{ marginBottom: 12 }}>
-      <div className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginBottom: 5 }}>{who.toUpperCase()}</div>
+      <div className="mono" style={{ fontSize: "var(--fs-micro)", letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginBottom: 5 }}>{who.toUpperCase()}</div>
       <div style={{ border: "1px solid var(--inverse-line)", borderLeft: accent ? "2px solid var(--accent)" : "1px solid var(--inverse-line)", padding: "10px 12px", borderRadius: 4, fontSize: 13, lineHeight: 1.55, color: "var(--inverse-ink)", fontFamily: "var(--font-sans)" }}>{children}</div>
     </div>);
 }
@@ -839,12 +839,12 @@ function Services() {
         <SectionHead tag="05" eyebrow="Custom AI services"
           title={<>When the product isn&apos;t enough,<br /><em className="italic" style={{ color: "var(--accent)" }}>we build it for you.</em></>}
           kicker="Newron is staffed by ex-research and ex-platform engineers. Most engagements ship to production inside one quarter." />
-        <div className="r-cards" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+        <div className="r-cards" style={{ marginTop: 56 }}>
           {items.map((it, idx) =>
             <article key={it.title} className="card" style={{ padding: 28 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <div className="eyebrow">{it.tag}</div>
-                <div className="mono" style={{ fontSize: 11, color: "var(--ink-muted)", letterSpacing: "0.1em" }}>0{idx + 1}</div>
+                <div className="mono" style={{ fontSize: "var(--fs-label)", color: "var(--ink-muted)", letterSpacing: "0.1em" }}>0{idx + 1}</div>
               </div>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: 32, lineHeight: 1.05, margin: "24px 0 14px" }}>{it.title}</h3>
               <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.55, margin: 0 }}>{it.desc}</p>
@@ -871,7 +871,7 @@ function Customers() {
     <section id="customers" className="section" style={{ borderTop: "1px solid var(--line)", background: "var(--bg-2)" }}>
       <div className="shell">
         <SectionHead tag="06" eyebrow="Customers" title={<>In production at banks, NBFCs<br />and state institutions.</>} />
-        <div className="r-split" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.6fr)", gap: 56, alignItems: "start" }}>
+        <div className="r-split is-top" style={{ marginTop: 56 }}>
           <div>
             <div className="eyebrow" style={{ marginBottom: 18 }}>Featured · NBFC, Tier-1 · Q3 2025</div>
             <blockquote style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "clamp(26px, 2.6vw, 36px)", lineHeight: 1.2, letterSpacing: "-0.012em" }}>
@@ -880,7 +880,7 @@ function Customers() {
             <div style={{ marginTop: 24, fontSize: 13, color: "var(--ink-soft)" }}>Head of Credit · Tier-1 NBFC · ₹38,000 Cr AUM</div>
             <a href="#" className="btn btn-link" style={{ marginTop: 20, display: "inline-block" }}>Read the case study →</a>
           </div>
-          <div className="r-custgrid" style={{ border: "1px solid var(--line)", borderRadius: 6, background: "var(--bg)", display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}>
+          <div className="r-custgrid">
             {CUSTOMERS.map((c, i) => {
               /* three across the top, the remainder sharing the row below — a
                  6-column track lets both rows stay flush without an empty cell */
@@ -889,7 +889,7 @@ function Customers() {
               const lastInRow = top ? i === CUST_TOP - 1 : i === CUSTOMERS.length - 1;
               return (
                 <div key={c[0]} style={{ gridColumn: `span ${span}`, padding: "32px 24px", borderRight: lastInRow ? "none" : "1px solid var(--line)", borderBottom: top ? "1px solid var(--line)" : "none" }}>
-                  <div className="eyebrow" style={{ fontSize: 10 }}>{c[1]}</div>
+                  <div className="eyebrow" style={{ fontSize: "var(--fs-micro)" }}>{c[1]}</div>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: 22, marginTop: 8, lineHeight: 1.15 }}>{c[0]}</div>
                 </div>);
             })}
@@ -910,10 +910,10 @@ function Company() {
     <section id="company" className="section">
       <div className="shell">
         <SectionHead tag="07" eyebrow="Why Newron" title={<>A platform built for the way<br /><em className="italic" style={{ color: "var(--accent)" }}>regulated industries</em> actually buy AI.</>} />
-        <div className="r-pillars" style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 0 }}>
+        <div className="r-pillars" style={{ marginTop: 56 }}>
           {pillars.map((p, i) =>
-            <div key={p.k} className="r-pillar" style={{ padding: "32px 32px 32px 0", paddingLeft: i % 2 === 1 ? 32 : 0, borderTop: i < 2 ? "1px solid var(--line)" : "none", borderBottom: "1px solid var(--line)", borderLeft: i % 2 === 1 ? "1px solid var(--line)" : "none", display: "grid", gridTemplateColumns: "60px 1fr", gap: 16 }}>
-              <div className="mono" style={{ fontSize: 11, color: "var(--ink-muted)", letterSpacing: "0.1em", marginTop: 6 }}>0{i + 1}</div>
+            <div key={p.k} className="r-pillar">
+              <div className="mono" style={{ fontSize: "var(--fs-label)", color: "var(--ink-muted)", letterSpacing: "0.1em", marginTop: 6 }}>0{i + 1}</div>
               <div>
                 <div style={{ fontFamily: "var(--font-display)", fontSize: 26, lineHeight: 1.1 }}>{p.k}</div>
                 <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 10, lineHeight: 1.55, maxWidth: 420 }}>{p.v}</div>
@@ -932,7 +932,7 @@ const inputStyle: CSSProperties = {
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <label style={{ display: "block" }}>
-      <div className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginBottom: 6 }}>{label}</div>
+      <div className="mono" style={{ fontSize: "var(--fs-micro)", letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginBottom: 6 }}>{label}</div>
       {children}
     </label>);
 }
@@ -942,7 +942,7 @@ function CTA({ headline }: { headline: string }) {
   const [ticket, setTicket] = useState("");
   return (
     <section id="contact" className="section" data-on-dark="1" style={{ background: "var(--inverse-bg)", color: "var(--inverse-ink)" }}>
-      <div className="shell r-cta" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.3fr) minmax(0, 1fr)", gap: 80, alignItems: "end" }}>
+      <div className="shell r-cta">
         <div>
           <div className="eyebrow" style={{ color: "var(--inverse-ink-soft)", marginBottom: 24 }}>Get started</div>
           <h2 className="display" style={{ margin: 0, fontSize: "clamp(48px, 7vw, 96px)", lineHeight: 0.96, color: "var(--inverse-ink)" }}>
@@ -957,7 +957,7 @@ function CTA({ headline }: { headline: string }) {
         {submitted ?
           <div style={{ border: "1px solid var(--inverse-line)", padding: 28, borderRadius: 6, background: "var(--inverse-bg-2)" }}>
             <div style={{ fontFamily: "var(--font-display)", fontSize: 24, color: "var(--inverse-ink)" }}>Thanks — we&apos;ll be in touch within one business day.</div>
-            <div className="mono" style={{ fontSize: 11, color: "var(--inverse-ink-soft)", letterSpacing: "0.08em", marginTop: 12 }}>TICKET · NWR-2026-{ticket}</div>
+            <div className="mono" style={{ fontSize: "var(--fs-label)", color: "var(--inverse-ink-soft)", letterSpacing: "0.08em", marginTop: 12 }}>TICKET · NWR-2026-{ticket}</div>
           </div> :
           <form onSubmit={(e) => { e.preventDefault(); setTicket(String(Math.floor(Math.random() * 90000 + 10000))); setSubmitted(true); }} style={{ border: "1px solid var(--inverse-line)", padding: 24, borderRadius: 6, background: "var(--inverse-bg-2)", display: "flex", flexDirection: "column", gap: 14 }}>
             <Field label="WORK EMAIL"><input required type="email" placeholder="cto@bank.example" style={inputStyle} /></Field>
@@ -986,7 +986,7 @@ function Footer() {
   return (
     <footer style={{ background: "var(--bg)", borderTop: "1px solid var(--line)", paddingBlock: 80 }}>
       <div className="shell">
-        <div className="r-footer" style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) repeat(4, minmax(0, 1fr))", gap: 32 }}>
+        <div className="r-footer">
           <div>
             <Wordmark />
             <p style={{ fontSize: 13, color: "var(--ink-soft)", maxWidth: 280, marginTop: 18, lineHeight: 1.55 }}>
@@ -1003,7 +1003,7 @@ function Footer() {
               </ul>
             </div>)}
         </div>
-        <div style={{ borderTop: "1px solid var(--line)", marginTop: 64, paddingTop: 22, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap", fontSize: 12, color: "var(--ink-muted)", fontFamily: "var(--font-mono)" }}>
+        <div style={{ borderTop: "1px solid var(--line)", marginTop: 64, paddingTop: 22, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap", fontSize: "var(--fs-meta)", color: "var(--ink-muted)", fontFamily: "var(--font-mono)" }}>
           <span>© 2026 NEWRON AI TECHNOLOGIES PVT. LTD.</span>
           <span style={{ display: "flex", gap: 14, flexWrap: "wrap", letterSpacing: "0.06em" }}>
             <span>SOC 2 (APPLIED)</span><span style={{ opacity: 0.5 }}>·</span>
@@ -1019,13 +1019,13 @@ function Footer() {
 // ───────────────────────────────────────────────── shared SectionHead
 function SectionHead({ tag, eyebrow, title, kicker, inverse }: { tag: string; eyebrow: ReactNode; title: ReactNode; kicker?: string; inverse?: boolean }) {
   return (
-    <header className="section-head" style={{ display: "grid", gridTemplateColumns: "80px minmax(0, 1.4fr) minmax(0, 1fr)", gap: 48, alignItems: "start", borderTop: `1px solid ${inverse ? "var(--inverse-line)" : "var(--line)"}`, paddingTop: 28 }}>
-      <div className="mono" style={{ fontSize: 12, color: inverse ? "var(--inverse-ink-soft)" : "var(--ink-muted)", letterSpacing: "0.1em", paddingTop: 6 }}>{tag}</div>
+    <header className={"section-head" + (inverse ? " is-inverse" : "")}>
+      <div className="mono sh-tag">{tag}</div>
       <div>
         <div className="eyebrow eyebrow-grad" style={{ marginBottom: 18 }}>{eyebrow}</div>
-        <h2 className="display" style={{ margin: 0, fontSize: "clamp(48px, 6.4vw, 88px)", lineHeight: 0.98, color: inverse ? "var(--inverse-ink)" : "var(--ink)" }}>{title}</h2>
+        <h2 className="display sh-title">{title}</h2>
       </div>
-      <div>{kicker && <p style={{ margin: 0, marginTop: 38, fontSize: 16, lineHeight: 1.55, color: inverse ? "var(--inverse-ink-soft)" : "var(--ink-soft)", maxWidth: 380 }}>{kicker}</p>}</div>
+      <div>{kicker && <p className="sh-kicker">{kicker}</p>}</div>
     </header>);
 }
 

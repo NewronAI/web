@@ -19,7 +19,7 @@ function LegalAside({ updated, items }: { updated: string; items: [string, strin
       <div className="eyebrow" style={{ marginBottom: 12 }}>On this page</div>
       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 9 }}>
         {items.map(([id, label]) =>
-          <li key={id}><a href={"#" + id} style={{ color: "var(--ink-soft)", textDecoration: "none", fontSize: 13.5 }}>{label}</a></li>)}
+          <li key={id}><a className="toc-link" href={"#" + id}>{label}</a></li>)}
       </ul>
     </div>);
 }
@@ -52,7 +52,7 @@ export default function Page() {
 
       <Band id="certs">
         <Head tag="03" eyebrow="Certifications & programme" title={<>Independently <em className="italic">checked</em>.</>} />
-        <div className="r-cards" style={{ marginTop: 48, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+        <div className="r-cards" style={{ marginTop: 48 }}>
           {([["ISO 27001", "Information security management system aligned to the standard."], ["SOC 2", "Type II programme covering security, availability and confidentiality (in progress)."], ["Data residency", "Indian data-residency commitments; training on India-hosted data."]] as [string, string][]).map(([t, d]) =>
             <div key={t} className="card" style={{ padding: 28 }}>
               <div className="eyebrow eyebrow-grad" style={{ marginBottom: 14 }}>Certified</div>

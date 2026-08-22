@@ -78,7 +78,7 @@ export function Nav() {
         <Wordmark />
         <nav className="nav-center" style={{ display: "flex", justifyContent: "center", gap: 2 }}>
           {NAV_LINKS.map(([l, h]) =>
-            <a key={l} href={route(h)} style={{ textDecoration: "none", color: "var(--ink)", padding: "8px 10px", fontSize: 13.5, fontWeight: 500, borderRadius: 4, whiteSpace: "nowrap" }}>{l}</a>)}
+            <a key={l} className="nav-link" href={route(h)}>{l}</a>)}
         </nav>
         <div className="nav-cta" style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <a className="btn btn-ghost nav-cta-secondary" href={route("v4.html#contact")}>Talk to sales</a>
@@ -105,7 +105,7 @@ export function Footer() {
   return (
     <footer style={{ background: "var(--bg)", borderTop: "1px solid var(--line)", paddingBlock: 80 }}>
       <div className="shell">
-        <div className="r-footer" style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) repeat(4, minmax(0, 1fr))", gap: 32 }}>
+        <div className="r-footer">
           <div>
             <Wordmark />
             <p style={{ fontSize: 13, color: "var(--ink-soft)", maxWidth: 280, marginTop: 18, lineHeight: 1.55 }}>
@@ -122,7 +122,7 @@ export function Footer() {
               </ul>
             </div>)}
         </div>
-        <div style={{ borderTop: "1px solid var(--line)", marginTop: 64, paddingTop: 22, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap", fontSize: 12, color: "var(--ink-muted)", fontFamily: "var(--font-mono)" }}>
+        <div style={{ borderTop: "1px solid var(--line)", marginTop: 64, paddingTop: 22, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap", fontSize: "var(--fs-meta)", color: "var(--ink-muted)", fontFamily: "var(--font-mono)" }}>
           <span>© 2026 NEWRON AI TECHNOLOGIES PVT. LTD.</span>
           <span style={{ display: "flex", gap: 14, flexWrap: "wrap", letterSpacing: "0.06em" }}>
             <span>NVIDIA INCEPTION PARTNER</span><span style={{ opacity: 0.5 }}>·</span>
@@ -145,12 +145,12 @@ export function PageHero({ crumb, eyebrow, title, lead, ctas, aside }: {
     <section className="dotgrid-soft" style={{ paddingBlock: "calc(72px * var(--density)) calc(80px * var(--density))", position: "relative", borderBottom: "1px solid var(--line)" }}>
       <div className="shell">
         {crumb &&
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.1em", color: "var(--ink-muted)", marginBottom: 28, display: "flex", gap: 8, alignItems: "center" }}>
-            <a href={route("v4.html")} style={{ color: "var(--ink-muted)", textDecoration: "none" }}>HOME</a>
+          <div className="mono" style={{ fontSize: "var(--fs-label)", letterSpacing: "0.1em", color: "var(--ink-muted)", marginBottom: 28, display: "flex", gap: 8, alignItems: "center" }}>
+            <a className="crumb-link" href={route("v4.html")}>HOME</a>
             <span style={{ opacity: 0.5 }}>/</span>
             <span>{crumb}</span>
           </div>}
-        <div className={aside ? "pg-hero-grid" : ""} style={{ display: "grid", gridTemplateColumns: aside ? "minmax(0, 1.5fr) minmax(0, 1fr)" : "1fr", gap: 64, alignItems: aside ? "center" : "end" }}>
+        <div className={"pg-hero-grid" + (aside ? " has-aside" : "")}>
           <div>
             {eyebrow && <div className="eyebrow eyebrow-grad" style={{ marginBottom: 22 }}>{eyebrow}</div>}
             <h1 className="display" style={{ margin: 0, fontSize: "clamp(44px, 6.4vw, 92px)", lineHeight: 0.98, letterSpacing: "-0.028em" }}>{title}</h1>
@@ -184,8 +184,8 @@ export function Head({ tag, eyebrow, title, kicker, inverse }: {
   tag?: ReactNode; eyebrow?: ReactNode; title?: ReactNode; kicker?: ReactNode; inverse?: boolean;
 }) {
   return (
-    <header className="section-head" style={{ display: "grid", gridTemplateColumns: "80px minmax(0, 1.4fr) minmax(0, 1fr)", gap: 48, alignItems: "start", borderTop: "1px solid " + (inverse ? "var(--inverse-line)" : "var(--line)"), paddingTop: 28 }}>
-      <div className="mono" style={{ fontSize: 12, color: inverse ? "var(--inverse-ink-soft)" : "var(--ink-muted)", letterSpacing: "0.1em", paddingTop: 6 }}>{tag}</div>
+    <header className={"section-head" + (inverse ? " is-inverse" : "")}>
+      <div className="mono" style={{ fontSize: "var(--fs-meta)", color: inverse ? "var(--inverse-ink-soft)" : "var(--ink-muted)", letterSpacing: "0.1em", paddingTop: 6 }}>{tag}</div>
       <div>
         <div className="eyebrow eyebrow-grad" style={{ marginBottom: 18 }}>{eyebrow}</div>
         <h2 className="display" style={{ margin: 0, fontSize: "clamp(34px, 4.2vw, 56px)", lineHeight: 1.0, color: inverse ? "var(--inverse-ink)" : "var(--ink)" }}>{title}</h2>
@@ -198,12 +198,12 @@ export function Head({ tag, eyebrow, title, kicker, inverse }: {
 type Feature = { tag?: string; title: string; desc: string; points?: string[] };
 export function FeatureGrid({ items, cols = 3, top = 56 }: { items: Feature[]; cols?: number; top?: number }) {
   return (
-    <div className="r-cards" style={{ marginTop: top, display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 16 }}>
+    <div className="r-cards" style={{ marginTop: top, ...(cols === 2 ? { "--card-min": "min(400px, 100%)" } as CSSProperties : null) }}>
       {items.map((it, i) =>
         <article key={i} className="card" style={{ padding: 28 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
             {it.tag && <div className="eyebrow">{it.tag}</div>}
-            <div className="mono" style={{ fontSize: 11, color: "var(--ink-muted)", letterSpacing: "0.1em" }}>{String(i + 1).padStart(2, "0")}</div>
+            <div className="mono" style={{ fontSize: "var(--fs-label)", color: "var(--ink-muted)", letterSpacing: "0.1em" }}>{String(i + 1).padStart(2, "0")}</div>
           </div>
           <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 26, lineHeight: 1.08, margin: "22px 0 12px", letterSpacing: "-0.01em" }}>{it.title}</h3>
           <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.6, margin: 0 }}>{it.desc}</p>
@@ -222,7 +222,7 @@ export function FeatureGrid({ items, cols = 3, top = 56 }: { items: Feature[]; c
 type Stat = { v: string; suffix?: string; k: string };
 export function StatBand({ lead, stats }: { lead?: ReactNode; stats: Stat[] }) {
   return (
-    <div className="r-stats" style={{ marginTop: 56, display: "grid", gridTemplateColumns: `minmax(0, 2fr) repeat(${stats.length}, 1fr)`, borderTop: "1px solid var(--line)" }}>
+    <div className="r-stats" style={{ marginTop: 56 }}>
       <div style={{ padding: "32px 24px 0 0" }}>
         <div className="eyebrow">Measured in production</div>
         <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 22, marginTop: 8, lineHeight: 1.2 }}>{lead}</div>
@@ -230,7 +230,7 @@ export function StatBand({ lead, stats }: { lead?: ReactNode; stats: Stat[] }) {
       {stats.map((m) =>
         <div key={m.k} style={{ padding: 24, borderLeft: "1px solid var(--line)" }}>
           <div className="display" style={{ fontSize: "clamp(32px, 3.6vw, 52px)", lineHeight: 0.95 }}>{m.v}<span style={{ color: "var(--accent)" }}>{m.suffix}</span></div>
-          <div className="mono" style={{ fontSize: 11, color: "var(--ink-muted)", letterSpacing: "0.08em", marginTop: 14 }}>{m.k.toUpperCase()}</div>
+          <div className="mono" style={{ fontSize: "var(--fs-label)", color: "var(--ink-muted)", letterSpacing: "0.08em", marginTop: 14 }}>{m.k.toUpperCase()}</div>
         </div>)}
     </div>);
 }
@@ -238,17 +238,10 @@ export function StatBand({ lead, stats }: { lead?: ReactNode; stats: Stat[] }) {
 // ── definition rows (two-column) ─────────────────────────
 export function SplitRows({ items, top = 56 }: { items: [string, string][]; top?: number }) {
   return (
-    <div className="r-pillars" style={{ marginTop: top, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 0 }}>
+    <div className="r-pillars" style={{ marginTop: top }}>
       {items.map(([k, v], i) =>
-        <div key={k} className="r-pillar" style={{
-          padding: "32px 32px 32px 0",
-          paddingLeft: i % 2 === 1 ? 32 : 0,
-          borderTop: i < 2 ? "1px solid var(--line)" : "none",
-          borderBottom: "1px solid var(--line)",
-          borderLeft: i % 2 === 1 ? "1px solid var(--line)" : "none",
-          display: "grid", gridTemplateColumns: "60px 1fr", gap: 16
-        }}>
-          <div className="mono" style={{ fontSize: 11, color: "var(--ink-muted)", letterSpacing: "0.1em", marginTop: 6 }}>{String(i + 1).padStart(2, "0")}</div>
+        <div key={k} className="r-pillar">
+          <div className="mono" style={{ fontSize: "var(--fs-label)", color: "var(--ink-muted)", letterSpacing: "0.1em", marginTop: 6 }}>{String(i + 1).padStart(2, "0")}</div>
           <div>
             <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 24, lineHeight: 1.12 }}>{k}</div>
             <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 10, lineHeight: 1.6, maxWidth: 440 }}>{v}</div>
@@ -275,7 +268,7 @@ export function Timeline({ items }: { items: [string, string, string][] }) {
       {items.map(([t, label, desc], i) =>
         <div key={i} style={{ position: "relative", paddingBottom: 26 }}>
           <span style={{ position: "absolute", left: -27, top: 4, width: 10, height: 10, borderRadius: "50%", background: "var(--accent)", border: "2px solid var(--bg)" }} />
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.08em", color: "var(--ink-muted)" }}>{t}</div>
+          <div className="mono" style={{ fontSize: "var(--fs-label)", letterSpacing: "0.08em", color: "var(--ink-muted)" }}>{t}</div>
           <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 19, marginTop: 4 }}>{label}</div>
           {desc && <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 4, lineHeight: 1.6, maxWidth: 560 }}>{desc}</div>}
         </div>)}
@@ -302,7 +295,7 @@ export function CTABand({ eyebrow = "Get started", headline, sub, primary = { la
 }) {
   return (
     <section className="section" data-on-dark="1" style={{ background: "var(--inverse-bg)", color: "var(--inverse-ink)" }}>
-      <div className="shell r-cta" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.3fr) minmax(0, 1fr)", gap: 64, alignItems: "end" }}>
+      <div className="shell r-cta">
         <div>
           <div className="eyebrow eyebrow-grad" style={{ marginBottom: 22 }}>{eyebrow}</div>
           <h2 className="display" style={{ margin: 0, fontSize: "clamp(36px, 5vw, 68px)", lineHeight: 1.0, color: "var(--inverse-ink)" }}>{headline}</h2>
@@ -319,7 +312,7 @@ export function CTABand({ eyebrow = "Get started", headline, sub, primary = { la
 // ── prose wrapper (legal/editorial) ──────────────────────
 export function Prose({ children, aside }: { children?: ReactNode; aside?: ReactNode }) {
   return (
-    <div className="shell r-prose" style={{ paddingBlock: "calc(72px * var(--density))", display: "grid", gridTemplateColumns: aside ? "minmax(0, 3fr) minmax(0, 1fr)" : "1fr", gap: 64, alignItems: "start" }}>
+    <div className={"shell r-prose" + (aside ? " has-aside" : "")}>
       <div className="prose">{children}</div>
       {aside && <aside style={{ position: "sticky", top: 96, fontSize: 13, color: "var(--ink-muted)" }}>{aside}</aside>}
     </div>);

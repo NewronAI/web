@@ -13,7 +13,7 @@ function LegalAside({ updated, items }: { updated: string; items: [string, strin
       <div className="eyebrow" style={{ marginBottom: 12 }}>On this page</div>
       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 9 }}>
         {items.map(([id, label]) =>
-          <li key={id}><a href={"#" + id} style={{ color: "var(--ink-soft)", textDecoration: "none", fontSize: 13.5 }}>{label}</a></li>)}
+          <li key={id}><a className="toc-link" href={"#" + id}>{label}</a></li>)}
       </ul>
     </div>);
 }
@@ -68,9 +68,9 @@ export default function Page() {
 
       <Band id="more" bg="var(--bg-2)" tight style={{ borderTop: "1px solid var(--line)" }}>
         <div style={{ display: "flex", gap: 28, flexWrap: "wrap", fontSize: 14 }}>
-          <a href={route("privacy.html")} style={{ color: "var(--accent)", textDecoration: "none" }}>Privacy Policy →</a>
-          <a href={route("security.html")} style={{ color: "var(--accent)", textDecoration: "none" }}>Security →</a>
-          <a href={route("responsible-ai.html")} style={{ color: "var(--accent)", textDecoration: "none" }}>Responsible AI →</a>
+          <a href={route("privacy.html")} className="xlink">Privacy Policy →</a>
+          <a href={route("security.html")} className="xlink">Security →</a>
+          <a href={route("responsible-ai.html")} className="xlink">Responsible AI →</a>
         </div>
       </Band>
       <Footer />

@@ -13,7 +13,7 @@ function LegalAside({ updated, items }: { updated: string; items: [string, strin
       <div className="eyebrow" style={{ marginBottom: 12 }}>On this page</div>
       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 9 }}>
         {items.map(([id, label]) =>
-          <li key={id}><a href={"#" + id} style={{ color: "var(--ink-soft)", textDecoration: "none", fontSize: 13.5 }}>{label}</a></li>)}
+          <li key={id}><a className="toc-link" href={"#" + id}>{label}</a></li>)}
       </ul>
     </div>);
 }
