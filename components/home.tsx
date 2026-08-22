@@ -78,7 +78,7 @@ function Nav() {
       borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",
       transition: "background 0.2s, border-color 0.2s"
     }}>
-      <div className="shell" style={{ height: "var(--nav-h)", display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "clamp(16px, 3vw, 48px)" }}>
+      <div className="shell" style={{ height: "var(--nav-h)", display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "clamp(14px, 2.4vw, 40px)" }}>
         <Wordmark />
         <nav className="nav-center" style={{ display: "flex", justifyContent: "center", gap: 2 }}>
           {HOME_NAV.map(([l, h]) =>

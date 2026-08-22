@@ -946,6 +946,12 @@ h1, h2, h3, .display, .sh-title, .hero-title, .page-lead, .prose h2, .prose h3 {
 /* =========================================================
    Responsive nav
    ========================================================= */
+/* The nav is the tightest row on the site: at ~990px the link row has zero
+   slack and only the grid gap separates it from the wordmark and the CTA.
+   Give the nav a narrower right gutter than body content so the CTA has
+   somewhere to go before anything collides. */
+header .shell { padding-right: clamp(16px, 2.6vw, 40px); }
+
 .nav-link {
   text-decoration: none;
   color: var(--ink);
