@@ -698,7 +698,7 @@ function Artha() {
         </div>
         <div className="artha-pillars" style={{ marginTop: 56 }}>
           {pillars.map(([k, v], i) =>
-            <div key={k} style={{ padding: "28px 24px 0", paddingLeft: i === 0 ? 0 : 24, borderLeft: i === 0 ? "none" : "1px solid var(--inverse-line)" }}>
+            <div key={k}>
               <div style={{ fontFamily: "var(--font-display)", fontSize: 19, color: "var(--inverse-ink)", lineHeight: 1.2 }}>{k}</div>
               <div style={{ fontSize: 13, color: "var(--inverse-ink-soft)", marginTop: 10, lineHeight: 1.55 }}>{v}</div>
             </div>)}
