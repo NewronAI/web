@@ -1,6 +1,6 @@
 import React from "react";
 import { BOOKING_URL } from "@/lib/route";
-import { Nav, Footer, PageHero, Band, Head, FeatureGrid, SplitRows, Timeline, FAQ, CTABand, Quote } from "@/components/site-chrome";
+import { Nav, Footer, PageHero, Band, Head, FeatureGrid, SplitRows, Timeline, FAQ, CTABand } from "@/components/site-chrome";
 import { IlloCustom } from "@/components/illustrations";
 
 export const metadata = { title: "Custom AI engineering — Newron" };
@@ -48,13 +48,7 @@ export default function Page() {
           ["Built with NVIDIA", "NVIDIA Inception Partner since 2023, training on Indian data with explicit residency commitments."]]} />
       </Band>
 
-      <Band id="proof" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
-        <div style={{ maxWidth: 900 }}>
-          <Quote text={"“They embedded with our team, shipped to production in eleven weeks, and left us with a system we actually understand and can operate ourselves.”"} who="VP Engineering" sub="Banking platform" />
-        </div>
-      </Band>
-
-      <Band id="faq">
+      <Band id="faq" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
           ["Who owns the model and the code?", "The deliverables we build for you — code, trained weights and documentation — are handed over at the end of the engagement. Where a deliverable builds on Newron\u2019s existing base models or platform packages, those are licensed to you to run and self-host rather than assigned. Which parts are owned and which are licensed is set out explicitly in the engagement agreement."],

@@ -1,6 +1,6 @@
 import { BOOKING_URL } from "@/lib/route";
 import React from "react";
-import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, Timeline, FAQ, CTABand, Quote } from "@/components/site-chrome";
+import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, Timeline, FAQ, CTABand } from "@/components/site-chrome";
 import { IlloInsurance } from "@/components/illustrations";
 
 export const metadata = { title: "Insurance AI — Newron" };
@@ -45,13 +45,7 @@ export default function Page() {
         </div>
       </Band>
 
-      <Band id="proof" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
-        <div style={{ maxWidth: 900 }}>
-          <Quote text={"“The denial-risk model paid for itself in a quarter. We stopped filing claims that were always going to bounce, and our adjusters finally have time for the genuinely hard cases.”"} who="VP, Claims Operations" sub="Health insurer · multi-TPA" />
-        </div>
-      </Band>
-
-      <Band id="faq">
+      <Band id="faq" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
           ["Which lines of business are supported?", "Health and motor are in production today. No other line is validated yet — the document and policy-reasoning stack is line-agnostic in design, so we scope additional lines case by case rather than claiming coverage up front."],

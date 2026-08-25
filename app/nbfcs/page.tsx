@@ -42,7 +42,7 @@ export default function Page() {
           ["API-first integration", "Drops into your LOS and collections stack via REST + webhooks, without a rip-and-replace."]]} />
       </Band>
 
-      <Band id="faq">
+      <Band id="faq" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
           ["Can it handle our volume?", "Yes. Statement analysis runs in under a minute and the suite is built for high-throughput origination, with human review reserved for exceptions and deviations."],

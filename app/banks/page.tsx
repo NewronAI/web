@@ -1,6 +1,6 @@
 import { BOOKING_URL } from "@/lib/route";
 import React from "react";
-import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand, Quote } from "@/components/site-chrome";
+import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand } from "@/components/site-chrome";
 import { IlloBank } from "@/components/illustrations";
 
 export const metadata = { title: "Newron for Banks" };
@@ -42,13 +42,7 @@ export default function Page() {
         <StatBand lead={<>Measured on credit-desk deployments</>} stats={[{ v: "66", suffix: "%", k: "Reduction in TAT" }, { v: "200", suffix: "%", k: "Productivity uplift" }, { v: "65k", suffix: "+", k: "Hours saved" }]} />
       </Band>
 
-      <Band id="proof" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
-        <div style={{ maxWidth: 900 }}>
-          <Quote text={"“Procurement and the security team signed off because nothing leaves our VPC. That's what made it possible to actually deploy AI on the credit desk.”"} who="Chief Risk Officer" sub="Private-sector bank" />
-        </div>
-      </Band>
-
-      <Band id="faq">
+      <Band id="faq" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
           ["Will this pass our security review?", "Newron is designed for it: VPC, on-prem or air-gapped deployment, controls aligned to ISO 27001 with a SOC 2 Type II programme in progress, and a complete audit trail. We work directly with your security and procurement teams."],

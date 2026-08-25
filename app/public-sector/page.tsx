@@ -42,7 +42,7 @@ export default function Page() {
           ["Transparent & auditable", "Every answer is sourced to the governing rule, and every case is logged for oversight."]]} />
       </Band>
 
-      <Band id="faq">
+      <Band id="faq" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
           ["Can Newron run inside our data centre?", "Yes. Public-sector deployments run on-premise or air-gapped within state infrastructure, with data-residency commitments."],

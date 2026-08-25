@@ -42,7 +42,7 @@ export default function Page() {
           ["Human-in-the-loop", "Newron assembles and recommends; adjusters approve. Nothing settles without a person in the loop."]]} />
       </Band>
 
-      <Band id="faq">
+      <Band id="faq" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
           ["Which lines are supported?", "Health and motor are in production. Other lines are not validated yet; we scope them case by case rather than claiming coverage up front."],

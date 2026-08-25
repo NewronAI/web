@@ -1,6 +1,6 @@
 import React from "react";
 import { BOOKING_URL } from "@/lib/route";
-import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, Timeline, FAQ, CTABand, Quote } from "@/components/site-chrome";
+import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, Timeline, FAQ, CTABand } from "@/components/site-chrome";
 import { IlloGovernance } from "@/components/illustrations";
 
 export const metadata = { title: "Governance AI — Newron" };
@@ -46,13 +46,7 @@ export default function Page() {
         <StatBand lead={<>Across grievance categories in pilot</>} stats={[{ v: "1", suffix: "", k: "Language in production · Kannada" }, { v: "4:12", suffix: "", k: "Median response time (mm:ss)" }, { v: "100", suffix: "%", k: "Cases audit-logged" }]} />
       </Band>
 
-      <Band id="proof" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
-        <div style={{ maxWidth: 900 }}>
-          <Quote text={"“For the first time, a citizen can speak in their own dialect and get an answer the same day — sourced from the actual rule, not a call-centre guess.”"} who="Programme Lead" sub="Government of Karnataka" />
-        </div>
-      </Band>
-
-      <Band id="faq">
+      <Band id="faq" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
           ["Which languages and dialects are supported?", "Kannada is in production, including handwriting recognition. No other language is in production today — the stack is built to extend to other Indian languages and regional dialects, but each one needs its own data and evaluation before we would call it supported."],
