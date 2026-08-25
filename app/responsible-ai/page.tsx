@@ -1,6 +1,6 @@
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, SplitRows, Prose, FAQ, CTABand } from "@/components/site-chrome";
-import { route } from "@/lib/route";
+import { route, BOOKING_URL } from "@/lib/route";
 import { IlloResponsible } from "@/components/illustrations";
 
 export const metadata = { title: "Responsible AI — Newron" };
@@ -28,7 +28,7 @@ export default function Page() {
         eyebrow="Responsible AI"
         title={<>In our rooms, a wrong answer has <em className="italic">consequences</em>.</>}
         lead="We build AI for credit desks, claims queues and grievance counters. That obligates us to a higher bar than a chatbot: sourced answers, human decisions, and the humility to say “I'm not sure.”"
-        ctas={[{ label: "Talk to us", href: "v4.html#contact", primary: true }, { label: "How we deploy", href: "security.html" }]} />
+        ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }, { label: "How we deploy", href: "security.html" }]} />
 
       <Band id="principles">
         <Head tag="01" eyebrow="Our principles" title={<>Six commitments we <em className="italic">design</em> around.</>} kicker="Not a manifesto — the constraints our systems are actually built to meet." />
@@ -72,7 +72,7 @@ export default function Page() {
           ["What happens when the model is unsure?", "We design for abstention. A system that surfaces uncertainty and the relevant policy clause is more useful — and safer — than one that always answers."]]} />
       </Band>
 
-      <CTABand eyebrow="Responsible AI" headline={<>Hold us to <em className="italic">this</em>.</>} sub="If you're deploying AI where the stakes are real, let's talk about how to do it defensibly — and what we'd refuse to build." primary={{ label: "Talk to us", href: "v4.html#contact" }} secondary={{ label: "Security", href: "security.html" }} />
+      <CTABand eyebrow="Responsible AI" headline={<>Hold us to <em className="italic">this</em>.</>} sub="If you're deploying AI where the stakes are real, let's talk about how to do it defensibly — and what we'd refuse to build." primary={{ label: "Talk to Us", href: BOOKING_URL }} secondary={{ label: "Security", href: "security.html" }} />
       <Footer />
     </>);
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, Footer, PageHero, Band, Head, StatBand, SplitRows, Timeline, CTABand, Quote } from "@/components/site-chrome";
+import { Nav, Footer, PageHero, Band, Head, StatBand, SplitRows, Timeline, CTABand } from "@/components/site-chrome";
 import { IlloAbout } from "@/components/illustrations";
 
 export const metadata = { title: "About — Newron" };
@@ -29,7 +29,7 @@ export default function Page() {
           ["We sit inside your team", "Ex-research and ex-platform engineers embed with your people to design the data pipelines, eval harnesses and inference path."],
           ["We ship to production", "Most engagements reach production inside a single quarter — a working system you own, not a proof of concept."],
           ["We deploy where data lives", "VPC, on-premise or air-gapped. Compliance gets the audit trail; your engineering keeps the keys."],
-          ["We earn the cost", "Custom models score within striking distance of frontier systems on the tasks that matter, at a fraction of the inference bill."]]} />
+          ["We earn the cost", "On the tasks we train for, our custom models score on par with frontier systems in our own evaluations, at a fraction of the inference bill."]]} />
       </Band>
 
       <Band id="footprint">
@@ -45,12 +45,6 @@ export default function Page() {
             ["2023", "NVIDIA Inception Partner", "Joined NVIDIA Inception, training on Indian financial data with explicit residency commitments."],
             ["2024", "Lending suite in production", "Credit memos, statement analysis and verification live at banks and NBFCs."],
             ["2025", "Insurance & governance", "Claims automation for insurers and citizen-service AI with the Government of Karnataka."]]} />
-        </div>
-      </Band>
-
-      <Band id="quote">
-        <div style={{ maxWidth: 900 }}>
-          <Quote text={"“We don't sell a demo. We hand over a system our customers understand, run themselves, and can defend to a regulator.”"} who="The Newron team" sub="Bengaluru, India" />
         </div>
       </Band>
 

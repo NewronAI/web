@@ -29,8 +29,8 @@ export default function Page() {
       </Band>
 
       <Band id="outcomes" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
-        <Head tag="02" eyebrow="Impact" title={<>Fewer denials, <em className="italic">faster</em> settlements.</>} kicker="Measured across health and motor lines at insurers and TPAs running Newron in production." />
-        <StatBand lead={<>What claims teams see in production</>} stats={[{ v: "90", suffix: "s", k: "Avg time to file" }, { v: "0.18", suffix: "", k: "Median denial risk" }, { v: "4.2", suffix: "d", k: "Settlement SLA" }]} />
+        <Head tag="02" eyebrow="Impact" title={<>Fewer denials, <em className="italic">faster</em> settlements.</>} kicker="Measured across health and motor lines at insurers and TPAs running Newron in production. The settlement figure is the TPA turnaround we observe, not a Newron commitment." />
+        <StatBand lead={<>What claims teams see in production</>} stats={[{ v: "90", suffix: "s", k: "Avg time to file" }, { v: "4.2", suffix: "d", k: "Observed TPA settlement SLA" }]} />
       </Band>
 
       <Band id="lines">
@@ -54,7 +54,7 @@ export default function Page() {
       <Band id="faq">
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
-          ["Which lines of business are supported?", "Health and motor are in production today, with the document and policy-reasoning stack generalising to other lines. New document types onboard quickly because the models are pre-trained on Indian claims data."],
+          ["Which lines of business are supported?", "Health and motor are in production today. No other line is validated yet — the document and policy-reasoning stack is line-agnostic in design, so we scope additional lines case by case rather than claiming coverage up front."],
           ["Does it integrate with our TPA workflow?", "Yes. Newron produces TPA-ready packets and exposes REST + webhook APIs, so it slots into your existing claims platform and TPA handoffs."],
           ["How is denial risk calculated?", "The model is trained on historical adjudication outcomes and explains each prediction with the policy clauses and document evidence behind it — never an unexplained score."],
           ["Is patient data kept private?", "All processing runs inside your environment — VPC, on-prem or air-gapped — with full audit logging and data-residency commitments."]]} />

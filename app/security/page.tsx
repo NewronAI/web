@@ -1,12 +1,12 @@
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, SplitRows, FeatureGrid, Prose, FAQ, CTABand } from "@/components/site-chrome";
-import { route } from "@/lib/route";
+import { BOOKING_URL } from "@/lib/route";
 import { IlloSecurity } from "@/components/illustrations";
 
 export const metadata = { title: "Security — Newron" };
 
 const deploy = [
-  { tag: "VPC", title: "Your private cloud", desc: "Runs inside your AWS, Oracle or Google VPC. Data stays in your account; we never see it.", points: ["Customer-owned account", "Private networking", "Your KMS keys"] },
+  { tag: "VPC", title: "Your private cloud", desc: "Runs inside your AWS, Oracle or Google VPC. Data stays in your account; Newron holds no copy of it.", points: ["Customer-owned account", "Private networking", "Your KMS keys"] },
   { tag: "On-prem", title: "On-premise", desc: "Deploys into your own data centre for full physical control over data and compute.", points: ["No external egress", "Hardware you control", "Local key management"] },
   { tag: "Air-gapped", title: "Fully air-gapped", desc: "Operates with no internet connectivity for the most sensitive government and financial workloads.", points: ["Zero outbound", "Offline model updates", "Sovereign by default"] },
 ];
@@ -34,13 +34,13 @@ export default function Page() {
         eyebrow="Security"
         title={<>Built to pass the <em className="italic">security review</em>.</>}
         lead="Newron is designed for buyers whose procurement, risk and audit teams ask hard questions. We deploy inside your perimeter, encrypt everything, and leave a trail for every action."
-        ctas={[{ label: "Request our security pack", href: "v4.html#contact", primary: true }, { label: "Report a vulnerability", href: "#disclosure" }]} />
+        ctas={[{ label: "Request our security pack", href: BOOKING_URL, primary: true }, { label: "Report a vulnerability", href: "#disclosure" }]} />
 
       <Band id="pillars">
-        <Head tag="01" eyebrow="Posture" title={<>The controls your <em className="italic">risk team</em> expects.</>} kicker="Aligned to ISO 27001 and our SOC 2 programme, and validated in regulated deployments." />
+        <Head tag="01" eyebrow="Posture" title={<>What every deployment <em className="italic">includes</em>.</>} kicker="Controls aligned to ISO 27001, with a SOC 2 Type II programme in progress. Every item below applies to every deployment." />
         <SplitRows items={[
-          ["Data stays in your environment", "Newron runs in your VPC, on-premise or air-gapped. Customer data is never sent to third-party model APIs, and we hold no copy of it."],
-          ["Encryption everywhere", "TLS for data in transit and strong encryption at rest, with keys managed by you through your own KMS where you choose."],
+          ["Data stays in your environment", "Newron runs in your VPC, on-premise or air-gapped. Customer data is never sent to third-party model APIs, and Newron keeps no copy of it outside your environment. Support access, where you grant it, is scoped, time-bound and logged."],
+          ["Encryption everywhere", "TLS for data in transit and encryption at rest, with keys managed by you through your own KMS where you choose."],
           ["Least-privilege access", "Role-based access control, scoped service credentials and just-in-time access for support, all logged."],
           ["Complete audit trail", "Every model output and user action is timestamped, sourced and exportable for audit and regulator review."]]} />
       </Band>
@@ -51,11 +51,11 @@ export default function Page() {
       </Band>
 
       <Band id="certs">
-        <Head tag="03" eyebrow="Certifications & programme" title={<>Independently <em className="italic">checked</em>.</>} />
+        <Head tag="03" eyebrow="Certifications & programme" title={<>Exactly where we <em className="italic">stand</em>.</>} kicker="Stated precisely, because procurement will check. We do not claim a certification we do not hold." />
         <div className="r-cards" style={{ marginTop: 48 }}>
-          {([["ISO 27001", "Information security management system aligned to the standard."], ["SOC 2", "Type II programme covering security, availability and confidentiality (in progress)."], ["Data residency", "Indian data-residency commitments; training on India-hosted data."]] as [string, string][]).map(([t, d]) =>
+          {([["ISO 27001", "Aligned", "Our information security management system is built to the standard's controls. We are not certified against it."], ["SOC 2", "In progress", "A Type II programme covering security, availability and confidentiality is underway. No report has been issued yet."], ["Data residency", "Contractual", "Indian data-residency commitments, made in the customer agreement rather than by certification."]] as [string, string, string][]).map(([t, status, d]) =>
             <div key={t} className="card" style={{ padding: 28 }}>
-              <div className="eyebrow eyebrow-grad" style={{ marginBottom: 14 }}>Certified</div>
+              <div className="eyebrow eyebrow-grad" style={{ marginBottom: 14 }}>{status}</div>
               <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 26 }}>{t}</div>
               <p style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 10, lineHeight: 1.6 }}>{d}</p>
             </div>)}
@@ -76,13 +76,13 @@ export default function Page() {
       <Band id="faq" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
-          ["Can we get your SOC 2 report and security pack?", "Yes. Under NDA we share our security documentation, including controls, architecture and subprocessor details. Request it via the contact form."],
+          ["Can we get your security pack?", "Yes. Under NDA we share our security documentation, including controls, architecture and subprocessor details. Our SOC 2 Type II programme is still in progress, so there is no report to share yet — the pack sets out where the programme stands."],
           ["Does Newron ever see our data?", "In a standard deployment, no. The system runs inside your environment and we hold no copy of your data. Support access, where granted, is scoped, just-in-time and logged."],
           ["Do you use our data to train models?", "Not without an explicit, contracted agreement. Customer data is processed under your instructions and is not used to train shared models."],
           ["How do you handle vulnerabilities?", "We scan continuously, patch on a risk-based schedule, and operate a responsible-disclosure process for external reports."]]} />
       </Band>
 
-      <CTABand eyebrow="Security" headline={<>Send us your <em className="italic">questionnaire</em>.</>} sub="We've answered a lot of them. Share your security and procurement requirements and we'll work through them with your team." primary={{ label: "Request security pack", href: "v4.html#contact" }} secondary={{ label: "Privacy Policy", href: "privacy.html" }} />
+      <CTABand eyebrow="Security" headline={<>Send us your <em className="italic">questionnaire</em>.</>} sub="We've answered a lot of them. Share your security and procurement requirements and we'll work through them with your team." primary={{ label: "Request security pack", href: BOOKING_URL }} secondary={{ label: "Privacy Policy", href: "privacy.html" }} />
       <Footer />
     </>);
 }

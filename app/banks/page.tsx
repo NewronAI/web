@@ -38,8 +38,8 @@ export default function Page() {
       </Band>
 
       <Band id="impact">
-        <Head tag="03" eyebrow="In production" title={<>Outcomes banks measure.</>} />
-        <StatBand lead={<>Across credit and operations deployments</>} stats={[{ v: "66", suffix: "%", k: "Reduction in TAT" }, { v: "200", suffix: "%", k: "Productivity uplift" }, { v: "65k", suffix: "+", k: "Hours saved" }]} />
+        <Head tag="03" eyebrow="In production" title={<>Outcomes banks measure.</>} kicker="From origination deployments. The operations and copilot workflows above are newer and are not covered by these numbers." />
+        <StatBand lead={<>Measured on credit-desk deployments</>} stats={[{ v: "66", suffix: "%", k: "Reduction in TAT" }, { v: "200", suffix: "%", k: "Productivity uplift" }, { v: "65k", suffix: "+", k: "Hours saved" }]} />
       </Band>
 
       <Band id="proof" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
@@ -51,7 +51,7 @@ export default function Page() {
       <Band id="faq">
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
-          ["Will this pass our security review?", "Newron is designed for it: VPC, on-prem or air-gapped deployment, SOC 2 (applied) and ISO 27001 controls, and a complete audit trail. We work directly with your security and procurement teams."],
+          ["Will this pass our security review?", "Newron is designed for it: VPC, on-prem or air-gapped deployment, controls aligned to ISO 27001 with a SOC 2 Type II programme in progress, and a complete audit trail. We work directly with your security and procurement teams."],
           ["Does it replace our core or LOS?", "No. Newron is API-first and integrates with your existing core, LOS and claims systems rather than replacing them."],
           ["How long to first production use?", "Most banks reach a production pilot within a quarter, starting with one workflow and expanding from there."],
           ["Can it follow our exact credit policy?", "Yes — Newron is configured to your policy book, tiers and formats, and evaluates deviations against your own rules with citations."]]} />

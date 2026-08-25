@@ -1,6 +1,6 @@
 import { BOOKING_URL } from "@/lib/route";
 import React from "react";
-import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand, Quote } from "@/components/site-chrome";
+import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand } from "@/components/site-chrome";
 import { IlloInsuranceInd } from "@/components/illustrations";
 
 export const metadata = { title: "Newron for Insurance" };
@@ -30,7 +30,7 @@ export default function Page() {
 
       <Band id="impact" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="02" eyebrow="In production" title={<>Faster settlements, <em className="italic">fewer</em> denials.</>} kicker="Measured across health and motor lines at insurers and TPAs." />
-        <StatBand lead={<>What claims teams see in production</>} stats={[{ v: "90", suffix: "s", k: "Avg time to file" }, { v: "0.18", suffix: "", k: "Median denial risk" }, { v: "4.2", suffix: "d", k: "Settlement SLA" }]} />
+        <StatBand lead={<>What claims teams see in production</>} stats={[{ v: "90", suffix: "s", k: "Avg time to file" }, { v: "4.2", suffix: "d", k: "Observed TPA settlement SLA" }]} />
       </Band>
 
       <Band id="trust">
@@ -42,16 +42,10 @@ export default function Page() {
           ["Human-in-the-loop", "Newron assembles and recommends; adjusters approve. Nothing settles without a person in the loop."]]} />
       </Band>
 
-      <Band id="proof" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
-        <div style={{ maxWidth: 900 }}>
-          <Quote text={"“We stopped filing claims that were always going to bounce. The denial-risk model paid for itself in a quarter.”"} who="VP, Claims Operations" sub="Health insurer · multi-TPA" />
-        </div>
-      </Band>
-
       <Band id="faq">
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
-          ["Which lines are supported?", "Health and motor are in production, with the document and policy-reasoning stack generalising to other lines as new document types onboard."],
+          ["Which lines are supported?", "Health and motor are in production. Other lines are not validated yet; we scope them case by case rather than claiming coverage up front."],
           ["How does denial-risk prediction work?", "It is trained on your historical adjudication outcomes and explains every prediction with the policy clauses and evidence behind it."],
           ["Does it fit our TPA workflow?", "Yes. Newron produces TPA-ready packets and integrates via REST + webhooks with your claims platform and TPA partners."],
           ["Is sensitive medical data protected?", "Processing stays inside your environment with audit logging and data-residency commitments — nothing is sent to third-party model APIs."]]} />

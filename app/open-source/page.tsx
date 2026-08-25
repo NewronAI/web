@@ -4,24 +4,26 @@ import { IlloOpenSource } from "@/components/illustrations";
 
 export const metadata = { title: "Open source — Newron" };
 
-const REPOS: [string, string, string, string][] = [
-  ["nexus", "The Newron monorepo — shared platform packages and the public marketing surface.", "TypeScript", "github.com/NewronAI/nexus"],
-  ["indic-ocr-eval", "Evaluation harness and benchmarks for Indian-language OCR, including Kannada handwriting.", "Python", "github.com/NewronAI"],
-  ["statement-parse", "Reference parsers and schemas for Indian bank-statement formats.", "Python", "github.com/NewronAI"],
-  ["eval-harness", "A lightweight, reproducible evaluation harness for production LLM workflows.", "Python", "github.com/NewronAI"],
+type Repo = { name: string; desc: string; lang: string; licence: string; active: string; href: string };
+const REPOS: Repo[] = [
+  { name: "cortex", desc: "Electron-based crawler for automating repetitive collection and scraping tasks.", lang: "JavaScript", licence: "MIT", active: "Apr 2026", href: "github.com/NewronAI/cortex" },
+  { name: "n00bs", desc: "Framework for running data collection at scale.", lang: "TypeScript", licence: "MIT", active: "Jun 2024", href: "github.com/NewronAI/n00bs" },
+  { name: "newron-sdk", desc: "SDK for the data-centric ML platform Newron started on — build, manage and deploy models through data-driven development.", lang: "Python", licence: "Apache-2.0", active: "Oct 2022", href: "github.com/NewronAI/newron-sdk" },
 ];
 
 function Repos() {
   return (
     <div style={{ marginTop: 48, borderTop: "1px solid var(--line)" }}>
-      {REPOS.map(([name, desc, lang, href]) =>
-        <a key={name} href={"https://" + href} target="_blank" rel="noopener" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) auto", gap: 28, alignItems: "center", padding: "24px 0", borderBottom: "1px solid var(--line)", textDecoration: "none", color: "var(--ink)" }}>
+      {REPOS.map((r) =>
+        <a key={r.name} href={"https://" + r.href} target="_blank" rel="noopener" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) auto", gap: 28, alignItems: "center", padding: "24px 0", borderBottom: "1px solid var(--line)", textDecoration: "none", color: "var(--ink)" }}>
           <span style={{ minWidth: 0 }}>
-            <span style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <span className="mono" style={{ fontFamily: "var(--font-mono)", fontWeight: 500, fontSize: 18, color: "var(--ink)" }}>{name}</span>
-              <span className="lang-chip">{lang.toUpperCase()}</span>
+            <span style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+              <span className="mono" style={{ fontFamily: "var(--font-mono)", fontWeight: 500, fontSize: 18, color: "var(--ink)" }}>{r.name}</span>
+              <span className="lang-chip">{r.lang.toUpperCase()}</span>
+              <span className="lang-chip">{r.licence.toUpperCase()}</span>
+              <span className="mono" style={{ fontSize: "var(--fs-micro)", letterSpacing: "0.08em", color: "var(--ink-muted)" }}>LAST ACTIVITY {r.active.toUpperCase()}</span>
             </span>
-            <span style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 8, lineHeight: 1.55, display: "block", maxWidth: 620 }}>{desc}</span>
+            <span style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 8, lineHeight: 1.55, display: "block", maxWidth: 620 }}>{r.desc}</span>
           </span>
           <Arrow size={15} />
         </a>)}
@@ -37,11 +39,11 @@ export default function Page() {
         aside={<IlloOpenSource />}
         eyebrow="Open source"
         title={<>The tools we wish <em className="italic">existed</em>.</>}
-        lead="Regulated AI in India needs shared infrastructure — benchmarks, parsers and evaluation harnesses that everyone can build on. We open-source the pieces that shouldn't be reinvented behind closed doors."
-        ctas={[{ label: "View on GitHub", href: "https://github.com/NewronAI/nexus", primary: true }, { label: "How to contribute", href: "#contributing" }]} />
+        lead="What we can release, we release — tooling built alongside our production work, under permissive licences. This is a small roster, not a portfolio: it lists what is actually public today."
+        ctas={[{ label: "View on GitHub", href: "https://github.com/NewronAI", primary: true }, { label: "How to contribute", href: "#contributing" }]} />
 
       <Band id="repos">
-        <Head tag="01" eyebrow="Projects" title={<>What we&apos;ve <em className="italic">released</em>.</>} kicker="Open-source under permissive licences, maintained alongside our production work." />
+        <Head tag="01" eyebrow="Projects" title={<>What we&apos;ve <em className="italic">released</em>.</>} kicker="Every public repository in the Newron org, with its licence and last activity. Nothing here is listed as maintained that we are not touching." />
         <Repos />
       </Band>
 
@@ -49,17 +51,17 @@ export default function Page() {
         <Head tag="02" eyebrow="Why we do it" title={<>Some things shouldn&apos;t be <em className="italic">proprietary</em>.</>} kicker="Our edge is in deployment and custom models — not in hoarding the basics." />
         <SplitRows items={[
           ["Shared evaluation", "Honest, reproducible benchmarks make the whole field better. We'd rather compete on results than on secret test sets."],
-          ["Indian-language data", "Tooling for Indic OCR and speech is scarce. Releasing ours lowers the barrier for everyone building here."],
-          ["Interop over lock-in", "Open schemas for statements and documents let institutions move data without being trapped by any one vendor."],
-          ["Give back to the stack", "We build on open source every day; contributing upstream is the rent we pay for it."]]} />
+          ["Indian-language tooling", "Tooling for Indic OCR and speech is scarce, and most of ours is still customer-specific. Where we can separate it from customer data, releasing it lowers the barrier for everyone building here."],
+          ["Interop over lock-in", "Open schemas for statements and documents would let institutions move data without being trapped by any one vendor. We'd like to publish ours; it isn't public yet."],
+          ["What we can't open", "Customer-trained models, customer data and anything covered by a deployment agreement stay closed. We'd rather say that plainly than imply a bigger public footprint than we have."]]} />
       </Band>
 
       <Band id="contributing">
-        <Head tag="03" eyebrow="Contributing" title={<>How to get <em className="italic">involved</em>.</>} kicker="Issues, pull requests and benchmark contributions are all welcome." />
+        <Head tag="03" eyebrow="Contributing" title={<>How to get <em className="italic">involved</em>.</>} kicker="Issues and pull requests are welcome on any public repository." />
         <div className="prose" style={{ marginTop: 36 }}>
           <ul>
             <li><strong>Start with an issue.</strong> Open one describing the bug or proposal before sending a large change, so we can align on approach.</li>
-            <li><strong>Read the contributing guide.</strong> Each repository ships a CONTRIBUTING file with setup, style and test expectations.</li>
+            <li><strong>Check the repository README.</strong> Setup, style and test expectations live there; open an issue if anything is missing or out of date.</li>
             <li><strong>Add to the benchmarks.</strong> New evaluation cases — especially for Indian languages and document types — are some of the most valuable contributions.</li>
             <li><strong>Sign your commits.</strong> We use the Developer Certificate of Origin; a signed-off commit confirms you can contribute the code.</li>
           </ul>
@@ -69,13 +71,13 @@ export default function Page() {
       <Band id="faq" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
-          ["What licence do you use?", "Our open-source projects ship under permissive licences (typically MIT or Apache 2.0). Check each repository for specifics."],
+          ["What licence do you use?", "Per project, and it is listed next to each one above: cortex and n00bs are MIT, newron-sdk is Apache-2.0. The LICENSE file in each repository is the authority."],
           ["Do you accept external contributions?", "Yes. Issues and pull requests are welcome; start with an issue for anything substantial so we can discuss the approach."],
           ["Are the production models open?", "The shared tooling, schemas and benchmarks are open. Our custom, customer-trained models are not — those are licensed to the customer."],
           ["How do I report a security issue?", "Please disclose responsibly via our security contact rather than a public issue. See the Security page for details."]]} />
       </Band>
 
-      <CTABand eyebrow="Build with us" headline={<>Use it, <em className="italic">improve</em> it, ship it.</>} sub="Star the repos, open an issue, or send a pull request. If you're building regulated AI in India, we'd love to compare notes." primary={{ label: "View on GitHub", href: "https://github.com/NewronAI/nexus" }} secondary={{ label: "Security", href: "security.html" }} />
+      <CTABand eyebrow="Build with us" headline={<>Use it, <em className="italic">improve</em> it, ship it.</>} sub="Open an issue or send a pull request on anything public. If you're building regulated AI in India, we'd love to compare notes." primary={{ label: "View on GitHub", href: "https://github.com/NewronAI" }} secondary={{ label: "Security", href: "security.html" }} />
       <Footer />
     </>);
 }

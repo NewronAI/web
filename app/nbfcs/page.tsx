@@ -1,6 +1,6 @@
 import { BOOKING_URL } from "@/lib/route";
 import React from "react";
-import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand, Quote } from "@/components/site-chrome";
+import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand } from "@/components/site-chrome";
 import { IlloNBFC } from "@/components/illustrations";
 
 export const metadata = { title: "Newron for NBFCs" };
@@ -29,7 +29,7 @@ export default function Page() {
       </Band>
 
       <Band id="impact" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
-        <Head tag="02" eyebrow="In production" title={<>The numbers that <em className="italic">move the book</em>.</>} kicker="Measured at NBFCs running Newron across origination and verification." />
+        <Head tag="02" eyebrow="In production" title={<>The numbers that <em className="italic">move the book</em>.</>} kicker="From NBFC origination and verification deployments. The CAM figure is from the Aditya Birla Capital deployment." />
         <StatBand lead={<>What credit teams see in production</>} stats={[{ v: "66", suffix: "%", k: "Reduction in TAT" }, { v: "200", suffix: "%", k: "Productivity uplift" }, { v: "40", suffix: "min", k: "CAM QC, from 3 weeks" }]} />
       </Band>
 
@@ -42,12 +42,6 @@ export default function Page() {
           ["API-first integration", "Drops into your LOS and collections stack via REST + webhooks, without a rip-and-replace."]]} />
       </Band>
 
-      <Band id="proof" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
-        <div style={{ maxWidth: 900 }}>
-          <Quote text={"“Newron's CAM engine replaced three weeks of human review with a 40-minute QC step. Our officers stopped reformatting Excel and went back to underwriting.”"} who="Head of Credit" sub="Tier-1 NBFC · ₹38,000 Cr AUM" />
-        </div>
-      </Band>
-
       <Band id="faq">
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
@@ -57,7 +51,7 @@ export default function Page() {
           ["How quickly can we onboard a new product?", "New products configure in days because the underlying models are pre-trained on Indian commercial and consumer credit."]]} />
       </Band>
 
-      <CTABand headline={<>Scale the book, not the <em className="italic">risk</em>.</>} sub="We'll pilot Newron on a slice of your live pipeline and show you the TAT and productivity numbers before you commit." secondary={{ label: "Read customer stories", href: "v4.html#customers" }} />
+      <CTABand headline={<>Scale the book, not the <em className="italic">risk</em>.</>} sub="We'll pilot Newron on a slice of your historical, de-identified files and show you the TAT and productivity numbers before you commit." secondary={{ label: "Read customer stories", href: "v4.html#customers" }} />
       <Footer />
     </>);
 }

@@ -42,7 +42,7 @@ export default function Page() {
         aside={<IlloCareers />}
         eyebrow="Careers"
         title={<>Ship AI that <em className="italic">survives</em> contact with production.</>}
-        lead="We're a small team of ex-research and ex-platform engineers building systems for regulated industries. The work is hard, the stakes are real, and the feedback loop is a live deployment — not a leaderboard."
+        lead="We're a small team of ex-research and ex-platform engineers building systems for regulated industries. You'll ship into live deployments at banks, insurers and state bodies — where the feedback loop is a credit officer or an adjuster, not a leaderboard."
         ctas={[{ label: "See open roles", href: "#roles", primary: true }, { label: "About Newron", href: "about.html" }]} />
 
       <Band id="values">
@@ -65,7 +65,7 @@ export default function Page() {
           <Timeline items={[
             ["STEP 01", "Intro call", "A conversation about your work and what you're looking for — and an honest read on fit."],
             ["STEP 02", "Technical deep-dive", "We dig into something you've actually built. No whiteboard puzzles."],
-            ["STEP 03", "Working session", "A scoped, paid exercise close to the real work, done together with the team."],
+            ["STEP 03", "Working session", "A scoped exercise close to the real work, done together with the team. It is paid, and we agree the scope and the time it should take with you before you start."],
             ["STEP 04", "Team & offer", "Meet the people you'll work with, then a decision — fast, either way."]]} />
         </div>
       </Band>
@@ -79,7 +79,7 @@ export default function Page() {
           ["I'm early in my career — should I apply?", "If you've shipped something real and you're drawn to high-stakes problems, yes. We weight evidence of building over years of experience."]]} />
       </Band>
 
-      <CTABand eyebrow="Join us" headline={<>Tell us what you&apos;ve <em className="italic">built</em>.</>} sub="Send us your work — a repo, a paper, a system you shipped. That tells us more than a CV ever could." primary={{ label: "Get in touch", href: "v4.html#contact" }} secondary={{ label: "About Newron", href: "about.html" }} />
+      <CTABand eyebrow="Join us" headline={<>Tell us what you&apos;ve <em className="italic">built</em>.</>} sub="Send the role you want, a CV or LinkedIn, and one thing you've built that you can talk through in detail — a repo, a paper, a system in production. The last one carries the most weight." primary={{ label: "Apply with your work", href: "v4.html#contact" }} secondary={{ label: "About Newron", href: "about.html" }} />
       <Footer />
     </>);
 }

@@ -683,7 +683,7 @@ function Outcomes() {
   const o = [
   { k: "Reduction in TAT", v: 66, suffix: "%" },
   { k: "Productivity uplift", v: 200, suffix: "%" },
-  { k: "Hours saved", v: 65000, suffix: "+" }];
+  { k: "Hours saved", v: 130000, suffix: "+" }];
 
   return (
     <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "minmax(0, 2fr) repeat(3, 1fr)", gap: 0, borderTop: "1px solid var(--line)" }}>

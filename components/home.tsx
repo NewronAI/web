@@ -168,7 +168,7 @@ function LogoMarquee() {
   return (
     <section className="section-tight hr-top hr-bot" style={{ overflow: "hidden", paddingBlock: 36 }}>
       <div className="shell" style={{ marginBottom: 18 }}>
-        <div className="eyebrow">POSTING SUCCESS STORIES AT</div>
+        <div className="eyebrow">SELECTED CUSTOMERS AND COLLABORATORS</div>
       </div>
       <div style={{ display: "flex", gap: 64, whiteSpace: "nowrap", animation: "drift 60s linear infinite", fontFamily: "var(--font-display)", fontSize: 28, color: "var(--ink-muted)", letterSpacing: "-0.01em" }}>
         {row.map((l, i) =>
@@ -254,7 +254,7 @@ function ProductChrome({ title, children }: { title: string; children: ReactNode
         <span style={{ width: 1, height: 12, background: "var(--line)" }} />
         <span className="mono" style={{ fontSize: "var(--fs-label)", color: "var(--ink-soft)" }}>{title}</span>
         <div style={{ flex: 1 }} />
-        <span className="mono" style={{ fontSize: "var(--fs-micro)", color: "var(--green)", letterSpacing: "0.08em" }}>● LIVE</span>
+        <span className="mono" style={{ fontSize: "var(--fs-micro)", color: "var(--ink-muted)", letterSpacing: "0.08em" }}>ILLUSTRATIVE</span>
       </div>
       {children}
     </div>);
@@ -462,7 +462,7 @@ function Msg({ from, right, accent, children }: { from: string; right?: boolean;
 }
 
 function Outcomes() {
-  const o = [{ k: "Reduction in TAT", v: 66, suffix: "%" }, { k: "Productivity uplift", v: 200, suffix: "%" }, { k: "Hours saved", v: 65000, suffix: "+" }];
+  const o = [{ k: "Reduction in TAT", v: 66, suffix: "%" }, { k: "Productivity uplift", v: 200, suffix: "%" }, { k: "Hours saved", v: 130000, suffix: "+" }];
   return (
     <div className="r-stats" style={{ marginTop: 56 }}>
       <div style={{ padding: "32px 24px 0 0" }}>
@@ -472,8 +472,8 @@ function Outcomes() {
         </div>
       </div>
       {o.map((m) =>
-        <div key={m.k} style={{ padding: 24, borderLeft: "1px solid var(--line)" }}>
-          <div className="display" style={{ fontSize: "clamp(36px, 4vw, 56px)", lineHeight: 0.95 }}>
+        <div key={m.k} style={{ padding: 18, borderLeft: "1px solid var(--line)" }}>
+          <div className="display" style={{ fontSize: "clamp(28px, 4vw, 44px)", lineHeight: 0.95 }}>
             <AnimatedNumber value={m.v} suffix={m.suffix} />
           </div>
           <div className="mono" style={{ fontSize: "var(--fs-label)", color: "var(--ink-muted)", letterSpacing: "0.08em", marginTop: 14 }}>{m.k.toUpperCase()}</div>
@@ -668,8 +668,8 @@ function Artha() {
     { n: "03", k: "Party mapping", d: "Resolves every party in the file and attaches each document to the right one, so applicant, co-applicant, guarantor and entity never blur together.", meta: "4 PARTIES RESOLVED" }];
   const pillars = [
     ["Zero-shot", "No per-client fine-tune and no template library. Point Artha at a file it has never seen."],
-    ["Frontier-grade", "Matches or beats frontier LLMs on classification, extraction and party mapping."],
-    ["≈1/8 the cost", "Small, task-tuned models — a fraction of the frontier inference bill, per document."],
+    ["Frontier-comparable", "Matches or beats frontier LLMs on classification, extraction and party mapping in our own document evaluations."],
+    ["≈1/8 the cost", "Small, task-tuned models — roughly an eighth of the frontier inference bill on the same document set."],
     ["Yours to run", "Licensable and self-hostable. Your VPC, on-prem, or fully air-gapped."]];
   return (
     <section id="artha" className="section" data-on-dark="1" style={{ background: "var(--inverse-bg)", color: "var(--inverse-ink)" }}>
@@ -789,7 +789,7 @@ function Governance() {
           <div style={{ background: "var(--inverse-bg-2)", border: "1px solid var(--inverse-line)", borderRadius: 6, padding: 22 }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 14 }}>
               <span className="mono" style={{ fontSize: "var(--fs-micro)", color: "var(--inverse-ink-soft)", letterSpacing: "0.1em" }}>GRIEVANCE · GOK-2026-118447</span>
-              <span className="mono" style={{ fontSize: "var(--fs-micro)", color: "var(--accent)", letterSpacing: "0.1em" }}>● LIVE</span>
+              <span className="mono" style={{ fontSize: "var(--fs-micro)", color: "var(--inverse-ink-soft)", letterSpacing: "0.1em" }}>ILLUSTRATIVE</span>
             </div>
             <Bubble who="Citizen · Kannada audio">
               <span style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--inverse-ink)" }}>ನನ್ನ ರೇಶನ್ ಕಾರ್ಡ್ ಎರಡು ತಿಂಗಳಿಂದ ಬಂದಿಲ್ಲ.</span>
@@ -807,7 +807,7 @@ function Governance() {
               <span style={{ fontFamily: "var(--font-display)", fontSize: 16, color: "var(--inverse-ink)" }}>ನಿಮ್ಮ ರೇಶನ್ ಕಾರ್ಡ್ ಮಾರ್ಚ್ 12 ರಂದು ಮುದ್ರಿತವಾಗಿದೆ…</span>
               <div style={{ marginTop: 10, display: "flex", gap: 16, fontSize: "var(--fs-micro)", fontFamily: "var(--font-mono)", letterSpacing: "0.08em" }}>
                 <span style={{ color: "var(--green)" }}>● APPROVED</span>
-                <span style={{ color: "var(--inverse-ink-soft)" }}>SENT · TTS · 04:12s</span>
+                <span style={{ color: "var(--inverse-ink-soft)" }}>SENT · TTS · 4 MIN 12 SEC</span>
               </div>
             </Bubble>
           </div>
@@ -828,7 +828,7 @@ function Bubble({ who, accent, children }: { who: string; accent?: boolean; chil
 function Services() {
   const items = [
     { tag: "Engineering", title: "Custom AI engineering", desc: "We sit inside your team to design data pipelines, eval harnesses and the inference path. Scope to production in 8–12 weeks.", points: ["Discovery + scoping sprint", "Data + eval pipeline", "Deployment"] },
-    { tag: "Foundational", title: "Custom foundational models", desc: "When off-the-shelf models won't do the job, we build them. Domain-pretrained, fine-tuned on your data, evaluated against the SOTA.", points: ["Pretraining + alignment", "On par with SOTA · 1/8 cost", "License: yours"] },
+    { tag: "Foundational", title: "Custom foundational models", desc: "When off-the-shelf models won't do the job, we build them. Domain-pretrained, fine-tuned on your data, evaluated against frontier baselines.", points: ["Pretraining + alignment", "Frontier-comparable · ~1/8 cost", "License: yours"] },
     { tag: "Automation", title: "Business automation with AI", desc: "Document workflows, ops tooling, and customer-facing copilots — built on the Newron platform, deployed in your VPC.", points: ["Document + workflow ops", "VPC or air-gapped", "API-first, self-hostable"] }];
   return (
     <section id="services" className="section">
@@ -860,8 +860,7 @@ function Services() {
 // ───────────────────────────────────────────────── Customers
 const CUSTOMERS: [string, string][] = [
   ["Google", "Technology"], ["IISc", "Research"], ["Govt. of Karnataka", "State"],
-  ["HDFC Credila", "NBFC"], ["Fusion", "Microfinance"]];
-const CUST_TOP = 3;
+  ["Aditya Birla Capital", "NBFC"], ["HDFC Credila", "NBFC"], ["Fusion", "Microfinance"]];
 
 function Customers() {
   return (
@@ -870,26 +869,23 @@ function Customers() {
         <SectionHead tag="06" eyebrow="Customers" title={<>In production at banks, NBFCs<br />and state institutions.</>} />
         <div className="r-split is-top" style={{ marginTop: 56 }}>
           <div>
-            <div className="eyebrow" style={{ marginBottom: 18 }}>Featured · NBFC, Tier-1 · Q3 2025</div>
+            <div className="eyebrow" style={{ marginBottom: 18 }}>Featured · Aditya Birla Capital · Q3 2025</div>
             <blockquote style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "clamp(26px, 2.6vw, 36px)", lineHeight: 1.2, letterSpacing: "-0.012em" }}>
               &quot;Newron&apos;s CAM engine replaced three weeks of human review with a 40-minute QC step. Our credit officers stopped reformatting Excel and went back to actually underwriting.&quot;
             </blockquote>
-            <div style={{ marginTop: 24, fontSize: 13, color: "var(--ink-soft)" }}>Head of Credit · Tier-1 NBFC · ₹38,000 Cr AUM</div>
-            <a href="#" className="btn btn-link" style={{ marginTop: 20, display: "inline-block" }}>Read the case study →</a>
+            <div style={{ marginTop: 24, fontSize: 13, color: "var(--ink-soft)" }}>
+              <strong style={{ fontWeight: 600, color: "var(--ink)" }}>Arun Velayutham</strong> · Head of SME, Aditya Birla Capital (ABCL)
+            </div>
           </div>
           <div className="r-custgrid">
-            {CUSTOMERS.map((c, i) => {
-              /* three across the top, the remainder sharing the row below — a
-                 6-column track lets both rows stay flush without an empty cell */
-              const top = i < CUST_TOP;
-              const span = top ? 2 : Math.max(1, Math.round(6 / (CUSTOMERS.length - CUST_TOP)));
-              const lastInRow = top ? i === CUST_TOP - 1 : i === CUSTOMERS.length - 1;
-              return (
-                <div key={c[0]} style={{ gridColumn: `span ${span}`, padding: "32px 24px", borderRight: lastInRow ? "none" : "1px solid var(--line)", borderBottom: top ? "1px solid var(--line)" : "none" }}>
-                  <div className="eyebrow" style={{ fontSize: "var(--fs-micro)" }}>{c[1]}</div>
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: 22, marginTop: 8, lineHeight: 1.15 }}>{c[0]}</div>
-                </div>);
-            })}
+            {/* Rules between cells are drawn by the grid's 1px gap (see
+                .r-custgrid), so the layout stays flush at whatever column
+                count auto-fit resolves to. */}
+            {CUSTOMERS.map((c) =>
+              <div key={c[0]} style={{ padding: "32px 24px" }}>
+                <div className="eyebrow" style={{ fontSize: "var(--fs-micro)" }}>{c[1]}</div>
+                <div style={{ fontFamily: "var(--font-display)", fontSize: 22, marginTop: 8, lineHeight: 1.15 }}>{c[0]}</div>
+              </div>)}
           </div>
         </div>
       </div>
@@ -901,7 +897,7 @@ function Company() {
   const pillars = [
     { k: "Deploy where you need to", v: "Self-hostable on your VPC, on-prem, or fully air-gapped. Compliance teams get the audit trail; engineering keeps the keys." },
     { k: "API-first by design", v: "Every Newron product ships with the same REST + webhook surface. Drop into your LOS, your claims platform, your CRM." },
-    { k: "On par with SOTA, at 1/8", v: "Our custom models score within striking distance of frontier systems on the tasks that matter — for a fraction of the inference bill." },
+    { k: "Frontier-comparable, at ~1/8", v: "On the specific tasks we train for, our custom models score on par with frontier systems in our own evaluations — for a fraction of the inference bill." },
     { k: "Built with NVIDIA", v: "Inception Partner since 2023. Trained on Indian financial data with explicit residency commitments." }];
   return (
     <section id="company" className="section">
@@ -934,7 +930,7 @@ function CTA({ headline }: { headline: string }) {
               <em className="italic" style={{ color: "var(--accent)" }}>{headline}</em>}
           </h2>
           <p style={{ fontSize: 16, color: "var(--inverse-ink-soft)", maxWidth: 520, marginTop: 28, lineHeight: 1.5 }}>
-            We&apos;ll spin up a sandboxed instance against a slice of your data, deliver a working pilot, and give your team the eval numbers to make the decision.
+            We&apos;ll spin up a sandboxed instance against a slice of your historical data, deliver a working pilot inside a week, and give your team the eval numbers to make the decision. Production rollouts typically run over the following quarter.
           </p>
         </div>
         <div style={{ border: "1px solid var(--inverse-line)", padding: 28, borderRadius: 6, background: "var(--inverse-bg-2)", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 16 }}>
@@ -966,7 +962,7 @@ function Footer() {
             <p style={{ fontSize: 13, color: "var(--ink-soft)", maxWidth: 280, marginTop: 18, lineHeight: 1.55 }}>
               Newron is an applied-AI company building production systems for regulated industries. Bengaluru, India.
             </p>
-            <div style={{ marginTop: 18 }}><span className="tag">NVIDIA PARTNERED</span></div>
+            <div style={{ marginTop: 18 }}><span className="tag">NVIDIA INCEPTION</span></div>
           </div>
           {cols.map((c) =>
             <div key={c.h}>
@@ -980,11 +976,12 @@ function Footer() {
         <div style={{ borderTop: "1px solid var(--line)", marginTop: 64, paddingTop: 22, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap", fontSize: "var(--fs-meta)", color: "var(--ink-muted)", fontFamily: "var(--font-mono)" }}>
           <span>© 2026 NEWRON AI TECHNOLOGIES PVT. LTD.</span>
           <span style={{ display: "flex", gap: 14, flexWrap: "wrap", letterSpacing: "0.06em" }}>
-            <span>SOC 2 (APPLIED)</span><span style={{ opacity: 0.5 }}>·</span>
-            <span>ISO 27001</span><span style={{ opacity: 0.5 }}>·</span>
+            <span>NVIDIA INCEPTION PARTNER</span><span style={{ opacity: 0.5 }}>·</span>
+            <span>ISO 27001-ALIGNED</span><span style={{ opacity: 0.5 }}>·</span>
+            <span>SOC 2 · IN PROGRESS</span><span style={{ opacity: 0.5 }}>·</span>
             <span>BENGALURU, INDIA</span>
           </span>
-          <span>v4.0 · MAY 2026</span>
+          <span>v4.7 · JULY 2026</span>
         </div>
       </div>
     </footer>);
@@ -1004,8 +1001,8 @@ function SectionHead({ tag, eyebrow, title, kicker, inverse }: { tag: string; ey
 }
 
 // ───────────────────────────────────────────────── Page
-const HERO_SUB = "Newron is the applied-AI partner to India's banks, NBFCs, insurers and Government — building production systems that underwrite faster, settle claims sooner, serve citizens in their own language & many more";
-const CTA_COPY = "See Newron on your data, in a week.";
+const HERO_SUB = "Newron is the applied-AI partner to India's banks, NBFCs, insurers and Government — building production systems that underwrite faster, settle claims sooner, serve citizens in their own language.";
+const CTA_COPY = "See Newron on your data, in a one-week evaluation.";
 
 export default function Home() {
   return (

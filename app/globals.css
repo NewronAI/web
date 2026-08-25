@@ -827,11 +827,13 @@ section[id] { scroll-margin-top: 80px; }
 .r-custgrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: 1px;
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
-  background: var(--bg);
+  background: var(--line);
   overflow: hidden;
 }
+.r-custgrid > * { background: var(--bg); }
 
 /* footer: the brand block keeps a wider track, link columns fill the rest */
 .r-footer {

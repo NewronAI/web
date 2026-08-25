@@ -425,7 +425,7 @@ function MetricsStrip() {
   { v: 2200, prefix: "₹", suffix: " Cr+", label: "Disbursed via Newron", spark: [1, 2, 2, 3, 4, 5, 7, 9, 11, 14, 18, 22] },
   { v: 66, suffix: "%", label: "Reduction in TAT", spark: [20, 18, 16, 14, 11, 9, 8, 7, 7, 7, 7, 7] },
   { v: 200, suffix: "%", label: "Productivity uplift", spark: [10, 11, 12, 13, 15, 17, 18, 19, 20, 22, 24, 30] },
-  { v: 65000, suffix: "+", label: "Hours saved", spark: [2, 4, 6, 9, 13, 18, 24, 30, 38, 48, 57, 65] }];
+  { v: 130000, suffix: "+", label: "Hours saved", spark: [2, 4, 6, 9, 13, 18, 24, 30, 38, 48, 57, 65] }];
 
   return (
     <section className="section-tight inverse" style={{ position: "relative" }}>

@@ -1,4 +1,5 @@
 import React from "react";
+import { BOOKING_URL } from "@/lib/route";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, Timeline, FAQ, CTABand, Quote } from "@/components/site-chrome";
 import { IlloGovernance } from "@/components/illustrations";
 
@@ -21,7 +22,7 @@ export default function Page() {
         eyebrow="Governance AI"
         title={<>Citizen services in <em className="italic">their</em> language.</>}
         lead="Built with the Government of Karnataka. Newron reads Kannada handwriting, speaks in regional dialects and surfaces policy answers from documents that were never indexed — so grievance redressal works at the speed of a phone call."
-        ctas={[{ label: "Talk to our public-sector team", href: "v4.html#contact", primary: true }, { label: "Read the Karnataka story", href: "v4.html#customers" }]} />
+        ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }, { label: "Public sector", href: "public-sector.html" }]} />
 
       <Band id="capabilities">
         <Head tag="01" eyebrow="Capabilities" title={<>The stack behind a <em className="italic">working</em> grievance desk.</>} kicker="Language, voice, triage and knowledge — assembled into one workflow that meets citizens where they are." />
@@ -41,8 +42,8 @@ export default function Page() {
       </Band>
 
       <Band id="impact">
-        <Head tag="03" eyebrow="Why it matters" title={<>Reach the citizens a form <em className="italic">never</em> could.</>} kicker="Language and literacy are the real barriers to public services. Newron removes both." />
-        <StatBand lead={<>Across grievance categories in pilot</>} stats={[{ v: "22", suffix: "+", k: "Dialects supported" }, { v: "04:12", suffix: "", k: "Median response time" }, { v: "100", suffix: "%", k: "Cases audit-logged" }]} />
+        <Head tag="03" eyebrow="Why it matters" title={<>Reach the citizens a form <em className="italic">never</em> could.</>} kicker="Language and literacy are the real barriers to public services. Newron reduces the reliance on English-language forms and written applications." />
+        <StatBand lead={<>Across grievance categories in pilot</>} stats={[{ v: "1", suffix: "", k: "Language in production · Kannada" }, { v: "4:12", suffix: "", k: "Median response time (mm:ss)" }, { v: "100", suffix: "%", k: "Cases audit-logged" }]} />
       </Band>
 
       <Band id="proof" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
@@ -54,7 +55,7 @@ export default function Page() {
       <Band id="faq">
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
-          ["Which languages and dialects are supported?", "Kannada is in production, including handwriting recognition, with the architecture extending to other Indian languages and regional dialects."],
+          ["Which languages and dialects are supported?", "Kannada is in production, including handwriting recognition. No other language is in production today — the stack is built to extend to other Indian languages and regional dialects, but each one needs its own data and evaluation before we would call it supported."],
           ["Can it run inside government infrastructure?", "Yes. Newron deploys on-premise or air-gapped within state data centres, with explicit data-residency commitments and full audit trails."],
           ["Does an officer stay in the loop?", "Always. Newron drafts and routes; a human officer reviews and approves every response before it is sent."],
           ["How does it find answers in old circulars?", "Policy discovery indexes scanned PDFs and circulars and retrieves the exact governing clause with a citation, even when the source was never digitised."]]} />

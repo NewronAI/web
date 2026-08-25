@@ -5,6 +5,8 @@ import {
 } from "@/components/site-chrome";
 import { IlloLending } from "@/components/illustrations";
 
+export const metadata = { title: "Lending intelligence — Newron" };
+
 function Chips({ label, items }: { label: string; items: string[] }) {
   return (
     <div className="card" style={{ padding: 24 }}>
@@ -69,7 +71,7 @@ export default function Page() {
 
       <Band id="proof" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <div style={{ maxWidth: 900 }}>
-          <Quote text={"“Newron’s CAM engine replaced three weeks of human review with a 40-minute QC step. Our credit officers stopped reformatting Excel and went back to actually underwriting.”"} who="Head of Credit" sub="Tier-1 NBFC · ₹38,000 Cr AUM" />
+          <Quote text={"“Newron’s CAM engine replaced three weeks of human review with a 40-minute QC step. Our credit officers stopped reformatting Excel and went back to actually underwriting.”"} who="Arun Velayutham" sub="Head of SME, Aditya Birla Capital (ABCL)" />
         </div>
       </Band>
 
@@ -79,7 +81,7 @@ export default function Page() {
           ["Does it work with our existing LOS?", "Yes. Newron is API-first with REST + webhook surfaces and drops into your loan origination system without replacing it. Most integrations are live within a quarter."],
           ["Where does our data live?", "Wherever you need it to. Newron self-hosts on your VPC, on-premise, or fully air-gapped. Your engineers keep the keys; compliance gets a complete audit trail."],
           ["Can it follow our credit policy exactly?", "The suite is configured to your policy book, formats and tier override matrix. Deviations are detected and routed against your own rules, not generic ones."],
-          ["What about model accuracy?", "Our custom models score within striking distance of frontier systems on the tasks that matter, at a fraction of the inference cost — and every output is sourced and reviewable."]]} />
+          ["What about model accuracy?", "On the tasks we train for, our custom models score on par with frontier systems in our own evaluations, at a fraction of the inference cost — and every output is sourced and reviewable."]]} />
       </Band>
 
       <CTABand headline={<>See Newron on your <em className="italic">own credit files</em>.</>} sub="We'll spin up a sandboxed instance against a slice of your data and deliver a working pilot with eval numbers your team can trust." secondary={{ label: "Read customer stories", href: "v4.html#customers" }} />
