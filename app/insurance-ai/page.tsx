@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/route";
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, Timeline, FAQ, CTABand, Quote } from "@/components/site-chrome";
 import { IlloInsurance } from "@/components/illustrations";
@@ -20,7 +21,7 @@ export default function Page() {
         eyebrow="Insurance AI"
         title={<>Settle claims <em className="italic">before</em> they&apos;re filed.</>}
         lead="Newron's claims models inspect documents, parse policy language and predict denial risk the moment a claim is initiated — so adjusters spend their time on edge cases, not paperwork."
-        ctas={[{ label: "Book a demo", href: "v4.html#contact", primary: true }, { label: "Talk to sales", href: "v4.html#contact" }]} />
+        ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }]} />
 
       <Band id="pipeline">
         <Head tag="01" eyebrow="The claims pipeline" title={<>Three checkpoints, fully automated.</>} kicker="From first notice of loss to a TPA-ready packet, Newron handles the mechanical work and escalates only what needs a human." />

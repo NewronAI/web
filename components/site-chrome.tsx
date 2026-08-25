@@ -6,7 +6,7 @@
    mapped to Next routes via route().
    ========================================================= */
 import React, { useState, useEffect, type ReactNode, type CSSProperties } from "react";
-import { route } from "@/lib/route";
+import { route, BOOKING_URL } from "@/lib/route";
 
 // ── footer link map (single source of truth) ─────────────
 const FOOTER_COLS: { h: string; links: [string, string][] }[] = [
@@ -81,8 +81,7 @@ export function Nav() {
             <a key={l} className="nav-link" href={route(h)}>{l}</a>)}
         </nav>
         <div className="nav-cta" style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <a className="btn btn-ghost nav-cta-secondary" href={route("v4.html#contact")}>Talk to sales</a>
-          <a className="btn btn-primary" href={route("v4.html#contact")} style={{ whiteSpace: "nowrap" }}>Book a demo <Arrow /></a>
+          <a className="btn btn-primary" href={BOOKING_URL} style={{ whiteSpace: "nowrap" }}>Talk to Us <Arrow /></a>
           <button className="nav-toggle" aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}>
             <span className={open ? "is-x" : ""} /><span className={open ? "is-x" : ""} />
@@ -94,7 +93,7 @@ export function Nav() {
           <div className="shell">
             {NAV_LINKS.map(([l, h]) =>
               <a key={l} href={route(h)} onClick={() => setOpen(false)}>{l}</a>)}
-            <a href={route("v4.html#contact")} onClick={() => setOpen(false)}>Talk to sales</a>
+            <a href={BOOKING_URL} onClick={() => setOpen(false)}>Talk to Us</a>
           </div>
         </div>}
     </header>);
@@ -290,7 +289,7 @@ export function FAQ({ items }: { items: [string, string][] }) {
 }
 
 // ── CTA band (dark) ──────────────────────────────────────
-export function CTABand({ eyebrow = "Get started", headline, sub, primary = { label: "Book a demo", href: "v4.html#contact" }, secondary }: {
+export function CTABand({ eyebrow = "Get started", headline, sub, primary = { label: "Talk to Us", href: BOOKING_URL }, secondary }: {
   eyebrow?: string; headline?: ReactNode; sub?: ReactNode; primary?: { label: string; href: string }; secondary?: { label: string; href: string };
 }) {
   return (

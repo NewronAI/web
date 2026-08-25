@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/route";
 import React, { type CSSProperties } from "react";
 import {
   Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, Timeline, FAQ, CTABand, Quote,
@@ -38,7 +39,7 @@ export default function Page() {
         eyebrow="Lending intelligence"
         title={<>The credit officer&apos;s <em className="italic">second brain.</em></>}
         lead="A modular suite for the loan origination lifecycle — from intake and statement parsing to CAM generation, deviation handling and verification. Configured to your policy, your format, your tier structure."
-        ctas={[{ label: "Book a demo", href: "v4.html#contact", primary: true }, { label: "Talk to sales", href: "v4.html#contact" }]} />
+        ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }]} />
 
       <Band id="suite">
         <Head tag="01" eyebrow="In the suite" title={<>Six modules, one origination flow.</>} kicker="Adopt the whole suite or drop a single module into your existing LOS. Every module is API-first and self-hostable." />

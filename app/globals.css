@@ -961,9 +961,7 @@ header .shell { padding-right: clamp(16px, 2.6vw, 40px); }
   border-radius: var(--r);
   white-space: nowrap;
 }
-@media (max-width: 1180px) {
-  .nav-cta-secondary { display: none; }
-}
+
 @media (max-width: 980px) {
   .nav-center { display: none !important; }
   /* the inline links are gone at this width, so the menu is the only way

@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/route";
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand, Quote } from "@/components/site-chrome";
 import { IlloBank } from "@/components/illustrations";
@@ -20,7 +21,7 @@ export default function Page() {
         eyebrow="Newron for Banks"
         title={<>AI that respects the <em className="italic">regulator</em>.</>}
         lead="Banks operate under scrutiny that generic AI tools ignore. Newron deploys inside your perimeter, follows your credit policy to the clause, and leaves an audit trail for every decision."
-        ctas={[{ label: "Book a demo", href: "v4.html#contact", primary: true }, { label: "Lending intelligence", href: "lending-intelligence.html" }]} />
+        ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }, { label: "Lending intelligence", href: "lending-intelligence.html" }]} />
 
       <Band id="use-cases">
         <Head tag="01" eyebrow="Where banks deploy Newron" title={<>From origination to the <em className="italic">back office</em>.</>} kicker="Start with the credit desk or the operations floor — Newron meets the same controls either way." />

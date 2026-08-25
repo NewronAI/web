@@ -14,7 +14,7 @@ export default function Page() {
         eyebrow="About Newron"
         title={<>We build the intelligence <em className="italic">behind</em> decisions that can&apos;t be taken back.</>}
         lead="Newron is an applied-AI company building production systems for the institutions that operate under regulation — India's banks, NBFCs, insurers and state bodies — where a wrong answer is never just a bug report."
-        ctas={[{ label: "Work with us", href: "careers.html", primary: true }, { label: "Talk to sales", href: "v4.html#contact" }]} />
+        ctas={[{ label: "Work with us", href: "careers.html", primary: true }]} />
 
       <Band id="why">
         <Head tag="01" eyebrow="Why we exist" title={<>Some rooms don&apos;t <em className="italic">forgive</em> a guess.</>} kicker="The constraint of regulated work shapes everything we make." />

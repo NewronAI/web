@@ -6,7 +6,7 @@
    the design's default theme (light · regular · indigo accent).
    ========================================================= */
 import React, { useState, useEffect, useRef, type ReactNode, type CSSProperties } from "react";
-import { route } from "@/lib/route";
+import { route, BOOKING_URL } from "@/lib/route";
 
 // ───────────────────────────────────────────────── helpers
 function AnimatedNumber({ value, prefix = "", suffix = "", duration = 1600, locale = "en-IN" }: {
@@ -85,8 +85,7 @@ function Nav() {
             <a key={l} className="nav-link" href={h}>{l}</a>)}
         </nav>
         <div className="nav-cta" style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <a className="btn btn-ghost nav-cta-secondary" href="#contact">Talk to sales</a>
-          <a className="btn btn-primary" href="#contact" style={{ whiteSpace: "nowrap" }}>Book a demo <Arrow /></a>
+          <a className="btn btn-primary" href={BOOKING_URL} style={{ whiteSpace: "nowrap" }}>Talk to Us <Arrow /></a>
           <button className="nav-toggle" aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}>
             <span className={open ? "is-x" : ""} /><span className={open ? "is-x" : ""} />
@@ -98,7 +97,7 @@ function Nav() {
           <div className="shell">
             {HOME_NAV.map(([l, h]) =>
               <a key={l} href={h} onClick={() => setOpen(false)}>{l}</a>)}
-            <a href="#contact" onClick={() => setOpen(false)}>Talk to sales</a>
+            <a href={BOOKING_URL} onClick={() => setOpen(false)}>Talk to Us</a>
           </div>
         </div>}
     </header>);
@@ -132,8 +131,7 @@ function Hero({ sub }: { sub: string }) {
               <p className="hero-sub">{sub}</p>
             </div>
             <div className="hero-actions">
-              <a className="btn btn-primary" href="#contact">Book a demo <Arrow /></a>
-              <a className="btn btn-ghost" href="#lending">See the lending suite</a>
+              <a className="btn btn-primary" href={BOOKING_URL}>Talk to Us <Arrow /></a>
             </div>
           </div>
         </div>
@@ -704,8 +702,7 @@ function Artha() {
             </div>)}
         </div>
         <div style={{ marginTop: 40, display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <a className="btn btn-primary" href="#contact">Evaluate Artha on your documents <Arrow /></a>
-          <a className="btn btn-ghost" href="#contact">Licensing & self-hosting</a>
+          <a className="btn btn-primary" href={BOOKING_URL}>Evaluate Artha on your documents <Arrow /></a>
         </div>
       </div>
     </section>);
@@ -925,21 +922,7 @@ function Company() {
 }
 
 // ───────────────────────────────────────────────── CTA + Footer
-const inputStyle: CSSProperties = {
-  width: "100%", background: "transparent", border: "1px solid var(--inverse-line)", color: "var(--inverse-ink)",
-  padding: "12px 14px", fontFamily: "var(--font-sans)", fontSize: 14, borderRadius: 4, outline: "none"
-};
-function Field({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    <label style={{ display: "block" }}>
-      <div className="mono" style={{ fontSize: "var(--fs-micro)", letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginBottom: 6 }}>{label}</div>
-      {children}
-    </label>);
-}
-
 function CTA({ headline }: { headline: string }) {
-  const [submitted, setSubmitted] = useState(false);
-  const [ticket, setTicket] = useState("");
   return (
     <section id="contact" className="section" data-on-dark="1" style={{ background: "var(--inverse-bg)", color: "var(--inverse-ink)" }}>
       <div className="shell r-cta">
@@ -954,25 +937,16 @@ function CTA({ headline }: { headline: string }) {
             We&apos;ll spin up a sandboxed instance against a slice of your data, deliver a working pilot, and give your team the eval numbers to make the decision.
           </p>
         </div>
-        {submitted ?
-          <div style={{ border: "1px solid var(--inverse-line)", padding: 28, borderRadius: 6, background: "var(--inverse-bg-2)" }}>
-            <div style={{ fontFamily: "var(--font-display)", fontSize: 24, color: "var(--inverse-ink)" }}>Thanks — we&apos;ll be in touch within one business day.</div>
-            <div className="mono" style={{ fontSize: "var(--fs-label)", color: "var(--inverse-ink-soft)", letterSpacing: "0.08em", marginTop: 12 }}>TICKET · NWR-2026-{ticket}</div>
-          </div> :
-          <form onSubmit={(e) => { e.preventDefault(); setTicket(String(Math.floor(Math.random() * 90000 + 10000))); setSubmitted(true); }} style={{ border: "1px solid var(--inverse-line)", padding: 24, borderRadius: 6, background: "var(--inverse-bg-2)", display: "flex", flexDirection: "column", gap: 14 }}>
-            <Field label="WORK EMAIL"><input required type="email" placeholder="cto@bank.example" style={inputStyle} /></Field>
-            <Field label="COMPANY"><input required placeholder="Acme Capital" style={inputStyle} /></Field>
-            <Field label="INTEREST">
-              <select style={inputStyle} defaultValue="">
-                <option value="" disabled>Choose one</option>
-                <option>Lending intelligence</option>
-                <option>Insurance AI</option>
-                <option>Governance AI</option>
-                <option>Custom AI engineering</option>
-              </select>
-            </Field>
-            <button type="submit" className="btn" style={{ background: "var(--accent)", color: "#fff", marginTop: 6, justifyContent: "space-between" }}>Request a pilot <Arrow /></button>
-          </form>}
+        <div style={{ border: "1px solid var(--inverse-line)", padding: 28, borderRadius: 6, background: "var(--inverse-bg-2)", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 16 }}>
+          <div className="mono" style={{ fontSize: "var(--fs-micro)", letterSpacing: "0.1em", color: "var(--inverse-ink-soft)" }}>TALK TO US</div>
+          <div style={{ fontFamily: "var(--font-display)", fontSize: 24, lineHeight: 1.2, color: "var(--inverse-ink)" }}>
+            Pick a time that suits your team.
+          </div>
+          <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55, color: "var(--inverse-ink-soft)" }}>
+            Opens our scheduling calendar — choose a slot and we&apos;ll take it from there.
+          </p>
+          <a className="btn btn-primary" href={BOOKING_URL} style={{ marginTop: 4 }}>Talk to Us <Arrow /></a>
+        </div>
       </div>
     </section>);
 }

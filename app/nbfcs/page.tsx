@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/route";
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand, Quote } from "@/components/site-chrome";
 import { IlloNBFC } from "@/components/illustrations";
@@ -20,7 +21,7 @@ export default function Page() {
         eyebrow="Newron for NBFCs"
         title={<>Volume <em className="italic">and</em> rigour. Both.</>}
         lead="NBFCs win on speed and reach — but thin files and high volume make disciplined underwriting hard. Newron automates the mechanical work so you can grow the book without growing the risk."
-        ctas={[{ label: "Book a demo", href: "v4.html#contact", primary: true }, { label: "Lending intelligence", href: "lending-intelligence.html" }]} />
+        ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }, { label: "Lending intelligence", href: "lending-intelligence.html" }]} />
 
       <Band id="use-cases">
         <Head tag="01" eyebrow="Where NBFCs deploy Newron" title={<>Underwrite faster, <em className="italic">without</em> cutting corners.</>} kicker="The same modular suite that powers banks, tuned for the speed and product mix of an NBFC." />
