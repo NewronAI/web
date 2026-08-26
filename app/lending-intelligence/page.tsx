@@ -71,7 +71,7 @@ export default function Page() {
 
       <Band id="proof" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <div style={{ maxWidth: 900 }}>
-          <Quote text={"“Newron’s CAM engine replaced three weeks of human review with a 40-minute QC step. Our credit officers stopped reformatting Excel and went back to actually underwriting.”"} who="Arun Velayutham" sub="Head of SME, Aditya Birla Capital (ABCL)" />
+          <Quote text={"“Newron’s AI CAM engine replaced weeks of human review with a 40-minute QC step. Our credit officers stopped reformatting Excel and went back to actual underwriting.”"} who="Arun V" sub="Head of Product, Aditya Birla Capital (ABCL)" />
         </div>
       </Band>
 

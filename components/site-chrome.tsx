@@ -125,7 +125,7 @@ export function Footer() {
           <span>© 2026 NEWRON AI TECHNOLOGIES PVT. LTD.</span>
           <span style={{ display: "flex", gap: 14, flexWrap: "wrap", letterSpacing: "0.06em" }}>
             <span>NVIDIA INCEPTION PARTNER</span><span style={{ opacity: 0.5 }}>·</span>
-            <span>ISO 27001-ALIGNED</span><span style={{ opacity: 0.5 }}>·</span>
+            <span>ISO 27001</span><span style={{ opacity: 0.5 }}>·</span>
             <span>SOC 2 · IN PROGRESS</span><span style={{ opacity: 0.5 }}>·</span>
             <span>BENGALURU, INDIA</span>
           </span>

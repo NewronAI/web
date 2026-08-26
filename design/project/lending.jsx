@@ -358,14 +358,13 @@ function VideoPDMockup() {
           <div>
             <div className="eyebrow" style={{ marginBottom: 14 }}>Auto-generated report</div>
             <div style={{ border: "1px solid var(--line)", borderRadius: 6, padding: 16, background: "var(--bg-2)" }}>
-              <div style={{ fontFamily: "var(--font-display)", fontSize: 18, marginBottom: 10 }}>Property verified</div>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: 18, marginBottom: 10 }}>Customer verified</div>
               <div style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: 12.5 }}>
                 {[
-                  ["Boundary match", "0.94", "var(--signal-green)"],
-                  ["Door no. visibility", "Confirmed", "var(--signal-green)"],
-                  ["Plot extent (est.)", "1,840 sq ft", "var(--ink)"],
-                  ["Construction stage", "Completed", "var(--signal-green)"],
-                  ["Encroachment risk", "None detected", "var(--signal-green)"],
+                  ["Face match", "0.94", "var(--signal-green)"],
+                  ["Address Location", "Confirmed", "var(--signal-green)"],
+                  ["GPS", "Locked", "var(--ink)"],
+                  ["Call", "Analysed", "var(--signal-green)"],
                   ["Surroundings", "Residential, low density", "var(--ink-soft)"],
                 ].map(([k, v, c]) => (
                   <div key={k} style={{ display: "flex", justifyContent: "space-between" }}>

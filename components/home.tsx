@@ -123,8 +123,8 @@ function Hero({ sub }: { sub: string }) {
         <div className="hero-stage">
           <div className="hero-grid">
             <h1 className="display hero-title">
-              Intelligence, built for the institutions that{" "}
-              <em className="italic" style={{ color: "var(--accent)" }}>can&apos;t get it&nbsp;wrong.</em>
+              The Enterprise AI Partner of Choice for
+              <em className="italic" style={{ color: "var(--accent)" }}> Regulated Industries</em>
             </h1>
             <div className="hero-band">
               <div className="hero-eyebrow">FOR REGULATED INDUSTRIES</div>
@@ -408,9 +408,9 @@ function VideoPDScreen() {
         <div>
           <div className="eyebrow" style={{ marginBottom: 12 }}>Auto-generated report</div>
           <div className="card" style={{ padding: 14 }}>
-            <div style={{ fontFamily: "var(--font-display)", fontSize: 20 }}>Property verified</div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 20 }}>Customer verified</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 12, fontSize: 12.5 }}>
-              {[["Boundary match", "0.94", "green"], ["Door no. visibility", "Confirmed", "green"], ["Plot extent (est.)", "1,840 sq ft", "ink"], ["Construction stage", "Completed", "green"], ["Encroachment risk", "None", "green"], ["Surroundings", "Residential", "ink-soft"]].map(([k, v, c]) =>
+              {[["Face match", "0.94", "green"], ["Address location", "Confirmed", "green"], ["GPS", "Locked", "ink"], ["Call", "Analysed", "green"], ["Surroundings", "Residential, low density", "ink-soft"]].map(([k, v, c]) =>
                 <div key={k} style={{ display: "flex", justifyContent: "space-between" }}>
                   <span style={{ color: "var(--ink-soft)" }}>{k}</span>
                   <span className="mono" style={{ fontSize: 11.5, color: `var(--${c})` }}>{v}</span>
@@ -667,7 +667,7 @@ function Artha() {
     { n: "02", k: "Extraction", d: "Reads the fields credit actually underwrites on — issuer, period, balances, identifiers — from scans, phone photographs and regional-language forms.", meta: "0-SHOT · NO TEMPLATES" },
     { n: "03", k: "Party mapping", d: "Resolves every party in the file and attaches each document to the right one, so applicant, co-applicant, guarantor and entity never blur together.", meta: "4 PARTIES RESOLVED" }];
   const pillars = [
-    ["Zero-shot", "No per-client fine-tune and no template library. Point Artha at a file it has never seen."],
+    ["Upto 3x Faster", "Artha models are faster by design. By the time frontier models start writing their response, Artha is ready with the full analysis."],
     ["Frontier-comparable", "Matches or beats frontier LLMs on classification, extraction and party mapping in our own document evaluations."],
     ["≈1/8 the cost", "Small, task-tuned models — roughly an eighth of the frontier inference bill on the same document set."],
     ["Yours to run", "Licensable and self-hostable. Your VPC, on-prem, or fully air-gapped."]];
@@ -676,7 +676,7 @@ function Artha() {
       <div className="shell">
         <SectionHead inverse tag="02" eyebrow="Artha models"
           title={<>The models <em className="italic" style={{ color: "var(--accent)" }}>underneath</em> Indian credit.</>}
-          kicker="Artha is Newron's suite of vision-language models, built for the paperwork Indian banks and NBFCs actually process. Zero-shot, on documents no template was written for." />
+          kicker="Artha is Newron's suite of vision-language models, built for the paperwork Indian banks and NBFCs actually process." />
         <div className="artha-grid" style={{ marginTop: 56 }}>
           <div>
             <div className="mono" style={{ fontSize: "var(--fs-micro)", letterSpacing: "0.1em", color: "var(--inverse-ink-soft)", marginBottom: 24 }}>
@@ -859,8 +859,8 @@ function Services() {
 
 // ───────────────────────────────────────────────── Customers
 const CUSTOMERS: [string, string][] = [
-  ["Google", "Technology"], ["IISc", "Research"], ["Govt. of Karnataka", "State"],
-  ["Aditya Birla Capital", "NBFC"], ["HDFC Credila", "NBFC"], ["Fusion", "Microfinance"]];
+  ["Google", "Technology"], ["Fedbank", "Bank"], ["IISc", "Research"], ["Fusion", "Microfinance"], ["Govt. of Karnataka", "State"],
+  ["Aditya Birla Capital", "NBFC"], ["HDFC Credila", "NBFC"],  ["Niwas", "NBFC"]];
 
 function Customers() {
   return (
@@ -977,7 +977,7 @@ function Footer() {
           <span>© 2026 NEWRON AI TECHNOLOGIES PVT. LTD.</span>
           <span style={{ display: "flex", gap: 14, flexWrap: "wrap", letterSpacing: "0.06em" }}>
             <span>NVIDIA INCEPTION PARTNER</span><span style={{ opacity: 0.5 }}>·</span>
-            <span>ISO 27001-ALIGNED</span><span style={{ opacity: 0.5 }}>·</span>
+            <span>ISO 27001</span><span style={{ opacity: 0.5 }}>·</span>
             <span>SOC 2 · IN PROGRESS</span><span style={{ opacity: 0.5 }}>·</span>
             <span>BENGALURU, INDIA</span>
           </span>
