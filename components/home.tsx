@@ -462,7 +462,7 @@ function Msg({ from, right, accent, children }: { from: string; right?: boolean;
 }
 
 function Outcomes() {
-  const o = [{ k: "Reduction in TAT", v: 66, suffix: "%" }, { k: "Productivity uplift", v: 200, suffix: "%" }, { k: "Hours saved", v: 130000, suffix: "+" }];
+  const o = [{ k: "Reduction in TAT", v: 66, suffix: "%" }, { k: "Productivity uplift", v: 200, suffix: "%" }, { k: "Hours saved", v: 230000, suffix: "+" }];
   return (
     <div className="r-stats" style={{ marginTop: 56 }}>
       <div style={{ padding: "32px 24px 0 0" }}>

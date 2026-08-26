@@ -34,7 +34,7 @@ export default function Page() {
 
       <Band id="footprint">
         <Head tag="03" eyebrow="Where we run" title={<>Already in <em className="italic">production</em>.</>} kicker="Not theoretical — running today across three surfaces." />
-        <StatBand lead={<>Across lending, insurance and governance</>} stats={[{ v: "3", suffix: "", k: "Live practice areas" }, { v: "65k", suffix: "+", k: "Hours saved" }, { v: "2023", suffix: "", k: "NVIDIA Inception" }]} />
+        <StatBand lead={<>Across lending, insurance and governance</>} stats={[{ v: "3", suffix: "", k: "Live practice areas" }, { v: "230k", suffix: "+", k: "Hours saved" }, { v: "2023", suffix: "", k: "NVIDIA Inception" }]} />
       </Band>
 
       <Band id="story" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>

@@ -54,7 +54,7 @@ export default function Page() {
           <Chips label="Commercial" items={["Loan against property", "Overdraft", "Gold loan", "Equipment finance", "Revenue-based finance", "Line of credit"]} />
           <Chips label="Consumer" items={["Home loan", "Auto loan", "Loan against securities", "Personal loan", "Education loan", "Credit card"]} />
         </div>
-        <StatBand lead={<>What credit teams see in production</>} stats={[{ v: "66", suffix: "%", k: "Reduction in TAT" }, { v: "200", suffix: "%", k: "Productivity uplift" }, { v: "65k", suffix: "+", k: "Hours saved" }]} />
+        <StatBand lead={<>What credit teams see in production</>} stats={[{ v: "66", suffix: "%", k: "Reduction in TAT" }, { v: "200", suffix: "%", k: "Productivity uplift" }, { v: "230k", suffix: "+", k: "Hours saved" }]} />
       </Band>
 
       <Band id="flow">

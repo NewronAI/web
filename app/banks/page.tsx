@@ -39,7 +39,7 @@ export default function Page() {
 
       <Band id="impact">
         <Head tag="03" eyebrow="In production" title={<>Outcomes banks measure.</>} kicker="From origination deployments. The operations and copilot workflows above are newer and are not covered by these numbers." />
-        <StatBand lead={<>Measured on credit-desk deployments</>} stats={[{ v: "66", suffix: "%", k: "Reduction in TAT" }, { v: "200", suffix: "%", k: "Productivity uplift" }, { v: "65k", suffix: "+", k: "Hours saved" }]} />
+        <StatBand lead={<>Measured on credit-desk deployments</>} stats={[{ v: "66", suffix: "%", k: "Reduction in TAT" }, { v: "200", suffix: "%", k: "Productivity uplift" }, { v: "230k", suffix: "+", k: "Hours saved" }]} />
       </Band>
 
       <Band id="faq" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
