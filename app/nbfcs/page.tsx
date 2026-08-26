@@ -8,7 +8,7 @@ export const metadata = { title: "Newron for NBFCs" };
 const useCases = [
   { tag: "Speed", title: "Underwrite at NBFC pace", desc: "Statement analysis and CAM generation that keep up with high-volume, thin-file lending without losing rigour.", points: ["Thin-file friendly", "Sub-60s statement parse", "Same-day decisions"] },
   { tag: "Breadth", title: "Every product you originate", desc: "LAP, gold, equipment, personal and revenue-based finance — pre-trained on Indian commercial and consumer credit.", points: ["Commercial + consumer", "Fast product onboarding", "Configurable policy"] },
-  { tag: "Field", title: "Verification without the visit", desc: "Video PD verifies property and collateral remotely, geotagged and attached to the file automatically.", points: ["Remote property PD", "Geotag + timestamp", "Auto-attached report"] },
+  { tag: "Field", title: "Verification without the visit", desc: "Video PD runs the personal discussion remotely — identity and address verified, geotagged, and attached to the file automatically.", points: ["Remote personal discussion", "Geotag + timestamp", "Auto-attached report"] },
 ];
 
 export default function Page() {

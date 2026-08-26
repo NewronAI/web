@@ -186,7 +186,7 @@ function Lending() {
     { id: "cam", label: "CAM Generation", tag: "01", desc: "Compose Credit Approval Memos in your bank's format, with deviation flags and policy citations." },
     { id: "statement", label: "Statement Analyser", tag: "02", desc: "12 months of bank statements parsed in under 60 seconds — cash-flow, recurring obligations, anomalies." },
     { id: "view360", label: "Applicant 360°", tag: "03", desc: "Every signal, every covenant, every prior decision — on one screen." },
-    { id: "videopd", label: "Video PD", tag: "04", desc: "Verify property without a site visit. Geotagged, annotated, attached to the CAM automatically." },
+    { id: "videopd", label: "Video PD", tag: "04", desc: "Hold the personal discussion over video — face and address verified, the call analysed and attached to the CAM." },
     { id: "chat", label: "Policy Chat", tag: "05", desc: "Underwriters ask, Newron answers — sourced from your policy book." }];
   const [active, setActive] = useState("cam");
   return (
@@ -288,7 +288,7 @@ function CAMScreen() {
         <div style={{ marginTop: 20, padding: 16, borderLeft: "2px solid var(--accent)", background: "var(--bg-2)", borderRadius: "0 4px 4px 0" }}>
           <div className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", color: "var(--accent)", marginBottom: 8 }}>NEWRON · DRAFTING</div>
           <div style={{ fontSize: 14, lineHeight: 1.6 }}>
-            Based on the Video PD conducted on 12 May 2026, the property
+            Based on the valuer&apos;s report dated 12 May 2026, the property
             <span style={{ display: "inline-block", width: 8, height: 14, background: "var(--accent)", marginLeft: 2, verticalAlign: "middle", animation: "blink 1s steps(1) infinite" }} />
           </div>
         </div>
@@ -398,8 +398,8 @@ function VideoPDScreen() {
             <span style={{ background: "var(--accent)", color: "#fff", padding: "3px 8px", borderRadius: 3, fontSize: 10, fontFamily: "var(--font-mono)", letterSpacing: "0.1em" }}>● REC</span>
             <span style={{ background: "rgba(0,0,0,0.5)", color: "#fff", padding: "3px 8px", borderRadius: 3, fontSize: 10, fontFamily: "var(--font-mono)" }}>02:14</span>
           </div>
-          <div style={{ position: "absolute", inset: "30% 24%", border: "1px solid #c98064", borderRadius: 3 }}>
-            <div style={{ position: "absolute", top: -22, left: 0, color: "#c98064", fontSize: 10, fontFamily: "var(--font-mono)" }}>BOUNDARY · 0.94</div>
+          <div style={{ position: "absolute", inset: "16% 36% 28% 36%", border: "1px solid #c98064", borderRadius: 3 }}>
+            <div style={{ position: "absolute", top: -22, left: 0, color: "#c98064", fontSize: 10, fontFamily: "var(--font-mono)" }}>FACE MATCH · 0.94</div>
           </div>
           <div style={{ position: "absolute", bottom: 14, left: 14, color: "#f4f1e7", fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.08em", opacity: 0.85 }}>
             12.9159°N · 77.6428°E · HSR LAYOUT

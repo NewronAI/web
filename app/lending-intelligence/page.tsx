@@ -25,7 +25,7 @@ const modules = [
   { tag: "Generation", title: "CAM generation", desc: "Compose Credit Approval Memos in your bank's exact format, with deviation flags and inline policy citations.", points: ["Your template, your tiers", "Clause-level citations", "Human-in-the-loop QC"] },
   { tag: "Analysis", title: "Statement analyser", desc: "12 months of bank statements parsed in under 60 seconds — cash-flow, recurring obligations, anomalies.", points: ["Multi-bank ingestion", "Round-tripping detection", "Salary regularity"] },
   { tag: "Profile", title: "Applicant 360°", desc: "Every signal, covenant and prior decision on one screen, with a recommendation and a full decision trail.", points: ["Bureau + income score", "Policy-fit scoring", "Audit timeline"] },
-  { tag: "Verification", title: "Video PD", desc: "Verify property without a site visit — geotagged, annotated, and attached to the CAM automatically.", points: ["Boundary detection", "Geotag + timestamp", "Auto-report"] },
+  { tag: "Verification", title: "Video PD", desc: "Hold the personal discussion over video instead of a field visit — identity and address verified, the call analysed, a standard report attached to the CAM.", points: ["Face + address match", "Geotag + GPS lock", "Call analysis, auto-report"] },
   { tag: "Knowledge", title: "Policy chat", desc: "Underwriters ask, Newron answers — sourced from your policy book with page-level references.", points: ["Sourced answers", "Pre-fills deviations", "Always current"] },
   { tag: "Controls", title: "Deviation engine", desc: "Detects, classifies and routes deviations against your credit policy and tier override matrix.", points: ["Tiered overrides", "Reason codes", "Maker-checker"] },
 ];
@@ -64,7 +64,7 @@ export default function Page() {
             ["STEP 01", "Intake from your LOS", "Application, KYC and bureau pulled automatically the moment a file is created."],
             ["STEP 02", "Statement & document analysis", "Bank statements, ITRs and GST returns parsed; anomalies and obligations surfaced."],
             ["STEP 03", "CAM drafted in your format", "Sections written with citations; deviations flagged against your policy book."],
-            ["STEP 04", "Verification & remediation", "Video PD scheduled and attached; missing artefacts requested before review."],
+            ["STEP 04", "Verification & remediation", "Personal discussion held over video and attached; missing artefacts requested before review."],
             ["STEP 05", "Officer review & decision", "A clean recommendation with a complete, exportable audit trail."]]} />
         </div>
       </Band>
