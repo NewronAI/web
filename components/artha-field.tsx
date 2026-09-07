@@ -10,8 +10,10 @@ export default function ArthaField() {
     const reduce=window.matchMedia("(prefers-reduced-motion: reduce)");
     let width=0,height=0,frame=0,phase=0,visible=true,last=0,px=0,py=0;
     const points: {x:number;y:number;z:number;t:number;band:number}[]=[];
-    for(let band=0;band<3;band++) for(let i=0;i<150;i++) for(let j=0;j<22;j++) {
-      const t=i/150*Math.PI*2, v=(j/21-.5)*.65;
+    const smallScreen=window.matchMedia("(max-width: 800px)").matches;
+    const segments=smallScreen?90:150, strands=smallScreen?15:22;
+    for(let band=0;band<3;band++) for(let i=0;i<segments;i++) for(let j=0;j<strands;j++) {
+      const t=i/segments*Math.PI*2, v=(j/(strands-1)-.5)*.65;
       const r=1.45+v*Math.cos(t*1.5+band);
       const a=t+band*Math.PI*2/3;
       points.push({x:r*Math.cos(a),y:r*Math.sin(a),z:.58*Math.sin(t*2+band)+v*Math.sin(t*1.5+band),t,band});

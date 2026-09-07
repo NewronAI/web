@@ -12,8 +12,13 @@ const customers = [
 export default function CustomerCarousel() {
   const ref=useRef<HTMLDivElement>(null);
   const shift=(direction:number)=>{
-    if(!ref.current)return;
-    ref.current.scrollBy({left:direction*ref.current.clientWidth*.7,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
+    const track=ref.current;
+    if(!track)return;
+    const end=track.scrollWidth-track.clientWidth;
+    const next=direction>0 && track.scrollLeft>=end-2 ? 0
+      : direction<0 && track.scrollLeft<=2 ? end
+      : Math.max(0,Math.min(end,track.scrollLeft+direction*track.clientWidth*.7));
+    track.scrollTo({left:next,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
   };
   return <section className="customer-carousel" aria-label="Selected customers and collaborators" aria-roledescription="carousel">
     <div className="customer-carousel-head"><div><span className="n-eyebrow">BUILT IN GOOD COMPANY</span><p>Selected customers & collaborators</p></div><div className="carousel-controls"><button aria-label="Previous customers" onClick={()=>shift(-1)}>←</button><button aria-label="Next customers" onClick={()=>shift(1)}>→</button></div></div>
