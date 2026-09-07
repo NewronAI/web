@@ -1,7 +1,6 @@
 import { BOOKING_URL } from "@/lib/route";
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand } from "@/components/site-chrome";
-import { IlloNBFC } from "@/components/illustrations";
 
 export const metadata = { title: "Newron for NBFCs" };
 
@@ -13,19 +12,23 @@ const useCases = [
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Industries / NBFCs"
-        aside={<IlloNBFC />}
+        art="lending"
+        tool="Statement analyser"
+        caption="SCALE WITH INTELLIGENCE"
         eyebrow="Newron for NBFCs"
-        title={<>Volume <em className="italic">and</em> rigour. Both.</>}
-        lead="NBFCs win on speed and reach — but thin files and high volume make disciplined underwriting hard. Newron automates the mechanical work so you can grow the book without growing the risk."
+        title={<> More momentum.<br /><em>Same rigour.</em></>}
+        lead="Move from thin files to informed decisions. Lending intelligence built for the speed and reach of NBFCs."
         ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }, { label: "Lending intelligence", href: "lending-intelligence.html" }]} />
 
+      <div id="page-content" />
       <Band id="use-cases">
         <Head tag="01" eyebrow="Where NBFCs deploy Newron" title={<>Underwrite faster, <em className="italic">without</em> cutting corners.</>} kicker="The same modular suite that powers banks, tuned for the speed and product mix of an NBFC." />
-        <FeatureGrid items={useCases} cols={3} />
+        <FeatureGrid items={useCases} />
       </Band>
 
       <Band id="impact" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
@@ -52,6 +55,7 @@ export default function Page() {
       </Band>
 
       <CTABand headline={<>Scale the book, not the <em className="italic">risk</em>.</>} sub="We'll pilot Newron on a slice of your historical, de-identified files and show you the TAT and productivity numbers before you commit." secondary={{ label: "Read customer stories", href: "v4.html#customers" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

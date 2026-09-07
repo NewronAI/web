@@ -1,6 +1,5 @@
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, SplitRows, FAQ, CTABand, Arrow } from "@/components/site-chrome";
-import { IlloOpenSource } from "@/components/illustrations";
 
 export const metadata = { title: "Open source — Newron" };
 
@@ -32,16 +31,19 @@ function Repos() {
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Company / Open source"
-        aside={<IlloOpenSource />}
+        art="open-source"
+        caption="OPEN TO POSSIBILITY"
         eyebrow="Open source"
-        title={<>The tools we wish <em className="italic">existed</em>.</>}
-        lead="What we can release, we release — tooling built alongside our production work, under permissive licences. This is a small roster, not a portfolio: it lists what is actually public today."
+        title={<> Built to be<br /><em>built upon.</em></>}
+        lead="Explore the tools we can share: public repositories, permissive licences and practical ways to contribute."
         ctas={[{ label: "View on GitHub", href: "https://github.com/NewronAI", primary: true }, { label: "How to contribute", href: "#contributing" }]} />
 
+      <div id="page-content" />
       <Band id="repos">
         <Head tag="01" eyebrow="Projects" title={<>What we&apos;ve <em className="italic">released</em>.</>} kicker="Every public repository in the Newron org, with its licence and last activity. Nothing here is listed as maintained that we are not touching." />
         <Repos />
@@ -78,6 +80,7 @@ export default function Page() {
       </Band>
 
       <CTABand eyebrow="Build with us" headline={<>Use it, <em className="italic">improve</em> it, ship it.</>} sub="Open an issue or send a pull request on anything public. If you're building regulated AI in India, we'd love to compare notes." primary={{ label: "View on GitHub", href: "https://github.com/NewronAI" }} secondary={{ label: "Security", href: "security.html" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

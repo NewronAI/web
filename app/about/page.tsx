@@ -1,21 +1,23 @@
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, StatBand, SplitRows, Timeline, CTABand } from "@/components/site-chrome";
-import { IlloAbout } from "@/components/illustrations";
 
 export const metadata = { title: "About — Newron" };
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Company / About"
-        aside={<IlloAbout />}
+        art="network"
+        caption="HUMAN AMBITION. AMPLIFIED."
         eyebrow="About Newron"
-        title={<>We build the intelligence <em className="italic">behind</em> decisions that can&apos;t be taken back.</>}
-        lead="Newron is an applied-AI company building production systems for the institutions that operate under regulation — India's banks, NBFCs, insurers and state bodies — where a wrong answer is never just a bug report."
+        title={<> Intelligence.<br /><em>With purpose.</em></>}
+        lead="We are an applied-AI company in Bengaluru, building production systems for banks, insurers and public institutions."
         ctas={[{ label: "Work with us", href: "careers.html", primary: true }]} />
 
+      <div id="page-content" />
       <Band id="why">
         <Head tag="01" eyebrow="Why we exist" title={<>Some rooms don&apos;t <em className="italic">forgive</em> a guess.</>} kicker="The constraint of regulated work shapes everything we make." />
         <div style={{ marginTop: 40, maxWidth: 820 }}>
@@ -39,16 +41,17 @@ export default function Page() {
 
       <Band id="story" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="04" eyebrow="The story so far" title={<>A short history.</>} />
-        <div style={{ marginTop: 48, maxWidth: 760 }}>
+        <div style={{ marginTop: 48 }}>
           <Timeline items={[
-            ["2023", "Founded in Bengaluru", "Started with a focus on regulated industries and a conviction that deployability is an engineering problem."],
-            ["2023", "NVIDIA Inception Partner", "Joined NVIDIA Inception, training on Indian financial data with explicit residency commitments."],
+            ["EARLY 2023", "Founded in Bengaluru", "Started with a focus on regulated industries and a conviction that deployability is an engineering problem."],
+            ["LATE 2023", "NVIDIA Inception Partner", "Joined NVIDIA Inception, training on Indian financial data with explicit residency commitments."],
             ["2024", "Lending suite in production", "Credit memos, statement analysis and verification live at banks and NBFCs."],
             ["2025", "Insurance & governance", "Claims automation for insurers and citizen-service AI with the Government of Karnataka."]]} />
         </div>
       </Band>
 
       <CTABand headline={<>Build the <em className="italic">defensible</em> kind of AI.</>} sub="Whether you want to deploy our products or have us build something custom, we'd like to hear what you're working on." secondary={{ label: "See open roles", href: "careers.html" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

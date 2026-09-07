@@ -1,7 +1,6 @@
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, SplitRows, FeatureGrid, Prose, FAQ, CTABand } from "@/components/site-chrome";
 import { BOOKING_URL } from "@/lib/route";
-import { IlloSecurity } from "@/components/illustrations";
 
 export const metadata = { title: "Security — Newron" };
 
@@ -26,16 +25,19 @@ function LegalAside({ updated, items }: { updated: string; items: [string, strin
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Legal / Security"
-        aside={<IlloSecurity />}
+        art="deployment"
+        caption="TRUST IS THE FOUNDATION"
         eyebrow="Security"
-        title={<>Built to pass the <em className="italic">security review</em>.</>}
-        lead="Newron is designed for buyers whose procurement, risk and audit teams ask hard questions. We deploy inside your perimeter, encrypt everything, and leave a trail for every action."
+        title={<> Your perimeter.<br /><em>Our starting point.</em></>}
+        lead="Deployment inside your environment. Encryption, access controls and a traceable record of every action."
         ctas={[{ label: "Request our security pack", href: BOOKING_URL, primary: true }, { label: "Report a vulnerability", href: "#disclosure" }]} />
 
+      <div id="page-content" />
       <Band id="pillars">
         <Head tag="01" eyebrow="Posture" title={<>What every deployment <em className="italic">includes</em>.</>} kicker="Controls aligned to ISO 27001, with a SOC 2 Type II programme in progress. Every item below applies to every deployment." />
         <SplitRows items={[
@@ -47,7 +49,7 @@ export default function Page() {
 
       <Band id="deploy" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="02" eyebrow="Deployment models" title={<>You choose where it <em className="italic">runs</em>.</>} kicker="The more sensitive the workload, the more isolated we deploy." />
-        <FeatureGrid items={deploy} cols={3} />
+        <FeatureGrid items={deploy} />
       </Band>
 
       <Band id="certs">
@@ -83,6 +85,7 @@ export default function Page() {
       </Band>
 
       <CTABand eyebrow="Security" headline={<>Send us your <em className="italic">questionnaire</em>.</>} sub="We've answered a lot of them. Share your security and procurement requirements and we'll work through them with your team." primary={{ label: "Request security pack", href: BOOKING_URL }} secondary={{ label: "Privacy Policy", href: "privacy.html" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

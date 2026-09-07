@@ -1,7 +1,6 @@
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, FAQ, CTABand, Arrow } from "@/components/site-chrome";
 import { route } from "@/lib/route";
-import { IlloPress } from "@/components/illustrations";
 
 export const metadata = { title: "Press — Newron" };
 
@@ -34,16 +33,19 @@ function Releases() {
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Company / Press"
-        aside={<IlloPress />}
+        art="press"
+        caption="SIGNALS FROM THE PRODUCTION FLOOR"
         eyebrow="Press"
-        title={<>News from the <em className="italic">production</em> floor.</>}
-        lead="Announcements, coverage and press resources. For interviews, briefings or media enquiries, our team usually responds within one business day."
+        title={<> The latest.<br /><em>From Newron.</em></>}
+        lead="Company milestones, press resources and the stories behind our work. Everything you need to get to know Newron."
         ctas={[{ label: "Media enquiries", href: "v4.html#contact", primary: true }, { label: "View press resources", href: "#kit" }]} />
 
+      <div id="page-content" />
       <Band id="releases">
         <Head tag="01" eyebrow="Announcements" title={<>Latest from Newron.</>} kicker="Product milestones, deployments and partnerships." />
         <Releases />
@@ -51,7 +53,7 @@ export default function Page() {
 
       <Band id="coverage" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="02" eyebrow="Story angles" title={<>What we can <em className="italic">talk about</em>.</>} kicker="Subjects we can brief on with data and a named spokesperson. Not published coverage — ask us and we'll put the material together." />
-        <FeatureGrid items={ANGLES} cols={3} />
+        <FeatureGrid items={ANGLES} />
       </Band>
 
       <Band id="kit">
@@ -91,6 +93,7 @@ export default function Page() {
       </Band>
 
       <CTABand eyebrow="Media" headline={<>Working on a <em className="italic">story</em>?</>} sub="Tell us your angle and deadline and we'll get you what you need — data, context or a spokesperson." primary={{ label: "Contact the media team", href: "v4.html#contact" }} secondary={{ label: "About Newron", href: "about.html" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

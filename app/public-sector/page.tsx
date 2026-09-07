@@ -1,7 +1,6 @@
 import React from "react";
 import { BOOKING_URL } from "@/lib/route";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand } from "@/components/site-chrome";
-import { IlloPublic } from "@/components/illustrations";
 
 export const metadata = { title: "Newron for the Public Sector" };
 
@@ -13,19 +12,22 @@ const useCases = [
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Industries / Public sector"
-        aside={<IlloPublic />}
+        art="public-sector"
+        caption="CONNECTED SERVICES. PUBLIC GOOD."
         eyebrow="Newron for the Public Sector"
-        title={<>Public services that <em className="italic">reach further</em>.</>}
-        lead="Built with the Government of Karnataka. Newron meets citizens in their own language and runs entirely inside government infrastructure — so digital services don't leave people behind."
+        title={<> Public services.<br /><em>Human connection.</em></>}
+        lead="Meet citizens in their own language, inside government infrastructure. Built with the Government of Karnataka."
         ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }, { label: "Governance AI", href: "governance-ai.html" }]} />
 
+      <div id="page-content" />
       <Band id="use-cases">
         <Head tag="01" eyebrow="Where the state deploys Newron" title={<>From the grievance desk to the <em className="italic">archive</em>.</>} kicker="Language, voice and document understanding, assembled into services citizens can actually use." />
-        <FeatureGrid items={useCases} cols={3} />
+        <FeatureGrid items={useCases} />
       </Band>
 
       <Band id="impact" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
@@ -52,6 +54,7 @@ export default function Page() {
       </Band>
 
       <CTABand eyebrow="For the public sector" headline={<>Start with a single <em className="italic">grievance category</em>.</>} sub="We work with state bodies to scope a pilot on your own infrastructure, with the audit trail and sovereignty your mandate requires." secondary={{ label: "About Newron", href: "about.html" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

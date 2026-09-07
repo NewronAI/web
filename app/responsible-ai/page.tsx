@@ -1,7 +1,6 @@
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, SplitRows, Prose, FAQ, CTABand } from "@/components/site-chrome";
 import { route, BOOKING_URL } from "@/lib/route";
-import { IlloResponsible } from "@/components/illustrations";
 
 export const metadata = { title: "Responsible AI — Newron" };
 
@@ -20,16 +19,19 @@ function LegalAside({ updated, items }: { updated: string; items: [string, strin
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Legal / Responsible AI"
-        aside={<IlloResponsible />}
+        art="responsible"
+        caption="POWERFUL AI. HUMAN JUDGEMENT."
         eyebrow="Responsible AI"
-        title={<>In our rooms, a wrong answer has <em className="italic">consequences</em>.</>}
-        lead="We build AI for credit desks, claims queues and grievance counters. That obligates us to a higher bar than a chatbot: sourced answers, human decisions, and the humility to say “I'm not sure.”"
+        title={<> Intelligence with<br /><em>accountability.</em></>}
+        lead="Sourced answers. Human decisions. Clear limits. The principles and practices behind our production systems."
         ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }, { label: "How we deploy", href: "security.html" }]} />
 
+      <div id="page-content" />
       <Band id="principles">
         <Head tag="01" eyebrow="Our principles" title={<>Six commitments we <em className="italic">design</em> around.</>} kicker="Not a manifesto — the constraints our systems are actually built to meet." />
         <SplitRows items={[
@@ -73,6 +75,7 @@ export default function Page() {
       </Band>
 
       <CTABand eyebrow="Responsible AI" headline={<>Hold us to <em className="italic">this</em>.</>} sub="If you're deploying AI where the stakes are real, let's talk about how to do it defensibly — and what we'd refuse to build." primary={{ label: "Talk to Us", href: BOOKING_URL }} secondary={{ label: "Security", href: "security.html" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

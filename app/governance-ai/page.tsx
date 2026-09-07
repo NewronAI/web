@@ -1,7 +1,6 @@
 import React from "react";
 import { BOOKING_URL } from "@/lib/route";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, Timeline, FAQ, CTABand } from "@/components/site-chrome";
-import { IlloGovernance } from "@/components/illustrations";
 
 export const metadata = { title: "Governance AI — Newron" };
 
@@ -14,24 +13,27 @@ const caps = [
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Solutions / Governance AI"
-        aside={<IlloGovernance />}
+        art="citizen"
+        caption="LANGUAGE TO UNDERSTANDING"
         eyebrow="Governance AI"
-        title={<>Citizen services in <em className="italic">their</em> language.</>}
-        lead="Built with the Government of Karnataka. Newron reads Kannada handwriting, speaks in regional dialects and surfaces policy answers from documents that were never indexed — so grievance redressal works at the speed of a phone call."
+        title={<> Every voice.<br /><em>Understood.</em></>}
+        lead="Citizen-service AI built with the Government of Karnataka. Kannada handwriting, regional speech and cited policy answers."
         ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }, { label: "Public sector", href: "public-sector.html" }]} />
 
+      <div id="page-content" />
       <Band id="capabilities">
         <Head tag="01" eyebrow="Capabilities" title={<>The stack behind a <em className="italic">working</em> grievance desk.</>} kicker="Language, voice, triage and knowledge — assembled into one workflow that meets citizens where they are." />
-        <FeatureGrid items={caps} cols={2} />
+        <FeatureGrid items={caps} />
       </Band>
 
       <Band id="flow" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="02" eyebrow="A grievance, end to end" title={<>From a voice note to a <em className="italic">resolved</em> case.</>} kicker="Every step is logged and reviewable. Officers approve; Newron does the assembly." />
-        <div style={{ marginTop: 48, maxWidth: 760 }}>
+        <div style={{ marginTop: 48 }}>
           <Timeline items={[
             ["00:00", "Citizen speaks, in Kannada", "A voice note or call is transcribed and understood — no forms, no app, no English."],
             ["00:04", "Classified & routed", "Category, district and the right officer tier identified automatically."],
@@ -56,6 +58,7 @@ export default function Page() {
       </Band>
 
       <CTABand eyebrow="For the public sector" headline={<>Bring services to <em className="italic">every</em> citizen.</>} sub="We work with state bodies to scope a pilot on a single grievance category, on your own infrastructure, with the audit trail your compliance teams require." secondary={{ label: "Public sector", href: "public-sector.html" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

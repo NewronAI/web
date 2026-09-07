@@ -1,7 +1,6 @@
 import React from "react";
 import { Nav, Footer, PageHero, Prose, Band } from "@/components/site-chrome";
 import { route } from "@/lib/route";
-import { IlloTerms } from "@/components/illustrations";
 
 export const metadata = { title: "Terms of Service — Newron" };
 
@@ -20,15 +19,18 @@ function LegalAside({ updated, items }: { updated: string; items: [string, strin
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Legal / Terms"
-        aside={<IlloTerms />}
+        art="terms"
+        caption="A CLEAR FOUNDATION"
         eyebrow="Terms of Service"
-        title={<>The <em className="italic">agreement</em>, in plain language.</>}
-        lead="These terms govern your use of Newron's website and any evaluation access we provide. Production deployments are governed by a separate master agreement — these terms don't override it." />
+        title={<> Clear terms.<br /><em>Shared understanding.</em></>}
+        lead="The terms for using our website and evaluation access. Customer deployments remain governed by their own agreements." />
 
+      <div id="page-content" />
       <Prose aside={<LegalAside updated="1 May 2026" items={[["accept", "1. Acceptance"], ["site", "2. Use of the site"], ["eval", "3. Evaluation access"], ["ip", "4. Intellectual property"], ["customer", "5. Customer agreements"], ["disclaimer", "6. Disclaimers"], ["liability", "7. Liability"], ["law", "8. Governing law"], ["contact", "9. Contact"]]} />}>
         <p className="lede">These Terms of Service (“Terms”) are a contract between you and NewronAI Technologies Pvt. Ltd. (“Newron”). By using our website or any evaluation environment we provide, you agree to them.</p>
 
@@ -73,6 +75,7 @@ export default function Page() {
           <a href={route("responsible-ai.html")} className="xlink">Responsible AI →</a>
         </div>
       </Band>
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

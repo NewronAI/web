@@ -1,7 +1,6 @@
 import { BOOKING_URL } from "@/lib/route";
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand } from "@/components/site-chrome";
-import { IlloInsuranceInd } from "@/components/illustrations";
 
 export const metadata = { title: "Newron for Insurance" };
 
@@ -13,19 +12,22 @@ const useCases = [
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Industries / Insurance"
-        aside={<IlloInsuranceInd />}
+        art="claims"
+        caption="EVERY CLAIM. A CLEARER PICTURE."
         eyebrow="Newron for Insurance"
-        title={<>Settle the clean claims <em className="italic">automatically</em>.</>}
-        lead="Insurers and TPAs drown in documents. Newron reads them, checks eligibility against the specific policy, and predicts denial risk — so adjusters focus on the genuine edge cases."
+        title={<> Less paperwork.<br /><em>More assurance.</em></>}
+        lead="Document and policy intelligence for insurers and TPAs. Help adjusters focus on the cases that need their judgement."
         ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }, { label: "Insurance AI", href: "insurance-ai.html" }]} />
 
+      <div id="page-content" />
       <Band id="use-cases">
         <Head tag="01" eyebrow="Where insurers deploy Newron" title={<>Across claims and <em className="italic">underwriting</em>.</>} kicker="Cut handling time on routine claims and surface risk before it becomes a denial or a dispute." />
-        <FeatureGrid items={useCases} cols={3} />
+        <FeatureGrid items={useCases} />
       </Band>
 
       <Band id="impact" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
@@ -52,6 +54,7 @@ export default function Page() {
       </Band>
 
       <CTABand headline={<>Replay <em className="italic">last quarter&apos;s claims</em> through Newron.</>} sub="We'll show you the denial-risk and time-to-file numbers on your own historical claims before you commit to anything." secondary={{ label: "Security & compliance", href: "security.html" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

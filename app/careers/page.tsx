@@ -1,50 +1,41 @@
-"use client";
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, SplitRows, Timeline, FAQ, CTABand, Arrow } from "@/components/site-chrome";
 import { route } from "@/lib/route";
-import { IlloCareers } from "@/components/illustrations";
 
-const ROLES: [string, string, string][] = [
-  ["Engineering", "Senior ML Engineer — Document Understanding", "Bengaluru · On-site"],
-  ["Engineering", "Applied Research Scientist — LLM Fine-tuning", "Bengaluru · On-site"],
-  ["Engineering", "Platform Engineer — Inference & Deployment", "Bengaluru / Remote (India)"],
-  ["Engineering", "Forward-Deployed Engineer — Lending", "Bengaluru · Client-embedded"],
-  ["Product", "Product Manager — Insurance AI", "Bengaluru · On-site"],
-  ["Go-to-market", "Solutions Engineer — Banks & NBFCs", "Bengaluru / Mumbai"],
-  ["Operations", "Customer Success Lead — Public Sector", "Bengaluru · On-site"],
+export const metadata = { title: "Careers — Newron" };
+
+const ROLES: [string, string][] = [
+  ["AI Engineer", "Bengaluru · On-site"],
+  ["Financial Data Curator — Internship", "Bengaluru · On-site"],
 ];
 
 function Roles() {
-  const groups = [...new Set(ROLES.map((r) => r[0]))];
   return (
     <div style={{ marginTop: 48, borderTop: "1px solid var(--line)" }}>
-      {groups.map((g) =>
-        <div key={g}>
-          <div className="eyebrow" style={{ padding: "26px 0 6px" }}>{g}</div>
-          {ROLES.filter((r) => r[0] === g).map(([, title, loc]) =>
-            <a key={title} href={route("v4.html#contact")} style={{ display: "grid", gridTemplateColumns: "1fr auto auto", gap: 24, alignItems: "center", padding: "20px 0", borderTop: "1px solid var(--line)", textDecoration: "none", color: "var(--ink)", transition: "padding 0.2s" }}
-              onMouseEnter={(e) => { e.currentTarget.style.paddingLeft = "12px"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.paddingLeft = "0"; }}>
-              <span style={{ fontFamily: "var(--font-display)", fontWeight: 500, fontSize: 19 }}>{title}</span>
-              <span className="mono job-loc">{loc}</span>
-              <Arrow size={15} />
-            </a>)}
-        </div>)}
+      {ROLES.map(([title, loc]) =>
+        <a className="career-role" key={title} href={route("v4.html#contact")}>
+          <span>{title}</span>
+          <span className="mono job-loc">{loc}</span>
+          <Arrow size={15} />
+        </a>)}
     </div>);
 }
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Company / Careers"
-        aside={<IlloCareers />}
+        art="careers"
+        caption="BUILD THE NEXT CHAPTER"
         eyebrow="Careers"
-        title={<>Ship AI that <em className="italic">survives</em> contact with production.</>}
-        lead="We're a small team of ex-research and ex-platform engineers building systems for regulated industries. You'll ship into live deployments at banks, insurers and state bodies — where the feedback loop is a credit officer or an adjuster, not a leaderboard."
+        title={<> Build what<br /><em>matters.</em></>}
+        lead="A small team. Real ownership. AI that reaches credit desks, claims teams and the people they serve."
         ctas={[{ label: "See open roles", href: "#roles", primary: true }, { label: "About Newron", href: "about.html" }]} />
 
+      <div id="page-content" />
       <Band id="values">
         <Head tag="01" eyebrow="How we operate" title={<>What it&apos;s <em className="italic">like</em> to work here.</>} kicker="Small team, direct ownership, real customers from week one." />
         <SplitRows items={[
@@ -61,7 +52,7 @@ export default function Page() {
 
       <Band id="process">
         <Head tag="03" eyebrow="How we hire" title={<>A short, <em className="italic">honest</em> process.</>} kicker="Four steps, real work, no trick questions. Usually wrapped up in two to three weeks." />
-        <div style={{ marginTop: 48, maxWidth: 760 }}>
+        <div style={{ marginTop: 48 }}>
           <Timeline items={[
             ["STEP 01", "Intro call", "A conversation about your work and what you're looking for — and an honest read on fit."],
             ["STEP 02", "Technical deep-dive", "We dig into something you've actually built. No whiteboard puzzles."],
@@ -73,13 +64,14 @@ export default function Page() {
       <Band id="faq" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="04" eyebrow="Questions" title={<>Common questions.</>} />
         <FAQ items={[
-          ["Do you hire remotely?", "Most engineering roles are on-site in Bengaluru because the work is collaborative and client-embedded, but some roles are open to remote within India. Each listing says which."],
+          ["Do you hire remotely?", "Most engineering roles are on-site in Bengaluru because the work is collaborative and client-embedded, but some roles are open to remote within India. Each listing says where it&apos;s based."],
           ["Do you sponsor relocation?", "Yes, for roles where it makes sense. We'll discuss specifics during the process."],
           ["What's the stack?", "Python-heavy ML and data tooling, modern inference infrastructure, and product surfaces in TypeScript/React. We train and fine-tune our own models."],
           ["I'm early in my career — should I apply?", "If you've shipped something real and you're drawn to high-stakes problems, yes. We weight evidence of building over years of experience."]]} />
       </Band>
 
       <CTABand eyebrow="Join us" headline={<>Tell us what you&apos;ve <em className="italic">built</em>.</>} sub="Send the role you want, a CV or LinkedIn, and one thing you've built that you can talk through in detail — a repo, a paper, a system in production. The last one carries the most weight." primary={{ label: "Apply with your work", href: "v4.html#contact" }} secondary={{ label: "About Newron", href: "about.html" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

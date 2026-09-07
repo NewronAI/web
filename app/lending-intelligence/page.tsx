@@ -3,7 +3,6 @@ import React, { type CSSProperties } from "react";
 import {
   Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, Timeline, FAQ, CTABand, Quote,
 } from "@/components/site-chrome";
-import { IlloLending } from "@/components/illustrations";
 
 export const metadata = { title: "Lending intelligence — Newron" };
 
@@ -32,20 +31,23 @@ const modules = [
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
 
       <PageHero
         crumb="Solutions / Lending intelligence"
-        aside={<IlloLending />}
+        art="lending"
+        caption="FROM FILES TO FORESIGHT"
         eyebrow="Lending intelligence"
-        title={<>The credit officer&apos;s <em className="italic">second brain.</em></>}
-        lead="A modular suite for the loan origination lifecycle — from intake and statement parsing to CAM generation, deviation handling and verification. Configured to your policy, your format, your tier structure."
+        title={<> Credit decisions.<br /><em>Connected.</em></>}
+        lead="From statement analysis to credit memos. One intelligent suite, configured to your policy and your workflow."
         ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }]} />
 
+      <div id="page-content" />
       <Band id="suite">
         <Head tag="01" eyebrow="In the suite" title={<>Six modules, one origination flow.</>} kicker="Adopt the whole suite or drop a single module into your existing LOS. Every module is API-first and self-hostable." />
-        <FeatureGrid items={modules} cols={3} />
+        <FeatureGrid items={modules} />
       </Band>
 
       <Band id="coverage" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
@@ -59,7 +61,7 @@ export default function Page() {
 
       <Band id="flow">
         <Head tag="03" eyebrow="How it fits" title={<>From application to <em className="italic">decision-ready</em>.</>} kicker="Newron sits between your LOS and your credit committee — automating the mechanical work so officers spend time on judgement." />
-        <div style={{ marginTop: 48, maxWidth: 760 }}>
+        <div style={{ marginTop: 48 }}>
           <Timeline items={[
             ["STEP 01", "Intake from your LOS", "Application, KYC and bureau pulled automatically the moment a file is created."],
             ["STEP 02", "Statement & document analysis", "Bank statements, ITRs and GST returns parsed; anomalies and obligations surfaced."],
@@ -86,6 +88,7 @@ export default function Page() {
 
       <CTABand headline={<>See Newron on your <em className="italic">own credit files</em>.</>} sub="We'll spin up a sandboxed instance against a slice of your data and deliver a working pilot with eval numbers your team can trust." secondary={{ label: "Read customer stories", href: "v4.html#customers" }} />
 
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

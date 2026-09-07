@@ -1,7 +1,6 @@
 import { BOOKING_URL } from "@/lib/route";
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, SplitRows, FAQ, CTABand } from "@/components/site-chrome";
-import { IlloBank } from "@/components/illustrations";
 
 export const metadata = { title: "Newron for Banks" };
 
@@ -13,19 +12,23 @@ const useCases = [
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Industries / Banks"
-        aside={<IlloBank />}
+        art="lending"
+        tool="Applicant 360°"
+        caption="INTELLIGENCE INSIDE YOUR PERIMETER"
         eyebrow="Newron for Banks"
-        title={<>AI that respects the <em className="italic">regulator</em>.</>}
-        lead="Banks operate under scrutiny that generic AI tools ignore. Newron deploys inside your perimeter, follows your credit policy to the clause, and leaves an audit trail for every decision."
+        title={<> Built for banks.<br /><em>Ready for scrutiny.</em></>}
+        lead="Connect credit intelligence to your existing systems. Your policies, your infrastructure, your officers in control."
         ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }, { label: "Lending intelligence", href: "lending-intelligence.html" }]} />
 
+      <div id="page-content" />
       <Band id="use-cases">
         <Head tag="01" eyebrow="Where banks deploy Newron" title={<>From origination to the <em className="italic">back office</em>.</>} kicker="Start with the credit desk or the operations floor — Newron meets the same controls either way." />
-        <FeatureGrid items={useCases} cols={3} />
+        <FeatureGrid items={useCases} />
       </Band>
 
       <Band id="trust" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
@@ -52,6 +55,7 @@ export default function Page() {
       </Band>
 
       <CTABand headline={<>Put Newron in front of your <em className="italic">risk team</em>.</>} sub="We'll run a sandboxed pilot inside your environment and give your security, risk and credit teams the evidence they need." secondary={{ label: "Security & compliance", href: "security.html" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import { BOOKING_URL } from "@/lib/route";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, SplitRows, Timeline, FAQ, CTABand } from "@/components/site-chrome";
-import { IlloCustom } from "@/components/illustrations";
 
 export const metadata = { title: "Custom AI engineering — Newron" };
 
@@ -13,24 +12,27 @@ const services = [
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Solutions / Custom AI engineering"
-        aside={<IlloCustom />}
+        art="engineering"
+        caption="YOUR AMBITION. ENGINEERED."
         eyebrow="Custom AI engineering"
-        title={<>When the product isn&apos;t enough, <em className="italic">we build it for you.</em></>}
-        lead="Newron is staffed by ex-research and ex-platform engineers who embed with your team. Most engagements ship to production inside one quarter."
+        title={<> Your next leap.<br /><em>Built together.</em></>}
+        lead="Custom models, intelligent workflows and production platforms. Engineered for your data, your infrastructure and your ambition."
         ctas={[{ label: "Scope an engagement", href: BOOKING_URL, primary: true }, { label: "See the product suite", href: "lending-intelligence.html" }]} />
 
+      <div id="page-content" />
       <Band id="offerings">
         <Head tag="01" eyebrow="What we do" title={<>Three ways to work with us.</>} kicker="From a focused engineering sprint to a custom foundational model — scoped to the problem, not a fixed package." />
-        <FeatureGrid items={services} cols={3} />
+        <FeatureGrid items={services} />
       </Band>
 
       <Band id="how" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
         <Head tag="02" eyebrow="How we engage" title={<>A quarter from <em className="italic">kickoff</em> to production.</>} kicker="We don't hand over a slide deck. We deliver a working system your team owns and can run." />
-        <div style={{ marginTop: 48, maxWidth: 760 }}>
+        <div style={{ marginTop: 48 }}>
           <Timeline items={[
             ["WEEK 1–2", "Discovery & scoping", "We map the problem, the data and the eval criteria with your team and agree on what 'working' means."],
             ["WEEK 3–6", "Data & eval pipeline", "We build the ingestion, labelling and evaluation harness so progress is measurable from day one."],
@@ -58,6 +60,7 @@ export default function Page() {
       </Band>
 
       <CTABand headline={<>Bring us your <em className="italic">hardest</em> problem.</>} sub="Tell us what off-the-shelf AI can't do for you. We'll scope an engagement and tell you honestly whether — and how — we can ship it." secondary={{ label: "About Newron", href: "about.html" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

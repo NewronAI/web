@@ -1,7 +1,6 @@
 import { BOOKING_URL } from "@/lib/route";
 import React from "react";
 import { Nav, Footer, PageHero, Band, Head, FeatureGrid, StatBand, Timeline, FAQ, CTABand } from "@/components/site-chrome";
-import { IlloInsurance } from "@/components/illustrations";
 
 export const metadata = { title: "Insurance AI — Newron" };
 
@@ -13,19 +12,22 @@ const steps = [
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Solutions / Insurance AI"
-        aside={<IlloInsurance />}
+        art="claims"
+        caption="CLARITY AT EVERY CHECKPOINT"
         eyebrow="Insurance AI"
-        title={<>Settle claims <em className="italic">before</em> they&apos;re filed.</>}
-        lead="Newron's claims models inspect documents, parse policy language and predict denial risk the moment a claim is initiated — so adjusters spend their time on edge cases, not paperwork."
+        title={<> Claims, without<br /><em>the complexity.</em></>}
+        lead="Understand documents, check eligibility and surface denial risk. Give your claims team the clarity to move forward."
         ctas={[{ label: "Talk to Us", href: BOOKING_URL, primary: true }]} />
 
+      <div id="page-content" />
       <Band id="pipeline">
         <Head tag="01" eyebrow="The claims pipeline" title={<>Three checkpoints, fully automated.</>} kicker="From first notice of loss to a TPA-ready packet, Newron handles the mechanical work and escalates only what needs a human." />
-        <FeatureGrid items={steps} cols={3} />
+        <FeatureGrid items={steps} />
       </Band>
 
       <Band id="outcomes" bg="var(--bg-2)" style={{ borderTop: "1px solid var(--line)" }}>
@@ -35,7 +37,7 @@ export default function Page() {
 
       <Band id="lines">
         <Head tag="03" eyebrow="Lines & documents" title={<>Built for messy, <em className="italic">real-world</em> claims.</>} kicker="Newron reads discharge summaries, prescriptions, invoices, FIRs and policy schedules — printed or handwritten." />
-        <div style={{ marginTop: 48, maxWidth: 760 }}>
+        <div style={{ marginTop: 48 }}>
           <Timeline items={[
             ["INTAKE", "Document understanding", "Discharge summaries, bills, prescriptions and policy schedules parsed and cross-checked."],
             ["ELIGIBILITY", "Policy reasoning", "Sub-limits, waiting periods and exclusions evaluated against the specific policy schedule."],
@@ -55,6 +57,7 @@ export default function Page() {
       </Band>
 
       <CTABand headline={<>Run a pilot on <em className="italic">last quarter&apos;s claims</em>.</>} sub="We'll replay a slice of your historical claims through Newron and show you the denial-risk and time-to-file numbers before you commit." secondary={{ label: "Read customer stories", href: "v4.html#customers" }} />
+      </main>
       <Footer />
-    </>);
+    </div>);
 }

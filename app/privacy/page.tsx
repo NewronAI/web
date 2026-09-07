@@ -1,7 +1,6 @@
 import React from "react";
 import { Nav, Footer, PageHero, Prose, Band } from "@/components/site-chrome";
 import { route } from "@/lib/route";
-import { IlloPrivacy } from "@/components/illustrations";
 
 export const metadata = { title: "Privacy Policy — Newron" };
 
@@ -20,15 +19,18 @@ function LegalAside({ updated, items }: { updated: string; items: [string, strin
 
 export default function Page() {
   return (
-    <>
+    <div className="immersive inner-site">
       <Nav />
+      <main id="main">
       <PageHero
         crumb="Legal / Privacy"
-        aside={<IlloPrivacy />}
+        art="privacy"
+        caption="YOUR DATA. YOUR CHOICE."
         eyebrow="Privacy Policy"
-        title={<>Your data, <em className="italic">handled</em> the way we&apos;d want ours to be.</>}
-        lead="This policy explains what Newron collects, why, and the choices you have. We build for regulated industries, so privacy isn't an afterthought — it's the design constraint." />
+        title={<> Your privacy.<br /><em>By design.</em></>}
+        lead="What we collect, how we use it and the choices you have. Our privacy policy, in full." />
 
+      <div id="page-content" />
       <Prose aside={<LegalAside updated="1 May 2026" items={[["scope", "1. Scope"], ["collect", "2. What we collect"], ["use", "3. How we use it"], ["customer", "4. Customer data"], ["sharing", "5. Sharing"], ["retention", "6. Retention"], ["rights", "7. Your rights"], ["security", "8. Security"], ["contact", "9. Contact"]]} />}>
         <p className="lede">This Privacy Policy describes how NewronAI Technologies Pvt. Ltd. (“Newron”, “we”, “us”) collects and processes personal information through our website and corporate operations. It is written to be read, not just filed.</p>
 
@@ -73,6 +75,7 @@ export default function Page() {
           <a href={route("responsible-ai.html")} className="xlink">Responsible AI →</a>
         </div>
       </Band>
+      </main>
       <Footer />
-    </>);
+    </div>);
 }
