@@ -7,6 +7,7 @@
    ========================================================= */
 import React, { useState, useEffect, useRef, type ReactNode, type CSSProperties } from "react";
 import { route, BOOKING_URL } from "@/lib/route";
+import { AnnouncementRibbon } from "@/components/announcement-ribbon";
 
 // ───────────────────────────────────────────────── helpers
 function AnimatedNumber({ value, prefix = "", suffix = "", duration = 1600, locale = "en-IN" }: {
@@ -78,6 +79,7 @@ function Nav() {
       borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",
       transition: "background 0.2s, border-color 0.2s"
     }}>
+      <AnnouncementRibbon />
       <div className="shell" style={{ height: "var(--nav-h)", display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "clamp(14px, 2.4vw, 40px)" }}>
         <Wordmark />
         <nav className="nav-center" style={{ display: "flex", justifyContent: "center", gap: 2 }}>

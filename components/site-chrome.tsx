@@ -7,6 +7,7 @@
    ========================================================= */
 import React, { useState, useEffect, type ReactNode, type CSSProperties } from "react";
 import { route, BOOKING_URL } from "@/lib/route";
+import { AnnouncementRibbon } from "@/components/announcement-ribbon";
 
 // ── footer link map (single source of truth) ─────────────
 const FOOTER_COLS: { h: string; links: [string, string][] }[] = [
@@ -74,6 +75,7 @@ export function Nav() {
       borderBottom: "1px solid " + (scrolled ? "var(--line)" : "transparent"),
       transition: "background 0.2s, border-color 0.2s"
     }}>
+      <AnnouncementRibbon />
       <div className="shell" style={{ height: "var(--nav-h)", display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "clamp(14px, 2.4vw, 40px)" }}>
         <Wordmark />
         <nav className="nav-center" style={{ display: "flex", justifyContent: "center", gap: 2 }}>

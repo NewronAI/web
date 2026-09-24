@@ -101,6 +101,7 @@
 
   /* ---------- homepage hero (see "Homepage hero" below) ---------- */
   --nav-h:           68px;
+  --ribbon-h:        0px;    /* set to the ribbon's height by :root:has(.ribbon) below */
   --hero-pad-top:    calc(72px * var(--density));
   --hero-pad-bottom: calc(96px * var(--density));
   --hero-gap:        52px;   /* headline → band */
@@ -190,7 +191,7 @@ a { color: inherit; }
 img, svg { display: block; max-width: 100%; }
 button { font: inherit; color: inherit; }
 strong, b { font-weight: 500; }
-section[id] { scroll-margin-top: 80px; }
+section[id] { scroll-margin-top: calc(80px + var(--ribbon-h)); }
 
 /* =========================================================
    Layout shells
@@ -377,7 +378,7 @@ section[id] { scroll-margin-top: 80px; }
 .hero-stage {
   display: grid;
   align-content: center;
-  min-height: calc(100svh - var(--nav-h) - var(--hero-peek));
+  min-height: calc(100svh - var(--nav-h) - var(--ribbon-h) - var(--hero-peek));
   padding-block: var(--hero-pad-top) var(--hero-pad-bottom);
 }
 
@@ -954,6 +955,51 @@ h1, h2, h3, .display, .sh-title, .hero-title, .page-lead, .prose h2, .prose h3 {
    somewhere to go before anything collides. */
 header .shell { padding-right: clamp(16px, 2.6vw, 40px); }
 
+/* ---------- announcement ribbon (components/announcement-ribbon.tsx) ----------
+   One slim brand-gradient band above the nav, inside the sticky header so it
+   travels with it. --ribbon-h is only non-zero while a ribbon is in the DOM. */
+:root:has(.ribbon) { --ribbon-h: 36px; }
+.ribbon {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px;
+  height: var(--ribbon-h);
+  padding-inline: clamp(16px, 2.6vw, 40px);
+  background: var(--brand-grad);
+  color: #fff;
+  text-decoration: none;
+  font-size: 12.5px;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.ribbon strong { font-weight: 600; color: inherit; }
+.ribbon-mark { display: inline-flex; color: var(--orange-400); flex: none; }
+.ribbon-tag {
+  font-size: var(--fs-label); font-weight: 600;
+  letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+  opacity: 0.9;
+  padding-right: 10px; border-right: 1px solid rgba(255,255,255,0.3);
+}
+.ribbon-text { overflow: hidden; text-overflow: ellipsis; }
+.ribbon-text-short { display: none; }
+.ribbon-cta {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-weight: 500; opacity: 0.9;
+  text-decoration: underline; text-decoration-color: rgba(255,255,255,0.45); text-underline-offset: 3px;
+  flex: none;
+}
+.ribbon:hover .ribbon-cta { opacity: 1; text-decoration-color: #fff; }
+.ribbon:focus-visible { outline: 2px solid #fff; outline-offset: -3px; }
+@media (max-width: 760px) {
+  .ribbon { gap: 8px; }
+  .ribbon-tag { display: none; }
+  .ribbon-text-full { display: none; }
+  .ribbon-text-short { display: inline; }
+}
+@media (max-width: 380px) {
+  .ribbon-cta { display: none; }
+}
+
 .nav-link {
   text-decoration: none;
   color: var(--ink);
@@ -989,7 +1035,7 @@ header .shell { padding-right: clamp(16px, 2.6vw, 40px); }
 .nav-panel {
   border-top: 1px solid var(--line);
   background: var(--bg);
-  max-height: calc(100svh - var(--nav-h));
+  max-height: calc(100svh - var(--nav-h) - var(--ribbon-h));
   overflow-y: auto;
 }
 .nav-panel .shell { display: flex; flex-direction: column; padding-block: 8px; }

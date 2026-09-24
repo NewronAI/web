@@ -6,6 +6,7 @@ import { IlloPress } from "@/components/illustrations";
 export const metadata = { title: "Press — Newron" };
 
 const RELEASES: [string, string, string][] = [
+  ["Sep 2026", "Newron wins the Challenger award at Nasscom AI Gamechangers 2026", "First place in the Startup category for the BFSI sector, for demonstrating innovation, leadership and impact in applying AI to transformative business outcomes."],
   ["May 2026", "Newron expands citizen-services AI with the Government of Karnataka", "The deployment now spans additional grievance categories with dialect-aware voice intake."],
   ["Feb 2026", "Newron's claims models reach production at a national health insurer", "Denial-risk prediction and TPA-ready filing go live across health and motor lines."],
   ["Nov 2025", "Tier-1 NBFC cuts credit-memo turnaround from three weeks to under an hour", "The lending suite replaces manual CAM review with a 40-minute QC step."],
