@@ -1,0 +1,2236 @@
+/* =========================================================
+   Scroll scenes — one section, one illustration, one story.
+   The runtime publishes `--p` and the scene's `--c-*` cues onto .scene-stage;
+   everything below is a pure function of those numbers. Cue defaults are the
+   finished composition, so a scene reads correctly before scripting starts.
+   ========================================================= */
+
+:root {
+  --scene-top: 76px;
+}
+
+.scroll-scene {
+  --travel: 200svh;
+  --scene-pinned: 1;
+  position: relative;
+}
+.scene-track {
+  height: var(--travel);
+}
+.scene-stage {
+  --p: 1;
+  position: sticky;
+  top: var(--scene-top);
+  height: calc(100svh - var(--scene-top));
+  display: flex;
+  /* `safe`: if a stage is ever too short, the heading stays, not the footer. */
+  align-items: safe center;
+  overflow: hidden;
+}
+.scene-inner {
+  width: 100%;
+  max-width: 1660px;
+  margin-inline: auto;
+  padding: 24px 7%;
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: 24px 56px;
+  align-items: center;
+}
+/* Depth is its own element so a layer's drift never overwrites the transform an
+   illustration applies to itself. */
+.scene-layer {
+  translate: 0 calc(var(--depth, 0) * (0.5 - var(--p)) * -46px + var(--lift, 0px) * var(--p));
+}
+
+/* ---------- copy column ---------- */
+.scene-copy {
+  min-width: 0;
+}
+.scene-copy h2 {
+  font-size: clamp(30px, 2.95vw, 45px);
+  margin: 17px 0 0;
+}
+.scene-copy > p {
+  max-width: 460px;
+  margin: 18px 0 0;
+  font-size: 13px;
+}
+.scene-steps {
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+}
+.scene-step button {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  background: none;
+  border: 0;
+  border-top: 1px solid #ffffff16;
+  padding: 17px 0;
+  color: #8f819e;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+}
+.scene-step-index {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding-top: 5px;
+}
+.scene-step-body {
+  min-width: 0;
+}
+.scene-step-body strong {
+  display: block;
+  font-weight: 400;
+  font-size: 19px;
+  letter-spacing: -0.4px;
+}
+.scene-step-body small {
+  display: block;
+  font-size: 11px;
+  margin-top: 5px;
+}
+.scene-step-body em[hidden] {
+  display: none;
+}
+.scene-step-body em {
+  display: block;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1.85;
+  color: #a79bb6;
+  margin-top: 12px;
+  max-width: 420px;
+}
+.scene-step-mark {
+  margin-left: auto;
+  padding-top: 4px;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+}
+.scene-step[data-active] button {
+  color: #e6d6f6;
+  border-color: #c5a4e288;
+}
+.scene-step[data-active] .scene-step-index {
+  color: #d1b3ff;
+}
+.scene-step[data-active] .scene-step-mark {
+  opacity: 1;
+}
+
+/* ---------- illustration panel ---------- */
+.scene-art {
+  min-width: 0;
+  position: relative;
+}
+.scene-art-panel {
+  border: 1px solid #bda1d23b;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #241b30, #0f0c16 70%);
+  box-shadow: 0 30px 100px #0004;
+  transform: perspective(1600px) rotateY(calc(-6deg + var(--p) * 4.5deg)) rotateX(calc(2.5deg - var(--p) * 1.6deg));
+  transform-origin: 60% 50%;
+}
+.scene-art-top,
+.scene-art-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+.scene-art-top {
+  padding: 20px 26px;
+  border-bottom: 1px solid #ffffff16;
+}
+.scene-art-top > span {
+  font-size: 24px;
+  letter-spacing: -1.2px;
+  color: #e3c9ff;
+}
+.scene-art-top > small,
+.scene-art-foot > span {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: #a99ab9;
+}
+.scene-art-body {
+  padding: 16px 20px;
+}
+.scene-art-foot {
+  border-top: 1px solid #ffffff16;
+  padding: 13px 24px;
+  font-size: 7px;
+}
+.scene-figure {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.scene-figure text {
+  font: 11px var(--font-mono);
+  fill: #bda9d4;
+  letter-spacing: 0.4px;
+}
+.scene-figure rect {
+  fill: #1c1729;
+  stroke: #b9a0e0;
+  stroke-width: 1.1;
+}
+.scene-figure path {
+  fill: none;
+  stroke: #9e86c2;
+  stroke-width: 1.2;
+}
+
+/* ---------- 01 / document understanding ---------- */
+.scene-documents .scene-stage {
+  --c-split: 1; --c-label: 1; --c-focus: 0;
+  --c-fields: 0; --c-transfer: 0; --c-map: 1; --c-file: 1;
+}
+.du-intake {
+  opacity: calc(1 - var(--c-split));
+}
+.scene-figure .du-intake rect {
+  fill: #221a31;
+  stroke-dasharray: 5 5;
+}
+.du-doc {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transform:
+    translate(calc((1 - var(--c-split)) * var(--dx) * 1px), calc((1 - var(--c-split)) * var(--dy) * 1px))
+    rotate(calc((1 - var(--c-split)) * var(--rot) * 1deg))
+    scale(calc(1 - (1 - var(--c-split)) * 0.4));
+}
+.du-doc-pull {
+  --f: calc(var(--c-focus) * (1 - var(--c-map)));
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transform:
+    translate(calc(var(--f) * var(--fx) * 1px), calc(var(--f) * var(--fy) * 1px))
+    scale(calc(1 + var(--f) * (var(--fs) - 1)));
+  opacity: calc(1 - (1 - var(--fo)) * var(--f));
+}
+.scene-figure .du-doc-lead rect {
+  stroke: #dcc0f5;
+}
+.du-doc-type {
+  opacity: var(--c-label);
+}
+.du-doc-type text {
+  fill: #d8c2f2;
+  font-size: 9px;
+}
+.du-read {
+  opacity: calc(var(--c-fields) * (1 - var(--c-map)));
+}
+rect.du-read-band {
+  fill: #c3b0f526;
+  stroke: #f5b194;
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: 0 50%;
+  transform: scaleX(clamp(0, calc((var(--c-fields) - var(--i) * 0.22) * 3.6), 1));
+}
+.du-scan {
+  stroke: #f5b194;
+  stroke-width: 2.5;
+  transform: translateY(calc(var(--c-fields) * 142px));
+  opacity: calc(var(--c-fields) * (1 - var(--c-fields)) * 4);
+}
+.du-structured {
+  opacity: calc(var(--c-transfer) * clamp(0, calc(1 - var(--c-map) * 2.4), 1));
+}
+.scene-figure .du-structured > rect {
+  fill: #ffffff05;
+  stroke: #bda1d23d;
+}
+.du-field {
+  opacity: clamp(0, calc((var(--c-transfer) - var(--i) * 0.17) * 4), 1);
+}
+.du-field path {
+  stroke: #ffffff14;
+}
+.du-field-value {
+  font-size: 14.5px;
+  fill: #ede2fb;
+}
+.du-field-tick {
+  fill: #b998d2;
+}
+.du-wire {
+  stroke: #f5b194;
+  stroke-width: 1;
+  stroke-dasharray: 340;
+  stroke-dashoffset: calc(340px - clamp(0, calc((var(--c-transfer) - var(--i) * 0.16) * 3.4), 1) * 340px);
+}
+.du-parties,
+.du-links {
+  opacity: var(--c-map);
+}
+.du-summary {
+  opacity: var(--c-file);
+}
+.scene-figure .du-summary rect {
+  fill: #ffffff05;
+  stroke: #bda1d23d;
+}
+.du-summary path {
+  stroke: #ffffff12;
+}
+.du-summary-id {
+  font-size: 15px !important;
+  fill: #e9dbfa;
+}
+.du-summary-value {
+  fill: #dcc5f6;
+  font-size: 12px !important;
+}
+.du-party {
+  --in: clamp(0, calc((var(--c-map) - var(--i) * 0.15) * 4), 1);
+  opacity: var(--in);
+  transform: translateX(calc((1 - var(--in)) * 30px));
+}
+.scene-figure .du-party rect {
+  fill: #b98ad014;
+  stroke: #c9a9e655;
+}
+.du-party text {
+  font-size: 14px;
+  font-family: var(--font-sans);
+  fill: #ecdffb;
+}
+.du-party-role {
+  font-size: 9px !important;
+  font-family: var(--font-mono) !important;
+  fill: #a88cc0 !important;
+  letter-spacing: 1.1px;
+}
+.du-link {
+  stroke: #c9a9e6;
+  stroke-width: 1;
+  stroke-dasharray: 320;
+  stroke-dashoffset: calc(320px - clamp(0, calc((var(--c-map) - var(--i) * 0.11) * 3.2), 1) * 320px);
+}
+rect.du-file-frame {
+  fill: none;
+  stroke: #c3b0f540;
+  stroke-dasharray: 7 7;
+  opacity: var(--c-file);
+}
+.du-file-mark {
+  opacity: var(--c-file);
+  fill: #a88cc0;
+  letter-spacing: 1.2px;
+  font-size: 9px !important;
+}
+/* Bands that sit between two scenes: the scenes already centre their own
+   content, so these do not need a chapter's worth of air above them. */
+.model-benchmarks-band,
+.lending-outcomes-band,
+.trust-links-band {
+  padding-top: 0;
+  padding-bottom: 60px;
+}
+
+/* ---------- shared step-list variants ---------- */
+.scene-steps-tight .scene-step button {
+  padding: 13px 0;
+}
+.scene-steps-tight .scene-step-body strong {
+  font-size: 17px;
+}
+.scene-steps-tight .scene-step-body em {
+  font-size: 11.5px;
+  line-height: 1.75;
+  margin-top: 9px;
+}
+.scene-copy > .n-text-link {
+  margin-top: 22px;
+  color: #d6b6ec;
+}
+/* Laid across a console header rather than down a column. */
+.scene-steps-row {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+}
+.scene-steps-row .scene-step button {
+  border: 1px solid #ffffff14;
+  border-radius: 6px;
+  padding: 9px 15px;
+  gap: 10px;
+  align-items: center;
+  width: auto;
+}
+.scene-steps-row .scene-step-body strong {
+  font-size: 12px;
+}
+.scene-steps-row .scene-step-body small,
+.scene-steps-row .scene-step-body em,
+.scene-steps-row .scene-step-mark {
+  display: none;
+}
+.scene-steps-row .scene-step-index {
+  padding-top: 0;
+  font-size: 9px;
+}
+.scene-steps-row .scene-step[data-active] button {
+  background: #b98ad014;
+  border-color: #c3a1eb88;
+}
+
+/* ---------- 00 / the opening hero ---------- */
+.scene-hero .scene-stage {
+  --c-gather: 1; --c-classify: 1; --c-extract: 1; --c-map: 1; --c-fields: 1; --c-settle: 1;
+}
+.scene-hero .artha-hero {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  padding: 40px 6% 74px;
+}
+.scene-hero .artha-hero-art {
+  height: 100%;
+  top: 0;
+}
+/* Loose pages on three depth planes, drawn toward the three processing paths. */
+.hero-fragments {
+  position: absolute;
+  inset: 8% 6% 14%;
+  pointer-events: none;
+}
+.hero-fragment {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 104px;
+  padding: 9px 10px 11px;
+  border: 1px solid #c3b0f52e;
+  border-radius: 5px;
+  background: linear-gradient(140deg, #1d1729cc, #100c18cc);
+  font-family: var(--font-mono);
+  font-size: 6.5px;
+  letter-spacing: 0.6px;
+  color: #a894bd;
+  translate: calc(var(--c-gather) * var(--tx)) calc(var(--c-gather) * var(--ty));
+  rotate: calc((1 - var(--c-gather)) * var(--rot) * 1deg);
+  scale: calc(1 - var(--c-gather) * 0.28);
+  opacity: calc((0.45 + var(--d) * 0.55) * (1 - var(--c-fields) * 0.85));
+  filter: blur(calc((1 - var(--d)) * 0.7px));
+}
+.hero-fragment i {
+  display: block;
+  height: 1px;
+  margin-bottom: 4px;
+  background: #c3b0f533;
+}
+.hero-fragment i:nth-child(2) {
+  width: 72%;
+}
+.hero-fragment i:nth-child(3) {
+  width: 48%;
+  margin-bottom: 7px;
+}
+/* What the field resolves into: three rows of structured evidence. */
+.hero-fields {
+  position: absolute;
+  left: 54%;
+  bottom: 8%;
+  translate: -50% calc((1 - var(--c-fields)) * 18px);
+  display: grid;
+  gap: 5px;
+  width: min(330px, 62%);
+  pointer-events: none;
+}
+.hero-fields > span {
+  --in: clamp(0, calc((var(--c-fields) - var(--i) * 0.2) * 3.4), 1);
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: baseline;
+  padding: 7px 12px;
+  border: 1px solid #c3b0f52e;
+  border-radius: 4px;
+  background: #100c18b8;
+  opacity: var(--in);
+  translate: calc((1 - var(--in)) * -14px) 0;
+}
+.hero-fields small {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: #a290b6;
+}
+.hero-fields b {
+  font-weight: 400;
+  font-size: 11px;
+  color: #e7d9f8;
+}
+.scene-hero .artha-art-name {
+  translate: 0 calc(var(--c-fields) * -34px);
+  scale: calc(1 - var(--c-fields) * 0.14);
+}
+.scene-hero .artha-signal {
+  opacity: calc(0.28 + 0.72 * var(--on));
+  border-left-color: color-mix(in oklab, currentColor calc(30% + var(--on) * 70%), transparent);
+  translate: calc((1 - var(--on)) * -10px) 0;
+  transition: none;
+}
+.scene-hero .signal-classify {
+  --on: var(--c-classify);
+}
+.scene-hero .signal-extract {
+  --on: var(--c-extract);
+}
+.scene-hero .signal-map {
+  --on: var(--c-map);
+  bottom: 31%;
+  left: 12%;
+}
+.scene-hero .artha-hero-footer {
+  opacity: calc(1 - var(--c-settle) * 0.45);
+}
+
+/* ---------- company strip ---------- */
+/* A pause between the hero and the product story: it settles in as the hero
+   releases, and otherwise stays in normal flow. */
+.scene-strip .scene-stage {
+  --c-enter: 1;
+  height: auto;
+  overflow: visible;
+}
+.scene-strip .customer-carousel {
+  opacity: calc(0.3 + var(--c-enter) * 0.7);
+  translate: 0 calc((1 - var(--c-enter)) * 18px);
+}
+
+/* ---------- 02 / inside the intelligence ---------- */
+.scene-intelligence .scene-stage {
+  --c-batch: 1; --c-model: 1; --c-entities: 1; --c-tools: 1; --c-routes: 1; --c-app: 1; --c-evidence: 1;
+}
+/* The console fills whatever the stage has left, so the walkthrough never
+   outgrows the pinned viewport. */
+.scene-inner-stack {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: 18px;
+  height: 100%;
+  padding-block: 18px;
+}
+.scene-intelligence {
+  background: #100d16;
+  border-block: 1px solid #ffffff14;
+}
+.scene-intelligence .lab-console {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 0;
+  /* `margin: auto` would centre the console in its row instead of filling it. */
+  margin: 0 auto;
+  width: 100%;
+}
+.scene-intelligence .lab-intro {
+  margin-bottom: 0;
+  padding: 0;
+}
+.scene-intelligence .lab-intro h2 {
+  font-size: clamp(24px, 2.3vw, 34px);
+  margin: 12px 0 0;
+}
+.scene-intelligence .lab-toolbar {
+  padding: 12px 20px;
+}
+.scene-intelligence .lab-detail {
+  padding: 16px 24px;
+}
+.scene-intelligence .lab-detail h3 {
+  font-size: 19px;
+  margin-bottom: 7px;
+}
+.scene-intelligence .lab-detail p {
+  font-size: 11.5px;
+}
+/* The console has a fixed share of a pinned stage, so the three planes are
+   drawn a size down from their standalone proportions. */
+.scene-intelligence .lab-ai-plane,
+.scene-intelligence .lab-tools-plane {
+  padding: 16px;
+}
+.scene-intelligence .lab-model-chip {
+  margin: 14px auto;
+  padding: 14px 10px;
+}
+.scene-intelligence .lab-model-chip strong {
+  font-size: 21px;
+}
+.scene-intelligence .lab-tool-nodes {
+  gap: 8px;
+}
+.scene-intelligence .lab-tool-nodes button {
+  min-height: 68px;
+  padding: 11px 9px;
+}
+.scene-intelligence .lab-tool-nodes button > span {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.scene-intelligence .lab-api {
+  padding-top: 12px;
+  margin-top: 12px;
+}
+.scene-intelligence .lab-app-plane .product-preview {
+  zoom: 0.88;
+}
+.scene-intelligence {
+  background: #100d16;
+  border-block: 1px solid #ffffff14;
+}
+.scene-intelligence .lab-console {
+  width: 100%;
+}
+.scene-intelligence .lab-world {
+  height: auto;
+  min-height: 0;
+  transition: none;
+}
+/* The planes are drawn at one size and the cluster is scaled to whatever the
+   pinned stage has left, so a short window never crops the workspace. */
+.lab-space {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: scale(var(--lab-scale, 1));
+  transform-origin: 50% 8%;
+}
+@media (max-height: 880px) {
+  .scene-intelligence {
+    --lab-scale: 0.9;
+  }
+}
+@media (max-height: 800px) {
+  .scene-intelligence {
+    --lab-scale: 0.8;
+  }
+}
+@media (max-height: 740px) {
+  .scene-intelligence {
+    --lab-scale: 0.68;
+  }
+  .scene-intelligence .lab-intro > p {
+    display: none;
+  }
+  .scene-intelligence .lab-detail {
+    padding: 12px 24px;
+  }
+  .scene-intelligence .lab-detail h3 {
+    font-size: 17px;
+    margin-bottom: 4px;
+  }
+}
+@media (max-height: 680px) {
+  .scene-intelligence {
+    --lab-scale: 0.57;
+  }
+}
+@media (max-height: 630px) {
+  .scene-intelligence {
+    --lab-scale: 0.48;
+  }
+}
+.scene-intelligence .lab-ai-plane,
+.scene-intelligence .lab-tools-plane,
+.scene-intelligence .lab-app-plane {
+  transition: none;
+  top: 34px;
+  /* Each plane is a flat card in the 3D space; its own children (the ArthaLM
+     chip has a rotateX of its own) must not be sorted against other planes. */
+  transform-style: flat;
+}
+/* The three planes share one timeline: tools open the composition, the
+   application closes it. Paint order follows the same two numbers. */
+.scene-intelligence .lab-ai-plane {
+  transform:
+    rotateY(calc(var(--c-tools) * 22deg)) rotateX(calc(var(--c-tools) * 8deg))
+    translateZ(calc(10px + var(--c-tools) * -92px + var(--c-app) * -30px));
+  opacity: calc(1 - var(--c-tools) * 0.4 - var(--c-app) * 0.05);
+  z-index: calc(4 - var(--c-tools) * 2 - var(--c-app) * 2);
+}
+.scene-intelligence .lab-tools-plane {
+  transform:
+    rotateY(calc(22deg - var(--c-tools) * 22deg + var(--c-app) * 22deg)) rotateX(calc(8deg - var(--c-tools) * 8deg + var(--c-app) * 8deg))
+    translateZ(calc(-70px + var(--c-tools) * 115px + var(--c-app) * -145px));
+  opacity: calc(0.7 + var(--c-tools) * 0.3 - var(--c-app) * 0.45);
+  z-index: calc(2 + var(--c-tools) * 2 - var(--c-app) * 4);
+}
+.scene-intelligence .lab-app-plane {
+  transform:
+    rotateY(calc(22deg - var(--c-app) * 30deg)) rotateX(calc(8deg - var(--c-app) * 8deg))
+    translateZ(calc(-100px + var(--c-app) * 140px));
+  opacity: calc(0.62 + var(--c-app) * 0.38);
+  z-index: calc(1 + var(--c-app) * 5);
+}
+.scene-intelligence .lab-document-batch > span {
+  --in: clamp(0, calc((var(--c-batch) - var(--i, 0) * 0.2) * 3.4), 1);
+  opacity: var(--in);
+  translate: calc((1 - var(--in)) * -14px) 0;
+}
+.scene-intelligence .lab-document-batch > span:nth-child(2) {
+  --i: 1;
+}
+.scene-intelligence .lab-document-batch > span:nth-child(3) {
+  --i: 2;
+}
+.scene-intelligence .lab-model-chip {
+  opacity: var(--c-model);
+  scale: calc(0.9 + var(--c-model) * 0.1);
+}
+.scene-intelligence .lab-entities > span {
+  opacity: var(--c-entities);
+}
+.scene-intelligence .lab-tool-nodes button {
+  --in: clamp(0, calc((var(--c-routes) - var(--i) * 0.12) * 3.4), 1);
+  opacity: calc(0.25 + var(--in) * 0.75);
+  translate: 0 calc((1 - var(--in)) * 10px);
+}
+.scene-intelligence .lab-api {
+  opacity: var(--c-routes);
+}
+.scene-intelligence .lab-app-plane .product-preview > *:not(.pv-top):not(.pv-heading) {
+  opacity: var(--c-evidence);
+}
+.scene-intelligence .lab-result-status {
+  opacity: calc(0.4 + var(--c-evidence) * 0.6);
+}
+
+/* ---------- 03 / lending intelligence ---------- */
+.scene-lending .scene-stage {
+  --c-intake: 1; --c-signals: 1; --c-wires: 1; --c-memo: 1; --c-cite: 1; --c-flag: 1; --c-review: 1;
+}
+.ln-doc,
+.ln-signal,
+.ln-section,
+.cl-input,
+.cl-check,
+.cl-packet-line,
+.cz-chip,
+.en-node,
+.en-surface,
+.dp-component,
+.dp-surface,
+.dp-event {
+  --in: clamp(0, calc((var(--stage) - var(--i) * 0.16) * 3.4), 1);
+  opacity: var(--in);
+}
+.ln-doc {
+  --stage: var(--c-intake);
+  transform: translateX(calc((1 - var(--in)) * -30px));
+}
+/* Group headings arrive with the first row of their group, not before it. */
+.ln-heading {
+  opacity: var(--c-signals);
+}
+.cl-heading {
+  opacity: var(--c-check);
+}
+.ln-signal {
+  --stage: var(--c-signals);
+  transform: translateX(calc((1 - var(--in)) * -22px));
+}
+.ln-section {
+  --stage: var(--c-memo);
+  transform: translateY(calc((1 - var(--in)) * 12px));
+}
+.ln-doc-note,
+.cl-input-note,
+.cz-input-note,
+.en-block-note {
+  fill: #a08aae;
+}
+.ln-signal-value {
+  font-size: 13.5px !important;
+  fill: #ede2fb;
+}
+.scene-figure .ln-signal rect {
+  fill: #ffffff05;
+  stroke: #bda1d23d;
+}
+.ln-wire {
+  stroke: #f5b194;
+  stroke-width: 1;
+  stroke-dasharray: 220;
+  stroke-dashoffset: calc(220px - clamp(0, calc((var(--c-wires) - var(--i) * 0.16) * 3.4), 1) * 220px);
+}
+.ln-cite {
+  stroke: #c9a9e6;
+  stroke-width: 1;
+  stroke-dasharray: 200;
+  stroke-dashoffset: calc(200px - clamp(0, calc((var(--c-cite) - var(--i) * 0.14) * 3.4), 1) * 200px);
+}
+.ln-memo {
+  opacity: var(--c-memo);
+}
+.scene-figure rect.ln-memo-sheet {
+  fill: #ffffff07;
+  stroke: #bda1d24d;
+}
+.ln-flag {
+  opacity: var(--c-flag);
+  transform: translateX(calc((1 - var(--c-flag)) * 18px));
+}
+.scene-figure .ln-flag rect {
+  fill: #f5b1941a;
+  stroke: #f5b194aa;
+}
+.ln-flag text {
+  fill: #f2c4ac;
+}
+.ln-review {
+  opacity: var(--c-review);
+}
+.scene-figure .ln-review rect {
+  fill: #b98ad01f;
+  stroke: #c9a9e6aa;
+}
+.ln-review text {
+  fill: #e9d9fb;
+}
+.lending-outcomes-band {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 65px;
+  align-items: start;
+}
+.lending-outcomes-band .lending-impact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.lending-outcomes-band .lending-impact > div:last-of-type {
+  grid-column: auto;
+  border-top: 0;
+  padding-top: 0;
+  display: block;
+}
+.lending-outcomes-band .lending-coverage {
+  grid-column: auto;
+  grid-template-columns: minmax(0, 1fr);
+  border-top: 0;
+  padding-top: 0;
+  gap: 0;
+}
+.lending-outcomes-band .lending-coverage details + details {
+  border-top: 1px solid #ffffff12;
+}
+
+/* ---------- 04 / insurance ---------- */
+.scene-claims .scene-stage {
+  --c-arrive: 1; --c-check: 1; --c-gap: 0; --c-fill: 1; --c-packet: 1; --c-seal: 1;
+}
+/* Illustration first in the source, so the wide column is the one it sits in. */
+.scene-inner-flip {
+  grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr);
+}
+.scene-claims .scene-art-panel {
+  transform: perspective(1600px) rotateY(calc(6deg - var(--p) * 4.5deg)) rotateX(calc(2.5deg - var(--p) * 1.6deg));
+  transform-origin: 40% 50%;
+}
+.scene-claims h2 em,
+.scene-claims .scene-step[data-active] button {
+  color: #acd1bd;
+}
+.scene-claims .scene-step[data-active] button {
+  border-color: #9cc4ae88;
+}
+.scene-claims .scene-step[data-active] .scene-step-index {
+  color: #acd1bd;
+}
+.cl-figure rect {
+  stroke: #9dc0ad;
+}
+.cl-figure path {
+  stroke: #86a894;
+}
+.cl-figure text {
+  fill: #a9c4b5;
+}
+.cl-input {
+  --stage: var(--c-arrive);
+  transform: translateX(calc((1 - var(--in)) * -34px));
+}
+.cl-check {
+  --stage: var(--c-check);
+  transform: translateX(calc((1 - var(--in)) * -18px));
+}
+.cl-check-verdict {
+  fill: #dcefe4 !important;
+  font-size: 12.5px !important;
+}
+.cl-check-mark {
+  fill: #91cdbb;
+  font-size: 13px !important;
+}
+.cl-check-alert {
+  opacity: 0;
+}
+/* The gap is the point of the beat: it is named, then it is filled. */
+.cl-check-gap .cl-check-mark {
+  opacity: calc(1 - var(--c-gap));
+}
+.cl-check-gap .cl-check-alert {
+  opacity: calc(var(--c-gap) * (1 - var(--c-fill)));
+  fill: #f5b194;
+  font-size: 14px !important;
+}
+.cl-check-gap {
+  opacity: calc(var(--in) * (1 - var(--c-fill)));
+}
+.scene-figure .cl-check-gap rect {
+  stroke: color-mix(in oklab, #f5b194 calc(var(--c-gap) * 100%), #9dc0ad);
+  stroke-dasharray: calc(var(--c-gap) * 6) calc(var(--c-gap) * 6);
+}
+.cl-supply {
+  opacity: var(--c-fill);
+  transform: translateX(calc((1 - var(--c-fill)) * 22px));
+}
+.scene-figure .cl-supply rect {
+  fill: #91cdbb1a;
+  stroke: #91cdbbaa;
+}
+.cl-link {
+  stroke: #91cdbb;
+  stroke-width: 1;
+  stroke-dasharray: 200;
+  stroke-dashoffset: calc(200px - clamp(0, calc((var(--c-check) - var(--i) * 0.16) * 3.4), 1) * 200px);
+}
+.cl-packet {
+  opacity: var(--c-packet);
+}
+.scene-figure rect.cl-packet-sheet {
+  fill: #ffffff07;
+  stroke: #9dc0ad55;
+}
+.cl-gauge-track {
+  stroke: #ffffff12;
+  stroke-width: 9;
+}
+.cl-gauge-fill {
+  stroke: #91cdbb;
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-dasharray: 252;
+  stroke-dashoffset: calc(252px - var(--c-packet) * 252px);
+}
+.cl-gauge-value {
+  font-size: 22px !important;
+  font-family: var(--font-sans) !important;
+  fill: #e4f2ea !important;
+}
+.cl-gauge-note,
+.cl-packet-line text {
+  font-size: 9px !important;
+}
+.cl-packet-line {
+  --stage: var(--c-seal);
+}
+.cl-packet-tick {
+  fill: #91cdbb;
+}
+.cl-seal {
+  opacity: var(--c-seal);
+}
+.scene-figure .cl-seal rect {
+  fill: #91cdbb1a;
+  stroke: #91cdbb88;
+}
+.cl-seal text {
+  fill: #d9eee4;
+  font-size: 9px !important;
+}
+
+/* ---------- 05 / governance ---------- */
+.scene-citizen .scene-stage {
+  --c-ink: 1; --c-voice: 1; --c-read: 1; --c-route: 1; --c-policy: 1; --c-reply: 1;
+}
+.scene-citizen h2 em,
+.scene-citizen .scene-step[data-active] .scene-step-index {
+  color: #dbb79d;
+}
+.scene-citizen .scene-step[data-active] button {
+  color: #f0ddd0;
+  border-color: #c79b7d88;
+}
+.cz-figure rect {
+  stroke: #c39d82;
+}
+.cz-figure text {
+  fill: #c7ab97;
+}
+.cz-figure path {
+  stroke: #a8866e;
+}
+.cz-ink {
+  stroke: #e9c2a4;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-dasharray: 300;
+  stroke-dashoffset: calc(300px - clamp(0, calc((var(--c-ink) - var(--i, 0) * 0.3) * 2.2), 1) * 300px);
+}
+.scene-figure .cz-wave rect {
+  fill: #e9c2a4;
+  stroke: none;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transform: scaleY(clamp(0.08, calc((var(--c-voice) - var(--i) * 0.012) * 4), 1));
+}
+.cz-read {
+  opacity: var(--c-read);
+}
+.cz-script {
+  font-family: serif !important;
+  font-size: 26px !important;
+  fill: #f0d3b8 !important;
+}
+.cz-read-line {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  fill: #ecdccf !important;
+}
+.cz-flow {
+  stroke: #e9c2a4;
+  stroke-width: 1;
+  stroke-dasharray: 130;
+  stroke-dashoffset: calc(130px - clamp(0, calc((var(--c-read) - var(--i, 0) * 0.2) * 3), 1) * 130px);
+}
+.cz-route {
+  opacity: var(--c-route);
+}
+.cz-chip {
+  --stage: var(--c-route);
+  transform: translateX(calc((1 - var(--in)) * 26px));
+}
+.scene-figure .cz-chip rect {
+  fill: #dbb79d14;
+  stroke: #dbb79d55;
+}
+.cz-chip text {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  fill: #f2e0d3 !important;
+}
+.cz-chip-kind {
+  font-family: var(--font-mono) !important;
+  font-size: 8.5px !important;
+  fill: #b8917a !important;
+  letter-spacing: 1.1px;
+}
+.cz-policy {
+  opacity: var(--c-policy);
+}
+.cz-reply {
+  opacity: var(--c-reply);
+  transform: translateY(calc((1 - var(--c-reply)) * 14px));
+}
+.cz-approval {
+  fill: #f0d3b8 !important;
+  font-size: 9px !important;
+  letter-spacing: 1.1px;
+}
+.scene-citizen .governance-capabilities {
+  margin: 16px 0 0;
+  gap: 6px 16px;
+  font-size: 11.5px;
+}
+.scene-citizen .governance-note {
+  margin-top: 14px;
+  font-size: 9.5px;
+}
+.scene-citizen .governance-script {
+  position: absolute;
+  right: 14px;
+  top: -62px;
+  font-family: serif;
+  font-size: 128px;
+  line-height: 1;
+  color: #e2b58c14;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---------- 06 / custom AI engineering ---------- */
+.scene-engineering .scene-stage {
+  --c-sources: 1; --c-model: 1; --c-evaluate: 1; --c-integrate: 1; --c-deploy: 1;
+}
+.scene-art-blueprint {
+  background:
+    linear-gradient(#9badb907 1px, transparent 1px) 0 0 / 25px 25px,
+    linear-gradient(90deg, #9badb907 1px, transparent 1px) 0 0 / 25px 25px,
+    linear-gradient(145deg, #1a1e27, #0e0f15 70%);
+  border-color: #9badb93b;
+}
+.en-figure rect {
+  fill: #151922;
+  stroke: #8d9eab;
+}
+.en-figure text {
+  fill: #a7b5c2;
+}
+.en-figure path {
+  stroke: #7c8e9c;
+}
+.en-node {
+  --stage: var(--c-sources);
+  transform: translateX(calc((1 - var(--in)) * -26px));
+}
+.en-link {
+  stroke: #b6c1d9;
+  stroke-width: 1;
+  stroke-dasharray: 190;
+  stroke-dashoffset: calc(190px - clamp(0, calc((var(--stage, var(--c-model)) - var(--i, 0) * 0.14) * 3.2), 1) * 190px);
+}
+.en-block {
+  opacity: var(--c-model);
+  transform: scale(calc(0.94 + var(--c-model) * 0.06));
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.en-block-eval {
+  opacity: var(--c-evaluate);
+}
+.scene-figure .en-block rect {
+  fill: #9badb914;
+  stroke: #b6c1d977;
+}
+.en-block text {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  fill: #d5d6e0 !important;
+}
+.en-block-note {
+  font-family: var(--font-mono) !important;
+  font-size: 9px !important;
+  fill: #8d9eab !important;
+}
+.en-loop {
+  stroke: #b6c1d9;
+  stroke-dasharray: 4 4;
+  opacity: var(--c-evaluate);
+}
+.en-integrate {
+  --stage: var(--c-integrate);
+}
+.en-surface {
+  --stage: var(--c-integrate);
+  transform: translateX(calc((1 - var(--in)) * 20px));
+}
+.scene-figure .en-surface rect {
+  fill: #9badb914;
+  stroke: #9badb966;
+}
+.en-deploy {
+  opacity: var(--c-deploy);
+}
+.scene-figure rect.en-perimeter {
+  fill: none;
+  stroke: #b6c1d94d;
+  stroke-dasharray: 8 6;
+}
+.en-perimeter-label {
+  fill: #8d9eab;
+  font-size: 9px !important;
+  letter-spacing: 1.2px;
+}
+/* The engagement timeline and its CTA sit outside the moving layer. */
+.engineering-delivery-band {
+  padding-top: 0;
+  padding-bottom: 60px;
+}
+.engineering-delivery-band .engineering-delivery {
+  padding: 28px 0 0;
+  border-top: 1px solid #ffffff16;
+  flex-direction: row;
+  align-items: center;
+  gap: 18px 40px;
+  flex-wrap: wrap;
+}
+.engineering-delivery-band .engineering-delivery > small {
+  flex-basis: 100%;
+}
+.engineering-delivery-band .engineering-delivery > strong {
+  font-size: 56px;
+  letter-spacing: -3.5px;
+  margin-top: 0;
+}
+.engineering-delivery-band .engineering-delivery > strong > span {
+  display: inline;
+  font-size: 20px;
+  margin-left: 12px;
+}
+.engineering-delivery-band .engineering-delivery p {
+  margin: 0;
+  max-width: 300px;
+  font-size: 12px;
+}
+.engineering-delivery-band .engineering-delivery .n-button {
+  margin-left: auto;
+}
+
+/* ---------- 07 / customer evidence ---------- */
+.scene-evidence .scene-stage {
+  --c-contract: 1; --c-land: 1;
+}
+.scene-evidence .scene-stage,
+.scene-closing .scene-stage {
+  height: auto;
+  overflow: visible;
+}
+.customer-evidence-inner {
+  grid-template-columns: minmax(0, 1fr);
+  padding-block: 78px;
+}
+.scene-evidence {
+  border-top: 1px solid #ffffff18;
+  background: radial-gradient(ellipse at 0 60%, #a075b012, transparent 65%);
+}
+.evidence-window {
+  height: 3px;
+  margin: 22px 0 6px;
+  background: #ffffff10;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.evidence-window i {
+  display: block;
+  height: 100%;
+  width: calc(100% - var(--c-contract) * 96%);
+  background: linear-gradient(90deg, #c4a8e4, #eac0a3);
+  border-radius: 2px;
+}
+.customer-evidence-inner .customer-story-number > strong:last-of-type {
+  opacity: var(--c-land);
+  translate: 0 calc((1 - var(--c-land)) * 10px);
+}
+
+/* ---------- 08 / infrastructure and control ---------- */
+.scene-deployment .scene-stage {
+  --c-boundary: 1; --c-components: 1; --c-api: 1; --c-audit: 1; --c-settle: 1;
+}
+.dp-figure rect {
+  fill: #141821;
+  stroke: #9cadbb;
+}
+.dp-figure text {
+  fill: #a8b6c4;
+}
+.dp-figure path {
+  stroke: #8496a4;
+}
+.dp-boundary {
+  opacity: var(--c-boundary);
+}
+.scene-figure rect.dp-perimeter {
+  fill: #9cadbb08;
+  stroke: #b2b6c988;
+  stroke-dasharray: 1400;
+  stroke-dashoffset: calc(1400px - var(--c-boundary) * 1400px);
+}
+.dp-perimeter-label {
+  font-size: 10px !important;
+  letter-spacing: 1.4px;
+  fill: #cfd4e4 !important;
+}
+.dp-perimeter-note {
+  font-size: 9px !important;
+  fill: #8496a4 !important;
+}
+.dp-component {
+  --stage: var(--c-components);
+  transform: translateY(calc((1 - var(--in)) * 12px));
+}
+.scene-figure .dp-component rect {
+  fill: #9cadbb12;
+  stroke: #b2b6c966;
+}
+.dp-component-name {
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  fill: #e4e7f2 !important;
+}
+.dp-spine {
+  stroke: #b2b6c9;
+  stroke-dasharray: 3 4;
+  opacity: var(--c-components);
+}
+.dp-surface {
+  --stage: var(--c-api);
+  transform: translateX(calc((1 - var(--in)) * 18px));
+}
+.dp-wire {
+  stroke: #b2b6c9;
+  stroke-width: 1;
+  stroke-dasharray: 180;
+  stroke-dashoffset: calc(180px - clamp(0, calc((var(--c-api) - var(--i) * 0.18) * 3.2), 1) * 180px);
+}
+.scene-figure .dp-surface rect {
+  fill: #9cadbb14;
+  stroke: #9cadbb77;
+}
+.dp-api-note,
+.dp-sealed text {
+  font-size: 9px !important;
+  fill: #8496a4 !important;
+}
+.dp-api,
+.dp-sealed {
+  opacity: var(--c-api);
+}
+.dp-sealed-mark {
+  stroke: #f5b194;
+  stroke-width: 1.6;
+  stroke-dasharray: 5 5;
+}
+.dp-audit {
+  opacity: var(--c-audit);
+}
+.dp-event {
+  --stage: var(--c-audit);
+  transform: translateX(calc((1 - var(--in)) * 14px));
+}
+.dp-event-time {
+  fill: #cfd4e4 !important;
+}
+.trust-deployment-options button {
+  padding: 8px 13px;
+  border: 1px solid #9cadbb38;
+  border-radius: 5px;
+  font: inherit;
+  font-size: 10px;
+  color: #b2b6c9;
+  background: none;
+  cursor: pointer;
+}
+.trust-deployment-options button[aria-pressed="true"] {
+  border-color: #b2b6c9aa;
+  background: #9cadbb14;
+  color: #e4e7f2;
+}
+.trust-links-band {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding-top: 0;
+}
+.trust-links-band .trust-links,
+.trust-links-band .nvidia-partner {
+  margin-top: 0;
+}
+
+/* ---------- closing ---------- */
+.scene-closing {
+  border-top: 1px solid #ffffff18;
+  background: radial-gradient(ellipse at 50% 100%, #84619326, transparent 65%);
+  overflow: hidden;
+  isolation: isolate;
+}
+.scene-closing .scene-stage {
+  --c-reveal: 1;
+}
+.artha-contact-inner {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
+  padding-block: 86px 140px;
+  position: relative;
+}
+.artha-contact-inner h2 {
+  font-size: clamp(38px, 5.2vw, 78px);
+  margin: 20px 0 0;
+}
+.artha-contact-inner h2 em {
+  background: linear-gradient(100deg, #c4a8e4, #eac0a3);
+  background-clip: text;
+  color: transparent;
+}
+.artha-contact-inner > p {
+  max-width: 540px;
+  margin: 24px 0 28px;
+  font-size: 13px;
+}
+.artha-contact-inner .artha-contact-word {
+  /* The legacy rule centres with transform; doing it here too shifted it twice. */
+  transform: none;
+  translate: -50% calc((1 - var(--c-reveal)) * 24px);
+  opacity: var(--c-reveal);
+}
+
+/* ---------- motion preference control ---------- */
+.motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: inherit;
+  cursor: pointer;
+}
+.motion-toggle i {
+  width: 22px;
+  height: 11px;
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+  opacity: 0.55;
+  position: relative;
+}
+.motion-toggle i:after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  transition: translate 0.2s var(--ease-out);
+}
+.motion-toggle[aria-pressed="true"] i {
+  opacity: 1;
+}
+.motion-toggle[aria-pressed="true"] i:after {
+  translate: 9px 0;
+}
+
+/* ---------- narrow and short viewports ---------- */
+/* The stage stops pinning when it cannot sit comfortably below the navigation.
+   The runtime reads --scene-pinned when it measures, and runs the same story
+   while the section crosses the viewport instead. */
+@media (max-width: 900px), (max-height: 600px) {
+  .scroll-scene {
+    --scene-pinned: 0;
+    --scene-span: 0.72;
+  }
+  .scene-track {
+    height: auto;
+  }
+  .scene-stage {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+  .scene-art-panel {
+    transform: none;
+  }
+}
+/* Laptop heights: the pinned stage is around 700px, so the copy column gives
+   up air before anything is asked to scroll away. */
+@media (max-height: 880px) and (min-height: 601px) {
+  .scene-inner {
+    padding-block: 10px;
+  }
+  .scene-copy h2 {
+    font-size: clamp(26px, 2.3vw, 34px);
+    margin-top: 12px;
+  }
+  .scene-copy > p {
+    font-size: 12.5px;
+    line-height: 1.7;
+    margin-top: 12px;
+  }
+  .scene-steps {
+    margin-top: 16px;
+  }
+  .scene-step button,
+  .scene-steps-tight .scene-step button {
+    padding: 9px 0;
+    gap: 14px;
+  }
+  .scene-step-body strong,
+  .scene-steps-tight .scene-step-body strong {
+    font-size: 16px;
+  }
+  .scene-step-body em,
+  .scene-steps-tight .scene-step-body em {
+    font-size: 11px;
+    line-height: 1.6;
+    margin-top: 7px;
+  }
+  .scene-copy > .n-text-link {
+    margin-top: 12px;
+  }
+  .scene-art-top {
+    padding: 14px 22px;
+  }
+  .scene-art-body {
+    padding: 10px 14px;
+  }
+  .scene-art-foot {
+    padding: 10px 20px;
+  }
+  /* Inactive steps show their title; the active one carries the detail. */
+  .scene-step:not([data-active]) .scene-step-body small {
+    display: none;
+  }
+  .scene-hero .artha-hero {
+    padding: 26px 6% 64px;
+  }
+  .scene-hero .artha-hero h1 {
+    font-size: clamp(60px, 6.8vw, 96px);
+    margin: 16px 0;
+  }
+  .scene-hero .artha-hero h1 > span {
+    font-size: clamp(26px, 2.7vw, 38px);
+    margin-top: 14px;
+  }
+  .scene-hero .artha-hero-copy > p {
+    margin: 16px 0;
+  }
+  .scene-hero .artha-hero-domains {
+    margin-top: 26px;
+  }
+  .scene-hero .artha-hero-footer {
+    padding: 16px 0;
+  }
+}
+/* A short but wide window keeps the two columns; it simply stops pinning. */
+@media (max-width: 900px) {
+  .scene-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+    padding: 65px 6%;
+  }
+}
+/* Narrow viewports keep the illustration on screen and scroll the narrative
+   past it, so the drawing still changes while its step is being read. Nothing
+   moves sideways here: the only motion left is inside the drawing. */
+@media (max-width: 900px) {
+  .scene-inner:not(.scene-inner-stack) {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+  /* Heading, then the illustration, then the steps that narrate it — whatever
+     order the two columns were written in. */
+  .scene-inner:not(.scene-inner-stack) .scene-copy {
+    display: contents;
+  }
+  .scene-inner:not(.scene-inner-stack) .scene-copy > * {
+    order: 3;
+  }
+  .scene-inner:not(.scene-inner-stack) .scene-copy-head {
+    order: 1;
+  }
+  .scene-inner:not(.scene-inner-stack) .scene-art {
+    order: 2;
+    position: sticky;
+    top: calc(var(--scene-top) + 6px);
+    z-index: 1;
+  }
+  /* The copy passes behind the parked illustration, so it has to leave cleanly. */
+  .scene-inner:not(.scene-inner-stack) .scene-art:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 26px;
+    background: linear-gradient(var(--bg), transparent);
+  }
+  .scene-art-body {
+    padding: 12px 14px;
+  }
+  .scene-copy h2 {
+    margin-top: 14px;
+  }
+  .scene-steps {
+    margin-top: 20px;
+  }
+  .scene-evidence .scene-inner,
+  .scene-closing .scene-inner {
+    display: grid;
+  }
+}
+@media (max-width: 900px) {
+  .scene-step-body strong {
+    font-size: 18px;
+  }
+}
+
+/* ---------- reduced motion ---------- */
+/* No pinning, no scrubbing, no extra scroll distance: the finished illustration
+   and every narrative step, all at once. The attribute is written before first
+   paint from the stored choice or the system setting, so it is the only hook. */
+
+:root[data-motion="reduced"] .scroll-scene {
+  --scene-pinned: 0;
+}
+:root[data-motion="reduced"] .scene-track {
+  height: auto;
+}
+:root[data-motion="reduced"] .scene-stage {
+  position: static;
+  height: auto;
+  overflow: visible;
+}
+:root[data-motion="reduced"] .scene-layer {
+  translate: none;
+}
+:root[data-motion="reduced"] .scene-art-panel {
+  transform: none;
+}
+:root[data-motion="reduced"] .scene-step-mark {
+  display: none;
+}
+
+/* =========================================================
+   Interior page heroes
+   The sequence runs over the hero's own first stretch of scroll, so no interior
+   page grows a pinned stage or extra height. Each subject settles from a raised,
+   turned pose into the frontal read it should be left in.
+   ========================================================= */
+
+.scene-page-hero .scene-track {
+  height: auto;
+}
+.scene-page-hero .scene-stage {
+  --c-s1: 1; --c-s2: 1; --c-s3: 1; --c-s4: 1; --c-settle: 1;
+  position: static;
+  display: block;
+  height: auto;
+  overflow: visible;
+}
+.inner-hero-art {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- pinned interior heroes ---------- */
+/* The hero itself is the stage: crumb, copy, figure, preview and rail all hold
+   while the flow plays, so the compaction below keeps the whole of it inside a
+   laptop viewport. */
+.scene-page-hero-pinned .scene-track {
+  height: var(--travel);
+}
+.scene-page-hero-pinned .scene-stage {
+  position: sticky;
+  top: var(--scene-top);
+  height: calc(100svh - var(--scene-top));
+  display: flex;
+  align-items: safe center;
+  overflow: hidden;
+}
+.scene-page-hero-pinned .inner-hero {
+  width: 100%;
+  border-bottom: 0;
+}
+.scene-page-hero-pinned .inner-crumb {
+  padding-top: 12px;
+}
+.scene-page-hero-pinned .inner-hero-layout {
+  min-height: 0;
+  gap: 40px;
+}
+.scene-page-hero-pinned .inner-hero-copy {
+  padding-block: 20px;
+}
+.scene-page-hero-pinned .inner-hero-copy h1 {
+  font-size: clamp(40px, 4.6vw, 68px);
+  margin: 18px 0;
+}
+.scene-page-hero-pinned .inner-hero-art-flow .tailored-product {
+  max-width: 380px;
+}
+.scene-page-hero-pinned .hero-flow {
+  max-width: 500px;
+  margin: 0 auto -4px;
+}
+.scene-page-hero-pinned .inner-hero-art-flow .tailored-hero {
+  padding: 6px 0 12px;
+}
+.scene-page-hero-pinned .inner-hero-art-flow .tailored-footnote {
+  margin-top: 14px;
+}
+.scene-page-hero-pinned .hero-rail {
+  padding-top: 12px;
+}
+.scene-page-hero-pinned .inner-hero-bottom {
+  padding: 14px 0;
+}
+@media (max-height: 880px) {
+  .scene-page-hero-pinned .inner-hero-copy h1 {
+    font-size: clamp(36px, 4vw, 56px);
+    margin: 14px 0;
+  }
+  .scene-page-hero-pinned .inner-hero-copy > p {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .scene-page-hero-pinned .inner-actions {
+    margin-top: 20px;
+  }
+  .scene-page-hero-pinned .inner-hero-art-flow .tailored-product {
+    max-width: 330px;
+  }
+  .scene-page-hero-pinned .hero-flow {
+    max-width: 440px;
+  }
+  .scene-page-hero-pinned .inner-hero-art-flow .tailored-footnote {
+    display: none;
+  }
+  .scene-page-hero-pinned .hero-rail-label {
+    font-size: 10px;
+  }
+}
+/* The preview is drawn at one size and scaled: narrowing it only wraps its text
+   taller, whereas scaling reclaims real height for the pinned stage. */
+@media (max-height: 880px) {
+  .scene-page-hero-pinned .tailored-product .product-preview {
+    zoom: 0.8;
+  }
+}
+@media (max-height: 760px) {
+  .scene-page-hero-pinned .tailored-product .product-preview {
+    zoom: 0.7;
+  }
+  .scene-page-hero-pinned .hero-flow {
+    max-width: 400px;
+  }
+  .scene-page-hero-pinned .inner-hero-copy h1 {
+    font-size: clamp(32px, 3.6vw, 48px);
+  }
+  .scene-page-hero-pinned .inner-hero-bottom {
+    display: none;
+  }
+}
+@media (max-height: 680px) {
+  .scene-page-hero-pinned .tailored-product .product-preview {
+    zoom: 0.6;
+  }
+  .scene-page-hero-pinned .inner-crumb {
+    display: none;
+  }
+}
+/* Narrow or tiny viewports release the hero like every other scene. */
+@media (max-width: 900px), (max-height: 600px) {
+  .scene-page-hero-pinned .scene-track {
+    height: auto;
+  }
+  .scene-page-hero-pinned .scene-stage {
+    position: static;
+    display: block;
+    height: auto;
+    overflow: visible;
+  }
+}
+:root[data-motion="reduced"] .scene-page-hero-pinned .scene-track {
+  height: auto;
+}
+:root[data-motion="reduced"] .scene-page-hero-pinned .scene-stage {
+  position: static;
+  display: block;
+  height: auto;
+  overflow: visible;
+}
+
+/* ---------- the sequence rail ---------- */
+.hero-rail {
+  position: relative;
+  list-style: none;
+  display: flex;
+  gap: 18px;
+  margin: 0;
+  padding: 18px 0 0;
+}
+.hero-rail-line {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: #ffffff14;
+}
+.hero-rail-line b {
+  display: block;
+  height: 100%;
+  width: calc(var(--p) * 100%);
+  background: linear-gradient(90deg, #c4a8e4, #eac0a3);
+}
+.hero-rail-step {
+  --on: clamp(0, calc((var(--p) * var(--n) - var(--i)) * 2.4), 1);
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: calc(0.32 + var(--on) * 0.68);
+  translate: 0 calc((1 - var(--on)) * 6px);
+}
+.hero-rail-index {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #c2a9da;
+}
+.hero-rail-label {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #b1aaba;
+}
+
+/* ---------- the demonstrated flow ---------- */
+.hero-flow {
+  margin: 8px 0 -6px;
+}
+.hero-flow text {
+  font-size: 8.5px;
+  letter-spacing: 0.2px;
+}
+.scene-figure.hero-flow rect {
+  fill: #1a1526;
+  stroke: #b9a0e066;
+}
+.hf-input {
+  --in: clamp(0, calc((var(--c-s1) - var(--i) * 0.18) * 3.2), 1);
+  opacity: var(--in);
+  transform: translateX(calc((1 - var(--in)) * -36px));
+}
+.hf-input text {
+  fill: #d8c2f2;
+}
+.hf-link {
+  stroke: #c9a9e6;
+  stroke-width: 1;
+  stroke-dasharray: 120;
+}
+.hf-link-in {
+  stroke-dashoffset: calc(120px - clamp(0, calc((var(--c-s2) - var(--i) * 0.16) * 3), 1) * 120px);
+}
+.hf-link-out {
+  stroke: #f5b194;
+  stroke-dashoffset: calc(120px - clamp(0, calc((var(--c-s3) - var(--i) * 0.16) * 3), 1) * 120px);
+}
+.hf-process {
+  opacity: calc(0.35 + var(--c-s2) * 0.65);
+}
+.scene-figure.hero-flow .hf-process rect {
+  fill: #b98ad014;
+  stroke: #c9a9e6aa;
+}
+.hf-process-kind {
+  font-size: 8px !important;
+  letter-spacing: 1.4px;
+  fill: #a88cc0 !important;
+}
+.hf-process-label {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  fill: #ecdffb !important;
+}
+.hf-scan {
+  stroke: #f5b194;
+  stroke-width: 2;
+  transform: translateY(calc(var(--c-s2) * 58px));
+  opacity: calc(var(--c-s2) * (1 - var(--c-s2)) * 4);
+}
+.hf-output {
+  --in: clamp(0, calc((var(--c-s3) - var(--i) * 0.18) * 3.2), 1);
+  opacity: var(--in);
+  transform: translateX(calc((1 - var(--in)) * 26px));
+}
+.scene-figure.hero-flow .hf-output rect {
+  fill: #f5b19412;
+  stroke: #f5b19477;
+}
+.hf-output text {
+  fill: #f2dccd;
+}
+.hf-result {
+  opacity: var(--c-s4);
+}
+.hf-drop {
+  stroke: #c9a9e6;
+  stroke-width: 1.2;
+}
+.hf-result-label {
+  fill: #c2a9da;
+  letter-spacing: 1.1px;
+  font-size: 8.5px !important;
+}
+/* With a flow above it, the preview is the destination: smaller, and it fills
+   only once the results have been produced. */
+.inner-hero-art-flow .tailored-hero {
+  padding-top: 8px;
+}
+.inner-hero-art-flow .tailored-caption {
+  display: none;
+}
+.inner-hero-art-flow .tailored-product {
+  max-width: 430px;
+}
+
+/* ---------- product previews ---------- */
+.scene-page-hero .tailored-product {
+  transform:
+    rotateY(calc(-12deg + var(--c-settle) * 8deg)) rotateX(calc(4deg - var(--c-settle) * 2.5deg))
+    translateY(calc((1 - var(--c-settle)) * 24px));
+}
+.scene-page-hero .tailored-claims .tailored-product {
+  transform:
+    rotateY(calc(-8deg + var(--c-settle) * 6deg)) rotateZ(calc(2deg - var(--c-settle) * 2deg))
+    translateY(calc((1 - var(--c-settle)) * 24px));
+}
+.scene-page-hero .tailored-citizen .tailored-product {
+  transform:
+    rotateY(calc(10deg - var(--c-settle) * 7deg)) rotateX(calc(3deg - var(--c-settle) * 2deg))
+    translateY(calc((1 - var(--c-settle)) * 24px));
+}
+.scene-page-hero .tailored-deployment .tailored-product {
+  transform:
+    rotateY(calc(-15deg + var(--c-settle) * 10deg))
+    translateY(calc((1 - var(--c-settle)) * 24px));
+}
+/* The application fills in the order the page describes it; when a flow runs
+   above it, nothing lands in it before the process has produced results. */
+.scene-page-hero .tailored-product .product-preview > *:nth-child(3) {
+  opacity: var(--c-s2);
+}
+.scene-page-hero .tailored-product .product-preview > *:nth-child(4) {
+  opacity: var(--c-s3);
+}
+.scene-page-hero .tailored-product .product-preview > *:nth-child(n + 5) {
+  opacity: var(--c-s4);
+}
+.scene-page-hero .inner-hero-art-flow .tailored-product .product-preview > *:nth-child(3) {
+  opacity: var(--c-s3);
+}
+.scene-page-hero .inner-hero-art-flow .tailored-product .product-preview > *:nth-child(n + 4) {
+  opacity: var(--c-s4);
+}
+
+/* ---------- generic spatial scenes ---------- */
+.scene-page-hero .spatial-object {
+  opacity: calc(0.4 + var(--c-s1) * 0.6);
+}
+.scene-page-hero .spatial-doc {
+  --spread: calc(0.22 + var(--c-s2) * 0.78);
+  transform:
+    translateX(calc((var(--i) - 1) * 52px * var(--spread)))
+    translateZ(calc(var(--i) * 37px * var(--spread)))
+    translateY(calc((var(--i) - 1) * -16px * var(--spread)));
+}
+.scene-page-hero .spatial-doc:nth-child(2) {
+  opacity: var(--c-s2);
+}
+.scene-page-hero .spatial-doc:nth-child(3) {
+  opacity: var(--c-s3);
+}
+.scene-page-hero .spatial-node,
+.scene-page-hero .spatial-layer,
+.scene-page-hero .spatial-signal > div {
+  opacity: calc(0.25 + clamp(0, calc((var(--c-s2) - var(--i) * 0.07) * 3), 1) * 0.75);
+}
+.scene-page-hero .spatial-network-orbit,
+.scene-page-hero .spatial-ring {
+  opacity: var(--c-s3);
+}
+.scene-page-hero .spatial-sphere,
+.scene-page-hero .spatial-shield {
+  scale: calc(0.86 + var(--c-s1) * 0.14);
+}
+
+/* ---------- terminal, legal, press, public sector, responsible ---------- */
+.scene-page-hero .tailored-terminal,
+.scene-page-hero .legal-paper,
+.scene-page-hero .press-hero-art,
+.scene-page-hero .public-service-art,
+.scene-page-hero .responsible-hero-art {
+  translate: 0 calc((1 - var(--c-settle)) * 20px);
+}
+.scene-page-hero .tailored-terminal code b:nth-of-type(1),
+.scene-page-hero .press-hero-art > div:nth-of-type(1),
+.scene-page-hero .public-districts,
+.scene-page-hero .responsible-hero-art > div {
+  opacity: var(--c-s2);
+}
+.scene-page-hero .tailored-terminal code b:nth-of-type(2),
+.scene-page-hero .press-hero-art > div:nth-of-type(2),
+.scene-page-hero .public-service-flow,
+.scene-page-hero .responsible-hero-art h3 {
+  opacity: var(--c-s3);
+}
+.scene-page-hero .tailored-terminal code b:nth-of-type(3),
+.scene-page-hero .tailored-terminal code em,
+.scene-page-hero .press-hero-art > div:nth-of-type(3),
+.scene-page-hero .terminal-schematic,
+.scene-page-hero .responsible-hero-art p {
+  opacity: var(--c-s4);
+}
+.scene-page-hero .legal-paper-lines i:nth-child(1) {
+  opacity: var(--c-s1);
+}
+.scene-page-hero .legal-paper-lines i:nth-child(2) {
+  opacity: var(--c-s2);
+}
+.scene-page-hero .legal-paper-lines i:nth-child(3) {
+  opacity: var(--c-s3);
+}
+
+@media (max-width: 650px) {
+  .hero-rail {
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+  .hero-rail-step {
+    flex: 1 1 42%;
+  }
+}
+
+:root[data-motion="reduced"] .scene-page-hero .hero-rail-step {
+  opacity: 1;
+  translate: none;
+}
+
+/* =========================================================
+   The console without its stage
+   When the walkthrough cannot be pinned — a narrow viewport, or reduced motion —
+   the three planes stop being an exploded 3D view and become a vertical flow.
+   ========================================================= */
+@media (max-width: 900px) {
+  .lab-space {
+    position: static;
+    transform: none;
+    display: grid;
+    gap: 34px;
+  }
+  .scene-intelligence .scene-inner-stack {
+    height: auto;
+    grid-template-rows: none;
+    padding: 65px 6%;
+  }
+  .scene-intelligence .lab-console {
+    display: block;
+  }
+  .scene-intelligence .lab-world {
+    height: auto;
+    display: grid;
+    gap: 34px;
+    padding: 28px 18px 34px;
+    perspective: none;
+  }
+  .scene-intelligence .lab-ai-plane,
+  .scene-intelligence .lab-tools-plane,
+  .scene-intelligence .lab-app-plane {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: 520px;
+    margin: auto;
+    padding: 20px;
+    transform: none;
+    opacity: 1;
+    z-index: auto;
+  }
+  .scene-intelligence .lab-app-plane {
+    padding: 0;
+  }
+  .scene-intelligence .lab-app-plane .product-preview {
+    zoom: 1;
+  }
+  .scene-intelligence .lab-ai-plane:after,
+  .scene-intelligence .lab-tools-plane:after {
+    content: "↓";
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    color: #ab83c8;
+    font-size: 20px;
+  }
+/* Short but wide: the console keeps its exploded, side-by-side view and simply
+   stops pinning; the cluster scales to a fixed world instead. */
+@media (max-height: 600px) and (min-width: 901px) {
+  .scene-intelligence .scene-inner-stack {
+    height: auto;
+    grid-template-rows: none;
+    padding: 50px 7%;
+  }
+  .scene-intelligence .lab-console {
+    display: block;
+  }
+  .scene-intelligence .lab-world {
+    height: 440px;
+  }
+  .scene-intelligence {
+    --lab-scale: 0.9;
+  }
+}
+}
+:root[data-motion="reduced"] .lab-space {
+  position: static;
+  transform: none;
+  display: grid;
+  gap: 34px;
+}
+:root[data-motion="reduced"] .scene-intelligence .scene-inner-stack {
+  height: auto;
+  grid-template-rows: none;
+  padding: 65px 6%;
+}
+:root[data-motion="reduced"] .scene-intelligence .lab-console {
+  display: block;
+}
+:root[data-motion="reduced"] .scene-intelligence .lab-world {
+  height: auto;
+  display: grid;
+  gap: 34px;
+  padding: 28px 18px 34px;
+  perspective: none;
+}
+:root[data-motion="reduced"] .scene-intelligence .lab-ai-plane,
+:root[data-motion="reduced"] .scene-intelligence .lab-tools-plane,
+:root[data-motion="reduced"] .scene-intelligence .lab-app-plane {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  max-width: 520px;
+  margin: auto;
+  transform: none;
+  opacity: 1;
+  z-index: auto;
+}
+:root[data-motion="reduced"] .scene-intelligence .lab-app-plane .product-preview {
+  zoom: 1;
+}
+
+/* With motion reduced nothing is staged in: every layer is simply present. */
+
+:root[data-motion="reduced"] .scene-intelligence .lab-document-batch > span,
+:root[data-motion="reduced"] .scene-intelligence .lab-model-chip,
+:root[data-motion="reduced"] .scene-intelligence .lab-entities > span,
+:root[data-motion="reduced"] .scene-intelligence .lab-tool-nodes button,
+:root[data-motion="reduced"] .scene-intelligence .lab-api,
+:root[data-motion="reduced"] .scene-intelligence .lab-app-plane .product-preview > *,
+:root[data-motion="reduced"] .scene-intelligence .lab-result-status,
+:root[data-motion="reduced"] .hero-fragment {
+  opacity: 1;
+  translate: none;
+  scale: none;
+}
+:root[data-motion="reduced"] .scene-inner:not(.scene-inner-stack) .scene-art {
+  position: static;
+}
+:root[data-motion="reduced"] .scene-inner:not(.scene-inner-stack) .scene-art:after {
+  display: none;
+}
+:root[data-motion="reduced"] .scene-strip .customer-carousel {
+  opacity: 1;
+  translate: none;
+}
+
+/* ---------- interior process timelines ---------- */
+/* A shorter window than a full chapter: the card parks in the middle of the
+   band rather than taking over the viewport. */
+.scene-journey .scene-stage {
+  height: min(480px, 58svh);
+  align-items: center;
+}
+.scene-journey .scene-inner {
+  padding: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+.scene-journey .journey {
+  width: 100%;
+}
+.journey-progress {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 23px;
+  height: 1px;
+  background: transparent;
+}
+.journey-progress b {
+  display: block;
+  height: 100%;
+  width: calc(var(--p) * 100%);
+  background: linear-gradient(90deg, #c4a8e4, #eac0a3);
+}
+.journey-rail button[aria-current] > span:first-child {
+  color: #20182a;
+  background: #c3b0f5;
+  border-color: #c3b0f5;
+  box-shadow: 0 0 30px #b38cdd30;
+}
+.journey-rail button[aria-current] small {
+  color: #dcc9f2;
+}
+.journey-list {
+  list-style: none;
+  margin: 34px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 28px;
+}
+.journey-list h3 {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.7px;
+  margin: 12px 0 8px;
+}
+.journey-list p {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  max-width: 640px;
+  margin: 0;
+}
+@media (max-width: 900px), (max-height: 600px) {
+  .scene-journey .scene-inner,
+  .scene-journey .scene-stage {
+    padding: 0;
+  }
+  /* A step card is small enough to park below the navigation on a phone, so
+     this one keeps its pin: the rail has to stay with the step it is reporting. */
+  .scene-journey {
+    --scene-pinned: 1;
+  }
+  .scene-journey .scene-track {
+    height: var(--travel);
+  }
+  .scene-journey .scene-stage {
+    position: sticky;
+    top: calc(var(--scene-top) + 10px);
+    height: auto;
+    overflow: visible;
+  }
+  .journey-rail {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    justify-content: flex-start;
+    gap: 22px;
+  }
+}
+
+
+:root[data-motion="reduced"] .scene-journey {
+  --scene-pinned: 0;
+}
+:root[data-motion="reduced"] .scene-journey .scene-track {
+  height: auto;
+}
+:root[data-motion="reduced"] .scene-journey .scene-stage {
+  position: static;
+  height: auto;
+}
