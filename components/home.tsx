@@ -73,7 +73,7 @@ function Nav() {
   return (
     <header style={{
       position: "sticky", top: 0, zIndex: 50,
-      background: scrolled ? "color-mix(in oklab, var(--bg) 92%, transparent)" : "transparent",
+      background: scrolled ? "color-mix(in oklab, var(--bg) 92%, transparent)" : "var(--bg)",
       backdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none",
       WebkitBackdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none",
       borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",

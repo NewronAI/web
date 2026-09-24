@@ -964,16 +964,117 @@ header .shell { padding-right: clamp(16px, 2.6vw, 40px); }
   gap: 10px;
   height: var(--ribbon-h);
   padding-inline: clamp(16px, 2.6vw, 40px);
-  background: var(--brand-grad);
+  /* living gradient: brand indigo → violet → orange, drifting slowly */
+  background: linear-gradient(110deg,
+    var(--indigo-800) 0%, var(--indigo-600) 22%, #7c3aed 40%,
+    var(--orange-400) 55%, #7c3aed 70%, var(--indigo-600) 85%, var(--indigo-800) 100%);
+  background-size: 300% 100%;
+  animation: ribbon-flow 14s linear infinite;
   color: #fff;
   text-decoration: none;
   font-size: 12.5px;
   line-height: 1;
   white-space: nowrap;
   overflow: hidden;
+  position: relative;
+  isolation: isolate;
 }
-.ribbon strong { font-weight: 600; color: inherit; }
-.ribbon-mark { display: inline-flex; color: var(--orange-400); flex: none; }
+/* the shine: a bright diagonal sheen that sweeps across every few seconds */
+.ribbon::before {
+  content: ""; position: absolute; inset: -50% auto -50% 0;
+  width: 38%; z-index: -1; pointer-events: none;
+  background: linear-gradient(100deg,
+    transparent 0%, rgba(255,255,255,0) 30%,
+    rgba(255,255,255,0.28) 44%, rgba(255,246,230,0.75) 50%, rgba(255,255,255,0.28) 56%,
+    rgba(255,255,255,0) 70%, transparent 100%);
+  transform: translateX(-120%) skewX(-18deg);
+  filter: blur(1px);
+  animation: ribbon-sheen 4.8s cubic-bezier(.45,.05,.25,1) infinite;
+}
+/* soft glitter field + a top highlight so it reads as a polished foil */
+.ribbon::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,0.22), rgba(255,255,255,0) 45%, rgba(0,0,0,0.12)),
+    radial-gradient(1px 1px at 12% 30%, #fff, transparent 60%),
+    radial-gradient(1px 1px at 27% 70%, #fff, transparent 60%),
+    radial-gradient(1.5px 1.5px at 41% 25%, #fff, transparent 60%),
+    radial-gradient(1px 1px at 58% 75%, #fff, transparent 60%),
+    radial-gradient(1.5px 1.5px at 73% 35%, #fff, transparent 60%),
+    radial-gradient(1px 1px at 88% 65%, #fff, transparent 60%);
+  animation: ribbon-twinkle 3.2s ease-in-out infinite alternate;
+}
+.ribbon > * { position: relative; }
+.ribbon > .ribbon-sparkle { position: absolute; }
+.ribbon-mark {
+  display: inline-flex; color: #fcd34d; flex: none;
+  filter: drop-shadow(0 0 5px rgba(252,211,77,0.9));
+  animation: ribbon-glint 4.8s ease-in-out infinite;
+}
+/* gold "Winner" pill with a heartbeat glow */
+.ribbon-badge {
+  flex: none;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: #3b2300;
+  padding: 4px 9px 4px 10px; border-radius: var(--r-pill);
+  background: linear-gradient(110deg, #f59e0b 0%, #fde68a 35%, #fffbeb 50%, #fde68a 65%, #f59e0b 100%);
+  background-size: 250% 100%;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 0 12px rgba(252,211,77,0.7);
+  animation: ribbon-badge-shine 4.8s ease-in-out infinite, ribbon-badge-pulse 2.4s ease-in-out infinite;
+}
+/* the whole line of copy is gold-foil text; a white-hot glint runs left → right */
+.ribbon-line {
+  display: inline-flex; align-items: center; gap: 10px; min-width: 0;
+  background: linear-gradient(100deg,
+    #e4e0ff 0%, #e4e0ff 40%, #fbbf24 45%, #fde68a 48%, #ffffff 50%, #fde68a 52%, #fbbf24 55%, #e4e0ff 60%, #e4e0ff 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  animation: ribbon-text-glint 4.8s cubic-bezier(.45,.05,.25,1) infinite;
+  filter: drop-shadow(0 0 8px rgba(253,230,138,0.45));
+}
+.ribbon-line .ribbon-tag { border-right-color: rgba(255,255,255,0.35); }
+/* the key word stays solid gold so it pops even between glints */
+.ribbon-line strong {
+  font-weight: 700;
+  background: linear-gradient(100deg, #fbbf24, #fef3c7 50%, #fbbf24);
+  background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ribbon-strong 2.4s ease-in-out infinite alternate;
+}
+.ribbon-sparkle {
+  z-index: 0; color: #fff; pointer-events: none;
+  opacity: 0; transform: scale(0);
+  animation: ribbon-sparkle 3.4s ease-in-out infinite;
+}
+.ribbon-sparkle svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 0 3px #fff); }
+@keyframes ribbon-flow    { to { background-position: 300% 0; } }
+@keyframes ribbon-sheen   { 0% { transform: translateX(-120%) skewX(-18deg); } 55%, 100% { transform: translateX(380%) skewX(-18deg); } }
+@keyframes ribbon-twinkle { from { opacity: 0.35; } to { opacity: 1; } }
+@keyframes ribbon-glint   {
+  0%, 60%, 100% { transform: scale(1) rotate(0); filter: drop-shadow(0 0 4px rgba(253,186,116,0.9)); }
+  70% { transform: scale(1.25) rotate(-12deg); filter: drop-shadow(0 0 10px #fff) brightness(1.6); }
+  80% { transform: scale(1) rotate(0); }
+}
+@keyframes ribbon-text-glint { 0% { background-position: 100% 0; } 55%, 100% { background-position: 0% 0; } }
+@keyframes ribbon-badge-shine { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0% 0; } }
+@keyframes ribbon-badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 0 8px rgba(252,211,77,0.55); }
+  50%      { box-shadow: 0 0 0 1px rgba(255,255,255,0.7) inset, 0 0 18px rgba(252,211,77,1), 0 0 2px #fff; }
+}
+@keyframes ribbon-strong { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+@keyframes ribbon-sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0); }
+  15%      { opacity: 1; transform: scale(1.2) rotate(45deg); }
+  30%      { opacity: 0; transform: scale(0) rotate(90deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ribbon, .ribbon::before, .ribbon::after, .ribbon-mark,
+  .ribbon-badge, .ribbon-line, .ribbon-line strong, .ribbon-sparkle { animation: none; }
+  .ribbon-sparkle { display: none; }
+  .ribbon::before { display: none; }
+}
 .ribbon-tag {
   font-size: var(--fs-label); font-weight: 600;
   letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
@@ -996,7 +1097,7 @@ header .shell { padding-right: clamp(16px, 2.6vw, 40px); }
   .ribbon-text-full { display: none; }
   .ribbon-text-short { display: inline; }
 }
-@media (max-width: 380px) {
+@media (max-width: 440px) {
   .ribbon-cta { display: none; }
 }
 
