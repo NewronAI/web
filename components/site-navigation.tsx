@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { BOOKING_URL } from "@/lib/route";
+import { MotionToggle } from "./motion/motion-preferences";
 
 const groups = [
   { label: "Solutions", links: [["Lending intelligence", "/lending-intelligence"], ["Insurance AI", "/insurance-ai"], ["Governance AI", "/governance-ai"], ["Custom AI engineering", "/custom-ai-engineering"]] },
@@ -48,5 +49,5 @@ export function SiteNav() {
   </>;
 }
 export function SiteFooter() {
-  return <footer className="n-footer"><div className="n-footer-top"><div><SiteLogo /><p>Intelligence for a world<br />of possibility.</p><span className="site-location">BENGALURU, INDIA</span></div>{groups.map(g => <div key={g.label}><h3>{g.label}</h3>{g.links.map(([label,href]) => <a key={href} href={href}>{label}</a>)}</div>)}</div><div className="n-footer-bottom"><span>© {COPYRIGHT_YEAR} Newron. All rights reserved.</span><div>{legal.map(([label,href]) => <a href={href} key={href}>{label}</a>)}</div><span>BUILT WITH PURPOSE</span></div></footer>;
+  return <footer className="n-footer"><div className="n-footer-top"><div><SiteLogo /><p>Intelligence for a world<br />of possibility.</p><span className="site-location">BENGALURU, INDIA</span></div>{groups.map(g => <div key={g.label}><h3>{g.label}</h3>{g.links.map(([label,href]) => <a key={href} href={href}>{label}</a>)}</div>)}</div><div className="n-footer-bottom"><span>© {COPYRIGHT_YEAR} Newron. All rights reserved.</span><div>{legal.map(([label,href]) => <a href={href} key={href}>{label}</a>)}</div><MotionToggle /></div></footer>;
 }

@@ -1,8 +1,10 @@
 "use client";
-import React, { useId, useState, type ReactNode, type CSSProperties } from "react";
+import React, { useId, useMemo, useState, type ReactNode, type CSSProperties } from "react";
 import { route, BOOKING_URL } from "@/lib/route";
 import { SiteNav, SiteFooter } from "./site-navigation";
 import TailoredHero, { type HeroArt } from "./tailored-hero";
+import PageHeroScene, { HeroSequenceRail, HeroFlowFigure, usePageFlow } from "./scenes/page-hero-scene";
+import ScrollScene from "./motion/scroll-scene";
 
 export const Nav = SiteNav;
 export const Footer = SiteFooter;
@@ -12,13 +14,18 @@ type CTA = { label: string; href: string; primary?: boolean };
 export function PageHero({ crumb, eyebrow, title, lead, ctas, art = "layers", caption = "PURPOSE-BUILT INTELLIGENCE", tool }: {
   crumb?: string; eyebrow?: string; title?: ReactNode; lead?: ReactNode; ctas?: CTA[]; art?: HeroArt; caption?: string; tool?: string;
 }) {
-  return <section className="inner-hero">
-    <div className="inner-hero-grid" aria-hidden="true" />
-    <div className="shell"><div className="inner-crumb"><a href="/">HOME</a><span>/</span>{crumb}</div>
-      <div className="inner-hero-layout"><div className="inner-hero-copy"><div className="n-eyebrow"><i />{eyebrow}</div><h1>{title}</h1>{lead && <p>{lead}</p>}{ctas && <div className="inner-actions">{ctas.map((c,i) => <a key={i} href={route(c.href)} className={c.primary ? "n-button" : "n-text-link"}>{c.label}<Arrow /></a>)}</div>}</div><TailoredHero art={art} label={eyebrow?.toUpperCase() || "NEWRON"} caption={caption} tool={tool} /></div>
-      <div className="inner-hero-bottom"><span>INTELLIGENCE. WITH PURPOSE.</span><a href="#page-content">EXPLORE THIS CHAPTER <span aria-hidden="true">↓</span></a></div>
-    </div>
-  </section>;
+  const flow = usePageFlow();
+  return <PageHeroScene>
+    <section className="inner-hero">
+      <div className="inner-hero-grid" aria-hidden="true" />
+      <div className="shell"><div className="inner-crumb"><a href="/">HOME</a><span>/</span>{crumb}</div>
+        <div className="inner-hero-layout"><div className="inner-hero-copy"><div className="n-eyebrow"><i />{eyebrow}</div><h1>{title}</h1>{lead && <p>{lead}</p>}{ctas && <div className="inner-actions">{ctas.map((c,i) => <a key={i} href={route(c.href)} className={c.primary ? "n-button" : "n-text-link"}>{c.label}<Arrow /></a>)}</div>}</div>
+          <div className={flow ? "inner-hero-art inner-hero-art-flow" : "inner-hero-art"}><HeroFlowFigure /><TailoredHero art={art} label={eyebrow?.toUpperCase() || "NEWRON"} caption={caption} tool={tool} /><HeroSequenceRail /></div>
+        </div>
+        <div className="inner-hero-bottom"><span>INTELLIGENCE. WITH PURPOSE.</span><a href="#page-content">EXPLORE THIS CHAPTER <span aria-hidden="true">↓</span></a></div>
+      </div>
+    </section>
+  </PageHeroScene>;
 }
 export function Band({ id, inverse, tight, bg, children, style }: { id?: string; inverse?: boolean; tight?: boolean; bg?: string; children?: ReactNode; style?: CSSProperties }) {
   return <section id={id} className={`inner-band ${tight ? "inner-band-tight" : ""} ${inverse || bg ? "inner-band-alt" : ""}`} style={style}><div className="shell">{children}</div></section>;
@@ -58,13 +65,26 @@ export function SplitRows({ items, top=48 }: { items: [string,string][]; top?: n
 export function Quote({ text, who, sub }: { text: ReactNode; who: ReactNode; sub?: string }) {
   return <figure className="inner-quote"><span aria-hidden="true">“</span><blockquote>{text}</blockquote><figcaption><strong>{who}</strong>{sub && <span>{sub}</span>}</figcaption></figure>;
 }
+/* The process is walked rather than clicked: scrolling advances the step and a
+   step press moves the page to it. Nothing is switched, so these are not tabs. */
 export function Timeline({ items }: { items: [string,string,string][] }) {
-  const [active,setActive]=useState(0);
-  const id=useId();
+  const beats = useMemo(() => items.map(([tag, label, desc], i) => ({
+    at: items.length > 1 ? (i / (items.length - 1)) * 0.86 : 0, title: tag, summary: label, copy: desc,
+  })), [items]);
   if (!items.length) return null;
-  return <div className="journey"><div className="journey-rail" role="tablist" aria-label="Explore each step">{items.map(([tag,label],i) => <button key={i} id={`${id}-step-${i}`} role="tab" aria-selected={active===i} aria-controls={`${id}-detail`} tabIndex={active===i ? 0 : -1} onClick={() => setActive(i)} onKeyDown={e => {
-    let next=i; if(e.key==="ArrowRight") next=(i+1)%items.length; else if(e.key==="ArrowLeft") next=(i+items.length-1)%items.length; else if(e.key==="Home") next=0; else if(e.key==="End") next=items.length-1; else return; e.preventDefault(); setActive(next); document.getElementById(`${id}-step-${next}`)?.focus();
-  }}><span>{String(i+1).padStart(2,"0")}</span><small>{tag}</small><span className="sr-only">{label}</span></button>)}</div><div role="tabpanel" className="journey-detail" id={`${id}-detail`} aria-labelledby={`${id}-step-${active}`} tabIndex={0}><span aria-hidden="true">0{active+1}</span><div><span className="n-eyebrow">{items[active][0]}</span><h3>{items[active][1]}</h3><p>{items[active][2]}</p></div><button aria-label="Next step" onClick={() => setActive((active+1)%items.length)}>→</button></div></div>;
+  return <ScrollScene className="scene-journey" travel={`${104 + items.length * 16}svh`} beats={beats}>
+    {({ step, goToBeat, reduced }) => <div className="journey">
+      <div className="journey-rail" aria-label="Steps in this process">
+        <i className="journey-progress" aria-hidden="true"><b /></i>
+        {items.map(([tag, label], i) => <button key={i} type="button" onClick={() => goToBeat(i)} aria-current={step === i ? "step" : undefined}>
+          <span>{String(i+1).padStart(2,"0")}</span><small>{tag}</small><span className="sr-only">{label}</span>
+        </button>)}
+      </div>
+      {reduced
+        ? <ol className="journey-list">{items.map(([tag, label, desc], i) => <li key={i}><span className="n-eyebrow">{tag}</span><h3>{label}</h3><p>{desc}</p></li>)}</ol>
+        : <div className="journey-detail"><span aria-hidden="true">{String(step+1).padStart(2,"0")}</span><div><span className="n-eyebrow">{items[step][0]}</span><h3>{items[step][1]}</h3><p>{items[step][2]}</p></div></div>}
+    </div>}
+  </ScrollScene>;
 }
 export function FAQ({ items }: { items: [string,string][] }) {
   return <div className="inner-faq">{items.map(([q,a],i) => <details key={i}><summary><span className="faq-index">{String(i+1).padStart(2,"0")}</span><span>{q}</span><span className="faq-plus" aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div>;

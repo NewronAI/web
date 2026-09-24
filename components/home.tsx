@@ -1,44 +1,41 @@
 "use client";
-import { useState } from "react";
 import { SiteNav, SiteFooter } from "./site-navigation";
-import ArthaField from "./artha-field";
 import CustomerCarousel from "./customer-carousel";
-import IntelligenceLab from "./intelligence-lab";
-import { ClaimsPreview, CitizenPreview, DeploymentPreview } from "./product-previews";
-import { BOOKING_URL } from "@/lib/route";
+import ScrollScene from "./motion/scroll-scene";
+import ArthaHeroScene from "./scenes/artha-hero-scene";
+import DocumentUnderstandingScene from "./scenes/document-understanding-scene";
+import IntelligenceSystemScene from "./scenes/intelligence-system-scene";
+import LendingScene from "./scenes/lending-scene";
+import ClaimsScene from "./scenes/claims-scene";
+import CitizenServiceScene from "./scenes/citizen-service-scene";
+import EngineeringScene from "./scenes/engineering-scene";
+import EvidenceScene from "./scenes/evidence-scene";
+import DeploymentScene from "./scenes/deployment-scene";
+import ClosingScene from "./scenes/closing-scene";
 
-const Arrow=()=> <span aria-hidden="true">↗</span>;
-const modelSteps=[
-  {title:"Classification",summary:"A filename isn’t a document type.",copy:"Split merged PDFs and identify the documents inside scans, phone photos and mixed batches.",meta:"5 FILES → 6 DOCUMENTS",rows:[["combined_scan.pdf", "Bank statement · p. 01–06"],["combined_scan.pdf", "ITR + computation · p. 07–10"],["camera_capture.jpg", "PAN card · p. 11"],["+ 3 files", "Aadhaar · Sale deed · GST"]]},
-  {title:"Extraction",summary:"The fields that actually matter.",copy:"Read balances, identifiers, periods and property details from real documents, without a template for every format.",meta:"STRUCTURED FIELDS · SOURCE CONTEXT",rows:[["Document", "Bank statement"],["Period", "Apr–Jun 2026"],["Average balance", "₹ 8,41,905"],["Net inflow", "₹ 31,20,448"]]},
-  {title:"Party mapping",summary:"Every document. The right owner.",copy:"Connect the applicant, co-applicant, entity and collateral. Keep identities distinct while building one connected file.",meta:"4 PARTIES RESOLVED",rows:[["R. Iyer / Applicant", "PAN + bank statement"],["S. Iyer / Co-applicant", "Aadhaar"],["Iyer Traders / Entity", "ITR + GST returns"],["Collateral / Property", "Sale deed"]]},
-];
-function ModelUnderstanding(){
-  const [step,setStep]=useState(0);
-  return <section id="artha" className="model-understanding chapter-shell"><div className="model-understanding-copy"><div className="n-eyebrow">01 / MEET ARTHALM</div><h2>Paperwork is messy.<br /><em>Understanding isn’t.</em></h2><p>Newron’s vision-language models, built for the documents Indian banks and NBFCs actually process.</p><div className="model-step-list" role="tablist" aria-label="ArthaLM capabilities" aria-orientation="vertical">{modelSteps.map((s,i)=><button id={`model-tab-${i}`} key={s.title} role="tab" aria-selected={step===i} aria-controls="model-example" tabIndex={step===i?0:-1} onClick={()=>setStep(i)} onKeyDown={e=>{let n=i;if(e.key==="ArrowDown")n=(i+1)%modelSteps.length;else if(e.key==="ArrowUp")n=(i+modelSteps.length-1)%modelSteps.length;else if(e.key==="Home")n=0;else if(e.key==="End")n=modelSteps.length-1;else return;e.preventDefault();setStep(n);document.getElementById(`model-tab-${n}`)?.focus();}}><span>0{i+1}</span><div><strong>{s.title}</strong><small>{s.summary}</small></div><Arrow/></button>)}</div></div><div className="model-evidence" role="tabpanel" id="model-example" aria-labelledby={`model-tab-${step}`}><div className="model-evidence-top"><span>ArthaLM</span><small>DOCUMENT INTELLIGENCE</small></div><div className={`model-evidence-body model-view-${step}`} key={step}><span className="n-eyebrow">{modelSteps[step].meta}</span><div className="model-data-rows">{modelSteps[step].rows.map(([key,value],i)=><div key={key+value}><span className="model-data-n">0{i+1}</span><div><small>{key}</small><strong>{value}</strong></div><span className="model-data-check">✓</span></div>)}</div><p>{modelSteps[step].copy}</p></div><div className="model-evidence-foot"><span>ILLUSTRATIVE BATCH / 30 PAGES</span><span>अर्थ · MEANING, PURPOSE</span></div></div><div className="model-benchmarks"><div><strong>Up to 3×</strong><span>faster processing</span></div><div><strong>≈ 1/8</strong><span>the inference cost</span></div><div><strong>Frontier-comparable</strong><span>on our document tasks</span></div><div><strong>Yours to run</strong><span>licensable & self-hostable</span></div><p>Performance figures from Newron’s own document evaluations against frontier models on the same document set. Results vary by task, workload and deployment.</p></div></section>;
-}
-function LendingOutcomes(){
-  return <section id="lending" className="lending-outcomes chapter-shell"><div><div className="n-eyebrow">03 / LENDING INTELLIGENCE</div><h2>The credit officer’s<br /><em>second brain.</em></h2><p>Six connected modules for origination, verification and decision support. Configured to your policy, your formats and your tier structure.</p><a className="n-text-link" href="/lending-intelligence">Explore the lending suite <Arrow/></a></div><div className="lending-impact"><div><strong>66<span>%</span></strong><p>reduction in turnaround time</p></div><div><strong>200<span>%</span></strong><p>productivity uplift</p></div><div><strong>230k<span>+</span></strong><p>hours saved</p></div><small>Reported across Newron lending deployments.</small></div><div className="lending-coverage"><details><summary><span>Commercial lending</span><span>6 products +</span></summary><p>Loan against property · Overdraft · Gold loan · Equipment finance · Revenue-based finance · Line of credit</p></details><details><summary><span>Consumer lending</span><span>6 products +</span></summary><p>Home loan · Auto loan · Loan against securities · Personal loan · Education loan · Credit card</p></details></div></section>;
-}
-function IndustryChapters(){
-  return <div id="solutions">
-    <section id="insurance" className="insurance-chapter chapter-shell"><div className="insurance-visual"><div className="insurance-orbit" aria-hidden="true"/><ClaimsPreview/><span className="industry-visual-label">A CLAIM, WITH THE EVIDENCE CONNECTED.</span></div><div className="industry-copy"><div className="n-eyebrow">04 / INSURANCE AI</div><h2>Less back-and-forth.<br /><em>More moving forward.</em></h2><p>Check eligibility, assemble TPA-ready packets and identify denial risk before submission. Built for health and motor claims.</p><ol className="claim-journey"><li><span>01</span><div><strong>Check eligibility</strong><small>Policy limits. Missing documents. Evidence.</small></div></li><li><span>02</span><div><strong>Assemble the claim</strong><small>Forms and supporting artefacts, together.</small></div></li><li><span>03</span><div><strong>Resolve the gaps</strong><small>Denial reasons surfaced for remediation.</small></div></li></ol><a className="n-text-link" href="/insurance-ai">Explore insurance AI <Arrow/></a></div></section>
-    <section id="governance" className="governance-chapter chapter-shell"><div className="industry-copy"><div className="n-eyebrow">05 / GOVERNANCE AI</div><h2>Technology should<br /><em>speak your language.</em></h2><p>Built with the Government of Karnataka. Kannada handwriting recognition, regional voice and policy discovery bring citizen services closer to the people who need them.</p><div className="governance-capabilities"><span>Kannada OCR</span><span>Regional TTS & ASR</span><span>Grievance triage</span><span>Cited policy answers</span></div><a className="n-text-link" href="/governance-ai">Explore citizen-service AI <Arrow/></a><small className="governance-note">Kannada is in production. Additional languages require dedicated data and evaluation.</small></div><div className="governance-visual"><span className="governance-script" aria-hidden="true" lang="kn">ಅರ್ಥ</span><CitizenPreview/></div></section>
+/* Eleven chapters, told in order. Each scene owns its own scroll distance and
+   its own illustration; the strip and the closing sections stay in normal flow
+   so the page is not one pinned stage after another. */
+export default function Home() {
+  return <div className="immersive artha-home">
+    <SiteNav />
+    <main id="main">
+      <ArthaHeroScene />
+      <ScrollScene as="div" className="scene-strip" travel="auto" mode="cross" span={0.5} cues={{ enter: [0, 0.7] }}>
+        {() => <CustomerCarousel />}
+      </ScrollScene>
+      <DocumentUnderstandingScene />
+      <IntelligenceSystemScene />
+      <LendingScene />
+      <div id="solutions">
+        <ClaimsScene />
+        <CitizenServiceScene />
+      </div>
+      <EngineeringScene />
+      <EvidenceScene />
+      <DeploymentScene />
+      <ClosingScene />
+    </main>
+    <SiteFooter />
   </div>;
-}
-function EngineeringChapter(){
-  return <section id="services" className="engineering-chapter chapter-shell"><div className="engineering-heading"><div><div className="n-eyebrow">06 / CUSTOM AI ENGINEERING</div><h2>Beyond the product.<br /><em>Built around you.</em></h2></div><p>Embedded engineers. Custom models. A working system in your environment.</p></div><div className="engineering-blueprint"><div className="engineering-code"><span>YOUR REQUIREMENTS</span><code>data → model → evaluation → deployment</code><div><b>01</b><strong>Custom foundational models</strong><p>Domain pretraining and fine-tuning, evaluated on your tasks.</p></div><div><b>02</b><strong>AI engineering</strong><p>Data pipelines, evaluation harnesses and production inference.</p></div><div><b>03</b><strong>Business automation</strong><p>Document workflows, operations tooling and customer copilots.</p></div></div><div className="engineering-delivery"><small>FROM SCOPE TO PRODUCTION</small><strong>8–12<span>weeks</span></strong><p>A typical engagement timeline, scoped to your data and integration needs.</p><a className="n-button" href="/custom-ai-engineering">Build with Newron <Arrow/></a></div></div></section>;
-}
-function CustomerEvidence(){
-  return <section id="customers" className="customer-evidence chapter-shell"><div className="n-eyebrow">07 / REAL WORK. REAL IMPACT.</div><div className="customer-story"><div className="customer-story-number"><span>ADITYA BIRLA CAPITAL</span><strong>3 weeks</strong><i>↓</i><strong>40 minutes</strong><small>From manual review to CAM quality control</small></div><figure><blockquote>“Newron’s CAM engine replaced three weeks of human review with a 40-minute QC step. Our credit officers stopped reformatting Excel and went back to actually underwriting.”</blockquote><figcaption><strong>Arun Velayutham</strong><span>Head of SME, Aditya Birla Capital · Q3 2025</span></figcaption></figure></div></section>;
-}
-function TrustChapter(){
-  return <section id="company" className="trust-chapter chapter-shell"><div><div className="n-eyebrow">08 / YOUR INFRASTRUCTURE. YOUR CONTROL.</div><h2>Intelligence moves in.<br /><em>Your data stays put.</em></h2><p>Run in your VPC, on-premise or air-gapped. Connect through REST APIs and webhooks. Your team keeps the keys; your reviewers get the audit trail.</p><div className="trust-deployment-options"><span>VPC</span><span>On-premise</span><span>Air-gapped</span></div><div className="trust-links"><a href="/security">Security <Arrow/></a><a href="/responsible-ai">Responsible AI <Arrow/></a></div><div className="nvidia-partner"><span aria-hidden="true">▣</span><div><strong>NVIDIA</strong><small>INCEPTION PARTNER · SINCE 2023</small></div></div></div><DeploymentPreview/></section>;
-}
-export default function Home(){
-  return <div className="immersive artha-home"><SiteNav/><main id="main">
-    <section className="artha-hero" aria-labelledby="hero-heading"><div className="artha-hero-grid" aria-hidden="true"/><div className="artha-hero-copy"><div className="n-eyebrow"><i/>APPLIED AI FOR REGULATED INDUSTRIES</div><h1 id="hero-heading">ArthaLM<span>Find the meaning.<br/>Move the world.</span></h1><p>Our document intelligence models turn messy paperwork into structured understanding. Newron turns that understanding into tools your teams can use.</p><div className="n-actions"><a className="n-button" href="#demo">See intelligence in action <Arrow/></a><a className="n-text-link" href={BOOKING_URL}>Evaluate ArthaLM <Arrow/></a></div><div className="artha-hero-domains">BANKS & NBFCS <span>/</span> INSURANCE <span>/</span> PUBLIC SECTOR</div></div><div className="artha-hero-art"><ArthaField/><div className="artha-art-name"><span>अर्थ</span><small>FINANCE / MEANING / PURPOSE </small></div><span className="artha-signal signal-classify">01 / CLASSIFY</span><span className="artha-signal signal-extract">02 / EXTRACT</span><span className="artha-signal signal-map">03 / MAP</span></div><div className="artha-hero-footer"><span>BUILT BY NEWRON. BUILT FOR YOUR WORLD.</span><a href="#artha">ENTER THE INTELLIGENCE <span>↓</span></a></div></section>
-    <CustomerCarousel/><ModelUnderstanding/><IntelligenceLab/><LendingOutcomes/><IndustryChapters/><EngineeringChapter/><CustomerEvidence/><TrustChapter/>
-    <section id="contact" className="artha-contact chapter-shell"><div className="n-eyebrow">YOUR DOCUMENTS. YOUR NEXT CHAPTER.</div><h2>Let’s see what<br /><em>ArthaLM can unlock.</em></h2><p>Start with a sandboxed evaluation on a slice of your historical data. Get the evidence your team needs before a production rollout.</p><a className="n-button" href={BOOKING_URL}>Evaluate on your documents <Arrow/></a><span className="artha-contact-word" aria-hidden="true">ArthaLM</span></section>
-  </main><SiteFooter/></div>;
 }
