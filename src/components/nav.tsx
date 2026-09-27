@@ -2,15 +2,14 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { CONTACT_HREF } from "@/lib/site";
 
 const links = [
-  { href: "#agents", label: "Agents" },
-  { href: "#how", label: "How it works" },
-  { href: "#integrations", label: "Integrations" },
+  { href: "#lending", label: "Lending" },
+  { href: "#artha", label: "Artha" },
+  { href: "#insurance", label: "Insurance" },
   { href: "#governance", label: "Governance" },
+  { href: "#services", label: "Services" },
   { href: "#customers", label: "Customers" },
-  { href: "#builders", label: "Builders" },
 ];
 
 export function Logo({ className = "" }: { className?: string }) {
@@ -21,9 +20,7 @@ export function Logo({ className = "" }: { className?: string }) {
         <path d="M9 19V9l10 10V9" fill="none" stroke="currentColor" strokeWidth="1.8" />
         <circle cx="19" cy="9" r="2" fill="var(--accent)" />
       </svg>
-      <span className="text-[1.05rem] font-semibold tracking-tight">
-        Newron <span className="font-normal text-fg-2">AgentHub</span>
-      </span>
+      <span className="text-[1.1rem] font-semibold tracking-tight">Newron</span>
     </span>
   );
 }
@@ -46,7 +43,7 @@ export function Nav() {
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-5 md:px-8">
-        <Link href="/" aria-label="Newron AgentHub home">
+        <Link href="/" aria-label="Newron home">
           <Logo />
         </Link>
 
@@ -62,16 +59,10 @@ export function Nav() {
 
         <div className="flex items-center gap-2">
           <a
-            href={CONTACT_HREF}
-            className="hidden rounded-lg px-3.5 py-2 text-sm text-fg-2 transition-colors hover:text-fg sm:inline-block"
-          >
-            Book a demo
-          </a>
-          <a
-            href="#agents"
+            href="#contact"
             className="hidden rounded-lg bg-accent px-3.5 py-2 text-sm font-medium text-bg transition hover:brightness-110 sm:inline-block"
           >
-            Browse agents
+            Talk to us
           </a>
           <button
             type="button"
@@ -90,7 +81,7 @@ export function Nav() {
 
       {open && (
         <ul className="border-t border-line px-5 pb-6 pt-2 lg:hidden">
-          {[...links, { href: CONTACT_HREF, label: "Book a demo" }].map((l) => (
+          {[...links, { href: "#contact", label: "Talk to us" }].map((l) => (
             <li key={l.href}>
               <a
                 href={l.href}

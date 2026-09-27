@@ -20,9 +20,9 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Newron AgentHub — AI agents for regulated teams",
+  title: "Newron — The Enterprise AI Partner for Regulated Industries",
   description:
-    "Discover, approve and deploy production AI agents for credit, claims and citizen services. Scoped permissions, human approval and audit trails, running in your VPC, on-prem or air-gapped.",
+    "The applied-AI partner to India's banks, NBFCs, insurers and Government. Lending Intelligence, Artha models, Insurance AI and Governance AI — self-hostable on your VPC, on-prem or fully air-gapped.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

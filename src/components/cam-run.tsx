@@ -2,25 +2,25 @@
 
 import { useEffect, useState } from "react";
 
-// Illustrative sample run only — names, IDs and figures are demo data.
+// Illustrative sample file only — names, IDs and figures are demo data.
 const steps = [
-  { t: "Pull application file", src: "DMS · LN-20417", out: "14 documents", ms: 900 },
-  { t: "Parse 12 months of statements", src: "Artha · 41 pages", out: "52s", ms: 1300 },
-  { t: "Check bureau & obligations", src: "Bureau", out: "EMI ₹1.85 L / mo", ms: 1000 },
-  { t: "Apply credit policy v3.2", src: "Policy library", out: "1 exception", warn: true, ms: 1000 },
-  { t: "Draft CAM", src: "18 sections", out: "Draft ready", ms: 1200 },
-  { t: "Credit officer approval", src: "Human in the loop", out: "Approved · R. Iyer", ms: 2600, human: true },
-  { t: "Write back to LOS", src: "write:cam-draft", out: "Synced", ms: 900 },
+  { t: "Classify the loan file", src: "Artha · 5 files", out: "6 documents", ms: 900 },
+  { t: "Parse 12 months of statements", src: "Statement Analyser", out: "52s", ms: 1300 },
+  { t: "Resolve parties", src: "Artha · party mapping", out: "4 parties", ms: 1000 },
+  { t: "Check against credit policy", src: "Policy book v3.2", out: "1 deviation", warn: true, ms: 1000 },
+  { t: "Compose CAM in your format", src: "CAM Generation", out: "18 sections", ms: 1200 },
+  { t: "Credit officer QC", src: "Human review", out: "Approved · R. Iyer", ms: 2600, human: true },
+  { t: "Push to LOS", src: "REST + webhook", out: "Synced", ms: 900 },
 ];
 
 const HOLD_MS = 3200;
 
-export function AgentRun() {
+export function CamRun() {
   // Number of completed steps; steps[done] is the one running.
   const [done, setDone] = useState(0);
 
   useEffect(() => {
-    // Reduced motion: jump straight to the completed run and stay there.
+    // Reduced motion: jump straight to the completed file and stay there.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       const id = setTimeout(() => setDone(steps.length), 0);
       return () => clearTimeout(id);
@@ -33,21 +33,21 @@ export function AgentRun() {
   const finished = done >= steps.length;
   const awaiting = !finished && steps[done].human;
   const status = finished
-    ? { label: "Completed", cls: "text-ok" }
+    ? { label: "CAM ready", cls: "text-ok" }
     : awaiting
-      ? { label: "Awaiting approval", cls: "text-warn" }
-      : { label: "Running", cls: "text-accent" };
+      ? { label: "Awaiting QC", cls: "text-warn" }
+      : { label: "Processing", cls: "text-accent" };
 
   return (
     <div className="overflow-hidden rounded-2xl border border-line-2 bg-s1">
       {/* Window bar */}
       <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-3">
         <div className="flex min-w-0 items-center gap-2 font-mono text-xs text-muted">
-          <span className="text-fg-2">AgentHub</span>
+          <span className="text-fg-2">Lending Intelligence</span>
           <span>/</span>
-          <span className="hidden sm:inline">Credit Ops</span>
+          <span className="hidden sm:inline">CAM Generation</span>
           <span className="hidden sm:inline">/</span>
-          <span className="truncate text-fg">CAM Writer · run 4812</span>
+          <span className="truncate text-fg">LN-20417 · Loan against property</span>
         </div>
         <span className={`flex shrink-0 items-center gap-2 font-mono text-xs ${status.cls}`}>
           <span className={`h-1.5 w-1.5 rounded-full bg-current ${finished ? "" : "live-dot"}`} />
@@ -56,34 +56,22 @@ export function AgentRun() {
       </div>
 
       <div className="grid md:grid-cols-[13.5rem_minmax(0,1fr)]">
-        {/* Agent passport */}
+        {/* File summary */}
         <aside className="hidden border-r border-line p-4 md:block">
-          <div className="flex items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-lg border border-line-2 bg-s3 font-mono text-xs text-fg">
-              CW
-            </span>
-            <div>
-              <p className="text-sm font-medium text-fg">CAM Writer</p>
-              <p className="text-xs text-muted">by Newron · first-party</p>
-            </div>
-          </div>
+          <p className="label text-muted">Applicant</p>
+          <p className="mt-1.5 text-sm font-medium text-fg">Shree Steels Pvt. Ltd.</p>
+          <p className="text-xs text-muted">MSME · Pune</p>
           <dl className="mt-5 space-y-4 text-xs">
             <div>
-              <dt className="label text-muted">Scopes</dt>
-              <dd className="mt-2 flex flex-wrap gap-1.5">
-                {["read:application", "read:bureau", "write:cam-draft"].map((s) => (
-                  <span key={s} className="rounded border border-line-2 px-1.5 py-0.5 font-mono text-[11px] text-fg-2">
-                    {s}
-                  </span>
-                ))}
-              </dd>
+              <dt className="label text-muted">Ask</dt>
+              <dd className="mt-1.5 text-fg-2">₹2.4 Cr · 84 months</dd>
             </div>
             <div>
-              <dt className="label text-muted">Approval</dt>
-              <dd className="mt-1.5 text-fg-2">Credit officer sign-off</dd>
+              <dt className="label text-muted">Avg. monthly balance</dt>
+              <dd className="mt-1.5 text-fg-2">₹18.4 L</dd>
             </div>
             <div>
-              <dt className="label text-muted">Runs in</dt>
+              <dt className="label text-muted">Deployed in</dt>
               <dd className="mt-1.5 text-fg-2">Your VPC · ap-south-1</dd>
             </div>
             <div>
@@ -130,12 +118,11 @@ export function AgentRun() {
         </ol>
       </div>
 
-      {/* Audit footer */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line px-4 py-2.5 font-mono text-[11px] text-muted">
         <span>
-          {Math.min(done, steps.length)}/{steps.length} steps · every action logged
+          {Math.min(done, steps.length)}/{steps.length} steps · deviation flags + policy citations
         </span>
-        <span>audit · evt_a91f…c07</span>
+        <span>3 weeks of review → 40-min QC</span>
       </div>
     </div>
   );

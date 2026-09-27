@@ -1,15 +1,16 @@
 import { Nav } from "@/components/nav";
 import {
-  Builders,
-  CatalogSection,
+  Artha,
   CTA,
+  Deployment,
   Footer,
   Governance,
   Hero,
-  Integrations,
-  Lifecycle,
-  Outcomes,
+  Insurance,
+  Lending,
+  Numbers,
   Proof,
+  Services,
 } from "@/components/sections";
 
 export default function Home() {
@@ -19,12 +20,13 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <Proof />
-        <CatalogSection />
-        <Lifecycle />
-        <Integrations />
+        <Numbers />
+        <Lending />
+        <Artha />
+        <Insurance />
         <Governance />
-        <Outcomes />
-        <Builders />
+        <Services />
+        <Deployment />
         <CTA />
       </main>
       <Footer />

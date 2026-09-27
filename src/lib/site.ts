@@ -1,126 +1,62 @@
-// TODO: replace with the real scheduling link used by the "Book a demo" CTA.
+// TODO: replace with the real scheduling link used by the "Talk to us" CTA.
 export const CONTACT_HREF = "mailto:hello@newron.ai";
 
-// Customers only. Programs and partners are listed separately so the proof row isn't inflated.
-export const customers = [
-  "Aditya Birla Capital",
-  "Fedbank",
-  "HDFC Credila",
-  "Niwas",
-  "Fusion",
-  "Government of Karnataka",
-];
+// Content mirrors newron.ai. Customers are kept separate from partners so the proof row isn't inflated.
+export const customers = ["Aditya Birla Capital", "HDFC Credila", "Fedbank", "Niwas", "Fusion", "Government of Karnataka"];
 
-export const partners = ["NVIDIA Inception", "Google", "IISc"];
+export const partners = ["NVIDIA", "Google", "IISc", "Walmart", "Sattva", "Artpark"];
 
-export type Team = "Credit" | "Insurance" | "Public sector" | "Documents" | "Compliance";
-
-export type Agent = {
-  id: string;
-  mark: string;
-  name: string;
-  job: string;
-  team: Team;
-  tools: string[];
-  scopes: string[];
-  approval: string;
-  proof?: string;
+export const lending = {
+  commercial: ["Loan against property", "Overdraft", "Gold loan", "Equipment finance", "Revenue-based finance", "Line of credit"],
+  consumer: ["Home loan", "Auto loan", "Loan against securities", "Personal loan", "Education loan", "Credit card"],
+  modules: [
+    { t: "CAM Generation", d: "Compose Credit Approval Memos in your bank's format, with deviation flags and policy citations." },
+    { t: "Statement Analyser", d: "12 months of bank statements parsed in under 60 seconds." },
+    { t: "Applicant 360°", d: "Every signal, every covenant, every prior decision — on one screen." },
+    { t: "Video PD", d: "Hold the personal discussion over video — face and address verified." },
+    { t: "Policy Chat", d: "Underwriters ask, Newron answers — sourced from your policy book." },
+  ],
 };
 
-// First-party agents, built from Newron's shipping products.
-export const agents: Agent[] = [
-  {
-    id: "cam-writer",
-    mark: "CW",
-    name: "CAM Writer",
-    job: "Drafts the credit appraisal memo from the full application file.",
-    team: "Credit",
-    tools: ["LOS", "DMS", "Bureau"],
-    scopes: ["read:application", "write:cam-draft"],
-    approval: "Credit officer sign-off",
-    proof: "3 weeks of review → 40-min QC",
-  },
-  {
-    id: "statement-analyst",
-    mark: "SA",
-    name: "Statement Analyst",
-    job: "Parses bank statements into balances, obligations and red flags.",
-    team: "Credit",
-    tools: ["DMS", "Account Aggregator"],
-    scopes: ["read:statements"],
-    approval: "Auto, flags to reviewer",
-    proof: "12 months parsed in < 60s",
-  },
-  {
-    id: "applicant-360",
-    mark: "A3",
-    name: "Applicant 360°",
-    job: "Resolves every party, entity and relationship on a loan file.",
-    team: "Credit",
-    tools: ["LOS", "Bureau", "MCA"],
-    scopes: ["read:application", "read:bureau"],
-    approval: "Auto, flags to reviewer",
-  },
-  {
-    id: "claims-filer",
-    mark: "CF",
-    name: "Claims Filer",
-    job: "Checks eligibility and files the claim with every document attached.",
-    team: "Insurance",
-    tools: ["Policy admin", "DMS", "Email"],
-    scopes: ["read:policy", "write:claim"],
-    approval: "Claims handler sign-off",
-    proof: "Claims filed in < 90s",
-  },
-  {
-    id: "denial-risk",
-    mark: "DR",
-    name: "Denial Risk Scorer",
-    job: "Predicts denial risk before submission and names the missing evidence.",
-    team: "Insurance",
-    tools: ["Policy admin", "Claims history"],
-    scopes: ["read:claim"],
-    approval: "Advisory only",
-  },
-  {
-    id: "grievance-triage",
-    mark: "GT",
-    name: "Grievance Triage",
-    job: "Routes citizen grievances in Kannada and English to the right department.",
-    team: "Public sector",
-    tools: ["Grievance portal", "SMS"],
-    scopes: ["read:grievance", "write:routing"],
-    approval: "Officer review on escalation",
-  },
-  {
-    id: "artha-extract",
-    mark: "AX",
-    name: "Artha Extract",
-    job: "Classifies and extracts fields, tables and stamps from Indian financial documents.",
-    team: "Documents",
-    tools: ["DMS", "SFTP", "API"],
-    scopes: ["read:documents"],
-    approval: "Auto",
-    proof: "≈⅛ the cost of frontier models",
-  },
-  {
-    id: "policy-chat",
-    mark: "PC",
-    name: "Policy Chat",
-    job: "Answers credit and ops questions with citations to your current policy.",
-    team: "Compliance",
-    tools: ["Policy library", "Slack", "Teams"],
-    scopes: ["read:policy-library"],
-    approval: "Cited answers only",
-  },
+export const artha = {
+  claims: [
+    { n: "3×", l: "Up to 3× faster" },
+    { n: "≈⅛", l: "the cost of frontier models" },
+    { n: "Frontier", l: "comparable accuracy" },
+    { n: "Self-host", l: "Licensable and self-hostable" },
+  ],
+  capabilities: [
+    {
+      t: "Classification",
+      v: "5 files → 6 docs",
+      d: "Filenames are noise, and one PDF can hold four documents. Artha names each one and splits the batch.",
+    },
+    {
+      t: "Extraction",
+      v: "0-shot · no templates",
+      d: "Reads the fields credit actually underwrites on — issuer, period, balances, identifiers — from scans, phone photographs and regional-language forms.",
+    },
+    {
+      t: "Party mapping",
+      v: "4 parties resolved",
+      d: "Resolves every party in the file and attaches each document to the right one.",
+    },
+  ],
+};
+
+export const insurance = [
+  { t: "Eligibility check", d: "Policy retrieval + document understanding flags missing artefacts and ineligible claims at intake." },
+  { t: "Automated claim filing", d: "Forms, supporting documents and metadata assembled into TPA-ready packets in under 90 seconds." },
+  { t: "Denial risk & remediation", d: "Predicts likely denial reasons against historical adjudication data; suggests remediation pre-emptively." },
 ];
 
-// TODO: confirm the connector list with the platform team before launch.
-export const integrations = [
-  { group: "Lending", items: ["Loan origination (LOS)", "Loan management", "Credit bureaus", "Account Aggregator"] },
-  { group: "Insurance", items: ["Policy administration", "Claims systems", "TPA portals"] },
-  { group: "Documents", items: ["DMS", "SharePoint", "SFTP drops", "Email inboxes"] },
-  { group: "Work", items: ["Slack", "Microsoft Teams", "Ticketing", "SMS"] },
-];
+export const governance = ["Custom OCR · Kannada", "Regional TTS", "Grievance triage", "Policy discovery"];
 
-export const protocols = ["REST API", "MCP", "Webhooks", "SFTP"];
+export const services = [
+  {
+    t: "Custom AI engineering",
+    d: "We sit inside your team to design data pipelines, eval harnesses and the inference path. Scope to production in 8–12 weeks.",
+  },
+  { t: "Custom foundational models", d: "When off-the-shelf models won't do the job, we build them." },
+  { t: "Business automation with AI", d: "Document workflows, ops tooling, and customer-facing copilots." },
+];
