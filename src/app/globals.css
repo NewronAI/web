@@ -99,9 +99,9 @@
   --color-warn: var(--warn);
   --color-cta: var(--cta);
   --color-cta-fg: var(--cta-fg);
-  --font-sans: var(--font-figtree);
-  --font-serif: var(--font-garamond);
-  --font-mono: var(--font-plex-mono);
+  --font-sans: var(--font-geist), Arial, sans-serif;
+  --font-serif: var(--font-geist), Arial, sans-serif;
+  --font-mono: var(--font-geist-mono);
 }
 
 html {
@@ -111,7 +111,12 @@ html {
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-figtree), ui-sans-serif, sans-serif;
+  font-family: var(--font-geist), Arial, sans-serif;
+}
+
+h1,
+h2 {
+  font-weight: 500;
 }
 
 ::selection {
@@ -120,7 +125,7 @@ body {
 }
 
 .label {
-  font-family: var(--font-figtree), ui-sans-serif, sans-serif;
+  font-family: var(--font-geist), Arial, sans-serif;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.1em;

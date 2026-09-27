@@ -54,7 +54,7 @@ function ProductHead({
         <p className="label text-muted">
           <span className="text-accent">{n}</span> · {name}
         </p>
-        <h2 className="mt-5 font-serif text-5xl leading-[1] tracking-[-0.02em] md:text-[4.25rem]">{tagline}</h2>
+        <h2 className="mt-5 font-serif text-5xl leading-[1] tracking-[-0.045em] md:text-[4.25rem]">{tagline}</h2>
       </div>
       <p className="max-w-sm text-fg-2 md:text-right">{body}</p>
     </Reveal>
@@ -89,7 +89,7 @@ export function Hero() {
             Applied AI · Bengaluru, India
           </p>
           <h1
-            className="rise mt-6 font-serif text-[3.2rem] leading-[0.95] tracking-[-0.02em] sm:text-7xl lg:text-[6.25rem]"
+            className="rise mt-6 font-serif text-[3.2rem] leading-[0.95] tracking-[-0.045em] sm:text-7xl lg:text-[6.25rem]"
             style={{ animationDelay: "120ms" }}
           >
             The enterprise AI partner of choice for <Accent>regulated industries.</Accent>
@@ -138,7 +138,7 @@ export function Proof() {
         <div className="mt-16 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
           {numbers.map((o, i) => (
             <Reveal key={o.n} delay={i * 80} className="bg-s1 p-7">
-              <p className="font-serif text-5xl tracking-[-0.02em] md:text-6xl">{o.n}</p>
+              <p className="font-serif text-5xl tracking-[-0.045em] md:text-6xl">{o.n}</p>
               <p className="mt-3 max-w-[15rem] text-sm text-fg-2">{o.l}</p>
             </Reveal>
           ))}
@@ -284,7 +284,7 @@ export function Artha() {
         <Reveal className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
           {artha.claims.map((c) => (
             <div key={c.l} className="bg-bg p-6">
-              <p className="font-serif text-4xl tracking-[-0.02em] md:text-5xl">{c.n}</p>
+              <p className="font-serif text-4xl tracking-[-0.045em] md:text-5xl">{c.n}</p>
               <p className="mt-2 text-sm text-fg-2">{c.l}</p>
             </div>
           ))}
@@ -564,7 +564,7 @@ export function Deployment() {
       <div className="mx-auto grid max-w-7xl gap-12 px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52 lg:grid-cols-[1fr_1.2fr]">
         <Reveal>
           <p className="label text-accent">Deployment & security</p>
-          <h2 className="mt-5 font-serif text-5xl leading-[1] tracking-[-0.02em] md:text-[4.25rem]">
+          <h2 className="mt-5 font-serif text-5xl leading-[1] tracking-[-0.045em] md:text-[4.25rem]">
             Your data stays <Accent>where regulators expect it.</Accent>
           </h2>
           <p className="mt-6 max-w-md leading-relaxed text-fg-2">
@@ -606,7 +606,7 @@ export function CTA() {
       <Reveal className="mx-auto max-w-7xl px-5 pt-24 pb-40 text-center md:px-8 md:pt-32 md:pb-56">
         <div>
           <p className="label text-accent">One-week evaluation</p>
-          <h2 className="mx-auto mt-5 max-w-4xl font-serif text-5xl leading-[0.98] tracking-[-0.02em] md:text-7xl">
+          <h2 className="mx-auto mt-5 max-w-4xl font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
             A working pilot <Accent>on your own data,</Accent> inside a week.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-fg-2">
