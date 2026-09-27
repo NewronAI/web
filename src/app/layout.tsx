@@ -9,9 +9,11 @@ const geist = Geist({
   style: ["normal", "italic"],
 });
 
+// Only used for small data labels; not preloaded so it doesn't compete with the headline fonts.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: false,
 });
 
 // Italic accent words in headlines — a high-contrast serif italic that pairs with Geist's neutral roman.

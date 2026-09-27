@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const links = [
   { href: "#lending", label: "Lending" },
@@ -34,10 +34,25 @@ export function Announcement() {
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 px-4 pt-4 md:px-8">
-      <nav className="mx-auto max-w-5xl rounded-2xl border border-line-2 bg-bg/90 backdrop-blur-md">
+      <nav
+        aria-label="Main"
+        className={`mx-auto max-w-5xl rounded-2xl border bg-bg/85 backdrop-blur-xl backdrop-saturate-150 transition-[box-shadow,border-color] duration-300 ${
+          scrolled || open
+            ? "border-line-2 shadow-[0_12px_32px_-16px_rgb(0_0_0/0.28)]"
+            : "border-line-2 shadow-none"
+        }`}
+      >
         <div className="flex h-16 items-center justify-between gap-6 pl-5 pr-2.5">
           <Link href="/" aria-label="Newron home">
             <Logo />

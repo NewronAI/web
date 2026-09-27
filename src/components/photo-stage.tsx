@@ -15,7 +15,7 @@ export function PhotoStage({
   children: React.ReactNode;
 }) {
   return (
-    <div className={`relative overflow-hidden rounded-[2rem] p-3 sm:p-8 md:p-12 ${className}`}>
+    <div className={`stage relative isolate overflow-hidden rounded-[2rem] p-3 sm:p-8 md:p-12 ${className}`}>
       <Image
         src={src}
         alt=""
@@ -23,10 +23,12 @@ export function PhotoStage({
         priority={priority}
         placeholder="blur"
         sizes="(min-width: 1280px) 1152px, 100vw"
-        className="object-cover"
+        className="stage-photo -z-10 object-cover"
         style={{ objectPosition: position }}
       />
-      <div className="relative shadow-[0_30px_80px_-30px_rgb(0_0_0/0.5)] [border-radius:1.5rem]">{children}</div>
+      <div className="stage-ui relative rounded-[1.5rem] shadow-[0_40px_90px_-35px_rgb(0_0_0/0.55),0_12px_24px_-12px_rgb(0_0_0/0.25)]">
+        {children}
+      </div>
     </div>
   );
 }

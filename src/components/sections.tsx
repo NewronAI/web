@@ -3,7 +3,9 @@ import { Logo } from "@/components/nav";
 import { CamRun } from "@/components/cam-run";
 import { LendingShowcase } from "@/components/lending-showcase";
 import { PhotoStage } from "@/components/photo-stage";
-import { Check, Dot, Frame } from "@/components/ui";
+import Image from "next/image";
+import { Check, Dot, Eighth, Frame } from "@/components/ui";
+import ctaPhoto from "@/assets/photos/og-image.jpg";
 import arthaPhoto from "@/assets/photos/artha.jpg";
 import governancePhoto from "@/assets/photos/governance.jpg";
 import heroBackdrop from "@/assets/photos/hero-backdrop.jpg";
@@ -14,7 +16,7 @@ function PrimaryCTA({ href = "#contact", children }: { href?: string; children: 
   return (
     <a
       href={href}
-      className="inline-flex items-center rounded-xl border border-fg bg-cta px-5 py-3 text-sm font-medium text-cta-fg transition hover:brightness-95"
+      className="inline-flex items-center rounded-xl border border-fg bg-cta px-5 py-3 text-sm font-medium text-cta-fg shadow-[inset_0_1px_0_rgb(255_255_255/0.7),0_1px_2px_rgb(0_0_0/0.08)] transition duration-200 hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.7),0_8px_20px_-8px_rgb(0_0_0/0.35)] active:translate-y-0"
     >
       {children}
     </a>
@@ -25,7 +27,7 @@ function SecondaryCTA({ href, children }: { href: string; children: React.ReactN
   return (
     <a
       href={href}
-      className="inline-flex items-center rounded-xl border border-line-2 px-5 py-3 text-sm text-fg transition-colors hover:bg-s2"
+      className="inline-flex items-center rounded-xl border border-line-2 px-5 py-3 text-sm text-fg transition duration-200 hover:-translate-y-px hover:border-fg/40 hover:bg-s2 active:translate-y-0"
     >
       {children}
     </a>
@@ -74,10 +76,8 @@ export function Hero() {
           <p className="rise label text-muted" style={{ animationDelay: "40ms" }}>
             Applied AI · Bengaluru, India
           </p>
-          <h1
-            className="rise mt-6 font-serif text-[3.2rem] leading-[0.95] tracking-[-0.045em] sm:text-7xl lg:text-[6.25rem]"
-            style={{ animationDelay: "120ms" }}
-          >
+          {/* No entrance animation on the headline: it's the LCP element and should paint at first render. */}
+          <h1 className="mt-6 font-serif text-[3.2rem] leading-[0.95] tracking-[-0.045em] sm:text-7xl lg:text-[6.25rem]">
             The enterprise AI partner of choice for <Accent>regulated industries.</Accent>
           </h1>
           <p className="rise mx-auto mt-7 max-w-xl text-lg text-fg-2" style={{ animationDelay: "220ms" }}>
@@ -101,10 +101,10 @@ export function Hero() {
 
 /* ───────────────────────── Proof ───────────────────────── */
 
-const numbers = [
+const numbers: { n: React.ReactNode; l: string }[] = [
   { n: "< 60s", l: "12 months of statements" },
   { n: "< 90s", l: "to a TPA-ready claim" },
-  { n: "≈⅛", l: "the cost of frontier models" },
+  { n: <Eighth />, l: "the cost of frontier models" },
   { n: "8–12 wks", l: "scope to production" },
 ];
 
@@ -120,12 +120,17 @@ export function Proof() {
             </li>
           ))}
         </ul>
-        <p className="mt-5 text-center text-sm text-muted">With {partners.join(" · ")}</p>
+        <p className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-muted">
+          <span className="label text-fg-2">Partners &amp; ecosystem</span>
+          {partners.map((p) => (
+            <span key={p}>{p}</span>
+          ))}
+        </p>
 
-        <div className="mt-16 grid grid-cols-2 gap-y-10 lg:grid-cols-4">
+        <div className="mt-16 grid grid-cols-2 gap-y-10 border-y border-line py-12 lg:grid-cols-4 lg:divide-x lg:divide-line">
           {numbers.map((o, i) => (
-            <Reveal key={o.n} delay={i * 80} className="text-center">
-              <p className="font-serif text-5xl tracking-[-0.04em] md:text-6xl">{o.n}</p>
+            <Reveal key={o.l} delay={i * 80} className="text-center">
+              <p className="flex justify-center font-serif text-5xl tabular-nums tracking-[-0.04em] md:text-6xl">{o.n}</p>
               <p className="mt-2 text-sm text-muted">{o.l}</p>
             </Reveal>
           ))}
@@ -186,8 +191,10 @@ export function Artha() {
 
         <Reveal className="mx-auto mt-12 flex max-w-3xl flex-wrap justify-center gap-x-14 gap-y-6">
           {artha.claims.map((c) => (
-            <div key={c.n} className="text-center">
-              <p className="font-serif text-5xl tracking-[-0.04em]">{c.n}</p>
+            <div key={c.l} className="text-center">
+              <p className="flex justify-center font-serif text-5xl tabular-nums tracking-[-0.04em]">
+                {c.n === "eighth" ? <Eighth /> : c.n}
+              </p>
               <p className="mt-1 text-sm text-muted">{c.l}</p>
             </div>
           ))}
@@ -403,8 +410,11 @@ export function Services() {
         <div className="mt-14 grid gap-4 md:grid-cols-3">
           {services.map((s, i) => (
             <Reveal key={s.t} delay={i * 100}>
-              <div className="flex h-full flex-col justify-between gap-12 rounded-3xl border border-line bg-s1 p-7">
-                <span className="font-mono text-xs text-accent">0{i + 1}</span>
+              <div className="group flex h-full flex-col justify-between gap-12 rounded-3xl border border-line bg-s1 p-7 transition-colors duration-300 hover:border-line-2 hover:bg-s2">
+                <span className="flex items-center justify-between">
+                  <ServiceIcon kind={s.icon} />
+                  <span className="font-mono text-xs text-muted">0{i + 1}</span>
+                </span>
                 <div>
                   <h3 className="font-serif text-3xl leading-tight tracking-[-0.03em]">{s.t}</h3>
                   <p className="mt-2 text-sm text-fg-2">{s.s}</p>
@@ -415,6 +425,24 @@ export function Services() {
         </div>
       </div>
     </section>
+  );
+}
+
+function ServiceIcon({ kind }: { kind: (typeof services)[number]["icon"] }) {
+  return (
+    <span className="grid h-12 w-12 place-items-center rounded-2xl border border-line-2 bg-s2 text-accent transition-transform duration-300 group-hover:-rotate-6">
+      <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        {kind === "code" && <path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16" />}
+        {kind === "layers" && <path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5" />}
+        {kind === "flow" && (
+          <>
+            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+            <path d="M10 6.5h4a3.5 3.5 0 0 1 3.5 3.5v4" />
+          </>
+        )}
+      </svg>
+    </span>
   );
 }
 
@@ -492,16 +520,45 @@ export function Deployment() {
 export function CTA() {
   return (
     <section id="contact" className="sheet sheet-teal scroll-mt-24">
-      <Reveal className="mx-auto max-w-7xl px-5 pt-24 pb-40 text-center md:px-8 md:pt-32 md:pb-56">
-        <p className="label text-accent">One-week evaluation</p>
-        <h2 className="mx-auto mt-5 max-w-4xl font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
-          A working pilot <Accent>on your own data,</Accent> inside a week.
-        </h2>
-        <p className="mx-auto mt-6 max-w-lg text-lg text-fg-2">Production rollout over the following quarter.</p>
-        <div className="mt-9 flex justify-center">
-          <PrimaryCTA href={CONTACT_HREF}>Talk to us</PrimaryCTA>
-        </div>
-      </Reveal>
+      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 pt-24 pb-40 md:px-8 md:pt-32 md:pb-56 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+        <Reveal>
+          <p className="label text-accent">One-week evaluation</p>
+          <h2 className="mt-5 text-balance font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
+            A working pilot <Accent>on your own data,</Accent> inside a week.
+          </h2>
+          <ol className="mt-10 space-y-4">
+            {[
+              ["Day 1", "Sandbox on a slice of your historical data"],
+              ["Day 5", "A working pilot on a real workflow"],
+              ["Next quarter", "Production rollout, inside your perimeter"],
+            ].map(([k, v]) => (
+              <li key={k} className="flex items-baseline gap-4 border-b border-line pb-4">
+                <span className="w-28 shrink-0 font-mono text-xs text-accent">{k}</span>
+                <span className="text-fg-2">{v}</span>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <PrimaryCTA href={CONTACT_HREF}>Talk to us</PrimaryCTA>
+            <a href={CONTACT_HREF} className="text-sm text-fg-2 underline decoration-line-2 underline-offset-4 hover:text-fg">
+              hello@newron.ai
+            </a>
+          </div>
+        </Reveal>
+        <Reveal delay={120}>
+          <div className="stage relative isolate aspect-[4/3] overflow-hidden rounded-[2rem]">
+            <Image
+              src={ctaPhoto}
+              alt=""
+              fill
+              placeholder="blur"
+              sizes="(min-width: 1024px) 560px, 100vw"
+              className="stage-photo -z-10 object-cover"
+              style={{ objectPosition: "75% 50%" }}
+            />
+          </div>
+        </Reveal>
+      </div>
     </section>
   );
 }
@@ -509,26 +566,35 @@ export function CTA() {
 /* ───────────────────────── Footer ───────────────────────── */
 
 export function Footer() {
+  // Only links that resolve. Add About, Careers, Privacy etc. here once those pages exist.
   const cols = [
     {
       h: "Solutions",
       l: [
-        ["Lending intelligence", "#lending"],
+        ["Lending Intelligence", "#lending"],
+        ["Artha Models", "#artha"],
         ["Insurance AI", "#insurance"],
         ["Governance AI", "#governance"],
-        ["Custom AI engineering", "#services"],
+        ["Custom AI Services", "#services"],
       ],
     },
-    { h: "Industries", l: [["Banks"], ["NBFCs"], ["Insurance"], ["Public sector"]] },
-    { h: "Company", l: [["About"], ["Careers"], ["Press"], ["Open source"]] },
-    { h: "Legal", l: [["Privacy"], ["Terms"], ["Security", "#security"], ["Responsible AI"]] },
+    {
+      h: "Company",
+      l: [
+        ["Customers", "#customers"],
+        ["Deployment & security", "#security"],
+        ["One-week evaluation", "#contact"],
+      ],
+    },
   ];
   return (
     <footer className="sheet sheet-dark">
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:px-8 lg:grid-cols-[1.6fr_repeat(4,1fr)]">
+      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:px-8 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr]">
         <div>
           <Logo />
-          <p className="mt-5 max-w-xs text-sm text-fg-2">Production AI for regulated industries. Bengaluru, India.</p>
+          <p className="mt-5 max-w-xs text-sm text-fg-2">
+            Newron AI Technologies Pvt. Ltd. builds production AI for regulated industries.
+          </p>
         </div>
         {cols.map((c) => (
           <div key={c.h}>
@@ -536,19 +602,21 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5 text-sm">
               {c.l.map(([label, href]) => (
                 <li key={label}>
-                  {href ? (
-                    <a href={href} className="text-fg-2 transition-colors hover:text-fg">
-                      {label}
-                    </a>
-                  ) : (
-                    // TODO: link once these pages exist.
-                    <span className="text-fg-2">{label}</span>
-                  )}
+                  <a href={href} className="text-fg-2 transition-colors hover:text-fg">
+                    {label}
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
         ))}
+        <div>
+          <p className="label text-muted">Get in touch</p>
+          <a href={CONTACT_HREF} className="mt-4 block text-lg text-fg transition-colors hover:text-accent">
+            hello@newron.ai
+          </a>
+          <p className="mt-2 text-sm text-fg-2">Bengaluru, India</p>
+        </div>
       </div>
       <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-4 border-t border-line px-5 py-6 font-mono text-[11px] text-muted md:px-8">
         <span>© {new Date().getFullYear()} Newron AI Technologies Pvt. Ltd.</span>

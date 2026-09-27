@@ -17,14 +17,15 @@ export const lendingModules = [
 export type LendingModuleId = (typeof lendingModules)[number]["id"];
 
 export const artha = {
+  // n: "eighth" renders the ≈1/8 figure with <Eighth />.
   claims: [
-    { n: "3×", l: "faster" },
-    { n: "≈⅛", l: "the cost of frontier" },
-    { n: "Self-host", l: "or license" },
+    { n: "3×", l: "faster than frontier" },
+    { n: "eighth", l: "the cost per document" },
+    { n: "0-shot", l: "no templates" },
   ],
   capabilities: [
     { t: "Classify", v: "5 files → 6 docs" },
-    { t: "Extract", v: "0-shot · no templates" },
+    { t: "Extract", v: "fields, tables, stamps" },
     { t: "Map parties", v: "4 parties resolved" },
   ],
 };
@@ -38,7 +39,7 @@ export const insurance = [
 export const governance = ["Kannada handwriting OCR", "Regional text-to-speech", "Grievance triage", "Policy discovery"];
 
 export const services = [
-  { t: "Custom AI engineering", s: "Pipelines, evals and inference, built inside your team." },
-  { t: "Custom foundational models", s: "When off-the-shelf models won't do the job." },
-  { t: "Business automation", s: "Document workflows, ops tooling and copilots." },
-];
+  { t: "Custom AI engineering", s: "Pipelines, evals and inference, built inside your team.", icon: "code" },
+  { t: "Custom foundational models", s: "When off-the-shelf models won't do the job.", icon: "layers" },
+  { t: "Business automation", s: "Document workflows, ops tooling and copilots.", icon: "flow" },
+] as const;
