@@ -172,6 +172,33 @@ h2 {
   transform: none;
 }
 
+/* Tab auto-advance progress and panel swap */
+@keyframes grow {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+.progress {
+  animation: grow linear forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fade-in {
+  animation: fade-in 0.45s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+
 /* Live-state pulse for running / waiting indicators */
 @keyframes pulse-ring {
   0% {
@@ -203,7 +230,8 @@ h2 {
     transition: none;
   }
   .live-dot,
-  .caret {
+  .caret,
+  .fade-in {
     animation: none;
   }
 }

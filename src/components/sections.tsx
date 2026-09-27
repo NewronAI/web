@@ -1,7 +1,9 @@
 import { Reveal } from "@/components/reveal";
 import { Logo } from "@/components/nav";
 import { CamRun } from "@/components/cam-run";
-import { artha, CONTACT_HREF, customers, governance, insurance, lending, partners, services } from "@/lib/site";
+import { LendingShowcase } from "@/components/lending-showcase";
+import { Check, Dot, Frame } from "@/components/ui";
+import { artha, CONTACT_HREF, customers, governance, insurance, partners, services } from "@/lib/site";
 
 function Arrow() {
   return (
@@ -33,50 +35,37 @@ function SecondaryCTA({ href, children }: { href: string; children: React.ReactN
   );
 }
 
-const Accent = ({ children }: { children: React.ReactNode }) => (
-  <em className="accent">{children}</em>
-);
+const Accent = ({ children }: { children: React.ReactNode }) => <em className="accent">{children}</em>;
 
-function ProductHead({
-  n,
-  name,
-  tagline,
-  body,
+const H2 = "font-serif text-5xl leading-[1] tracking-[-0.045em] md:text-[4.25rem]";
+
+/** Section head: kicker, headline and one short line. Centered by default. */
+function Head({
+  kicker,
+  title,
+  line,
+  align = "center",
 }: {
-  n: string;
-  name: string;
-  tagline: React.ReactNode;
-  body: React.ReactNode;
+  kicker: React.ReactNode;
+  title: React.ReactNode;
+  line?: React.ReactNode;
+  align?: "center" | "left";
 }) {
+  const c = align === "center";
   return (
-    <Reveal className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-      <div className="max-w-4xl text-balance">
-        <p className="label text-muted">
-          <span className="text-accent">{n}</span> · {name}
-        </p>
-        <h2 className="mt-5 font-serif text-5xl leading-[1] tracking-[-0.045em] md:text-[4.25rem]">{tagline}</h2>
-      </div>
-      <p className="max-w-sm text-fg-2 md:text-right">{body}</p>
+    <Reveal className={c ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
+      <p className="label text-muted">{kicker}</p>
+      <h2 className={`mt-5 text-balance ${H2}`}>{title}</h2>
+      {line && <p className={`mt-5 text-balance text-lg text-fg-2${c ? "mx-auto max-w-xl" : "max-w-xl"}`}>{line}</p>}
     </Reveal>
   );
 }
 
-function Frame({ title, meta, children }: { title: string; meta?: string; children: React.ReactNode }) {
-  return (
-    <div className="overflow-hidden rounded-2xl border border-line-2 bg-bg">
-      <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-2.5 font-mono text-[11px] text-muted">
-        <span className="truncate text-fg-2">{title}</span>
-        {meta && <span className="shrink-0">{meta}</span>}
-      </div>
-      {children}
-    </div>
-  );
-}
-
-function Dot({ tone = "ok" }: { tone?: "ok" | "warn" | "open" }) {
-  const cls = tone === "ok" ? "bg-ok" : tone === "warn" ? "bg-warn" : "border border-warn";
-  return <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${cls}`} aria-hidden />;
-}
+const Num = ({ n, name }: { n: string; name: string }) => (
+  <>
+    <span className="text-accent">{n}</span> · {name}
+  </>
+);
 
 /* ───────────────────────── Hero ───────────────────────── */
 
@@ -94,12 +83,8 @@ export function Hero() {
           >
             The enterprise AI partner of choice for <Accent>regulated industries.</Accent>
           </h1>
-          <p
-            className="rise mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-fg-2"
-            style={{ animationDelay: "220ms" }}
-          >
-            Newron is the applied-AI partner to India&apos;s banks, NBFCs, insurers and Government — building
-            production systems that underwrite faster, settle claims sooner, serve citizens in their own language.
+          <p className="rise mx-auto mt-7 max-w-xl text-lg text-fg-2" style={{ animationDelay: "220ms" }}>
+            Production AI for India&apos;s banks, NBFCs, insurers and Government.
           </p>
           <div className="rise mt-9 flex flex-wrap justify-center gap-3" style={{ animationDelay: "320ms" }}>
             <PrimaryCTA>Talk to us</PrimaryCTA>
@@ -109,9 +94,6 @@ export function Hero() {
 
         <div className="rise mx-auto mt-16 max-w-5xl" style={{ animationDelay: "460ms" }}>
           <CamRun />
-          <p className="mt-3 text-center font-mono text-[11px] text-muted">
-            Sample file · Lending Intelligence composes a CAM in your bank&apos;s format, then waits for credit QC
-          </p>
         </div>
       </div>
     </section>
@@ -119,6 +101,13 @@ export function Hero() {
 }
 
 /* ───────────────────────── Proof ───────────────────────── */
+
+const numbers = [
+  { n: "< 60s", l: "12 months of statements" },
+  { n: "< 90s", l: "to a TPA-ready claim" },
+  { n: "≈⅛", l: "the cost of frontier models" },
+  { n: "8–12 wks", l: "scope to production" },
+];
 
 export function Proof() {
   return (
@@ -132,135 +121,51 @@ export function Proof() {
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-center text-sm text-muted">
-          Technology, research & ecosystem partners · {partners.join(" · ")}
-        </p>
-        <div className="mt-16 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        <p className="mt-5 text-center text-sm text-muted">With {partners.join(" · ")}</p>
+
+        <div className="mt-16 grid grid-cols-2 gap-y-10 lg:grid-cols-4">
           {numbers.map((o, i) => (
-            <Reveal key={o.n} delay={i * 80} className="bg-s1 p-7">
-              <p className="font-serif text-5xl tracking-[-0.045em] md:text-6xl">{o.n}</p>
-              <p className="mt-3 max-w-[15rem] text-sm text-fg-2">{o.l}</p>
+            <Reveal key={o.n} delay={i * 80} className="text-center">
+              <p className="font-serif text-5xl tracking-[-0.04em] md:text-6xl">{o.n}</p>
+              <p className="mt-2 text-sm text-muted">{o.l}</p>
             </Reveal>
           ))}
         </div>
+
+        <Reveal className="mx-auto mt-24 max-w-5xl text-center text-balance">
+          <blockquote className="font-serif text-3xl leading-[1.15] tracking-[-0.03em] md:text-5xl">
+            “Newron&apos;s CAM engine replaced three weeks of human review with a{" "}
+            <Accent>40-minute QC step.</Accent>”
+          </blockquote>
+          <p className="mt-8 text-sm text-fg-2">
+            <span className="text-fg">Arun Velayutham</span> · Head of SME, Aditya Birla Capital
+          </p>
+        </Reveal>
       </div>
     </section>
   );
 }
-
-/* ───────────────────────── Numbers ───────────────────────── */
-
-const numbers = [
-  { n: "< 60s", l: "to parse 12 months of bank statements" },
-  { n: "< 90s", l: "to assemble a TPA-ready claim packet" },
-  { n: "≈⅛", l: "the cost of frontier models, with Artha" },
-  { n: "8–12 wks", l: "from scope to production" },
-];
-
 
 /* ───────────────────────── 01 Lending ───────────────────────── */
 
 export function Lending() {
   return (
-    <section id="lending" className="sheet  scroll-mt-24">
+    <section id="lending" className="sheet scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
-        <ProductHead
-          n="01"
-          name="Lending Intelligence"
-          tagline={
+        <Head
+          kicker={<Num n="01" name="Lending Intelligence" />}
+          title={
             <>
               The credit officer&apos;s <Accent>second brain.</Accent>
             </>
           }
-          body="A modular suite for the loan origination lifecycle — from intake and statement parsing to CAM generation, deviation handling, and verification."
+          line="Intake to verification, across 12 commercial and consumer loan products."
         />
-
-        <div className="mt-14 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-          <Reveal>
-            <CamFragment />
-          </Reveal>
-          <Reveal delay={120} className="grid gap-6">
-            <div className="rounded-3xl border border-line bg-s1 p-6">
-              <p className="label text-muted">12 loan products, out of the box</p>
-              <div className="mt-5 grid gap-6 sm:grid-cols-2">
-                {[
-                  ["Commercial", lending.commercial],
-                  ["Consumer", lending.consumer],
-                ].map(([h, items]) => (
-                  <div key={h as string}>
-                    <p className="text-sm text-fg">{h}</p>
-                    <ul className="mt-3 flex flex-wrap gap-1.5">
-                      {(items as string[]).map((it) => (
-                        <li key={it} className="rounded-md border border-line-2 px-2 py-1 text-xs text-fg-2">
-                          {it}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <blockquote className="rounded-3xl border border-line bg-s1 p-6">
-              <p className="font-serif text-2xl leading-snug text-fg">
-                “Newron&apos;s CAM engine replaced three weeks of human review with a 40-minute QC step.”
-              </p>
-              <footer className="mt-5 flex items-center gap-3 text-sm">
-                <span className="grid h-9 w-9 place-items-center rounded-full border border-line-2 bg-s3 font-mono text-[11px]">
-                  AV
-                </span>
-                <span>
-                  <span className="text-fg">Arun Velayutham</span>
-                  <span className="text-muted"> · Head of SME, Aditya Birla Capital</span>
-                </span>
-              </footer>
-            </blockquote>
-          </Reveal>
-        </div>
-
-        <div className="mt-6 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
-          {lending.modules.map((m, i) => (
-            <Reveal key={m.t} delay={i * 60} className="bg-bg p-6">
-              <h3 className="font-medium text-fg">{m.t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-fg-2">{m.d}</p>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal className="mt-16">
+          <LendingShowcase />
+        </Reveal>
       </div>
     </section>
-  );
-}
-
-function CamFragment() {
-  const sections = [
-    { t: "Applicant & group profile", s: "4 parties resolved" },
-    { t: "Banking behaviour", s: "12 months · ABB ₹18.4 L" },
-    { t: "Obligations & FOIR", s: "EMI ₹1.85 L / mo" },
-    { t: "Collateral", s: "LAP · valuation attached" },
-  ];
-  return (
-    <Frame title="Credit Approval Memo · LN-20417" meta="your bank's format">
-      <ul>
-        {sections.map((s, i) => (
-          <li key={s.t} className={`flex items-center justify-between gap-4 px-4 py-3 ${i ? "border-t border-line" : ""}`}>
-            <span className="flex items-center gap-3 text-sm text-fg">
-              <Dot /> {s.t}
-            </span>
-            <span className="font-mono text-[11px] text-muted">{s.s}</span>
-          </li>
-        ))}
-      </ul>
-      <div className="border-t border-line bg-warn/5 px-4 py-4">
-        <p className="flex items-center gap-2 font-mono text-[11px] text-warn">
-          <Dot tone="warn" /> Deviation flagged
-        </p>
-        <p className="mt-2 text-sm text-fg">FOIR at 58% against a 55% cap for this product.</p>
-        <p className="mt-2 font-mono text-[11px] text-muted">Policy book §4.2.1 · approval: Zonal Credit Head</p>
-      </div>
-      <div className="flex items-center justify-between border-t border-line px-4 py-3 font-mono text-[11px] text-muted">
-        <span>18 sections · every figure cited to source</span>
-        <span className="text-ok">Ready for QC</span>
-      </div>
-    </Frame>
   );
 }
 
@@ -270,47 +175,39 @@ export function Artha() {
   return (
     <section id="artha" className="sheet sheet-teal scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
-        <ProductHead
-          n="02"
-          name="Artha Models"
-          tagline={
+        <Head
+          kicker={<Num n="02" name="Artha Models" />}
+          title={
             <>
               The models <Accent>underneath</Accent> Indian credit.
             </>
           }
-          body="Artha is Newron's suite of vision-language models, built for the paperwork Indian banks and NBFCs actually process."
+          line="Vision-language models built for Indian financial paperwork."
         />
 
-        <Reveal className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal className="mx-auto mt-12 flex max-w-3xl flex-wrap justify-center gap-x-14 gap-y-6">
           {artha.claims.map((c) => (
-            <div key={c.l} className="bg-bg p-6">
-              <p className="font-serif text-4xl tracking-[-0.045em] md:text-5xl">{c.n}</p>
-              <p className="mt-2 text-sm text-fg-2">{c.l}</p>
+            <div key={c.n} className="text-center">
+              <p className="font-serif text-5xl tracking-[-0.04em]">{c.n}</p>
+              <p className="mt-1 text-sm text-muted">{c.l}</p>
             </div>
           ))}
         </Reveal>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.1fr]">
-          <Reveal>
-            <ul className="divide-y divide-line overflow-hidden rounded-3xl border border-line bg-bg">
-              {artha.capabilities.map((c, i) => (
-                <li key={c.t} className="grid gap-2 p-6 sm:grid-cols-[2rem_1fr]">
+        <Reveal className="mx-auto mt-14 max-w-5xl">
+          <ClassifyFragment />
+          <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+            {artha.capabilities.map((c, i) => (
+              <li key={c.t} className="flex items-center justify-between gap-3 rounded-2xl border border-line px-5 py-4">
+                <span className="flex items-baseline gap-2.5">
                   <span className="font-mono text-xs text-muted">0{i + 1}</span>
-                  <div>
-                    <div className="flex flex-wrap items-baseline justify-between gap-2">
-                      <h3 className="text-lg font-medium text-fg">{c.t}</h3>
-                      <span className="font-mono text-[11px] text-accent">{c.v}</span>
-                    </div>
-                    <p className="mt-2 text-sm leading-relaxed text-fg-2">{c.d}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-          <Reveal delay={120}>
-            <ClassifyFragment />
-          </Reveal>
-        </div>
+                  <span className="font-medium">{c.t}</span>
+                </span>
+                <span className="font-mono text-[11px] text-accent">{c.v}</span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );
@@ -319,41 +216,35 @@ export function Artha() {
 function ClassifyFragment() {
   const files = ["scan_0412.pdf", "IMG_2231.jpg", "docs_final(2).pdf", "stmt.pdf", "kyc.zip"];
   const docs = [
-    { d: "Bank statement · HDFC", p: "Shree Steels Pvt. Ltd." },
-    { d: "GST return · GSTR-3B", p: "Shree Steels Pvt. Ltd." },
-    { d: "ITR-V · AY 2025-26", p: "R. Kulkarni (promoter)" },
-    { d: "Sale deed", p: "R. Kulkarni (promoter)" },
-    { d: "PAN card", p: "S. Kulkarni (co-applicant)" },
-    { d: "Udyam certificate", p: "Shree Steels Pvt. Ltd." },
+    { d: "Bank statement", p: "Shree Steels" },
+    { d: "GST return", p: "Shree Steels" },
+    { d: "ITR-V", p: "R. Kulkarni" },
+    { d: "Sale deed", p: "R. Kulkarni" },
+    { d: "PAN card", p: "S. Kulkarni" },
+    { d: "Udyam certificate", p: "Shree Steels" },
   ];
   return (
-    <Frame title="artha · classify + map" meta="sample batch">
-      <div className="grid sm:grid-cols-[0.8fr_1.2fr]">
-        <div className="border-b border-line p-4 sm:border-r sm:border-b-0">
-          <p className="label text-muted">5 files in</p>
-          <ul className="mt-3 space-y-2 font-mono text-[11px] text-fg-2">
-            {files.map((f) => (
-              <li key={f} className="truncate rounded border border-line px-2 py-1.5">
-                {f}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="p-4">
-          <p className="label text-muted">6 documents · 4 parties</p>
-          <ul className="mt-3 space-y-2">
-            {docs.map((d) => (
-              <li key={d.d} className="flex items-center justify-between gap-3 rounded border border-line px-2 py-1.5">
-                <span className="truncate text-xs text-fg">{d.d}</span>
-                <span className="shrink-0 truncate font-mono text-[10px] text-muted">{d.p}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+    <Frame title="artha · classify + extract + map" meta="sample batch">
+      <div className="grid items-center gap-4 p-4 md:grid-cols-[1fr_auto_1.4fr]">
+        <ul className="space-y-2 font-mono text-[11px] text-fg-2">
+          {files.map((f) => (
+            <li key={f} className="truncate rounded-lg border border-line px-3 py-2">
+              {f}
+            </li>
+          ))}
+        </ul>
+        <span aria-hidden className="hidden font-mono text-lg text-accent md:block">
+          →
+        </span>
+        <ul className="grid grid-cols-2 gap-2">
+          {docs.map((d) => (
+            <li key={d.d} className="rounded-lg border border-line-2 bg-s1 px-3 py-2.5">
+              <p className="truncate text-sm">{d.d}</p>
+              <p className="truncate font-mono text-[10px] text-muted">{d.p}</p>
+            </li>
+          ))}
+        </ul>
       </div>
-      <p className="border-t border-line px-4 py-2.5 font-mono text-[11px] text-muted">
-        {"POST /v1/artha/extract  →  { doc_type, fields[], parties[] }"}
-      </p>
     </Frame>
   );
 }
@@ -362,36 +253,34 @@ function ClassifyFragment() {
 
 export function Insurance() {
   return (
-    <section id="insurance" className="sheet  scroll-mt-24">
+    <section id="insurance" className="sheet scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
-        <ProductHead
-          n="03"
-          name="Insurance AI"
-          tagline={
+        <Head
+          kicker={<Num n="03" name="Insurance AI" />}
+          title={
             <>
               Settle claims <Accent>before</Accent> they&apos;re filed.
             </>
           }
-          body="Newron's claims models inspect documents, parse policy language, and predict denial risk the moment a claim is initiated."
+          line="Documents checked, claims filed and denial risk predicted at intake."
         />
-        <div className="mt-14 grid items-start gap-6 lg:grid-cols-[1fr_1.1fr]">
-          <div className="space-y-3">
+
+        <Reveal className="mx-auto mt-14 max-w-5xl">
+          <ol className="mb-6 grid gap-3 sm:grid-cols-3">
             {insurance.map((s, i) => (
-              <Reveal key={s.t} delay={i * 80}>
-                <div className="grid grid-cols-[2rem_1fr] gap-2 rounded-3xl border border-line bg-s1 p-6">
-                  <span className="font-mono text-xs text-accent">0{i + 1}</span>
-                  <div>
-                    <h3 className="font-medium text-fg">{s.t}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-fg-2">{s.d}</p>
-                  </div>
-                </div>
-              </Reveal>
+              <li key={s.t} className="flex items-center gap-4 rounded-2xl border border-line px-5 py-4">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-cta font-mono text-xs text-cta-fg">
+                  0{i + 1}
+                </span>
+                <span>
+                  <span className="block font-medium">{s.t}</span>
+                  <span className="block text-sm text-muted">{s.s}</span>
+                </span>
+              </li>
             ))}
-          </div>
-          <Reveal delay={120}>
-            <ClaimFragment />
-          </Reveal>
-        </div>
+          </ol>
+          <ClaimFragment />
+        </Reveal>
       </div>
     </section>
   );
@@ -402,35 +291,29 @@ function ClaimFragment() {
     { t: "Policy schedule", ok: true },
     { t: "Pre-authorisation", ok: true },
     { t: "Discharge summary", ok: true },
-    { t: "Final hospital bill", ok: true },
+    { t: "Final bill", ok: true },
     { t: "Investigation reports", ok: false },
   ];
   return (
-    <Frame title="Claim CLM-88214 · Health · Cashless" meta="sample claim">
-      <div className="grid sm:grid-cols-2">
-        <div className="border-b border-line p-4 sm:border-r sm:border-b-0">
-          <p className="label text-muted">Eligibility · intake</p>
-          <ul className="mt-3 space-y-2.5">
-            {artefacts.map((a) => (
-              <li key={a.t} className="flex items-center justify-between gap-3 text-sm">
-                <span className={a.ok ? "text-fg" : "text-warn"}>{a.t}</span>
-                <span className={`font-mono text-[11px] ${a.ok ? "text-ok" : "text-warn"}`}>{a.ok ? "found" : "missing"}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="p-4">
+    <Frame title="Claim CLM-88214 · Health · Cashless" meta="packet ready in 01:24">
+      <div className="grid md:grid-cols-[1.2fr_1fr]">
+        <ul className="grid grid-cols-1 gap-2 p-4 sm:grid-cols-2">
+          {artefacts.map((a) => (
+            <li
+              key={a.t}
+              className={`flex items-center gap-2.5 rounded-lg border px-3 py-2.5 text-sm ${
+                a.ok ? "border-line" : "border-warn/50 bg-warn/5 text-warn"
+              }`}
+            >
+              {a.ok ? <Check /> : <Dot tone="warn" />} {a.t}
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-col justify-center border-t border-line p-6 md:border-t-0 md:border-l">
           <p className="label text-muted">Denial risk</p>
-          <p className="mt-3 font-serif text-4xl text-warn">Elevated</p>
-          <p className="mt-2 text-sm text-fg-2">Likely reason: investigation reports absent for a surgical claim.</p>
-          <p className="mt-4 rounded-md border border-line-2 px-3 py-2 text-xs text-fg">
-            Remediation · request reports from hospital before submission
-          </p>
+          <p className="mt-2 font-serif text-5xl tracking-[-0.04em] text-warn">Elevated</p>
+          <p className="mt-3 text-sm text-fg-2">Request investigation reports before submitting.</p>
         </div>
-      </div>
-      <div className="flex items-center justify-between border-t border-line px-4 py-3 font-mono text-[11px] text-muted">
-        <span>TPA-ready packet assembled</span>
-        <span className="text-ok">01:24</span>
       </div>
     </Frame>
   );
@@ -442,31 +325,25 @@ export function Governance() {
   return (
     <section id="governance" className="sheet sheet-dawn scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
-        <ProductHead
-          n="04"
-          name="Governance AI"
-          tagline={
+        <Head
+          kicker={<Num n="04" name="Governance AI" />}
+          title={
             <>
               Citizen services in <Accent>their</Accent> language.
             </>
           }
-          body="Built with the Government of Karnataka. Newron reads Kannada handwriting, speaks in regional dialects, and surfaces policy answers from documents."
+          line="Built with the Government of Karnataka."
         />
-        <div className="mt-14 grid items-start gap-6 lg:grid-cols-[1.1fr_1fr]">
-          <Reveal>
-            <GrievanceFragment />
-          </Reveal>
-          <Reveal delay={120}>
-            <ul className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2">
-              {governance.map((g, i) => (
-                <li key={g} className="bg-bg p-6">
-                  <span className="font-mono text-xs text-muted">0{i + 1}</span>
-                  <p className="mt-8 font-serif text-3xl leading-tight text-fg">{g}</p>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
+        <Reveal className="mx-auto mt-14 max-w-4xl">
+          <GrievanceFragment />
+          <ul className="mt-6 flex flex-wrap justify-center gap-2">
+            {governance.map((g) => (
+              <li key={g} className="rounded-full border border-line-2 bg-s1 px-4 py-2 text-sm">
+                {g}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );
@@ -474,45 +351,30 @@ export function Governance() {
 
 function GrievanceFragment() {
   return (
-    <Frame title="Grievance GR-30952 · handwritten form" meta="sample">
-      <div className="grid sm:grid-cols-2">
-        <div className="border-b border-line p-4 sm:border-r sm:border-b-0">
-          <p className="label text-muted">OCR · Kannada</p>
-          <p lang="kn" className="mt-3 text-xl leading-relaxed text-fg">
+    <Frame title="Grievance GR-30952 · handwritten" meta="sample">
+      <div className="grid items-center md:grid-cols-[1fr_auto_1fr]">
+        <div className="p-6">
+          <p className="label text-muted">Read · Kannada</p>
+          <p lang="kn" className="mt-3 text-3xl leading-relaxed">
             ರಸ್ತೆ ದುರಸ್ತಿ ಮನವಿ
           </p>
-          <p className="mt-2 text-sm text-fg-2">Request for road repair</p>
+          <p className="mt-1 text-sm text-fg-2">Request for road repair</p>
         </div>
-        <div className="p-4">
-          <p className="label text-muted">Triage</p>
-          <dl className="mt-3 space-y-2 text-sm">
-            <div className="flex justify-between gap-3">
-              <dt className="text-muted">Department</dt>
-              <dd className="text-fg">Public Works</dd>
-            </div>
-            <div className="flex justify-between gap-3">
-              <dt className="text-muted">Priority</dt>
-              <dd className="text-warn">High</dd>
-            </div>
-            <div className="flex justify-between gap-3">
-              <dt className="text-muted">Relevant scheme</dt>
-              <dd className="text-fg">Found · 2 documents</dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-      <div className="flex items-center gap-3 border-t border-line px-4 py-3">
-        <span className="grid h-7 w-7 place-items-center rounded-full bg-accent text-bg" aria-hidden>
-          <svg viewBox="0 0 12 12" className="h-3 w-3">
-            <path d="M3 2l7 4-7 4z" fill="currentColor" />
-          </svg>
+        <span aria-hidden className="hidden px-2 font-mono text-lg text-accent md:block">
+          →
         </span>
-        <span className="flex h-6 flex-1 items-center gap-[3px]" aria-hidden>
-          {[4, 9, 14, 8, 17, 11, 6, 13, 18, 10, 5, 12, 16, 7, 11, 15, 9, 4, 8, 13, 6, 10].map((h, i) => (
-            <span key={i} className="w-[3px] rounded-full bg-line-2" style={{ height: h }} />
+        <dl className="space-y-3 border-t border-line p-6 text-sm md:border-t-0">
+          {[
+            ["Routed to", "Public Works"],
+            ["Priority", "High"],
+            ["Reply", "Kannada voice note"],
+          ].map(([k, v]) => (
+            <div key={k} className="flex justify-between gap-3">
+              <dt className="text-muted">{k}</dt>
+              <dd className="font-medium">{v}</dd>
+            </div>
           ))}
-        </span>
-        <span className="font-mono text-[11px] text-muted">Reply · regional TTS</span>
+        </dl>
       </div>
     </Frame>
   );
@@ -524,23 +386,24 @@ export function Services() {
   return (
     <section id="services" className="sheet sheet-dark scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
-        <ProductHead
-          n="05"
-          name="Custom AI Services"
-          tagline={
+        <Head
+          kicker={<Num n="05" name="Custom AI Services" />}
+          title={
             <>
               When the product isn&apos;t enough, <Accent>we build it for you.</Accent>
             </>
           }
-          body="Scope to production in 8–12 weeks."
+          line="Scope to production in 8–12 weeks."
         />
         <div className="mt-14 grid gap-4 md:grid-cols-3">
           {services.map((s, i) => (
             <Reveal key={s.t} delay={i * 100}>
-              <div className="flex h-full flex-col rounded-3xl border border-line bg-s1 p-6">
+              <div className="flex h-full flex-col justify-between gap-12 rounded-3xl border border-line bg-s1 p-7">
                 <span className="font-mono text-xs text-accent">0{i + 1}</span>
-                <h3 className="mt-12 font-serif text-3xl leading-tight">{s.t}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-fg-2">{s.d}</p>
+                <div>
+                  <h3 className="font-serif text-3xl leading-tight tracking-[-0.03em]">{s.t}</h3>
+                  <p className="mt-2 text-sm text-fg-2">{s.s}</p>
+                </div>
               </div>
             </Reveal>
           ))}
@@ -553,44 +416,65 @@ export function Services() {
 /* ───────────────────────── Deployment & security ───────────────────────── */
 
 const deploys = [
-  { t: "Self-hosted on your VPC", d: "Runs in your cloud account, under your keys and your IAM." },
-  { t: "On-prem", d: "Runs on your own hardware, inside your data centre." },
-  { t: "Fully air-gapped", d: "Fully offline for environments that can never phone home." },
-];
+  { t: "Your VPC", s: "Your keys, your IAM", icon: "cloud" },
+  { t: "On-prem", s: "Your data centre", icon: "rack" },
+  { t: "Air-gapped", s: "Never phones home", icon: "lock" },
+] as const;
+
+function DeployIcon({ kind }: { kind: (typeof deploys)[number]["icon"] }) {
+  return (
+    <svg viewBox="0 0 32 32" className="h-8 w-8 text-accent" aria-hidden fill="none" stroke="currentColor" strokeWidth="1.6">
+      {kind === "cloud" && <path d="M9 24a6 6 0 0 1 .6-12 8 8 0 0 1 15.3 2.6A4.8 4.8 0 0 1 24 24Z" />}
+      {kind === "rack" && (
+        <>
+          <rect x="6" y="6" width="20" height="6" rx="1.5" />
+          <rect x="6" y="14" width="20" height="6" rx="1.5" />
+          <rect x="6" y="22" width="20" height="4" rx="1.5" />
+        </>
+      )}
+      {kind === "lock" && (
+        <>
+          <rect x="8" y="14" width="16" height="12" rx="2" />
+          <path d="M11 14v-3a5 5 0 0 1 10 0v3" />
+        </>
+      )}
+    </svg>
+  );
+}
 
 export function Deployment() {
   return (
     <section id="security" className="sheet scroll-mt-24">
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52 lg:grid-cols-[1fr_1.2fr]">
-        <Reveal>
-          <p className="label text-accent">Deployment & security</p>
-          <h2 className="mt-5 font-serif text-5xl leading-[1] tracking-[-0.045em] md:text-[4.25rem]">
-            Your data stays <Accent>where regulators expect it.</Accent>
-          </h2>
-          <p className="mt-6 max-w-md leading-relaxed text-fg-2">
-            API-first, with a REST + webhook surface that fits into the systems you already run.
-          </p>
-          <ul className="mt-8 space-y-3 text-sm">
-            <li className="flex items-center gap-3 text-fg">
-              <Dot /> ISO 27001
-            </li>
-            <li className="flex items-center gap-3 text-fg">
-              <Dot /> NVIDIA Inception Partner
-            </li>
-            <li className="flex items-center gap-3 text-fg-2">
-              <Dot tone="open" /> SOC 2 · in progress
-            </li>
-          </ul>
-        </Reveal>
-        <Reveal delay={120} className="grid gap-4">
+      <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
+        <Head
+          kicker="Deployment & security"
+          title={
+            <>
+              Your data stays <Accent>where regulators expect it.</Accent>
+            </>
+          }
+          line="API-first, with REST and webhooks."
+        />
+        <div className="mx-auto mt-14 grid max-w-4xl gap-4 sm:grid-cols-3">
           {deploys.map((d, i) => (
-            <div key={d.t} className="grid grid-cols-[2rem_1fr] gap-2 rounded-3xl border border-line bg-bg p-6">
-              <span className="font-mono text-xs text-accent">0{i + 1}</span>
-              <div>
-                <h3 className="font-medium text-fg">{d.t}</h3>
-                <p className="mt-1.5 text-sm text-fg-2">{d.d}</p>
+            <Reveal key={d.t} delay={i * 90}>
+              <div className="flex h-full flex-col items-center rounded-3xl border border-line bg-s1 px-6 py-8 text-center">
+                <DeployIcon kind={d.icon} />
+                <p className="mt-5 text-lg font-medium">{d.t}</p>
+                <p className="mt-1 text-sm text-muted">{d.s}</p>
               </div>
-            </div>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal className="mt-8 flex flex-wrap justify-center gap-2">
+          {[
+            ["ISO 27001", "ok"],
+            ["NVIDIA Inception Partner", "ok"],
+            ["SOC 2 · in progress", "open"],
+          ].map(([t, tone]) => (
+            <span key={t} className="flex items-center gap-2 rounded-full border border-line-2 px-4 py-2 text-sm">
+              <Dot tone={tone as "ok" | "open"} /> {t}
+            </span>
           ))}
         </Reveal>
       </div>
@@ -604,18 +488,13 @@ export function CTA() {
   return (
     <section id="contact" className="sheet sheet-teal scroll-mt-24">
       <Reveal className="mx-auto max-w-7xl px-5 pt-24 pb-40 text-center md:px-8 md:pt-32 md:pb-56">
-        <div>
-          <p className="label text-accent">One-week evaluation</p>
-          <h2 className="mx-auto mt-5 max-w-4xl font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
-            A working pilot <Accent>on your own data,</Accent> inside a week.
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-fg-2">
-            We&apos;ll spin up a sandboxed instance against a slice of your historical data and deliver a working pilot
-            inside a week. Production rollouts typically run over the following quarter.
-          </p>
-          <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <PrimaryCTA href={CONTACT_HREF}>Talk to us</PrimaryCTA>
-          </div>
+        <p className="label text-accent">One-week evaluation</p>
+        <h2 className="mx-auto mt-5 max-w-4xl font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
+          A working pilot <Accent>on your own data,</Accent> inside a week.
+        </h2>
+        <p className="mx-auto mt-6 max-w-lg text-lg text-fg-2">Production rollout over the following quarter.</p>
+        <div className="mt-9 flex justify-center">
+          <PrimaryCTA href={CONTACT_HREF}>Talk to us</PrimaryCTA>
         </div>
       </Reveal>
     </section>
@@ -644,9 +523,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:px-8 lg:grid-cols-[1.6fr_repeat(4,1fr)]">
         <div>
           <Logo />
-          <p className="mt-5 max-w-xs text-sm leading-relaxed text-fg-2">
-            Newron is an applied-AI company building production systems for regulated industries. Bengaluru, India.
-          </p>
+          <p className="mt-5 max-w-xs text-sm text-fg-2">Production AI for regulated industries. Bengaluru, India.</p>
         </div>
         {cols.map((c) => (
           <div key={c.h}>
@@ -670,7 +547,7 @@ export function Footer() {
       </div>
       <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-4 border-t border-line px-5 py-6 font-mono text-[11px] text-muted md:px-8">
         <span>© {new Date().getFullYear()} Newron AI Technologies Pvt. Ltd.</span>
-        <span>NVIDIA Inception Partner · ISO 27001 · SOC 2 in progress · Bengaluru, India</span>
+        <span>NVIDIA Inception Partner · ISO 27001 · SOC 2 in progress</span>
       </div>
     </footer>
   );

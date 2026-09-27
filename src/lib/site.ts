@@ -1,62 +1,44 @@
 // TODO: replace with the real scheduling link used by the "Talk to us" CTA.
 export const CONTACT_HREF = "mailto:hello@newron.ai";
 
-// Content mirrors newron.ai. Customers are kept separate from partners so the proof row isn't inflated.
+// Content mirrors newron.ai, trimmed for scanning. Customers are kept separate from partners.
 export const customers = ["Aditya Birla Capital", "HDFC Credila", "Fedbank", "Niwas", "Fusion", "Government of Karnataka"];
 
 export const partners = ["NVIDIA", "Google", "IISc", "Walmart", "Sattva", "Artpark"];
 
-export const lending = {
-  commercial: ["Loan against property", "Overdraft", "Gold loan", "Equipment finance", "Revenue-based finance", "Line of credit"],
-  consumer: ["Home loan", "Auto loan", "Loan against securities", "Personal loan", "Education loan", "Credit card"],
-  modules: [
-    { t: "CAM Generation", d: "Compose Credit Approval Memos in your bank's format, with deviation flags and policy citations." },
-    { t: "Statement Analyser", d: "12 months of bank statements parsed in under 60 seconds." },
-    { t: "Applicant 360°", d: "Every signal, every covenant, every prior decision — on one screen." },
-    { t: "Video PD", d: "Hold the personal discussion over video — face and address verified." },
-    { t: "Policy Chat", d: "Underwriters ask, Newron answers — sourced from your policy book." },
-  ],
-};
+export const lendingModules = [
+  { id: "cam", t: "CAM Generation", s: "Memos in your bank's format, with deviation flags." },
+  { id: "statements", t: "Statement Analyser", s: "12 months of statements in under 60 seconds." },
+  { id: "applicant", t: "Applicant 360°", s: "Every signal and covenant on one screen." },
+  { id: "video", t: "Video PD", s: "Personal discussion over video, face and address verified." },
+  { id: "policy", t: "Policy Chat", s: "Answers sourced from your policy book." },
+] as const;
+
+export type LendingModuleId = (typeof lendingModules)[number]["id"];
 
 export const artha = {
   claims: [
-    { n: "3×", l: "Up to 3× faster" },
-    { n: "≈⅛", l: "the cost of frontier models" },
-    { n: "Frontier", l: "comparable accuracy" },
-    { n: "Self-host", l: "Licensable and self-hostable" },
+    { n: "3×", l: "faster" },
+    { n: "≈⅛", l: "the cost of frontier" },
+    { n: "Self-host", l: "or license" },
   ],
   capabilities: [
-    {
-      t: "Classification",
-      v: "5 files → 6 docs",
-      d: "Filenames are noise, and one PDF can hold four documents. Artha names each one and splits the batch.",
-    },
-    {
-      t: "Extraction",
-      v: "0-shot · no templates",
-      d: "Reads the fields credit actually underwrites on — issuer, period, balances, identifiers — from scans, phone photographs and regional-language forms.",
-    },
-    {
-      t: "Party mapping",
-      v: "4 parties resolved",
-      d: "Resolves every party in the file and attaches each document to the right one.",
-    },
+    { t: "Classify", v: "5 files → 6 docs" },
+    { t: "Extract", v: "0-shot · no templates" },
+    { t: "Map parties", v: "4 parties resolved" },
   ],
 };
 
 export const insurance = [
-  { t: "Eligibility check", d: "Policy retrieval + document understanding flags missing artefacts and ineligible claims at intake." },
-  { t: "Automated claim filing", d: "Forms, supporting documents and metadata assembled into TPA-ready packets in under 90 seconds." },
-  { t: "Denial risk & remediation", d: "Predicts likely denial reasons against historical adjudication data; suggests remediation pre-emptively." },
+  { t: "Check", s: "Missing artefacts caught at intake" },
+  { t: "File", s: "TPA-ready packets in < 90s" },
+  { t: "Predict", s: "Likely denials fixed before filing" },
 ];
 
-export const governance = ["Custom OCR · Kannada", "Regional TTS", "Grievance triage", "Policy discovery"];
+export const governance = ["Kannada handwriting OCR", "Regional text-to-speech", "Grievance triage", "Policy discovery"];
 
 export const services = [
-  {
-    t: "Custom AI engineering",
-    d: "We sit inside your team to design data pipelines, eval harnesses and the inference path. Scope to production in 8–12 weeks.",
-  },
-  { t: "Custom foundational models", d: "When off-the-shelf models won't do the job, we build them." },
-  { t: "Business automation with AI", d: "Document workflows, ops tooling, and customer-facing copilots." },
+  { t: "Custom AI engineering", s: "Pipelines, evals and inference, built inside your team." },
+  { t: "Custom foundational models", s: "When off-the-shelf models won't do the job." },
+  { t: "Business automation", s: "Document workflows, ops tooling and copilots." },
 ];
