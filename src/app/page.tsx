@@ -1,4 +1,4 @@
-import { Nav } from "@/components/nav";
+import { Announcement, Nav } from "@/components/nav";
 import {
   Artha,
   CTA,
@@ -8,7 +8,6 @@ import {
   Hero,
   Insurance,
   Lending,
-  Numbers,
   Proof,
   Services,
 } from "@/components/sections";
@@ -16,11 +15,11 @@ import {
 export default function Home() {
   return (
     <>
+      <Announcement />
       <Nav />
       <main className="flex-1">
         <Hero />
         <Proof />
-        <Numbers />
         <Lending />
         <Artha />
         <Insurance />

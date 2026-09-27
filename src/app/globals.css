@@ -1,20 +1,87 @@
 @import "tailwindcss";
 
+/*
+  Palette: warm cream base with near-black, deep teal and lavender sheets.
+  Every sheet re-declares the same tokens, so components re-theme by context.
+*/
 :root {
-  /* Warm graphite surface ladder — depth comes from steps + hairlines, not shadows */
-  --bg: #0c0c0a;
-  --s1: #121210;
-  --s2: #181815;
-  --s3: #201f1b;
-  --line: #262521;
-  --line-2: #34332d;
-  --fg: #efece4;
-  --fg-2: #b4afa3;
-  --muted: #7a766c;
-  /* One accent: actions and live state only */
-  --accent: #f26b35;
-  --ok: #8cc79a;
-  --warn: #e7b24d;
+  --bg: #ffffeb;
+  --s1: #fbfbe2;
+  --s2: #f3f3d8;
+  --s3: #e9e9cd;
+  --line: rgb(26 26 26 / 0.1);
+  --line-2: rgb(26 26 26 / 0.22);
+  --fg: #1a1a1a;
+  --fg-2: #454540;
+  --muted: #6d6d62;
+  --accent: #034f46;
+  --ok: #1f6b3a;
+  --warn: #b0500c;
+  --cta: #f0d7ff;
+  --cta-fg: #1a1a1a;
+  --sheet-r: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --sheet-r: 4.5rem;
+  }
+}
+
+.sheet-dark {
+  --bg: #1a1a1a;
+  --s1: #222220;
+  --s2: #2a2a27;
+  --s3: #33332f;
+  --line: rgb(255 255 235 / 0.1);
+  --line-2: rgb(255 255 235 / 0.2);
+  --fg: #ffffeb;
+  --fg-2: #d6d6c2;
+  --muted: #9a9a8b;
+  --accent: #ffbcf2;
+  --ok: #a6e3a9;
+  --warn: #ffa946;
+}
+
+.sheet-teal {
+  --bg: #034f46;
+  --s1: #075a50;
+  --s2: #0c6358;
+  --s3: #136c60;
+  --line: rgb(255 255 235 / 0.13);
+  --line-2: rgb(255 255 235 / 0.25);
+  --fg: #ffffeb;
+  --fg-2: #d3e4d9;
+  --muted: #9cc2b5;
+  --accent: #ffa946;
+  --ok: #b8f0bf;
+  --warn: #ffc56e;
+}
+
+.sheet-dawn {
+  --bg: #f0d7ff;
+  --s1: #f5e4ff;
+  --s2: #ebd0fc;
+  --s3: #e1c2f5;
+  --line: rgb(26 26 26 / 0.1);
+  --line-2: rgb(26 26 26 / 0.22);
+  --fg: #1a1a1a;
+  --fg-2: #3f3548;
+  --muted: #6c5d78;
+  --accent: #7f1c34;
+  --ok: #1a5c12;
+  --warn: #8f4300;
+  --cta: #ffffeb;
+}
+
+/* Stacked sheets: rounded top corners that slide over the previous section */
+.sheet {
+  position: relative;
+  margin-top: calc(var(--sheet-r) * -1);
+  border-top-left-radius: var(--sheet-r);
+  border-top-right-radius: var(--sheet-r);
+  background: var(--bg);
+  color: var(--fg);
 }
 
 @theme inline {
@@ -30,40 +97,33 @@
   --color-accent: var(--accent);
   --color-ok: var(--ok);
   --color-warn: var(--warn);
-  --font-sans: var(--font-schibsted);
-  --font-serif: var(--font-newsreader);
+  --color-cta: var(--cta);
+  --color-cta-fg: var(--cta-fg);
+  --font-sans: var(--font-figtree);
+  --font-serif: var(--font-garamond);
   --font-mono: var(--font-plex-mono);
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
 }
 
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-schibsted), ui-sans-serif, sans-serif;
+  font-family: var(--font-figtree), ui-sans-serif, sans-serif;
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--bg);
-}
-
-/* Faint engineering grid behind the hero, fading out at the edges */
-.grid-field {
-  background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--line) 70%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--line) 70%, transparent) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 20%, transparent 75%);
+  background: #f0d7ff;
+  color: #1a1a1a;
 }
 
 .label {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
+  font-family: var(--font-figtree), ui-sans-serif, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 

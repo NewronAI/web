@@ -15,7 +15,7 @@ function PrimaryCTA({ href = "#contact", children }: { href?: string; children: 
   return (
     <a
       href={href}
-      className="group inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-medium text-bg transition hover:brightness-110"
+      className="group inline-flex items-center gap-2 rounded-xl border border-fg bg-cta px-5 py-3 text-sm font-medium text-cta-fg transition hover:brightness-95"
     >
       {children} <Arrow />
     </a>
@@ -26,7 +26,7 @@ function SecondaryCTA({ href, children }: { href: string; children: React.ReactN
   return (
     <a
       href={href}
-      className="group inline-flex items-center gap-2 rounded-lg border border-line-2 px-5 py-3 text-sm text-fg transition-colors hover:bg-s2"
+      className="group inline-flex items-center gap-2 rounded-xl border border-line-2 px-5 py-3 text-sm text-fg transition-colors hover:bg-s2"
     >
       {children} <Arrow />
     </a>
@@ -34,7 +34,7 @@ function SecondaryCTA({ href, children }: { href: string; children: React.ReactN
 }
 
 const Accent = ({ children }: { children: React.ReactNode }) => (
-  <em className="font-serif font-normal italic tracking-[-0.01em] text-fg">{children}</em>
+  <em className="italic">{children}</em>
 );
 
 function ProductHead({
@@ -49,12 +49,12 @@ function ProductHead({
   body: React.ReactNode;
 }) {
   return (
-    <Reveal className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-      <div className="max-w-3xl">
-        <p className="font-mono text-xs text-muted">
+    <Reveal className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+      <div className="max-w-4xl text-balance">
+        <p className="label text-muted">
           <span className="text-accent">{n}</span> · {name}
         </p>
-        <h2 className="mt-4 text-4xl font-medium leading-[1.05] tracking-[-0.03em] md:text-5xl">{tagline}</h2>
+        <h2 className="mt-5 font-serif text-5xl leading-[1] tracking-[-0.02em] md:text-[4.25rem]">{tagline}</h2>
       </div>
       <p className="max-w-sm text-fg-2 md:text-right">{body}</p>
     </Reveal>
@@ -63,7 +63,7 @@ function ProductHead({
 
 function Frame({ title, meta, children }: { title: string; meta?: string; children: React.ReactNode }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-line-2 bg-bg">
+    <div className="overflow-hidden rounded-2xl border border-line-2 bg-bg">
       <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-2.5 font-mono text-[11px] text-muted">
         <span className="truncate text-fg-2">{title}</span>
         {meta && <span className="shrink-0">{meta}</span>}
@@ -82,22 +82,17 @@ function Dot({ tone = "ok" }: { tone?: "ok" | "warn" | "open" }) {
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28">
-      <div aria-hidden className="grid-field pointer-events-none absolute inset-0" />
+    <section className="relative overflow-hidden pt-16 pb-36 md:pt-24 md:pb-52">
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          <p
-            className="rise inline-flex items-center gap-2 rounded-full border border-line-2 bg-s1 py-1 pl-1 pr-3 text-xs text-fg-2"
-            style={{ animationDelay: "40ms" }}
-          >
-            <span className="rounded-full bg-s3 px-2 py-0.5 text-fg">1st place</span>
-            Nasscom AI Gamechangers 2026 · Startup, BFSI
+          <p className="rise label text-muted" style={{ animationDelay: "40ms" }}>
+            Applied AI · Bengaluru, India
           </p>
           <h1
-            className="rise mt-7 text-[2.7rem] font-medium leading-[1] tracking-[-0.045em] sm:text-6xl lg:text-[4.6rem]"
+            className="rise mt-6 font-serif text-[3.2rem] leading-[0.95] tracking-[-0.02em] sm:text-7xl lg:text-[6.25rem]"
             style={{ animationDelay: "120ms" }}
           >
-            The enterprise AI partner of choice for <Accent>regulated</Accent> industries.
+            The enterprise AI partner of choice for <Accent>regulated industries.</Accent>
           </h1>
           <p
             className="rise mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-fg-2"
@@ -127,19 +122,27 @@ export function Hero() {
 
 export function Proof() {
   return (
-    <section id="customers" className="scroll-mt-20 border-y border-line bg-s1/60">
-      <div className="mx-auto max-w-7xl px-5 py-10 md:px-8">
-        <p className="text-center text-sm text-muted">In production at India&apos;s lenders and in government</p>
+    <section id="customers" className="sheet sheet-dark scroll-mt-24">
+      <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
+        <p className="label text-center text-fg-2">In production at India&apos;s lenders and in government</p>
         <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
           {customers.map((c) => (
-            <li key={c} className="text-lg font-medium tracking-tight whitespace-nowrap text-fg-2">
+            <li key={c} className="text-xl font-semibold tracking-tight whitespace-nowrap text-fg">
               {c}
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-center font-mono text-[11px] text-muted">
+        <p className="mt-6 text-center text-sm text-muted">
           Technology, research & ecosystem partners · {partners.join(" · ")}
         </p>
+        <div className="mt-16 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          {numbers.map((o, i) => (
+            <Reveal key={o.n} delay={i * 80} className="bg-s1 p-7">
+              <p className="font-serif text-5xl tracking-[-0.02em] md:text-6xl">{o.n}</p>
+              <p className="mt-3 max-w-[15rem] text-sm text-fg-2">{o.l}</p>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -154,27 +157,13 @@ const numbers = [
   { n: "8–12 wks", l: "from scope to production" },
 ];
 
-export function Numbers() {
-  return (
-    <section className="mx-auto max-w-7xl px-5 py-20 md:px-8">
-      <div className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-        {numbers.map((o, i) => (
-          <Reveal key={o.n} delay={i * 80} className="bg-s1 p-6">
-            <p className="text-4xl font-medium tracking-[-0.04em] md:text-5xl">{o.n}</p>
-            <p className="mt-3 max-w-[15rem] text-sm text-fg-2">{o.l}</p>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 /* ───────────────────────── 01 Lending ───────────────────────── */
 
 export function Lending() {
   return (
-    <section id="lending" className="scroll-mt-20 border-t border-line">
-      <div className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+    <section id="lending" className="sheet  scroll-mt-24">
+      <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <ProductHead
           n="01"
           name="Lending Intelligence"
@@ -191,7 +180,7 @@ export function Lending() {
             <CamFragment />
           </Reveal>
           <Reveal delay={120} className="grid gap-6">
-            <div className="rounded-2xl border border-line bg-s1 p-6">
+            <div className="rounded-3xl border border-line bg-s1 p-6">
               <p className="label text-muted">12 loan products, out of the box</p>
               <div className="mt-5 grid gap-6 sm:grid-cols-2">
                 {[
@@ -211,7 +200,7 @@ export function Lending() {
                 ))}
               </div>
             </div>
-            <blockquote className="rounded-2xl border border-line bg-s1 p-6">
+            <blockquote className="rounded-3xl border border-line bg-s1 p-6">
               <p className="font-serif text-2xl leading-snug text-fg">
                 “Newron&apos;s CAM engine replaced three weeks of human review with a 40-minute QC step.”
               </p>
@@ -228,7 +217,7 @@ export function Lending() {
           </Reveal>
         </div>
 
-        <div className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-6 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
           {lending.modules.map((m, i) => (
             <Reveal key={m.t} delay={i * 60} className="bg-bg p-6">
               <h3 className="font-medium text-fg">{m.t}</h3>
@@ -279,8 +268,8 @@ function CamFragment() {
 
 export function Artha() {
   return (
-    <section id="artha" className="scroll-mt-20 border-t border-line bg-s1/50">
-      <div className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+    <section id="artha" className="sheet sheet-teal scroll-mt-24">
+      <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <ProductHead
           n="02"
           name="Artha Models"
@@ -292,10 +281,10 @@ export function Artha() {
           body="Artha is Newron's suite of vision-language models, built for the paperwork Indian banks and NBFCs actually process."
         />
 
-        <Reveal className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
           {artha.claims.map((c) => (
             <div key={c.l} className="bg-bg p-6">
-              <p className="text-3xl font-medium tracking-[-0.03em] md:text-4xl">{c.n}</p>
+              <p className="font-serif text-4xl tracking-[-0.02em] md:text-5xl">{c.n}</p>
               <p className="mt-2 text-sm text-fg-2">{c.l}</p>
             </div>
           ))}
@@ -303,7 +292,7 @@ export function Artha() {
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.1fr]">
           <Reveal>
-            <ul className="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-bg">
+            <ul className="divide-y divide-line overflow-hidden rounded-3xl border border-line bg-bg">
               {artha.capabilities.map((c, i) => (
                 <li key={c.t} className="grid gap-2 p-6 sm:grid-cols-[2rem_1fr]">
                   <span className="font-mono text-xs text-muted">0{i + 1}</span>
@@ -373,8 +362,8 @@ function ClassifyFragment() {
 
 export function Insurance() {
   return (
-    <section id="insurance" className="scroll-mt-20 border-t border-line">
-      <div className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+    <section id="insurance" className="sheet  scroll-mt-24">
+      <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <ProductHead
           n="03"
           name="Insurance AI"
@@ -389,7 +378,7 @@ export function Insurance() {
           <div className="space-y-3">
             {insurance.map((s, i) => (
               <Reveal key={s.t} delay={i * 80}>
-                <div className="grid grid-cols-[2rem_1fr] gap-2 rounded-2xl border border-line bg-s1 p-6">
+                <div className="grid grid-cols-[2rem_1fr] gap-2 rounded-3xl border border-line bg-s1 p-6">
                   <span className="font-mono text-xs text-accent">0{i + 1}</span>
                   <div>
                     <h3 className="font-medium text-fg">{s.t}</h3>
@@ -432,7 +421,7 @@ function ClaimFragment() {
         </div>
         <div className="p-4">
           <p className="label text-muted">Denial risk</p>
-          <p className="mt-3 text-3xl font-medium tracking-tight text-warn">Elevated</p>
+          <p className="mt-3 font-serif text-4xl text-warn">Elevated</p>
           <p className="mt-2 text-sm text-fg-2">Likely reason: investigation reports absent for a surgical claim.</p>
           <p className="mt-4 rounded-md border border-line-2 px-3 py-2 text-xs text-fg">
             Remediation · request reports from hospital before submission
@@ -451,8 +440,8 @@ function ClaimFragment() {
 
 export function Governance() {
   return (
-    <section id="governance" className="scroll-mt-20 border-t border-line bg-s1/50">
-      <div className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+    <section id="governance" className="sheet sheet-dawn scroll-mt-24">
+      <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <ProductHead
           n="04"
           name="Governance AI"
@@ -468,11 +457,11 @@ export function Governance() {
             <GrievanceFragment />
           </Reveal>
           <Reveal delay={120}>
-            <ul className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
+            <ul className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2">
               {governance.map((g, i) => (
                 <li key={g} className="bg-bg p-6">
                   <span className="font-mono text-xs text-muted">0{i + 1}</span>
-                  <p className="mt-6 text-lg font-medium text-fg">{g}</p>
+                  <p className="mt-8 font-serif text-3xl leading-tight text-fg">{g}</p>
                 </li>
               ))}
             </ul>
@@ -533,8 +522,8 @@ function GrievanceFragment() {
 
 export function Services() {
   return (
-    <section id="services" className="scroll-mt-20 border-t border-line">
-      <div className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+    <section id="services" className="sheet sheet-dark scroll-mt-24">
+      <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <ProductHead
           n="05"
           name="Custom AI Services"
@@ -548,9 +537,9 @@ export function Services() {
         <div className="mt-14 grid gap-4 md:grid-cols-3">
           {services.map((s, i) => (
             <Reveal key={s.t} delay={i * 100}>
-              <div className="flex h-full flex-col rounded-2xl border border-line bg-s1 p-6">
+              <div className="flex h-full flex-col rounded-3xl border border-line bg-s1 p-6">
                 <span className="font-mono text-xs text-accent">0{i + 1}</span>
-                <h3 className="mt-10 text-xl font-medium tracking-tight">{s.t}</h3>
+                <h3 className="mt-12 font-serif text-3xl leading-tight">{s.t}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-fg-2">{s.d}</p>
               </div>
             </Reveal>
@@ -571,11 +560,11 @@ const deploys = [
 
 export function Deployment() {
   return (
-    <section id="security" className="scroll-mt-20 border-t border-line bg-s1/50">
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-24 md:px-8 md:py-32 lg:grid-cols-[1fr_1.2fr]">
+    <section id="security" className="sheet scroll-mt-24">
+      <div className="mx-auto grid max-w-7xl gap-12 px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52 lg:grid-cols-[1fr_1.2fr]">
         <Reveal>
-          <p className="text-sm text-accent">Deployment & security</p>
-          <h2 className="mt-3 text-4xl font-medium leading-[1.05] tracking-[-0.03em] md:text-5xl">
+          <p className="label text-accent">Deployment & security</p>
+          <h2 className="mt-5 font-serif text-5xl leading-[1] tracking-[-0.02em] md:text-[4.25rem]">
             Your data stays <Accent>where regulators expect it.</Accent>
           </h2>
           <p className="mt-6 max-w-md leading-relaxed text-fg-2">
@@ -595,7 +584,7 @@ export function Deployment() {
         </Reveal>
         <Reveal delay={120} className="grid gap-4">
           {deploys.map((d, i) => (
-            <div key={d.t} className="grid grid-cols-[2rem_1fr] gap-2 rounded-2xl border border-line bg-bg p-6">
+            <div key={d.t} className="grid grid-cols-[2rem_1fr] gap-2 rounded-3xl border border-line bg-bg p-6">
               <span className="font-mono text-xs text-accent">0{i + 1}</span>
               <div>
                 <h3 className="font-medium text-fg">{d.t}</h3>
@@ -613,12 +602,11 @@ export function Deployment() {
 
 export function CTA() {
   return (
-    <section id="contact" className="scroll-mt-20 px-5 py-24 md:px-8">
-      <Reveal className="relative mx-auto max-w-7xl overflow-hidden rounded-3xl border border-line-2 bg-s1 px-6 py-16 text-center md:py-24">
-        <div aria-hidden className="grid-field pointer-events-none absolute inset-0 opacity-70" />
-        <div className="relative">
-          <p className="font-mono text-xs text-accent">One-week evaluation</p>
-          <h2 className="mx-auto mt-4 max-w-3xl text-4xl font-medium leading-[1.02] tracking-[-0.04em] md:text-6xl">
+    <section id="contact" className="sheet sheet-teal scroll-mt-24">
+      <Reveal className="mx-auto max-w-7xl px-5 pt-24 pb-40 text-center md:px-8 md:pt-32 md:pb-56">
+        <div>
+          <p className="label text-accent">One-week evaluation</p>
+          <h2 className="mx-auto mt-5 max-w-4xl font-serif text-5xl leading-[0.98] tracking-[-0.02em] md:text-7xl">
             A working pilot <Accent>on your own data,</Accent> inside a week.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-fg-2">
@@ -652,7 +640,7 @@ export function Footer() {
     { h: "Legal", l: [["Privacy"], ["Terms"], ["Security", "#security"], ["Responsible AI"]] },
   ];
   return (
-    <footer className="border-t border-line">
+    <footer className="sheet sheet-dark">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:px-8 lg:grid-cols-[1.6fr_repeat(4,1fr)]">
         <div>
           <Logo />

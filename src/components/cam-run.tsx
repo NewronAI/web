@@ -39,7 +39,7 @@ export function CamRun() {
       : { label: "Processing", cls: "text-accent" };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-line-2 bg-s1">
+    <div className="overflow-hidden rounded-3xl border border-line-2 bg-s1">
       {/* Window bar */}
       <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-3">
         <div className="flex min-w-0 items-center gap-2 font-mono text-xs text-muted">
