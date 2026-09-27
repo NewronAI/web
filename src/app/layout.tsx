@@ -1,37 +1,37 @@
 import type { Metadata } from "next";
-import { Hanken_Grotesk, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Newsreader, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const hanken = Hanken_Grotesk({
-  variable: "--font-hanken",
+const schibsted = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin"],
 });
 
-const instrument = Instrument_Serif({
-  variable: "--font-instrument",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
-  weight: "400",
   style: ["normal", "italic"],
 });
 
-const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "Newron — Applied AI for Regulated Industries",
+  title: "Newron AgentHub — AI agents for regulated teams",
   description:
-    "Production AI for banks, NBFCs, insurers and government. Lending intelligence, Artha document models, insurance claims AI and governance AI — deployed in your VPC, on-prem or air-gapped.",
+    "Discover, approve and deploy production AI agents for credit, claims and citizen services. Scoped permissions, human approval and audit trails, running in your VPC, on-prem or air-gapped.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${hanken.variable} ${instrument.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${schibsted.variable} ${newsreader.variable} ${plexMono.variable} h-full antialiased`}
     >
-      <body className="grain min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

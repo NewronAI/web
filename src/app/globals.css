@@ -1,75 +1,69 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f3efe6;
-  --paper-2: #ebe5d8;
-  --ink: #14130f;
-  --ink-2: #3a3830;
-  --muted: #77736a;
-  --rule: #d6cfbf;
-  --saffron: #e2582b;
-  --moss: #1f4d3a;
-  --night: #0f1411;
+  /* Warm graphite surface ladder — depth comes from steps + hairlines, not shadows */
+  --bg: #0c0c0a;
+  --s1: #121210;
+  --s2: #181815;
+  --s3: #201f1b;
+  --line: #262521;
+  --line-2: #34332d;
+  --fg: #efece4;
+  --fg-2: #b4afa3;
+  --muted: #7a766c;
+  /* One accent: actions and live state only */
+  --accent: #f26b35;
+  --ok: #8cc79a;
+  --warn: #e7b24d;
 }
 
 @theme inline {
-  --color-paper: var(--paper);
-  --color-paper-2: var(--paper-2);
-  --color-ink: var(--ink);
-  --color-ink-2: var(--ink-2);
+  --color-bg: var(--bg);
+  --color-s1: var(--s1);
+  --color-s2: var(--s2);
+  --color-s3: var(--s3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
   --color-muted: var(--muted);
-  --color-rule: var(--rule);
-  --color-saffron: var(--saffron);
-  --color-moss: var(--moss);
-  --color-night: var(--night);
-  --font-sans: var(--font-hanken);
-  --font-serif: var(--font-instrument);
-  --font-mono: var(--font-jetbrains);
+  --color-accent: var(--accent);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --font-sans: var(--font-schibsted);
+  --font-serif: var(--font-newsreader);
+  --font-mono: var(--font-plex-mono);
 }
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-hanken), ui-sans-serif, sans-serif;
-  font-feature-settings: "ss01", "cv11";
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-schibsted), ui-sans-serif, sans-serif;
 }
 
 ::selection {
-  background: var(--saffron);
-  color: var(--paper);
+  background: var(--accent);
+  color: var(--bg);
 }
 
-/* Paper grain */
-.grain::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 60;
-  opacity: 0.07;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+/* Faint engineering grid behind the hero, fading out at the edges */
+.grid-field {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--line) 70%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--line) 70%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 20%, transparent 75%);
 }
 
-/* Ledger ruling used behind sections */
-.ledger {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 31px,
-    color-mix(in oklab, var(--rule) 55%, transparent) 31px,
-    color-mix(in oklab, var(--rule) 55%, transparent) 32px
-  );
-}
-
-.eyebrow {
-  font-family: var(--font-jetbrains), ui-monospace, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+.label {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -77,7 +71,7 @@ body {
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
@@ -86,42 +80,33 @@ body {
 }
 .rise {
   opacity: 0;
-  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.1, 1) forwards;
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.1, 1) forwards;
 }
 
 /* Scroll reveal (toggled by <Reveal>) */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(16px);
   transition:
-    opacity 0.9s cubic-bezier(0.2, 0.7, 0.1, 1),
-    transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1);
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.1, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.1, 1);
 }
 .reveal.is-in {
   opacity: 1;
   transform: none;
 }
 
-/* Scanner sweep across the statement card */
-@keyframes scan {
+/* Live-state pulse for running / waiting indicators */
+@keyframes pulse-ring {
   0% {
-    top: 0%;
+    box-shadow: 0 0 0 0 color-mix(in oklab, currentColor 55%, transparent);
   }
   100% {
-    top: 100%;
+    box-shadow: 0 0 0 7px transparent;
   }
 }
-.scanline {
-  animation: scan 3.2s cubic-bezier(0.6, 0, 0.4, 1) infinite alternate;
-}
-
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-.marquee {
-  animation: marquee 38s linear infinite;
+.live-dot {
+  animation: pulse-ring 1.4s ease-out infinite;
 }
 
 @keyframes blink {
@@ -141,8 +126,7 @@ body {
     animation: none;
     transition: none;
   }
-  .scanline,
-  .marquee,
+  .live-dot,
   .caret {
     animation: none;
   }

@@ -2,25 +2,28 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { CONTACT_HREF } from "@/lib/site";
 
 const links = [
-  { href: "#lending", label: "Lending" },
-  { href: "#artha", label: "Artha" },
-  { href: "#insurance", label: "Insurance" },
+  { href: "#agents", label: "Agents" },
+  { href: "#how", label: "How it works" },
+  { href: "#integrations", label: "Integrations" },
   { href: "#governance", label: "Governance" },
-  { href: "#services", label: "Services" },
   { href: "#customers", label: "Customers" },
+  { href: "#builders", label: "Builders" },
 ];
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2 ${className}`}>
+    <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <svg viewBox="0 0 28 28" className="h-7 w-7" aria-hidden>
-        <rect x="1" y="1" width="26" height="26" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M8 20V8l12 12V8" fill="none" stroke="currentColor" strokeWidth="2" />
-        <circle cx="20" cy="8" r="2.2" fill="var(--saffron)" />
+        <rect x="1" y="1" width="26" height="26" rx="7" fill="var(--s3)" stroke="var(--line-2)" />
+        <path d="M9 19V9l10 10V9" fill="none" stroke="currentColor" strokeWidth="1.8" />
+        <circle cx="19" cy="9" r="2" fill="var(--accent)" />
       </svg>
-      <span className="font-serif text-[1.65rem] leading-none tracking-tight">Newron</span>
+      <span className="text-[1.05rem] font-semibold tracking-tight">
+        Newron <span className="font-normal text-fg-2">AgentHub</span>
+      </span>
     </span>
   );
 }
@@ -38,34 +41,37 @@ export function Nav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled || open ? "border-b border-rule bg-paper/90 backdrop-blur" : "border-b border-transparent"
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+        scrolled || open ? "border-line bg-bg/85 backdrop-blur-md" : "border-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:px-8">
-        <Link href="/" aria-label="Newron home">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-5 md:px-8">
+        <Link href="/" aria-label="Newron AgentHub home">
           <Logo />
         </Link>
 
-        <ul className="hidden items-center gap-7 lg:flex">
+        <ul className="hidden items-center gap-1 lg:flex">
           {links.map((l) => (
             <li key={l.href}>
-              <a
-                href={l.href}
-                className="text-sm text-ink-2 underline-offset-[6px] transition hover:text-ink hover:underline decoration-saffron"
-              >
+              <a href={l.href} className="rounded-md px-3 py-2 text-sm text-fg-2 transition-colors hover:bg-s2 hover:text-fg">
                 {l.label}
               </a>
             </li>
           ))}
         </ul>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <a
-            href="#contact"
-            className="hidden rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper transition hover:bg-saffron sm:inline-block"
+            href={CONTACT_HREF}
+            className="hidden rounded-lg px-3.5 py-2 text-sm text-fg-2 transition-colors hover:text-fg sm:inline-block"
           >
-            Talk to us
+            Book a demo
+          </a>
+          <a
+            href="#agents"
+            className="hidden rounded-lg bg-accent px-3.5 py-2 text-sm font-medium text-bg transition hover:brightness-110 sm:inline-block"
+          >
+            Browse agents
           </a>
           <button
             type="button"
@@ -74,29 +80,25 @@ export function Nav() {
             aria-expanded={open}
             onClick={() => setOpen((o) => !o)}
           >
-            <span className="relative block h-3 w-6">
-              <span
-                className={`absolute left-0 h-px w-6 bg-ink transition ${open ? "top-1.5 rotate-45" : "top-0"}`}
-              />
-              <span
-                className={`absolute left-0 h-px w-6 bg-ink transition ${open ? "top-1.5 -rotate-45" : "top-3"}`}
-              />
+            <span className="relative block h-3 w-5">
+              <span className={`absolute left-0 h-px w-5 bg-fg transition ${open ? "top-1.5 rotate-45" : "top-0"}`} />
+              <span className={`absolute left-0 h-px w-5 bg-fg transition ${open ? "top-1.5 -rotate-45" : "top-3"}`} />
             </span>
           </button>
         </div>
       </nav>
 
       {open && (
-        <ul className="border-t border-rule px-5 pb-6 pt-2 lg:hidden">
-          {[...links, { href: "#contact", label: "Talk to us" }].map((l) => (
+        <ul className="border-t border-line px-5 pb-6 pt-2 lg:hidden">
+          {[...links, { href: CONTACT_HREF, label: "Book a demo" }].map((l) => (
             <li key={l.href}>
               <a
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between border-b border-rule py-4 font-serif text-2xl"
+                className="flex items-center justify-between border-b border-line py-4 text-lg"
               >
                 {l.label}
-                <span className="text-saffron">→</span>
+                <span className="text-accent">→</span>
               </a>
             </li>
           ))}

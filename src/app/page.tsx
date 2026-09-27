@@ -1,14 +1,15 @@
 import { Nav } from "@/components/nav";
 import {
+  Builders,
+  CatalogSection,
   CTA,
-  Customers,
-  Deployment,
   Footer,
+  Governance,
   Hero,
-  Products,
-  Recognition,
-  Stats,
-  Testimonial,
+  Integrations,
+  Lifecycle,
+  Outcomes,
+  Proof,
 } from "@/components/sections";
 
 export default function Home() {
@@ -17,12 +18,13 @@ export default function Home() {
       <Nav />
       <main className="flex-1">
         <Hero />
-        <Customers />
-        <Stats />
-        <Products />
-        <Deployment />
-        <Testimonial />
-        <Recognition />
+        <Proof />
+        <CatalogSection />
+        <Lifecycle />
+        <Integrations />
+        <Governance />
+        <Outcomes />
+        <Builders />
         <CTA />
       </main>
       <Footer />
