@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -14,11 +15,8 @@ const links = [
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2 ${className}`}>
-      <svg viewBox="0 0 28 28" className="h-7 w-7" aria-hidden>
-        <path d="M7 21V7l14 14V7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="21" cy="7" r="2.6" fill="#ff6c4c" />
-      </svg>
+    <span className={`inline-flex items-center gap-2.5 ${className}`}>
+      <Image src="/newron-logo.svg" alt="" width={32} height={32} priority className="h-8 w-8" />
       <span className="text-[1.3rem] font-semibold tracking-tight">Newron</span>
     </span>
   );
