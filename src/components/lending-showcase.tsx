@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { PhotoStage } from "@/components/photo-stage";
 import { Check, Dot, Frame } from "@/components/ui";
+import lendingPhoto from "@/assets/photos/lending.jpg";
 import { lendingModules, type LendingModuleId } from "@/lib/site";
 
 const CYCLE_MS = 6000;
@@ -67,9 +69,11 @@ export function LendingShowcase() {
         })}
       </div>
 
-      <div id="lending-panel" role="tabpanel" aria-label={active.t} key={active.id} className="fade-in">
-        <Visual id={active.id} />
-      </div>
+      <PhotoStage src={lendingPhoto} position="50% 60%">
+        <div id="lending-panel" role="tabpanel" aria-label={active.t} key={active.id} className="fade-in">
+          <Visual id={active.id} />
+        </div>
+      </PhotoStage>
     </div>
   );
 }

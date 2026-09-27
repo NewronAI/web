@@ -23,6 +23,8 @@ const instrument = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+  // Absolute base for the generated Open Graph image URL.
+  metadataBase: new URL("https://www.newron.ai"),
   title: "Newron — The Enterprise AI Partner for Regulated Industries",
   description:
     "The applied-AI partner to India's banks, NBFCs, insurers and Government. Lending Intelligence, Artha models, Insurance AI and Governance AI — self-hostable on your VPC, on-prem or fully air-gapped.",

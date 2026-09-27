@@ -2,7 +2,12 @@ import { Reveal } from "@/components/reveal";
 import { Logo } from "@/components/nav";
 import { CamRun } from "@/components/cam-run";
 import { LendingShowcase } from "@/components/lending-showcase";
+import { PhotoStage } from "@/components/photo-stage";
 import { Check, Dot, Frame } from "@/components/ui";
+import arthaPhoto from "@/assets/photos/artha.jpg";
+import governancePhoto from "@/assets/photos/governance.jpg";
+import heroBackdrop from "@/assets/photos/hero-backdrop.jpg";
+import insurancePhoto from "@/assets/photos/insurance.jpg";
 import { artha, CONTACT_HREF, customers, governance, insurance, partners, services } from "@/lib/site";
 
 function Arrow() {
@@ -56,7 +61,7 @@ function Head({
     <Reveal className={c ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
       <p className="label text-muted">{kicker}</p>
       <h2 className={`mt-5 text-balance ${H2}`}>{title}</h2>
-      {line && <p className={`mt-5 text-balance text-lg text-fg-2${c ? "mx-auto max-w-xl" : "max-w-xl"}`}>{line}</p>}
+      {line && <p className={`mt-5 text-balance text-lg text-fg-2 ${c ? "mx-auto max-w-xl" : "max-w-xl"}`}>{line}</p>}
     </Reveal>
   );
 }
@@ -92,8 +97,10 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="rise mx-auto mt-16 max-w-5xl" style={{ animationDelay: "460ms" }}>
-          <CamRun />
+        <div className="rise mx-auto mt-16 max-w-6xl" style={{ animationDelay: "460ms" }}>
+          <PhotoStage src={heroBackdrop} priority>
+            <CamRun />
+          </PhotoStage>
         </div>
       </div>
     </section>
@@ -194,8 +201,10 @@ export function Artha() {
           ))}
         </Reveal>
 
-        <Reveal className="mx-auto mt-14 max-w-5xl">
-          <ClassifyFragment />
+        <Reveal className="mx-auto mt-14 max-w-6xl">
+          <PhotoStage src={arthaPhoto}>
+            <ClassifyFragment />
+          </PhotoStage>
           <ul className="mt-4 grid gap-3 sm:grid-cols-3">
             {artha.capabilities.map((c, i) => (
               <li key={c.t} className="flex items-center justify-between gap-3 rounded-2xl border border-line px-5 py-4">
@@ -279,7 +288,9 @@ export function Insurance() {
               </li>
             ))}
           </ol>
-          <ClaimFragment />
+          <PhotoStage src={insurancePhoto} position="50% 40%">
+            <ClaimFragment />
+          </PhotoStage>
         </Reveal>
       </div>
     </section>
@@ -334,8 +345,10 @@ export function Governance() {
           }
           line="Built with the Government of Karnataka."
         />
-        <Reveal className="mx-auto mt-14 max-w-4xl">
-          <GrievanceFragment />
+        <Reveal className="mx-auto mt-14 max-w-5xl">
+          <PhotoStage src={governancePhoto} position="60% 45%">
+            <GrievanceFragment />
+          </PhotoStage>
           <ul className="mt-6 flex flex-wrap justify-center gap-2">
             {governance.map((g) => (
               <li key={g} className="rounded-full border border-line-2 bg-s1 px-4 py-2 text-sm">
