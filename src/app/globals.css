@@ -102,6 +102,17 @@
   --font-sans: var(--font-geist), Arial, sans-serif;
   --font-serif: var(--font-geist), Arial, sans-serif;
   --font-mono: var(--font-geist-mono);
+  --font-accent: var(--font-instrument), Georgia, serif;
+}
+
+/* Serif italic accent inside Geist headlines: nudged up so its x-height sits level with Geist */
+.accent {
+  font-family: var(--font-instrument), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+  line-height: 0;
 }
 
 html {

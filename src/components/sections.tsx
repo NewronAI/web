@@ -34,7 +34,7 @@ function SecondaryCTA({ href, children }: { href: string; children: React.ReactN
 }
 
 const Accent = ({ children }: { children: React.ReactNode }) => (
-  <em className="italic">{children}</em>
+  <em className="accent">{children}</em>
 );
 
 function ProductHead({
