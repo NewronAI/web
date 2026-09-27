@@ -10,21 +10,13 @@ import heroBackdrop from "@/assets/photos/hero-backdrop.jpg";
 import insurancePhoto from "@/assets/photos/insurance.jpg";
 import { artha, CONTACT_HREF, customers, governance, insurance, partners, services } from "@/lib/site";
 
-function Arrow() {
-  return (
-    <span aria-hidden className="inline-block transition-transform group-hover:translate-x-0.5">
-      →
-    </span>
-  );
-}
-
 function PrimaryCTA({ href = "#contact", children }: { href?: string; children: React.ReactNode }) {
   return (
     <a
       href={href}
-      className="group inline-flex items-center gap-2 rounded-xl border border-fg bg-cta px-5 py-3 text-sm font-medium text-cta-fg transition hover:brightness-95"
+      className="inline-flex items-center rounded-xl border border-fg bg-cta px-5 py-3 text-sm font-medium text-cta-fg transition hover:brightness-95"
     >
-      {children} <Arrow />
+      {children}
     </a>
   );
 }
@@ -33,9 +25,9 @@ function SecondaryCTA({ href, children }: { href: string; children: React.ReactN
   return (
     <a
       href={href}
-      className="group inline-flex items-center gap-2 rounded-xl border border-line-2 px-5 py-3 text-sm text-fg transition-colors hover:bg-s2"
+      className="inline-flex items-center rounded-xl border border-line-2 px-5 py-3 text-sm text-fg transition-colors hover:bg-s2"
     >
-      {children} <Arrow />
+      {children}
     </a>
   );
 }
