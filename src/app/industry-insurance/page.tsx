@@ -17,7 +17,7 @@ export default function Page() {
       related={[
         { href: "/insurance-ai", kicker: "Solutions", t: "Insurance AI" },
         { href: "/security", kicker: "Trust", t: "Security & compliance" },
-        { href: "/responsible-ai", kicker: "Trust", t: "Responsible AI" },
+        { href: "/custom-ai-engineering", kicker: "Solutions", t: "Custom AI engineering" },
       ]}
     />
   );

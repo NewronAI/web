@@ -184,11 +184,6 @@
         "label": "Request security pack",
         "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
         "variant": "primary"
-      },
-      {
-        "label": "Privacy Policy",
-        "href": "/privacy",
-        "variant": "ghost"
       }
     ]
   }

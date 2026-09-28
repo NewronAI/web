@@ -16,7 +16,7 @@ export default function Page() {
       related={[
         { href: "/industry-insurance", kicker: "Industries", t: "Newron for Insurance" },
         { href: "/security", kicker: "Trust", t: "Security & compliance" },
-        { href: "/responsible-ai", kicker: "Trust", t: "Responsible AI" },
+        { href: "/custom-ai-engineering", kicker: "Solutions", t: "Custom AI engineering" },
       ]}
     />
   );

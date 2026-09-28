@@ -13,7 +13,8 @@ export function PageHero({
   secondary,
   children,
 }: {
-  crumb?: { href: string; label: string };
+  /** Middle breadcrumb; without an href it renders as plain text. */
+  crumb?: { href?: string; label: string };
   kicker: React.ReactNode;
   title: React.ReactNode;
   line?: React.ReactNode;
@@ -32,9 +33,13 @@ export function PageHero({
             {crumb && (
               <>
                 <span aria-hidden>/</span>
-                <Link href={crumb.href} className="hover:text-fg">
-                  {crumb.label}
-                </Link>
+                {crumb.href ? (
+                  <Link href={crumb.href} className="hover:text-fg">
+                    {crumb.label}
+                  </Link>
+                ) : (
+                  <span>{crumb.label}</span>
+                )}
               </>
             )}
             <span aria-hidden>/</span>

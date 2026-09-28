@@ -12,7 +12,6 @@ const groupHref: Record<string, string> = {
   Solutions: "/lending-intelligence",
   Industries: "/banks",
   Company: "/about",
-  Legal: "/privacy",
 };
 
 /** Renders any content page (solutions, industries, company, trust and legal) from its content file. */
@@ -29,7 +28,7 @@ export function ContentPageView({
   return (
     <>
       <PageHero
-        crumb={{ href: groupHref[page.hero.group] ?? "/", label: page.hero.group }}
+        crumb={{ href: groupHref[page.hero.group], label: page.hero.group }}
         kicker={page.hero.kicker}
         title={<Rich text={page.hero.title} accent />}
         line={page.hero.line}

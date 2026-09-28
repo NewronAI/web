@@ -12,9 +12,9 @@ export default function Page() {
     <ContentPageView
       page={content}
       related={[
-        { href: "/privacy", kicker: "Legal", t: "Privacy Policy" },
         { href: "/security", kicker: "Trust", t: "Security & compliance" },
-        { href: "/responsible-ai", kicker: "Trust", t: "Responsible AI" },
+        { href: "/about", kicker: "Company", t: "About Newron" },
+        { href: "/open-source", kicker: "Company", t: "Open source" },
       ]}
     />
   );

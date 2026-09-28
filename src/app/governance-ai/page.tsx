@@ -15,8 +15,8 @@ export default function Page() {
       visual={<GovernanceVisual />}
       related={[
         { href: "/public-sector", kicker: "Industries", t: "Newron for the Public Sector" },
-        { href: "/responsible-ai", kicker: "Trust", t: "Responsible AI" },
         { href: "/security", kicker: "Trust", t: "Security & compliance" },
+        { href: "/custom-ai-engineering", kicker: "Solutions", t: "Custom AI engineering" },
       ]}
     />
   );

@@ -13,8 +13,8 @@ export default function Page() {
       page={content}
       related={[
         { href: "/security", kicker: "Trust", t: "Security & compliance" },
-        { href: "/responsible-ai", kicker: "Trust", t: "Responsible AI" },
         { href: "/careers", kicker: "Company", t: "Careers" },
+        { href: "/about", kicker: "Company", t: "About Newron" },
       ]}
     />
   );
