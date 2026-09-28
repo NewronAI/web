@@ -1,6 +1,5 @@
 import { ContentPageView } from "@/components/content-page";
-import { PhotoBanner } from "@/components/page-visuals";
-import ctaPhoto from "@/assets/photos/og-image.jpg";
+import { TeamStrip } from "@/components/page-visuals";
 import { metaFor } from "@/content/load";
 import page from "@/content/pages/about.json";
 import type { ContentPage } from "@/content/types";
@@ -13,7 +12,7 @@ export default function Page() {
   return (
     <ContentPageView
       page={content}
-      visual={<PhotoBanner src={ctaPhoto} position="75% 50%" />}
+      visual={<TeamStrip />}
       related={[
         { href: "/careers", kicker: "Company", t: "Careers" },
         { href: "/press", kicker: "Company", t: "Press" },
