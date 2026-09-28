@@ -1,0 +1,141 @@
+{
+  "slug": "open-source",
+  "title": "Open source — Newron",
+  "hero": {
+    "group": "Company",
+    "kicker": "Open source",
+    "fact": "3 public repositories",
+    "title": "The tools we wish *existed*.",
+    "line": "What we can release, we release — tooling built alongside our production work, under permissive licences. This is a small roster, not a portfolio: it lists what is actually public today.",
+    "ctas": [
+      {
+        "label": "View on GitHub",
+        "href": "https://github.com/NewronAI",
+        "variant": "primary"
+      },
+      {
+        "label": "How to contribute",
+        "href": "#contributing",
+        "variant": "ghost"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "projects",
+      "n": "01",
+      "kicker": "Projects",
+      "title": "What we've *released*.",
+      "line": "Every public repository in the Newron org, with its licence and last activity. Nothing here is listed as maintained that we are not touching.",
+      "repos": [
+        {
+          "name": "cortex",
+          "lang": "JavaScript",
+          "license": "MIT",
+          "activity": "Apr 2026",
+          "d": "Electron-based crawler for automating repetitive collection and scraping tasks.",
+          "href": "https://github.com/NewronAI/cortex"
+        },
+        {
+          "name": "n00bs",
+          "lang": "TypeScript",
+          "license": "MIT",
+          "activity": "Jun 2024",
+          "d": "Framework for running data collection at scale.",
+          "href": "https://github.com/NewronAI/n00bs"
+        },
+        {
+          "name": "newron-sdk",
+          "lang": "Python",
+          "license": "Apache-2.0",
+          "activity": "Oct 2022",
+          "d": "SDK for the data-centric ML platform Newron started on — build, manage and deploy models through data-driven development.",
+          "href": "https://github.com/NewronAI/newron-sdk"
+        }
+      ]
+    },
+    {
+      "id": "why",
+      "n": "02",
+      "kicker": "Why we do it",
+      "title": "Some things shouldn't be *proprietary*.",
+      "line": "Our edge is in deployment and custom models — not in hoarding the basics.",
+      "steps": [
+        {
+          "label": "01",
+          "t": "Shared evaluation",
+          "d": "Honest, reproducible benchmarks make the whole field better. We'd rather compete on results than on secret test sets."
+        },
+        {
+          "label": "02",
+          "t": "Indian-language tooling",
+          "d": "Tooling for Indic OCR and speech is scarce, and most of ours is still customer-specific. Where we can separate it from customer data, releasing it lowers the barrier for everyone building here."
+        },
+        {
+          "label": "03",
+          "t": "Interop over lock-in",
+          "d": "Open schemas for statements and documents would let institutions move data without being trapped by any one vendor. We'd like to publish ours; it isn't public yet."
+        },
+        {
+          "label": "04",
+          "t": "What we can't open",
+          "d": "Customer-trained models, customer data and anything covered by a deployment agreement stay closed. We'd rather say that plainly than imply a bigger public footprint than we have."
+        }
+      ]
+    },
+    {
+      "id": "contributing",
+      "n": "03",
+      "kicker": "Contributing",
+      "title": "How to get *involved*.",
+      "line": "Issues and pull requests are welcome on any public repository.",
+      "list": [
+        "**Start with an issue.** Open one describing the bug or proposal before sending a large change, so we can align on approach.",
+        "**Check the repository README.** Setup, style and test expectations live there; open an issue if anything is missing or out of date.",
+        "**Add to the benchmarks.** New evaluation cases — especially for Indian languages and document types — are some of the most valuable contributions.",
+        "**Sign your commits.** We use the Developer Certificate of Origin; a signed-off commit confirms you can contribute the code."
+      ]
+    },
+    {
+      "id": "faq",
+      "n": "04",
+      "kicker": "Questions",
+      "title": "Common questions.",
+      "faq": [
+        {
+          "q": "What licence do you use?",
+          "a": "Per project, and it is listed next to each one above: cortex and n00bs are MIT, newron-sdk is Apache-2.0. The LICENSE file in each repository is the authority."
+        },
+        {
+          "q": "Do you accept external contributions?",
+          "a": "Yes. Issues and pull requests are welcome; start with an issue for anything substantial so we can discuss the approach."
+        },
+        {
+          "q": "Are the production models open?",
+          "a": "The shared tooling, schemas and benchmarks are open. Our custom, customer-trained models are not — those are licensed to the customer."
+        },
+        {
+          "q": "How do I report a security issue?",
+          "a": "Please disclose responsibly via our security contact rather than a public issue. See the Security page for details."
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "kicker": "Build with us",
+    "title": "Use it, *improve* it, ship it.",
+    "line": "Open an issue or send a pull request on anything public. If you're building regulated AI in India, we'd love to compare notes.",
+    "ctas": [
+      {
+        "label": "View on GitHub",
+        "href": "https://github.com/NewronAI",
+        "variant": "primary"
+      },
+      {
+        "label": "Security",
+        "href": "/security",
+        "variant": "ghost"
+      }
+    ]
+  }
+}
