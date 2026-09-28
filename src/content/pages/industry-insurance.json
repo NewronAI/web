@@ -1,0 +1,156 @@
+{
+  "slug": "industry-insurance",
+  "title": "Newron for Insurance",
+  "hero": {
+    "group": "Industries",
+    "kicker": "Newron for Insurance",
+    "title": "Settle the clean claims *automatically*.",
+    "line": "Insurers and TPAs drown in documents. Newron reads them, checks eligibility against the specific policy, and predicts denial risk — so adjusters focus on the genuine edge cases.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      },
+      {
+        "label": "Insurance AI",
+        "href": "/insurance-ai",
+        "variant": "ghost"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "use-cases",
+      "n": "01",
+      "kicker": "Where insurers deploy Newron",
+      "title": "Across claims and *underwriting*.",
+      "line": "Cut handling time on routine claims and surface risk before it becomes a denial or a dispute.",
+      "cards": [
+        {
+          "bullets": [
+            "Eligibility at intake",
+            "TPA-ready packets",
+            "Sub-limit awareness"
+          ],
+          "tag": "Claims",
+          "n": "01",
+          "t": "Straight-through claims",
+          "d": "Document understanding, eligibility checks and TPA-ready filing that clear clean claims without manual handling."
+        },
+        {
+          "bullets": [
+            "Denial-reason model",
+            "Pre-emptive remediation",
+            "SLA forecasting"
+          ],
+          "tag": "Risk",
+          "n": "02",
+          "t": "Denial-risk modelling",
+          "d": "Predict which claims will bounce, and why, against your historical adjudication data — and fix them first."
+        },
+        {
+          "bullets": [
+            "Proposal automation",
+            "Medical record parsing",
+            "Leakage controls"
+          ],
+          "tag": "Underwriting",
+          "n": "03",
+          "t": "Document-driven underwriting",
+          "d": "Parse proposal forms, medical records and financials to speed up underwriting and reduce leakage."
+        }
+      ]
+    },
+    {
+      "id": "impact",
+      "n": "02",
+      "kicker": "In production",
+      "title": "Faster settlements, *fewer* denials.",
+      "line": "Measured across health and motor lines at insurers and TPAs.",
+      "stats": {
+        "kicker": "Measured in production",
+        "caption": "What claims teams see in production",
+        "items": [
+          {
+            "n": "90s",
+            "l": "Avg time to file"
+          },
+          {
+            "n": "4.2d",
+            "l": "Observed TPA settlement SLA"
+          }
+        ]
+      }
+    },
+    {
+      "id": "trust",
+      "n": "03",
+      "kicker": "Built for regulated buyers",
+      "title": "The controls your *compliance* team expects.",
+      "steps": [
+        {
+          "label": "01",
+          "t": "Patient & policyholder privacy",
+          "d": "All processing runs inside your environment — VPC, on-prem or air-gapped — with full audit logging."
+        },
+        {
+          "label": "02",
+          "t": "Explainable decisions",
+          "d": "Every eligibility check and denial-risk score is backed by the specific policy clauses and document evidence."
+        },
+        {
+          "label": "03",
+          "t": "TPA-ready integration",
+          "d": "API-first packets and webhooks slot into your existing claims platform and TPA handoffs."
+        },
+        {
+          "label": "04",
+          "t": "Human-in-the-loop",
+          "d": "Newron assembles and recommends; adjusters approve. Nothing settles without a person in the loop."
+        }
+      ]
+    },
+    {
+      "id": "faq",
+      "n": "04",
+      "kicker": "Questions",
+      "title": "Common questions.",
+      "faq": [
+        {
+          "q": "Which lines are supported?",
+          "a": "Health and motor are in production. Other lines are not validated yet; we scope them case by case rather than claiming coverage up front."
+        },
+        {
+          "q": "How does denial-risk prediction work?",
+          "a": "It is trained on your historical adjudication outcomes and explains every prediction with the policy clauses and evidence behind it."
+        },
+        {
+          "q": "Does it fit our TPA workflow?",
+          "a": "Yes. Newron produces TPA-ready packets and integrates via REST + webhooks with your claims platform and TPA partners."
+        },
+        {
+          "q": "Is sensitive medical data protected?",
+          "a": "Processing stays inside your environment with audit logging and data-residency commitments — nothing is sent to third-party model APIs."
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "kicker": "Get started",
+    "title": "Replay *last quarter's claims* through Newron.",
+    "line": "We'll show you the denial-risk and time-to-file numbers on your own historical claims before you commit to anything.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      },
+      {
+        "label": "Security & compliance",
+        "href": "/security",
+        "variant": "ghost"
+      }
+    ]
+  }
+}

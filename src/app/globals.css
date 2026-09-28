@@ -156,6 +156,54 @@ blockquote {
   border-radius: 0.75rem;
 }
 
+/* Long-form (legal, policy) typography */
+.longform h2 {
+  margin-top: 3.5rem;
+  scroll-margin-top: 7rem;
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.longform h3 {
+  margin-top: 2rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.longform p,
+.longform li {
+  color: var(--fg-2);
+  line-height: 1.75;
+}
+.longform p {
+  margin-top: 1rem;
+}
+.longform ul,
+.longform ol {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+}
+.longform ul {
+  list-style: disc;
+}
+.longform ol {
+  list-style: decimal;
+}
+.longform li + li {
+  margin-top: 0.5rem;
+}
+.longform a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 4px;
+}
+.longform strong {
+  color: var(--fg);
+  font-weight: 500;
+}
+
 /* Photo stages: fine film grain over the photo, beneath the UI */
 .stage::after {
   content: "";

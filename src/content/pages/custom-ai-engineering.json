@@ -1,0 +1,164 @@
+{
+  "slug": "custom-ai-engineering",
+  "title": "Custom AI engineering — Newron",
+  "hero": {
+    "group": "Solutions",
+    "kicker": "Custom AI engineering",
+    "title": "When the product isn't enough, *we build it for you.*",
+    "line": "Newron is staffed by ex-research and ex-platform engineers who embed with your team. Most engagements ship to production inside one quarter.",
+    "ctas": [
+      {
+        "label": "Scope an engagement",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      },
+      {
+        "label": "See the product suite",
+        "href": "/lending-intelligence",
+        "variant": "ghost"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "offerings",
+      "n": "01",
+      "kicker": "What we do",
+      "title": "Three ways to work with us.",
+      "line": "From a focused engineering sprint to a custom foundational model — scoped to the problem, not a fixed package.",
+      "cards": [
+        {
+          "bullets": [
+            "Discovery + scoping sprint",
+            "Data + eval pipeline",
+            "Production deployment"
+          ],
+          "tag": "Engineering",
+          "n": "01",
+          "t": "Custom AI engineering",
+          "d": "We sit inside your team to design the data pipelines, eval harnesses and inference path. Scope to production in 8–12 weeks."
+        },
+        {
+          "bullets": [
+            "Pretraining + alignment",
+            "Frontier-comparable · ~1/8 cost",
+            "License: yours"
+          ],
+          "tag": "Foundational",
+          "n": "02",
+          "t": "Custom foundational models",
+          "d": "When off-the-shelf models won't do the job, we build them — domain-pretrained, fine-tuned on your data, evaluated against frontier baselines."
+        },
+        {
+          "bullets": [
+            "Document + workflow ops",
+            "VPC or air-gapped",
+            "API-first, self-hostable"
+          ],
+          "tag": "Automation",
+          "n": "03",
+          "t": "Business automation with AI",
+          "d": "Document workflows, ops tooling and customer-facing copilots, built on the Newron platform and deployed in your VPC."
+        }
+      ]
+    },
+    {
+      "id": "how",
+      "n": "02",
+      "kicker": "How we engage",
+      "title": "A quarter from *kickoff* to production.",
+      "line": "We don't hand over a slide deck. We deliver a working system your team owns and can run.",
+      "steps": [
+        {
+          "label": "WEEK 1–2",
+          "t": "Discovery & scoping",
+          "d": "We map the problem, the data and the eval criteria with your team and agree on what 'working' means."
+        },
+        {
+          "label": "WEEK 3–6",
+          "t": "Data & eval pipeline",
+          "d": "We build the ingestion, labelling and evaluation harness so progress is measurable from day one."
+        },
+        {
+          "label": "WEEK 6–10",
+          "t": "Model & inference path",
+          "d": "We train, fine-tune or assemble the models and stand up the inference path in your environment."
+        },
+        {
+          "label": "WEEK 10–12",
+          "t": "Hardening & handover",
+          "d": "We deploy to production, document everything, and hand your engineers the keys."
+        }
+      ]
+    },
+    {
+      "id": "principles",
+      "n": "03",
+      "kicker": "How we build",
+      "title": "Principles we *won't* trade away.",
+      "steps": [
+        {
+          "label": "01",
+          "t": "Deploy where you need to",
+          "d": "Self-hostable on your VPC, on-premise or fully air-gapped. Compliance teams get the audit trail; your engineering keeps the keys."
+        },
+        {
+          "label": "02",
+          "t": "API-first by design",
+          "d": "Every Newron system ships with the same REST + webhook surface, so it drops into your existing stack instead of replacing it."
+        },
+        {
+          "label": "03",
+          "t": "Frontier-comparable, at ~1/8",
+          "d": "On the specific tasks we train for, our custom models score on par with frontier systems in our own evaluations — for a fraction of the inference bill."
+        },
+        {
+          "label": "04",
+          "t": "Built with NVIDIA",
+          "d": "NVIDIA Inception Partner since 2023, training on Indian data with explicit residency commitments."
+        }
+      ]
+    },
+    {
+      "id": "faq",
+      "n": "04",
+      "kicker": "Questions",
+      "title": "Common questions.",
+      "faq": [
+        {
+          "q": "Who owns the model and the code?",
+          "a": "The deliverables we build for you — code, trained weights and documentation — are handed over at the end of the engagement. Where a deliverable builds on Newron’s existing base models or platform packages, those are licensed to you to run and self-host rather than assigned. Which parts are owned and which are licensed is set out explicitly in the engagement agreement."
+        },
+        {
+          "q": "How small a problem is worth an engagement?",
+          "a": "The smallest thing we take on is one workflow with a success criterion we can measure — in practice an 8–12 week engagement. Below that, the product suite is usually the better fit than a custom build, and we’ll say so."
+        },
+        {
+          "q": "Can you really match frontier models at lower cost?",
+          "a": "On the specific tasks that matter to you, yes — measured on your data with an evaluation harness you can re-run. Domain pretraining and fine-tuning let a smaller model match much larger ones at roughly an eighth of the inference cost. We publish the eval numbers to you rather than asking you to take the claim on trust."
+        },
+        {
+          "q": "What does your team look like?",
+          "a": "Ex-research and ex-platform engineers who have shipped production AI. You work directly with the people building your system, not an account layer."
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "kicker": "Get started",
+    "title": "Bring us your *hardest* problem.",
+    "line": "Tell us what off-the-shelf AI can't do for you. We'll scope an engagement and tell you honestly whether — and how — we can ship it.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      },
+      {
+        "label": "About Newron",
+        "href": "/about",
+        "variant": "ghost"
+      }
+    ]
+  }
+}

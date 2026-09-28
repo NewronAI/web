@@ -1,0 +1,128 @@
+{
+  "slug": "about",
+  "title": "About — Newron",
+  "hero": {
+    "group": "Company",
+    "kicker": "About Newron",
+    "title": "We build the intelligence *behind* decisions that can't be taken back.",
+    "line": "Newron is an applied-AI company building production systems for the institutions that operate under regulation — India's banks, NBFCs, insurers and state bodies — where a wrong answer is never just a bug report.",
+    "ctas": [
+      {
+        "label": "Work with us",
+        "href": "/careers",
+        "variant": "primary"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "why",
+      "n": "01",
+      "kicker": "Why we exist",
+      "title": "Some rooms don't *forgive* a guess.",
+      "line": "The constraint of regulated work shapes everything we make.",
+      "prose": [
+        "In a credit office, an error is a mis-priced loan. In a claims queue, it's a family left waiting. At a grievance desk, it's a citizen who couldn't be heard. We would rather ship a system that says *“I'm not sure, here's the policy clause”* than one that guesses with confidence."
+      ]
+    },
+    {
+      "id": "how",
+      "n": "02",
+      "kicker": "How we work",
+      "title": "Engineering, *not* magic.",
+      "line": "We began in Bengaluru with a narrow conviction: the distance between a frontier model and a deployable one is engineering.",
+      "steps": [
+        {
+          "label": "01",
+          "t": "We sit inside your team",
+          "d": "Ex-research and ex-platform engineers embed with your people to design the data pipelines, eval harnesses and inference path."
+        },
+        {
+          "label": "02",
+          "t": "We ship to production",
+          "d": "Most engagements reach production inside a single quarter — a working system you own, not a proof of concept."
+        },
+        {
+          "label": "03",
+          "t": "We deploy where data lives",
+          "d": "VPC, on-premise or air-gapped. Compliance gets the audit trail; your engineering keeps the keys."
+        },
+        {
+          "label": "04",
+          "t": "We earn the cost",
+          "d": "On the tasks we train for, our custom models score on par with frontier systems in our own evaluations, at a fraction of the inference bill."
+        }
+      ]
+    },
+    {
+      "id": "where",
+      "n": "03",
+      "kicker": "Where we run",
+      "title": "Already in *production*.",
+      "line": "Not theoretical — running today across three surfaces.",
+      "stats": {
+        "kicker": "Measured in production",
+        "caption": "Across lending, insurance and governance",
+        "items": [
+          {
+            "n": "3",
+            "l": "Live practice areas"
+          },
+          {
+            "n": "230k +",
+            "l": "Hours saved"
+          },
+          {
+            "n": "2023",
+            "l": "NVIDIA Inception"
+          }
+        ]
+      }
+    },
+    {
+      "id": "story",
+      "n": "04",
+      "kicker": "The story so far",
+      "title": "A short history.",
+      "steps": [
+        {
+          "label": "2023",
+          "t": "Founded in Bengaluru",
+          "d": "Started with a focus on regulated industries and a conviction that deployability is an engineering problem."
+        },
+        {
+          "label": "2023",
+          "t": "NVIDIA Inception Partner",
+          "d": "Joined NVIDIA Inception, training on Indian financial data with explicit residency commitments."
+        },
+        {
+          "label": "2024",
+          "t": "Lending suite in production",
+          "d": "Credit memos, statement analysis and verification live at banks and NBFCs."
+        },
+        {
+          "label": "2025",
+          "t": "Insurance & governance",
+          "d": "Claims automation for insurers and citizen-service AI with the Government of Karnataka."
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "kicker": "Get started",
+    "title": "Build the *defensible* kind of AI.",
+    "line": "Whether you want to deploy our products or have us build something custom, we'd like to hear what you're working on.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      },
+      {
+        "label": "See open roles",
+        "href": "/careers",
+        "variant": "ghost"
+      }
+    ]
+  }
+}

@@ -1,5 +1,55 @@
-// TODO: replace with the real scheduling link used by the "Talk to us" CTA.
-export const CONTACT_HREF = "mailto:hello@newron.ai";
+// Booking link used by every "Talk to Us" CTA (same as newron.ai).
+export const CONTACT_HREF = "https://calendar.app.google/LfJBqnSonqgrP6GUA";
+
+export const nav = [
+  { href: "/lending-intelligence", label: "Lending" },
+  { href: "/#artha", label: "Artha" },
+  { href: "/insurance-ai", label: "Insurance" },
+  { href: "/governance-ai", label: "Governance" },
+  { href: "/custom-ai-engineering", label: "Services" },
+  { href: "/#customers", label: "Customers" },
+  { href: "/about", label: "Company" },
+];
+
+// Mirrors the footer on newron.ai.
+export const footer = [
+  {
+    h: "Solutions",
+    l: [
+      { href: "/lending-intelligence", label: "Lending intelligence" },
+      { href: "/insurance-ai", label: "Insurance AI" },
+      { href: "/governance-ai", label: "Governance AI" },
+      { href: "/custom-ai-engineering", label: "Custom AI engineering" },
+    ],
+  },
+  {
+    h: "Industries",
+    l: [
+      { href: "/banks", label: "Banks" },
+      { href: "/nbfcs", label: "NBFCs" },
+      { href: "/industry-insurance", label: "Insurance" },
+      { href: "/public-sector", label: "Public sector" },
+    ],
+  },
+  {
+    h: "Company",
+    l: [
+      { href: "/about", label: "About" },
+      { href: "/careers", label: "Careers" },
+      { href: "/press", label: "Press" },
+      { href: "/open-source", label: "Open source" },
+    ],
+  },
+  {
+    h: "Legal",
+    l: [
+      { href: "/privacy", label: "Privacy" },
+      { href: "/terms", label: "Terms" },
+      { href: "/security", label: "Security" },
+      { href: "/responsible-ai", label: "Responsible AI" },
+    ],
+  },
+];
 
 // Content mirrors newron.ai, trimmed for scanning. Customers are kept separate from partners.
 export const customers = ["Aditya Birla Capital", "HDFC Credila", "Fedbank", "Niwas", "Fusion", "Government of Karnataka"];

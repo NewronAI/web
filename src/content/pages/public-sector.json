@@ -1,0 +1,160 @@
+{
+  "slug": "public-sector",
+  "title": "Newron for the Public Sector",
+  "hero": {
+    "group": "Industries",
+    "kicker": "Newron for the Public Sector",
+    "title": "Public services that *reach further*.",
+    "line": "Built with the Government of Karnataka. Newron meets citizens in their own language and runs entirely inside government infrastructure — so digital services don't leave people behind.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      },
+      {
+        "label": "Governance AI",
+        "href": "/governance-ai",
+        "variant": "ghost"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "use-cases",
+      "n": "01",
+      "kicker": "Where the state deploys Newron",
+      "title": "From the grievance desk to the *archive*.",
+      "line": "Language, voice and document understanding, assembled into services citizens can actually use.",
+      "cards": [
+        {
+          "bullets": [
+            "Voice-first intake",
+            "Auto-routing",
+            "Sourced responses"
+          ],
+          "tag": "Citizen services",
+          "n": "01",
+          "t": "Grievance redressal",
+          "d": "Citizens speak in their own dialect; Newron classifies, routes, retrieves the policy and drafts a response for officer approval."
+        },
+        {
+          "bullets": [
+            "Handwriting + print",
+            "Ledger layouts",
+            "Searchable archive"
+          ],
+          "tag": "Records",
+          "n": "02",
+          "t": "Digitising the archive",
+          "d": "Custom OCR reads Kannada handwriting and print from ledgers and forms that were never digitised."
+        },
+        {
+          "bullets": [
+            "Cited answers",
+            "Scales to archives",
+            "Always current"
+          ],
+          "tag": "Policy",
+          "n": "03",
+          "t": "Clause-level discovery",
+          "d": "Surface the exact rule from circulars and PDFs, with a citation, so frontline staff answer correctly the first time."
+        }
+      ]
+    },
+    {
+      "id": "impact",
+      "n": "02",
+      "kicker": "In pilot",
+      "title": "Service at the speed of a *phone call*.",
+      "line": "Across grievance categories in the Karnataka deployment.",
+      "stats": {
+        "kicker": "Measured in production",
+        "caption": "What citizen-service teams see",
+        "items": [
+          {
+            "n": "1",
+            "l": "Language in production · Kannada"
+          },
+          {
+            "n": "4:12",
+            "l": "Median response time (mm:ss)"
+          },
+          {
+            "n": "100%",
+            "l": "Cases audit-logged"
+          }
+        ]
+      }
+    },
+    {
+      "id": "trust",
+      "n": "03",
+      "kicker": "Built for government",
+      "title": "Sovereignty, *by default*.",
+      "steps": [
+        {
+          "label": "01",
+          "t": "Runs on your infrastructure",
+          "d": "Deploy on-premise or air-gapped within state data centres, with explicit data-residency commitments."
+        },
+        {
+          "label": "02",
+          "t": "Officer accountability",
+          "d": "Newron drafts and routes; an officer reviews and approves every response, with a full audit log."
+        },
+        {
+          "label": "03",
+          "t": "Accessible by design",
+          "d": "Voice-first intake in Kannada, so a citizen who cannot fill an English form can still be heard."
+        },
+        {
+          "label": "04",
+          "t": "Transparent & auditable",
+          "d": "Every answer is sourced to the governing rule, and every case is logged for oversight."
+        }
+      ]
+    },
+    {
+      "id": "faq",
+      "n": "04",
+      "kicker": "Questions",
+      "title": "Common questions.",
+      "faq": [
+        {
+          "q": "Can Newron run inside our data centre?",
+          "a": "Yes. Public-sector deployments run on-premise or air-gapped within state infrastructure, with data-residency commitments."
+        },
+        {
+          "q": "Which languages are supported?",
+          "a": "Kannada is in production, including handwriting. Other Indian languages are extensions the stack is built for, but each needs its own data and evaluation before we would call it supported."
+        },
+        {
+          "q": "How is citizen data protected?",
+          "a": "Data stays within government infrastructure, processing is logged end to end, and access is controlled and auditable."
+        },
+        {
+          "q": "Does it replace our officers?",
+          "a": "No — it removes the mechanical work. Officers review and approve responses; Newron handles intake, routing, retrieval and drafting."
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "kicker": "For the public sector",
+    "title": "Start with a single *grievance category*.",
+    "line": "We work with state bodies to scope a pilot on your own infrastructure, with the audit trail and sovereignty your mandate requires.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      },
+      {
+        "label": "About Newron",
+        "href": "/about",
+        "variant": "ghost"
+      }
+    ]
+  }
+}

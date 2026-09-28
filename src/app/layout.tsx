@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Footer } from "@/components/footer";
+import { Announcement, Nav } from "@/components/nav";
 import "./globals.css";
 
 // globals.css appends Arial, sans-serif → Geist, "Geist Fallback", Arial, sans-serif
@@ -27,7 +29,10 @@ const instrument = Instrument_Serif({
 export const metadata: Metadata = {
   // Absolute base for the generated Open Graph image URL.
   metadataBase: new URL("https://www.newron.ai"),
-  title: "Newron — The Enterprise AI Partner for Regulated Industries",
+  title: {
+    default: "Newron — The Enterprise AI Partner for Regulated Industries",
+    template: "%s — Newron",
+  },
   description:
     "The applied-AI partner to India's banks, NBFCs, insurers and Government. Lending Intelligence, Artha models, Insurance AI and Governance AI — self-hostable on your VPC, on-prem or fully air-gapped.",
 };
@@ -35,7 +40,20 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable} ${instrument.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <a
+          href="#main"
+          className="sr-only z-[60] rounded-xl bg-fg px-4 py-2 text-sm text-bg focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          Skip to content
+        </a>
+        <Announcement />
+        <Nav />
+        <main id="main" className="flex-1">
+          {children}
+        </main>
+        <Footer />
+      </body>
     </html>
   );
 }

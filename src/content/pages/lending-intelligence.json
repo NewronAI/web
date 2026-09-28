@@ -1,0 +1,228 @@
+{
+  "slug": "lending-intelligence",
+  "title": "Lending intelligence — Newron",
+  "hero": {
+    "group": "Solutions",
+    "kicker": "Lending intelligence",
+    "title": "The credit officer's *second brain.*",
+    "line": "A modular suite for the loan origination lifecycle — from intake and statement parsing to CAM generation, deviation handling and verification. Configured to your policy, your format, your tier structure.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "suite",
+      "n": "01",
+      "kicker": "In the suite",
+      "title": "Six modules, one origination flow.",
+      "line": "Adopt the whole suite or drop a single module into your existing LOS. Every module is API-first and self-hostable.",
+      "cards": [
+        {
+          "bullets": [
+            "Your template, your tiers",
+            "Clause-level citations",
+            "Human-in-the-loop QC"
+          ],
+          "tag": "Generation",
+          "n": "01",
+          "t": "CAM generation",
+          "d": "Compose Credit Approval Memos in your bank's exact format, with deviation flags and inline policy citations."
+        },
+        {
+          "bullets": [
+            "Multi-bank ingestion",
+            "Round-tripping detection",
+            "Salary regularity"
+          ],
+          "tag": "Analysis",
+          "n": "02",
+          "t": "Statement analyser",
+          "d": "12 months of bank statements parsed in under 60 seconds — cash-flow, recurring obligations, anomalies."
+        },
+        {
+          "bullets": [
+            "Bureau + income score",
+            "Policy-fit scoring",
+            "Audit timeline"
+          ],
+          "tag": "Profile",
+          "n": "03",
+          "t": "Applicant 360°",
+          "d": "Every signal, covenant and prior decision on one screen, with a recommendation and a full decision trail."
+        },
+        {
+          "bullets": [
+            "Face + address match",
+            "Geotag + GPS lock",
+            "Call analysis, auto-report"
+          ],
+          "tag": "Verification",
+          "n": "04",
+          "t": "Video PD",
+          "d": "Hold the personal discussion over video instead of a field visit — identity and address verified, the call analysed, a standard report attached to the CAM."
+        },
+        {
+          "bullets": [
+            "Sourced answers",
+            "Pre-fills deviations",
+            "Always current"
+          ],
+          "tag": "Knowledge",
+          "n": "05",
+          "t": "Policy chat",
+          "d": "Underwriters ask, Newron answers — sourced from your policy book with page-level references."
+        },
+        {
+          "bullets": [
+            "Tiered overrides",
+            "Reason codes",
+            "Maker-checker"
+          ],
+          "tag": "Controls",
+          "n": "06",
+          "t": "Deviation engine",
+          "d": "Detects, classifies and routes deviations against your credit policy and tier override matrix."
+        }
+      ]
+    },
+    {
+      "id": "coverage",
+      "n": "02",
+      "kicker": "Coverage",
+      "title": "Built for the products you *actually* originate.",
+      "line": "Pre-trained on Indian commercial and consumer credit. New products onboard in days, not quarters.",
+      "groups": [
+        {
+          "h": "Commercial",
+          "sub": "6 products",
+          "items": [
+            "Loan against property",
+            "Overdraft",
+            "Gold loan",
+            "Equipment finance",
+            "Revenue-based finance",
+            "Line of credit"
+          ]
+        },
+        {
+          "h": "Consumer",
+          "sub": "6 products",
+          "items": [
+            "Home loan",
+            "Auto loan",
+            "Loan against securities",
+            "Personal loan",
+            "Education loan",
+            "Credit card"
+          ]
+        }
+      ],
+      "stats": {
+        "kicker": "Measured in production",
+        "caption": "What credit teams see in production",
+        "items": [
+          {
+            "n": "66%",
+            "l": "Reduction in TAT"
+          },
+          {
+            "n": "200%",
+            "l": "Productivity uplift"
+          },
+          {
+            "n": "230k+",
+            "l": "Hours saved"
+          }
+        ]
+      }
+    },
+    {
+      "id": "flow",
+      "n": "03",
+      "kicker": "How it fits",
+      "title": "From application to *decision-ready*.",
+      "line": "Newron sits between your LOS and your credit committee — automating the mechanical work so officers spend time on judgement.",
+      "steps": [
+        {
+          "label": "STEP 01",
+          "t": "Intake from your LOS",
+          "d": "Application, KYC and bureau pulled automatically the moment a file is created."
+        },
+        {
+          "label": "STEP 02",
+          "t": "Statement & document analysis",
+          "d": "Bank statements, ITRs and GST returns parsed; anomalies and obligations surfaced."
+        },
+        {
+          "label": "STEP 03",
+          "t": "CAM drafted in your format",
+          "d": "Sections written with citations; deviations flagged against your policy book."
+        },
+        {
+          "label": "STEP 04",
+          "t": "Verification & remediation",
+          "d": "Personal discussion held over video and attached; missing artefacts requested before review."
+        },
+        {
+          "label": "STEP 05",
+          "t": "Officer review & decision",
+          "d": "A clean recommendation with a complete, exportable audit trail."
+        }
+      ]
+    },
+    {
+      "id": "proof",
+      "quote": {
+        "text": "Newron’s AI CAM engine replaced weeks of human review with a 40-minute QC step. Our credit officers stopped reformatting Excel and went back to actual underwriting.",
+        "name": "Arun V",
+        "role": "Head of Product, Aditya Birla Capital (ABCL)"
+      }
+    },
+    {
+      "id": "faq",
+      "n": "04",
+      "kicker": "Questions",
+      "title": "Common questions.",
+      "faq": [
+        {
+          "q": "Does it work with our existing LOS?",
+          "a": "Yes. Newron is API-first with REST + webhook surfaces and drops into your loan origination system without replacing it. Most integrations are live within a quarter."
+        },
+        {
+          "q": "Where does our data live?",
+          "a": "Wherever you need it to. Newron self-hosts on your VPC, on-premise, or fully air-gapped. Your engineers keep the keys; compliance gets a complete audit trail."
+        },
+        {
+          "q": "Can it follow our credit policy exactly?",
+          "a": "The suite is configured to your policy book, formats and tier override matrix. Deviations are detected and routed against your own rules, not generic ones."
+        },
+        {
+          "q": "What about model accuracy?",
+          "a": "On the tasks we train for, our custom models score on par with frontier systems in our own evaluations, at a fraction of the inference cost — and every output is sourced and reviewable."
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "kicker": "Get started",
+    "title": "See Newron on your *own credit files*.",
+    "line": "We'll spin up a sandboxed instance against a slice of your data and deliver a working pilot with eval numbers your team can trust.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      },
+      {
+        "label": "Read customer stories",
+        "href": "/#customers",
+        "variant": "ghost"
+      }
+    ]
+  }
+}

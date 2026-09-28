@@ -1,5 +1,5 @@
 import { Reveal } from "@/components/reveal";
-import { Logo } from "@/components/nav";
+import { Accent, Head, Num, PrimaryCTA, SecondaryCTA } from "@/components/kit";
 import { CamRun } from "@/components/cam-run";
 import { LendingShowcase } from "@/components/lending-showcase";
 import { PhotoStage } from "@/components/photo-stage";
@@ -11,60 +11,6 @@ import governancePhoto from "@/assets/photos/governance.jpg";
 import heroBackdrop from "@/assets/photos/hero-backdrop.jpg";
 import insurancePhoto from "@/assets/photos/insurance.jpg";
 import { artha, CONTACT_HREF, customers, governance, insurance, partners, services } from "@/lib/site";
-
-function PrimaryCTA({ href = "#contact", children }: { href?: string; children: React.ReactNode }) {
-  return (
-    <a
-      href={href}
-      className="inline-flex items-center rounded-xl border border-fg bg-cta px-5 py-3 text-sm font-medium text-cta-fg shadow-[inset_0_1px_0_rgb(255_255_255/0.7),0_1px_2px_rgb(0_0_0/0.08)] transition duration-200 hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.7),0_8px_20px_-8px_rgb(0_0_0/0.35)] active:translate-y-0"
-    >
-      {children}
-    </a>
-  );
-}
-
-function SecondaryCTA({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <a
-      href={href}
-      className="inline-flex items-center rounded-xl border border-line-2 px-5 py-3 text-sm text-fg transition duration-200 hover:-translate-y-px hover:border-fg/40 hover:bg-s2 active:translate-y-0"
-    >
-      {children}
-    </a>
-  );
-}
-
-const Accent = ({ children }: { children: React.ReactNode }) => <em className="accent">{children}</em>;
-
-const H2 = "font-serif text-5xl leading-[1] tracking-[-0.045em] md:text-[4.25rem]";
-
-/** Section head: kicker, headline and one short line. Centered by default. */
-function Head({
-  kicker,
-  title,
-  line,
-  align = "center",
-}: {
-  kicker: React.ReactNode;
-  title: React.ReactNode;
-  line?: React.ReactNode;
-  align?: "center" | "left";
-}) {
-  const c = align === "center";
-  return (
-    <Reveal className={c ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
-      <p className="label text-muted">{kicker}</p>
-      <h2 className={`mt-5 text-balance ${H2}`}>{title}</h2>
-      {line && <p className={`mt-5 text-balance text-lg text-fg-2 ${c ? "mx-auto max-w-xl" : "max-w-xl"}`}>{line}</p>}
-    </Reveal>
-  );
-}
-
-const Num = ({ n, name }: { n: string; name: string }) => (
-  <>
-    <span className="text-accent">{n}</span> · {name}
-  </>
-);
 
 /* ───────────────────────── Hero ───────────────────────── */
 
@@ -84,8 +30,8 @@ export function Hero() {
             Production AI for India&apos;s banks, NBFCs, insurers and Government.
           </p>
           <div className="rise mt-9 flex flex-wrap justify-center gap-3" style={{ animationDelay: "320ms" }}>
-            <PrimaryCTA>Talk to us</PrimaryCTA>
-            <SecondaryCTA href="#lending">Explore the platform</SecondaryCTA>
+            <PrimaryCTA href={CONTACT_HREF}>Talk to Us</PrimaryCTA>
+            <SecondaryCTA href="/lending-intelligence">Explore the platform</SecondaryCTA>
           </div>
         </div>
 
@@ -101,11 +47,12 @@ export function Hero() {
 
 /* ───────────────────────── Proof ───────────────────────── */
 
+// Production figures published on newron.ai.
 const numbers: { n: React.ReactNode; l: string }[] = [
+  { n: "66%", l: "Reduction in TAT" },
+  { n: "200%", l: "Productivity uplift" },
+  { n: "230k+", l: "Hours saved" },
   { n: "< 60s", l: "12 months of statements" },
-  { n: "< 90s", l: "to a TPA-ready claim" },
-  { n: <Eighth />, l: "the cost of frontier models" },
-  { n: "8–12 wks", l: "scope to production" },
 ];
 
 export function Proof() {
@@ -164,6 +111,7 @@ export function Lending() {
             </>
           }
           line="Intake to verification, across 12 commercial and consumer loan products."
+          more={{ href: "/lending-intelligence", label: "Explore Lending Intelligence" }}
         />
         <Reveal className="mt-16">
           <LendingShowcase />
@@ -221,7 +169,7 @@ export function Artha() {
   );
 }
 
-function ClassifyFragment() {
+export function ClassifyFragment() {
   const files = ["scan_0412.pdf", "IMG_2231.jpg", "docs_final(2).pdf", "stmt.pdf", "kyc.zip"];
   const docs = [
     { d: "Bank statement", p: "Shree Steels" },
@@ -271,6 +219,7 @@ export function Insurance() {
             </>
           }
           line="Documents checked, claims filed and denial risk predicted at intake."
+          more={{ href: "/insurance-ai", label: "Explore Insurance AI" }}
         />
 
         <Reveal className="mx-auto mt-14 max-w-5xl">
@@ -296,7 +245,7 @@ export function Insurance() {
   );
 }
 
-function ClaimFragment() {
+export function ClaimFragment() {
   const artefacts = [
     { t: "Policy schedule", ok: true },
     { t: "Pre-authorisation", ok: true },
@@ -343,6 +292,7 @@ export function Governance() {
             </>
           }
           line="Built with the Government of Karnataka."
+          more={{ href: "/governance-ai", label: "Explore Governance AI" }}
         />
         <Reveal className="mx-auto mt-14 max-w-5xl">
           <PhotoStage src={governancePhoto} position="60% 45%">
@@ -361,7 +311,7 @@ export function Governance() {
   );
 }
 
-function GrievanceFragment() {
+export function GrievanceFragment() {
   return (
     <Frame title="Grievance GR-30952 · handwritten" meta="sample">
       <div className="grid items-center md:grid-cols-[1fr_auto_1fr]">
@@ -406,6 +356,7 @@ export function Services() {
             </>
           }
           line="Scope to production in 8–12 weeks."
+          more={{ href: "/custom-ai-engineering", label: "Explore Custom AI Services" }}
         />
         <div className="mt-14 grid gap-4 md:grid-cols-3">
           {services.map((s, i) => (
@@ -487,6 +438,7 @@ export function Deployment() {
             </>
           }
           line="API-first, with REST and webhooks."
+          more={{ href: "/security", label: "Security & compliance" }}
         />
         <div className="mx-auto mt-14 grid max-w-4xl gap-4 sm:grid-cols-3">
           {deploys.map((d, i) => (
@@ -501,7 +453,7 @@ export function Deployment() {
         </div>
         <Reveal className="mt-8 flex flex-wrap justify-center gap-2">
           {[
-            ["ISO 27001", "ok"],
+            ["ISO 27001 aligned", "ok"],
             ["NVIDIA Inception Partner", "ok"],
             ["SOC 2 · in progress", "open"],
           ].map(([t, tone]) => (
@@ -539,10 +491,8 @@ export function CTA() {
             ))}
           </ol>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <PrimaryCTA href={CONTACT_HREF}>Talk to us</PrimaryCTA>
-            <a href={CONTACT_HREF} className="text-sm text-fg-2 underline decoration-line-2 underline-offset-4 hover:text-fg">
-              hello@newron.ai
-            </a>
+            <PrimaryCTA href={CONTACT_HREF}>Talk to Us</PrimaryCTA>
+            <SecondaryCTA href="/security">How we deploy</SecondaryCTA>
           </div>
         </Reveal>
         <Reveal delay={120}>
@@ -560,68 +510,5 @@ export function CTA() {
         </Reveal>
       </div>
     </section>
-  );
-}
-
-/* ───────────────────────── Footer ───────────────────────── */
-
-export function Footer() {
-  // Only links that resolve. Add About, Careers, Privacy etc. here once those pages exist.
-  const cols = [
-    {
-      h: "Solutions",
-      l: [
-        ["Lending Intelligence", "#lending"],
-        ["Artha Models", "#artha"],
-        ["Insurance AI", "#insurance"],
-        ["Governance AI", "#governance"],
-        ["Custom AI Services", "#services"],
-      ],
-    },
-    {
-      h: "Company",
-      l: [
-        ["Customers", "#customers"],
-        ["Deployment & security", "#security"],
-        ["One-week evaluation", "#contact"],
-      ],
-    },
-  ];
-  return (
-    <footer className="sheet sheet-dark">
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:px-8 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr]">
-        <div>
-          <Logo />
-          <p className="mt-5 max-w-xs text-sm text-fg-2">
-            Newron AI Technologies Pvt. Ltd. builds production AI for regulated industries.
-          </p>
-        </div>
-        {cols.map((c) => (
-          <div key={c.h}>
-            <p className="label text-muted">{c.h}</p>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              {c.l.map(([label, href]) => (
-                <li key={label}>
-                  <a href={href} className="text-fg-2 transition-colors hover:text-fg">
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-        <div>
-          <p className="label text-muted">Get in touch</p>
-          <a href={CONTACT_HREF} className="mt-4 block text-lg text-fg transition-colors hover:text-accent">
-            hello@newron.ai
-          </a>
-          <p className="mt-2 text-sm text-fg-2">Bengaluru, India</p>
-        </div>
-      </div>
-      <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-4 border-t border-line px-5 py-6 font-mono text-[11px] text-muted md:px-8">
-        <span>© {new Date().getFullYear()} Newron AI Technologies Pvt. Ltd.</span>
-        <span>NVIDIA Inception Partner · ISO 27001 · SOC 2 in progress</span>
-      </div>
-    </footer>
   );
 }
