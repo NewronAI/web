@@ -58,7 +58,7 @@ const numbers: { n: React.ReactNode; l: string }[] = [
 
 export function Proof() {
   return (
-    <section id="customers" className="sheet sheet-dark scroll-mt-24">
+    <section id="customers" className="sheet sheet-dark">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <p className="label text-center text-fg-2">In production at India&apos;s lenders and in government</p>
         <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
@@ -102,7 +102,7 @@ export function Proof() {
 
 export function Lending() {
   return (
-    <section id="lending" className="sheet scroll-mt-24">
+    <section id="lending" className="sheet">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
           kicker={<Num n="01" name="Lending Intelligence" />}
@@ -126,7 +126,7 @@ export function Lending() {
 
 export function Artha() {
   return (
-    <section id="artha" className="sheet sheet-teal scroll-mt-24">
+    <section id="artha" className="sheet sheet-teal">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
           kicker={<Num n="02" name="Artha Models" />}
@@ -210,7 +210,7 @@ export function ClassifyFragment() {
 
 export function Insurance() {
   return (
-    <section id="insurance" className="sheet scroll-mt-24">
+    <section id="insurance" className="sheet">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
           kicker={<Num n="03" name="Insurance AI" />}
@@ -283,7 +283,7 @@ export function ClaimFragment() {
 
 export function Governance() {
   return (
-    <section id="governance" className="sheet sheet-dawn scroll-mt-24">
+    <section id="governance" className="sheet sheet-dawn">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
           kicker={<Num n="04" name="Governance AI" />}
@@ -347,7 +347,7 @@ export function GrievanceFragment() {
 
 export function Services() {
   return (
-    <section id="services" className="sheet sheet-dark scroll-mt-24">
+    <section id="services" className="sheet sheet-dark">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
           kicker={<Num n="05" name="Custom AI Services" />}
@@ -429,7 +429,7 @@ function DeployIcon({ kind }: { kind: (typeof deploys)[number]["icon"] }) {
 
 export function Deployment() {
   return (
-    <section id="security" className="sheet scroll-mt-24">
+    <section id="security" className="sheet">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
           kicker="Deployment & security"
@@ -472,7 +472,7 @@ export function Deployment() {
 
 export function CTA() {
   return (
-    <section id="contact" className="sheet sheet-teal scroll-mt-24">
+    <section id="contact" className="sheet sheet-teal">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 pt-24 pb-40 md:px-8 md:pt-32 md:pb-56 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
         <Reveal>
           <p className="label text-accent">One-week evaluation</p>

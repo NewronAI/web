@@ -115,8 +115,23 @@
   line-height: 0;
 }
 
+/*
+  One offset for every #anchor jump: clears the sticky nav (~5.5rem) and leaves
+  room for the rounded top of the target sheet, so sections land fully in view.
+*/
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 8.5rem;
+}
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 9.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -159,7 +174,6 @@ blockquote {
 /* Long-form (legal, policy) typography */
 .longform h2 {
   margin-top: 3.5rem;
-  scroll-margin-top: 7rem;
   font-size: 1.75rem;
   font-weight: 500;
   letter-spacing: -0.03em;

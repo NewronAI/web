@@ -42,7 +42,7 @@ export function ContentPageView({
       {page.sections.map((s, i) =>
         s.longform ? (
           // Long-form prose always sits on cream for readability.
-          <section key={s.id ?? i} id={s.id ?? undefined} className="sheet scroll-mt-24 pt-20 md:pt-28">
+          <section key={s.id ?? i} id={s.id ?? undefined} className="sheet pt-20 md:pt-28">
             <LongForm
               toc={s.longform.items.map((it) => ({ id: it.id, label: it.toc }))}
               date={s.longform.date}
@@ -61,7 +61,7 @@ export function ContentPageView({
             </LongForm>
           </section>
         ) : (
-          <section key={s.id ?? i} id={s.id ?? undefined} className={`sheet ${TONES[i % TONES.length]} scroll-mt-24`}>
+          <section key={s.id ?? i} id={s.id ?? undefined} className={`sheet ${TONES[i % TONES.length]}`}>
             <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
               <SectionBody s={s} />
             </div>

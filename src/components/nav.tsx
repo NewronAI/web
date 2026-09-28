@@ -34,7 +34,7 @@ function Trophy({ className = "" }: { className?: string }) {
 
 // Same copy and destination as the award ribbon on newron.ai.
 const AWARD = {
-  href: "/press#releases",
+  href: "/press",
   label:
     "Newron wins the Challenger award, first place in the Startup category for the BFSI sector, at Nasscom AI Gamechangers 2026. Read the announcement.",
 };

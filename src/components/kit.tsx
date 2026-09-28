@@ -109,7 +109,7 @@ export function Sheet({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className={`sheet ${tone} scroll-mt-24`}>
+    <section id={id} className={`sheet ${tone}`}>
       <div className={`mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52 ${className}`}>{children}</div>
     </section>
   );
