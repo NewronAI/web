@@ -115,17 +115,23 @@
   line-height: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /*
   One offset for every #anchor jump: clears the sticky nav (~5.5rem) and leaves
   room for the rounded top of the target sheet, so sections land fully in view.
+  Set as scroll-margin on the targets, not scroll-padding on <html>: Next.js reads
+  the root scroll-padding when deciding whether to scroll on navigation, and a
+  large value made it scroll new pages (e.g. /press) down past their hero.
 */
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 8.5rem;
+[id] {
+  scroll-margin-top: 8.5rem;
 }
 @media (min-width: 768px) {
-  html {
-    scroll-padding-top: 9.5rem;
+  [id] {
+    scroll-margin-top: 9.5rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
