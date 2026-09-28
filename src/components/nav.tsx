@@ -39,40 +39,7 @@ const AWARD = {
     "Newron wins the Challenger award, first place in the Startup category for the BFSI sector, at Nasscom AI Gamechangers 2026. Read the announcement.",
 };
 
-export function Announcement() {
-  return (
-    <div className="sheet-teal relative overflow-hidden bg-bg text-fg">
-      {/* A slow sheen so the ribbon catches the eye on first load */}
-      <span aria-hidden className="ribbon-sheen pointer-events-none absolute inset-y-0 w-1/3" />
-      <Link
-        href={AWARD.href}
-        aria-label={AWARD.label}
-        className="group relative mx-auto flex max-w-7xl items-center justify-center gap-3 px-4 py-2.5 text-sm md:gap-4 md:px-8"
-      >
-        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-cta px-2.5 py-1 text-xs font-semibold text-cta-fg">
-          <Trophy className="h-3.5 w-3.5" />
-          Winner
-        </span>
-        <span className="hidden shrink-0 rounded-full border border-line-2 px-2.5 py-0.5 text-xs text-fg-2 lg:inline">
-          Nasscom AI Gamechangers 2026
-        </span>
-        <span className="min-w-0 text-[13px] leading-snug sm:truncate sm:text-sm">
-          <span className="hidden sm:inline">
-            Newron wins <strong className="font-semibold">Challenger</strong>, first place in the Startup category for BFSI
-          </span>
-          <span className="sm:hidden">
-            Newron wins <strong className="font-semibold">first place</strong>, Startup · BFSI
-          </span>
-        </span>
-        <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-fg px-3 py-1 text-xs font-semibold text-bg transition-[gap] group-hover:gap-2">
-          Read more <span aria-hidden>→</span>
-        </span>
-      </Link>
-    </div>
-  );
-}
-
-/** Award pill at the top of the homepage hero, so the win is seen even if the ribbon is missed. */
+/** Award pill at the top of the homepage hero — the site's single award announcement. */
 export function AwardPill() {
   return (
     <Link
@@ -88,8 +55,11 @@ export function AwardPill() {
         <span className="text-fg">Nasscom AI Gamechangers 2026</span>
         <span className="hidden sm:inline"> · First place, Startup · BFSI</span>
       </span>
-      <span aria-hidden className="shrink-0 text-fg transition-transform group-hover:translate-x-0.5">
-        →
+      <span className="inline-flex shrink-0 items-center gap-1 text-fg">
+        <span className="hidden font-medium sm:inline">Read more</span>
+        <span aria-hidden className="transition-transform group-hover:translate-x-0.5">
+          →
+        </span>
       </span>
     </Link>
   );

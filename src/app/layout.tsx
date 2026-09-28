@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Footer } from "@/components/footer";
-import { Announcement, Nav } from "@/components/nav";
+import { Nav } from "@/components/nav";
 import "./globals.css";
 
 // globals.css appends Arial, sans-serif → Geist, "Geist Fallback", Arial, sans-serif
@@ -47,7 +47,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
-        <Announcement />
         <Nav />
         <main id="main" className="flex-1">
           {children}
