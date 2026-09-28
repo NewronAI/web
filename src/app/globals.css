@@ -1,0 +1,361 @@
+@import "tailwindcss";
+
+/*
+  Palette: warm cream base with near-black, deep teal and lavender sheets.
+  Every sheet re-declares the same tokens, so components re-theme by context.
+*/
+:root {
+  --bg: #ffffeb;
+  --s1: #fbfbe2;
+  --s2: #f3f3d8;
+  --s3: #e9e9cd;
+  --line: rgb(26 26 26 / 0.1);
+  --line-2: rgb(26 26 26 / 0.22);
+  --fg: #1a1a1a;
+  --fg-2: #454540;
+  --muted: #6d6d62;
+  --accent: #034f46;
+  --ok: #1f6b3a;
+  --warn: #b0500c;
+  --cta: #f0d7ff;
+  --cta-fg: #1a1a1a;
+  --sheet-r: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --sheet-r: 4.5rem;
+  }
+}
+
+.sheet-dark {
+  --bg: #1a1a1a;
+  --s1: #222220;
+  --s2: #2a2a27;
+  --s3: #33332f;
+  --line: rgb(255 255 235 / 0.1);
+  --line-2: rgb(255 255 235 / 0.2);
+  --fg: #ffffeb;
+  --fg-2: #d6d6c2;
+  --muted: #9a9a8b;
+  --accent: #ffbcf2;
+  --ok: #a6e3a9;
+  --warn: #ffa946;
+}
+
+.sheet-teal {
+  --bg: #034f46;
+  --s1: #075a50;
+  --s2: #0c6358;
+  --s3: #136c60;
+  --line: rgb(255 255 235 / 0.13);
+  --line-2: rgb(255 255 235 / 0.25);
+  --fg: #ffffeb;
+  --fg-2: #d3e4d9;
+  --muted: #9cc2b5;
+  --accent: #ffa946;
+  --ok: #b8f0bf;
+  --warn: #ffc56e;
+}
+
+.sheet-dawn {
+  --bg: #f0d7ff;
+  --s1: #f5e4ff;
+  --s2: #ebd0fc;
+  --s3: #e1c2f5;
+  --line: rgb(26 26 26 / 0.1);
+  --line-2: rgb(26 26 26 / 0.22);
+  --fg: #1a1a1a;
+  --fg-2: #3f3548;
+  --muted: #6c5d78;
+  --accent: #7f1c34;
+  --ok: #1a5c12;
+  --warn: #8f4300;
+  --cta: #ffffeb;
+}
+
+/* Stacked sheets: rounded top corners that slide over the previous section */
+.sheet {
+  position: relative;
+  margin-top: calc(var(--sheet-r) * -1);
+  border-top-left-radius: var(--sheet-r);
+  border-top-right-radius: var(--sheet-r);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-s1: var(--s1);
+  --color-s2: var(--s2);
+  --color-s3: var(--s3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-cta: var(--cta);
+  --color-cta-fg: var(--cta-fg);
+  --font-sans: var(--font-geist), Arial, sans-serif;
+  --font-serif: var(--font-geist), Arial, sans-serif;
+  --font-mono: var(--font-geist-mono);
+  --font-accent: var(--font-instrument), Georgia, serif;
+}
+
+/* Serif italic accent inside Geist headlines: nudged up so its x-height sits level with Geist */
+.accent {
+  font-family: var(--font-instrument), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+  line-height: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+  One offset for every #anchor jump: clears the sticky nav (~5.5rem) and leaves
+  room for the rounded top of the target sheet, so sections land fully in view.
+  Set as scroll-margin on the targets, not scroll-padding on <html>: Next.js reads
+  the root scroll-padding when deciding whether to scroll on navigation, and a
+  large value made it scroll new pages (e.g. /press) down past their hero.
+*/
+[id] {
+  scroll-margin-top: 8.5rem;
+}
+@media (min-width: 768px) {
+  [id] {
+    scroll-margin-top: 9.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-geist), Arial, sans-serif;
+}
+
+h1,
+h2 {
+  font-weight: 500;
+}
+
+::selection {
+  background: #f0d7ff;
+  color: #1a1a1a;
+}
+
+.label {
+  font-family: var(--font-geist), Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+p,
+li,
+blockquote {
+  text-wrap: pretty;
+}
+
+/* Keyboard focus that reads on every sheet */
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+  border-radius: 0.75rem;
+}
+
+/* Long-form (legal, policy) typography */
+.longform h2 {
+  margin-top: 3.5rem;
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.longform h3 {
+  margin-top: 2rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.longform p,
+.longform li {
+  color: var(--fg-2);
+  line-height: 1.75;
+}
+.longform p {
+  margin-top: 1rem;
+}
+.longform ul,
+.longform ol {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+}
+.longform ul {
+  list-style: disc;
+}
+.longform ol {
+  list-style: decimal;
+}
+.longform li + li {
+  margin-top: 0.5rem;
+}
+.longform a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 4px;
+}
+.longform strong {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+/* Photo stages: fine film grain over the photo, beneath the UI */
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -5;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Scroll-linked depth where supported: the photo settles as it enters, the UI lifts in */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stage-photo {
+      animation: stage-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+    .stage-ui {
+      animation: stage-lift linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 35%;
+    }
+  }
+}
+@keyframes stage-settle {
+  from {
+    transform: scale(1.14);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes stage-lift {
+  from {
+    transform: translateY(28px) scale(0.985);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Load-in stagger */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  opacity: 0;
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.1, 1) forwards;
+}
+
+/* Scroll reveal (toggled by <Reveal>) */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.1, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Tab auto-advance progress and panel swap */
+@keyframes grow {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+.progress {
+  animation: grow linear forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fade-in {
+  animation: fade-in 0.45s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+
+/* Live-state pulse for running / waiting indicators */
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, currentColor 55%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 7px transparent;
+  }
+}
+.live-dot {
+  animation: pulse-ring 1.4s ease-out infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.caret {
+  animation: blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+  .live-dot,
+  .caret,
+  .fade-in {
+    animation: none;
+  }}

@@ -1,0 +1,102 @@
+{
+  "slug": "terms",
+  "title": "Terms — Newron",
+  "hero": {
+    "group": "Legal",
+    "kicker": "Terms of Service",
+    "fact": "Effective 1 May 2026",
+    "title": "The *agreement*, in plain language.",
+    "line": "These terms govern your use of Newron's website and any evaluation access we provide. Production deployments are governed by a separate master agreement — these terms don't override it.",
+    "ctas": []
+  },
+  "sections": [
+    {
+      "id": "terms",
+      "longform": {
+        "intro": "These Terms of Service (“Terms”) are a contract between you and NewronAI Technologies Pvt. Ltd. (“Newron”). By using our website or any evaluation environment we provide, you agree to them.",
+        "date": {
+          "label": "Effective",
+          "value": "1 May 2026"
+        },
+        "items": [
+          {
+            "id": "accept",
+            "toc": "1. Acceptance",
+            "h": "1. Acceptance",
+            "body": [
+              "By accessing newron.ai or using any materials, demos or evaluation access we make available, you accept these Terms. If you are agreeing on behalf of an organisation, you represent that you have authority to bind it. If you do not agree, please do not use the site."
+            ]
+          },
+          {
+            "id": "site",
+            "toc": "2. Use of the site",
+            "h": "2. Use of the site",
+            "body": [
+              "You may use our website for lawful, informational purposes. You agree not to:",
+              "- interfere with or disrupt the site, its security, or its underlying infrastructure;",
+              "- attempt to access areas or data you are not authorised to access;",
+              "- scrape, copy or republish content except as permitted by our [intellectual property](#ip) terms; or",
+              "- use the site to infringe the rights of others or violate any applicable law."
+            ]
+          },
+          {
+            "id": "eval",
+            "toc": "3. Evaluation access",
+            "h": "3. Evaluation & pilot access",
+            "body": [
+              "If we provide a sandbox, pilot or evaluation environment, it is offered **“as is”** for assessment purposes only, may change or be withdrawn, and must not be used in production or with live regulated data unless a separate written agreement says so. Any data you choose to load into an evaluation environment remains your responsibility."
+            ]
+          },
+          {
+            "id": "ip",
+            "toc": "4. Intellectual property",
+            "h": "4. Intellectual property",
+            "body": [
+              "The website, our trademarks, and the content we publish are owned by Newron or our licensors and are protected by law. We grant you a limited, revocable, non-exclusive licence to view and share our content for non-commercial, informational use with attribution. Our open-source projects are licensed separately under the terms in each repository (see [Open source](/open-source))."
+            ]
+          },
+          {
+            "id": "customer",
+            "toc": "5. Customer agreements",
+            "h": "5. Customer agreements prevail",
+            "body": [
+              "Production use of Newron's products and services is governed by a separate **master services agreement, order form and Data Processing Agreement**. Where those documents conflict with these Terms, **they control** for that engagement. Nothing on this website constitutes an offer, warranty or commitment outside such an agreement."
+            ]
+          },
+          {
+            "id": "disclaimer",
+            "toc": "6. Disclaimers",
+            "h": "6. Disclaimers",
+            "body": [
+              "The website and any evaluation access are provided “as is” and “as available”, without warranties of any kind, whether express or implied, including fitness for a particular purpose. AI systems can produce errors; outputs from any demo or evaluation must not be relied upon for real decisions without independent review."
+            ]
+          },
+          {
+            "id": "liability",
+            "toc": "7. Liability",
+            "h": "7. Limitation of liability",
+            "body": [
+              "To the maximum extent permitted by law, Newron will not be liable for any indirect, incidental, special or consequential damages, or loss of profits or data, arising from your use of the website or evaluation access. Our total liability in connection with the website is limited to the amount you paid us for that access, if any."
+            ]
+          },
+          {
+            "id": "law",
+            "toc": "8. Governing law",
+            "h": "8. Governing law",
+            "body": [
+              "These Terms are governed by the laws of India, and the courts of Bengaluru, Karnataka have exclusive jurisdiction over any dispute, without prejudice to any mandatory rights you have under applicable law."
+            ]
+          },
+          {
+            "id": "contact",
+            "toc": "9. Contact",
+            "h": "9. Contact",
+            "body": [
+              "Questions about these Terms? Reach us via [our contact page](/#contact). We may update these Terms from time to time; the effective date above reflects the latest version, and continued use after a change constitutes acceptance."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "slug": "careers",
+  "title": "Careers — Newron",
+  "hero": {
+    "group": "Company",
+    "kicker": "Careers",
+    "fact": "7 open roles",
+    "title": "Ship AI that *survives* contact with production.",
+    "line": "We're a small team of ex-research and ex-platform engineers building systems for regulated industries. You'll ship into live deployments at banks, insurers and state bodies — where the feedback loop is a credit officer or an adjuster, not a leaderboard.",
+    "ctas": [
+      {
+        "label": "See open roles",
+        "href": "#roles",
+        "variant": "primary"
+      },
+      {
+        "label": "About Newron",
+        "href": "/about",
+        "variant": "ghost"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "culture",
+      "n": "01",
+      "kicker": "How we operate",
+      "title": "What it's *like* to work here.",
+      "line": "Small team, direct ownership, real customers from week one.",
+      "steps": [
+        {
+          "label": "01",
+          "t": "Embedded, not abstracted",
+          "d": "You'll sit with the credit officers, adjusters and clerks who use what you build. The problem is never theoretical."
+        },
+        {
+          "label": "02",
+          "t": "Own the whole path",
+          "d": "From data pipeline to eval harness to the inference running in a customer's VPC — you ship the thing end to end."
+        },
+        {
+          "label": "03",
+          "t": "Rigour over hype",
+          "d": "We measure everything and we'd rather say 'not yet' than ship a confident guess into a regulated workflow."
+        },
+        {
+          "label": "04",
+          "t": "Built in Bengaluru",
+          "d": "On-site by default because the work is collaborative and fast. Some roles are remote within India."
+        }
+      ]
+    },
+    {
+      "id": "roles",
+      "n": "02",
+      "kicker": "Open roles",
+      "title": "Where we're *hiring*.",
+      "line": "Don't see your exact role? If you do work that's relevant to regulated AI, write to us anyway.",
+      "roles": [
+        {
+          "team": "Engineering",
+          "items": [
+            {
+              "t": "Senior ML Engineer — Document Understanding",
+              "meta": "Bengaluru · On-site",
+              "href": "/#contact"
+            },
+            {
+              "t": "Applied Research Scientist — LLM Fine-tuning",
+              "meta": "Bengaluru · On-site",
+              "href": "/#contact"
+            },
+            {
+              "t": "Platform Engineer — Inference & Deployment",
+              "meta": "Bengaluru / Remote (India)",
+              "href": "/#contact"
+            },
+            {
+              "t": "Forward-Deployed Engineer — Lending",
+              "meta": "Bengaluru · Client-embedded",
+              "href": "/#contact"
+            }
+          ]
+        },
+        {
+          "team": "Product",
+          "items": [
+            {
+              "t": "Product Manager — Insurance AI",
+              "meta": "Bengaluru · On-site",
+              "href": "/#contact"
+            }
+          ]
+        },
+        {
+          "team": "Go-to-market",
+          "items": [
+            {
+              "t": "Solutions Engineer — Banks & NBFCs",
+              "meta": "Bengaluru / Mumbai",
+              "href": "/#contact"
+            }
+          ]
+        },
+        {
+          "team": "Operations",
+          "items": [
+            {
+              "t": "Customer Success Lead — Public Sector",
+              "meta": "Bengaluru · On-site",
+              "href": "/#contact"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "process",
+      "n": "03",
+      "kicker": "How we hire",
+      "title": "A short, *honest* process.",
+      "line": "Four steps, real work, no trick questions. Usually wrapped up in two to three weeks.",
+      "steps": [
+        {
+          "label": "STEP 01",
+          "t": "Intro call",
+          "d": "A conversation about your work and what you're looking for — and an honest read on fit."
+        },
+        {
+          "label": "STEP 02",
+          "t": "Technical deep-dive",
+          "d": "We dig into something you've actually built. No whiteboard puzzles."
+        },
+        {
+          "label": "STEP 03",
+          "t": "Working session",
+          "d": "A scoped exercise close to the real work, done together with the team. It is paid, and we agree the scope and the time it should take with you before you start."
+        },
+        {
+          "label": "STEP 04",
+          "t": "Team & offer",
+          "d": "Meet the people you'll work with, then a decision — fast, either way."
+        }
+      ]
+    },
+    {
+      "id": "faq",
+      "n": "04",
+      "kicker": "Questions",
+      "title": "Common questions.",
+      "faq": [
+        {
+          "q": "Do you hire remotely?",
+          "a": "Most engineering roles are on-site in Bengaluru because the work is collaborative and client-embedded, but some roles are open to remote within India. Each listing says which."
+        },
+        {
+          "q": "Do you sponsor relocation?",
+          "a": "Yes, for roles where it makes sense. We'll discuss specifics during the process."
+        },
+        {
+          "q": "What's the stack?",
+          "a": "Python-heavy ML and data tooling, modern inference infrastructure, and product surfaces in TypeScript/React. We train and fine-tune our own models."
+        },
+        {
+          "q": "I'm early in my career — should I apply?",
+          "a": "If you've shipped something real and you're drawn to high-stakes problems, yes. We weight evidence of building over years of experience."
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "kicker": "Join us",
+    "title": "Tell us what you've *built*.",
+    "line": "Send the role you want, a CV or LinkedIn, and one thing you've built that you can talk through in detail — a repo, a paper, a system in production. The last one carries the most weight.",
+    "ctas": [
+      {
+        "label": "Apply with your work",
+        "href": "/#contact",
+        "variant": "primary"
+      },
+      {
+        "label": "About Newron",
+        "href": "/about",
+        "variant": "ghost"
+      }
+    ]
+  }
+}

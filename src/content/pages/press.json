@@ -1,0 +1,155 @@
+{
+  "slug": "press",
+  "title": "Press — Newron",
+  "hero": {
+    "group": "Company",
+    "kicker": "Press",
+    "fact": "Nasscom AI Gamechangers 2026 winner",
+    "title": "News from the *production* floor.",
+    "line": "Announcements, coverage and press resources. For interviews, briefings or media enquiries, our team usually responds within one business day.",
+    "ctas": [
+      {
+        "label": "Media enquiries",
+        "href": "/#contact",
+        "variant": "primary"
+      },
+      {
+        "label": "View press resources",
+        "href": "#kit",
+        "variant": "ghost"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "releases",
+      "n": "01",
+      "kicker": "Announcements",
+      "title": "Latest from Newron.",
+      "line": "Product milestones, deployments and partnerships.",
+      "dated": [
+        {
+          "date": "Sep 2026",
+          "t": "Newron wins the Challenger award at Nasscom AI Gamechangers 2026",
+          "d": "First place in the Startup category for the BFSI sector, for demonstrating innovation, leadership and impact in applying AI to transformative business outcomes."
+        },
+        {
+          "date": "May 2026",
+          "t": "Newron expands citizen-services AI with the Government of Karnataka",
+          "d": "The deployment now spans additional grievance categories with dialect-aware voice intake."
+        },
+        {
+          "date": "Feb 2026",
+          "t": "Newron's claims models reach production at a national health insurer",
+          "d": "Denial-risk prediction and TPA-ready filing go live across health and motor lines."
+        },
+        {
+          "date": "Nov 2025",
+          "t": "Tier-1 NBFC cuts credit-memo turnaround from three weeks to under an hour",
+          "d": "The lending suite replaces manual CAM review with a 40-minute QC step."
+        },
+        {
+          "date": "Jun 2025",
+          "t": "Newron joins NVIDIA Inception's accelerated cohort",
+          "d": "Deepening work on India-trained foundational models with data-residency commitments."
+        }
+      ]
+    },
+    {
+      "id": "angles",
+      "n": "02",
+      "kicker": "Story angles",
+      "title": "What we can *talk about*.",
+      "line": "Subjects we can brief on with data and a named spokesperson. Not published coverage — ask us and we'll put the material together.",
+      "cards": [
+        {
+          "tag": "Feature",
+          "n": "01",
+          "t": "Auditable AI on the credit desk",
+          "d": "Why deployability — not raw model size — is the real constraint for regulated industries, and what it takes to pass a bank's security review.",
+          "bullets": []
+        },
+        {
+          "tag": "Interview",
+          "n": "02",
+          "t": "Building systems that can say “I'm not sure”",
+          "d": "Abstention, sourcing and human sign-off as product requirements rather than safety talking points.",
+          "bullets": []
+        },
+        {
+          "tag": "Analysis",
+          "n": "03",
+          "t": "Indian-language AI in public service",
+          "d": "What dialect-aware grievance redressal looks like in a live state deployment, and where it still falls short.",
+          "bullets": []
+        }
+      ]
+    },
+    {
+      "id": "kit",
+      "n": "03",
+      "kicker": "Press kit",
+      "title": "Brand & *media* resources.",
+      "line": "Logos, the company description and approved imagery for editorial use.",
+      "kit": {
+        "items": [
+          {
+            "t": "Logo & wordmark",
+            "d": "PNG · open in a new tab and save",
+            "href": "/newron_logo.png"
+          },
+          {
+            "t": "Company boilerplate",
+            "d": "Printed in full below — copy it straight off this page."
+          },
+          {
+            "t": "Imagery",
+            "d": "Product and brand visuals released per request, so we can confirm the usage."
+          }
+        ],
+        "boilerplate": "Newron is an applied-AI company based in Bengaluru, building production systems for regulated industries — banks, NBFCs, insurers and state institutions. An NVIDIA Inception Partner, Newron deploys inside customer environments with full audit trails and data-residency commitments."
+      }
+    },
+    {
+      "id": "faq",
+      "n": "04",
+      "kicker": "For journalists",
+      "title": "Working with us.",
+      "faq": [
+        {
+          "q": "How do I request an interview?",
+          "a": "Book a slot with us and tell us your outlet, angle and deadline. We typically respond within one business day."
+        },
+        {
+          "q": "Can I use your logo in an article?",
+          "a": "Yes — please use the asset from the press resources above and don't alter the mark's colours or proportions."
+        },
+        {
+          "q": "Do you share customer names?",
+          "a": "Only with the customer's explicit consent. Many deployments are referenced anonymously by sector and scale."
+        },
+        {
+          "q": "Are spokespeople available?",
+          "a": "Yes, for briefings and commentary on applied AI in regulated industries. Reach out with your topic and timing."
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "kicker": "Media",
+    "title": "Working on a *story*?",
+    "line": "Tell us your angle and deadline and we'll get you what you need — data, context or a spokesperson.",
+    "ctas": [
+      {
+        "label": "Contact the media team",
+        "href": "/#contact",
+        "variant": "primary"
+      },
+      {
+        "label": "About Newron",
+        "href": "/about",
+        "variant": "ghost"
+      }
+    ]
+  }
+}
