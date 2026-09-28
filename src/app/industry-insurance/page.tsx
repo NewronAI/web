@@ -14,11 +14,6 @@ export default function Page() {
     <ContentPageView
       page={content}
       visual={<PhotoBanner src={insurancePhoto} position="50% 40%" />}
-      related={[
-        { href: "/insurance-ai", kicker: "Solutions", t: "Insurance AI" },
-        { href: "/security", kicker: "Trust", t: "Security & compliance" },
-        { href: "/custom-ai-engineering", kicker: "Solutions", t: "Custom AI engineering" },
-      ]}
     />
   );
 }

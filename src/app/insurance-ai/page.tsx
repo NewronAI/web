@@ -13,11 +13,6 @@ export default function Page() {
     <ContentPageView
       page={content}
       visual={<InsuranceVisual />}
-      related={[
-        { href: "/industry-insurance", kicker: "Industries", t: "Newron for Insurance" },
-        { href: "/security", kicker: "Trust", t: "Security & compliance" },
-        { href: "/custom-ai-engineering", kicker: "Solutions", t: "Custom AI engineering" },
-      ]}
     />
   );
 }

@@ -13,11 +13,6 @@ export default function Page() {
     <ContentPageView
       page={content}
       visual={<GovernanceVisual />}
-      related={[
-        { href: "/public-sector", kicker: "Industries", t: "Newron for the Public Sector" },
-        { href: "/security", kicker: "Trust", t: "Security & compliance" },
-        { href: "/custom-ai-engineering", kicker: "Solutions", t: "Custom AI engineering" },
-      ]}
     />
   );
 }

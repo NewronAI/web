@@ -14,11 +14,6 @@ export default function Page() {
     <ContentPageView
       page={content}
       visual={<PhotoBanner src={lendingPhoto} position="50% 60%" />}
-      related={[
-        { href: "/about", kicker: "Company", t: "About Newron" },
-        { href: "/open-source", kicker: "Company", t: "Open source" },
-        { href: "/press", kicker: "Company", t: "Press" },
-      ]}
     />
   );
 }

@@ -1,5 +1,5 @@
 import { Head, PrimaryCTA, SecondaryCTA } from "@/components/kit";
-import { LongForm, PageHero, RelatedLinks, StatRow } from "@/components/page-kit";
+import { LongForm, PageHero, StatRow } from "@/components/page-kit";
 import { Reveal } from "@/components/reveal";
 import { Blocks, Rich } from "@/components/rich";
 import { Check } from "@/components/ui";
@@ -9,15 +9,7 @@ import type { ContentPage, Cta, Section } from "@/content/types";
 const TONES = ["sheet-dark", "", "sheet-dawn", ""] as const;
 
 /** Renders any content page (solutions, industries, company, trust and legal) from its content file. */
-export function ContentPageView({
-  page,
-  visual,
-  related,
-}: {
-  page: ContentPage;
-  visual?: React.ReactNode;
-  related: { href: string; kicker: string; t: string }[];
-}) {
+export function ContentPageView({ page, visual }: { page: ContentPage; visual?: React.ReactNode }) {
   const [primary, secondary] = page.hero.ctas;
   return (
     <>
@@ -62,26 +54,20 @@ export function ContentPageView({
         ),
       )}
 
-      <section className="sheet sheet-teal">
-        <div className="mx-auto max-w-7xl px-5 pt-24 pb-36 text-center md:px-8 md:pt-32 md:pb-44">
-          {page.cta && (
-            <Reveal className="mb-24">
-              {page.cta.kicker && <p className="label text-accent">{page.cta.kicker}</p>}
-              {page.cta.title && (
-                <h2 className="mx-auto mt-5 max-w-4xl text-balance font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
-                  <Rich text={page.cta.title} accent />
-                </h2>
-              )}
-              {page.cta.line && <p className="mx-auto mt-6 max-w-xl text-balance text-lg text-fg-2">{page.cta.line}</p>}
-              <CtaRow ctas={page.cta.ctas} className="mt-9 justify-center" />
-            </Reveal>
-          )}
-          <div className="mx-auto max-w-5xl text-left">
-            <p className="label mb-4 text-muted">Keep exploring</p>
-            <RelatedLinks items={related} />
-          </div>
-        </div>
-      </section>
+      {page.cta && (
+        <section className="sheet sheet-teal">
+          <Reveal className="mx-auto max-w-7xl px-5 pt-24 pb-40 text-center md:px-8 md:pt-32 md:pb-52">
+            {page.cta.kicker && <p className="label text-accent">{page.cta.kicker}</p>}
+            {page.cta.title && (
+              <h2 className="mx-auto mt-5 max-w-4xl text-balance font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
+                <Rich text={page.cta.title} accent />
+              </h2>
+            )}
+            {page.cta.line && <p className="mx-auto mt-6 max-w-xl text-balance text-lg text-fg-2">{page.cta.line}</p>}
+            <CtaRow ctas={page.cta.ctas} className="mt-9 justify-center" />
+          </Reveal>
+        </section>
+      )}
     </>
   );
 }

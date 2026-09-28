@@ -13,11 +13,6 @@ export default function Page() {
     <ContentPageView
       page={content}
       visual={<TeamStrip />}
-      related={[
-        { href: "/careers", kicker: "Company", t: "Careers" },
-        { href: "/press", kicker: "Company", t: "Press" },
-        { href: "/custom-ai-engineering", kicker: "Solutions", t: "Custom AI engineering" },
-      ]}
     />
   );
 }

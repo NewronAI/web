@@ -14,11 +14,6 @@ export default function Page() {
     <ContentPageView
       page={content}
       visual={<PhotoBanner src={lendingPhoto} position="50% 60%" />}
-      related={[
-        { href: "/lending-intelligence", kicker: "Solutions", t: "Lending intelligence" },
-        { href: "/security", kicker: "Trust", t: "Security & compliance" },
-        { href: "/nbfcs", kicker: "Industries", t: "Newron for NBFCs" },
-      ]}
     />
   );
 }

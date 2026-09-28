@@ -11,11 +11,6 @@ export default function Page() {
   return (
     <ContentPageView
       page={content}
-      related={[
-        { href: "/banks", kicker: "Industries", t: "Newron for Banks" },
-        { href: "/lending-intelligence", kicker: "Solutions", t: "Lending intelligence" },
-        { href: "/custom-ai-engineering", kicker: "Solutions", t: "Custom AI engineering" },
-      ]}
     />
   );
 }

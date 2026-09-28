@@ -13,11 +13,6 @@ export default function Page() {
     <ContentPageView
       page={content}
       visual={<LendingVisual />}
-      related={[
-        { href: "/banks", kicker: "Industries", t: "Newron for Banks" },
-        { href: "/nbfcs", kicker: "Industries", t: "Newron for NBFCs" },
-        { href: "/custom-ai-engineering", kicker: "Solutions", t: "Custom AI engineering" },
-      ]}
     />
   );
 }

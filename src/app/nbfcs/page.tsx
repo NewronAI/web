@@ -14,11 +14,6 @@ export default function Page() {
     <ContentPageView
       page={content}
       visual={<PhotoBanner src={heroBackdrop} />}
-      related={[
-        { href: "/lending-intelligence", kicker: "Solutions", t: "Lending intelligence" },
-        { href: "/banks", kicker: "Industries", t: "Newron for Banks" },
-        { href: "/custom-ai-engineering", kicker: "Solutions", t: "Custom AI engineering" },
-      ]}
     />
   );
 }

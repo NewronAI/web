@@ -14,11 +14,6 @@ export default function Page() {
     <ContentPageView
       page={content}
       visual={<PhotoBanner src={governancePhoto} position="60% 45%" />}
-      related={[
-        { href: "/governance-ai", kicker: "Solutions", t: "Governance AI" },
-        { href: "/security", kicker: "Trust", t: "Security & compliance" },
-        { href: "/custom-ai-engineering", kicker: "Solutions", t: "Custom AI engineering" },
-      ]}
     />
   );
 }

@@ -13,11 +13,6 @@ export default function Page() {
     <ContentPageView
       page={content}
       visual={<EngagementVisual />}
-      related={[
-        { href: "/about", kicker: "Company", t: "About Newron" },
-        { href: "/lending-intelligence", kicker: "Solutions", t: "Lending intelligence" },
-        { href: "/open-source", kicker: "Company", t: "Open source" },
-      ]}
     />
   );
 }

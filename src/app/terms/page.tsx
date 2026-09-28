@@ -11,11 +11,6 @@ export default function Page() {
   return (
     <ContentPageView
       page={content}
-      related={[
-        { href: "/security", kicker: "Trust", t: "Security & compliance" },
-        { href: "/about", kicker: "Company", t: "About Newron" },
-        { href: "/open-source", kicker: "Company", t: "Open source" },
-      ]}
     />
   );
 }

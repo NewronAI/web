@@ -110,29 +110,6 @@ export function StatRow({ items }: { items: { n: React.ReactNode; l: string }[] 
   );
 }
 
-/** "Keep exploring" cross-links shown near the end of every inner page. */
-export function RelatedLinks({ items }: { items: { href: string; kicker: string; t: string }[] }) {
-  return (
-    <div className="grid gap-3 md:grid-cols-3">
-      {items.map((it) => (
-        <Link
-          key={it.href}
-          href={it.href}
-          className="group flex items-center justify-between gap-6 rounded-2xl border border-line px-6 py-5 transition-colors hover:border-line-2 hover:bg-s1"
-        >
-          <span>
-            <span className="label block text-muted">{it.kicker}</span>
-            <span className="mt-1 block text-lg font-medium">{it.t}</span>
-          </span>
-          <span aria-hidden className="text-muted transition-transform group-hover:translate-x-1">
-            →
-          </span>
-        </Link>
-      ))}
-    </div>
-  );
-}
-
 /** Long-form layout for legal and policy pages, with a sticky table of contents on desktop. */
 export function LongForm({
   toc,
