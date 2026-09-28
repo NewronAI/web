@@ -41,9 +41,21 @@ export function Roles({ roles }: { roles: NonNullable<Section["roles"]> }) {
 export function Dated({ items }: { items: NonNullable<Section["dated"]> }) {
   return (
     <ol className="mx-auto max-w-5xl divide-y divide-line border-y border-line">
-      {items.map((it) => (
-        <li key={it.t} className="grid gap-2 py-7 md:grid-cols-[9rem_1fr] md:gap-8">
-          <span className="font-mono text-xs uppercase text-accent md:pt-1.5">{it.date}</span>
+      {items.map((it, i) => (
+        <li
+          key={it.t}
+          className={`grid gap-2 py-7 md:grid-cols-[9rem_1fr] md:gap-8 ${
+            i === 0 ? "-mx-4 rounded-2xl border border-line-2 bg-s1 px-4 md:-mx-6 md:px-6" : ""
+          }`}
+        >
+          <span className="flex flex-wrap items-center gap-2 font-mono text-xs uppercase text-accent md:flex-col md:items-start md:pt-1.5">
+            {it.date}
+            {i === 0 && (
+              <span className="rounded-full bg-cta px-2 py-0.5 font-sans text-[11px] font-semibold normal-case text-cta-fg">
+                Latest
+              </span>
+            )}
+          </span>
           <span>
             <span className="block font-serif text-2xl leading-snug tracking-[-0.03em] md:text-[1.7rem]">{it.t}</span>
             <span className="mt-2 block text-fg-2">{it.d}</span>

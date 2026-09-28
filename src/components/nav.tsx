@@ -15,16 +15,83 @@ export function Logo({ className = "" }: { className?: string }) {
   );
 }
 
+function Trophy({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3" />
+    </svg>
+  );
+}
+
+// Same copy and destination as the award ribbon on newron.ai.
+const AWARD = {
+  href: "/press#releases",
+  label:
+    "Newron wins the Challenger award, first place in the Startup category for the BFSI sector, at Nasscom AI Gamechangers 2026. Read the announcement.",
+};
+
 export function Announcement() {
   return (
-    <div className="sheet-teal bg-bg text-fg">
+    <div className="sheet-teal relative overflow-hidden bg-bg text-fg">
+      {/* A slow sheen so the ribbon catches the eye on first load */}
+      <span aria-hidden className="ribbon-sheen pointer-events-none absolute inset-y-0 w-1/3" />
       <Link
-        href="/press#releases"
-        className="mx-auto block max-w-7xl px-5 py-3 text-center text-sm font-medium underline-offset-4 hover:underline md:px-8"
+        href={AWARD.href}
+        aria-label={AWARD.label}
+        className="group relative mx-auto flex max-w-7xl items-center justify-center gap-3 px-4 py-2.5 text-sm md:gap-4 md:px-8"
       >
-        Newron wins first place at Nasscom AI Gamechangers 2026 · Startup, BFSI
+        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-cta px-2.5 py-1 text-xs font-semibold text-cta-fg">
+          <Trophy className="h-3.5 w-3.5" />
+          Winner
+        </span>
+        <span className="hidden shrink-0 rounded-full border border-line-2 px-2.5 py-0.5 text-xs text-fg-2 lg:inline">
+          Nasscom AI Gamechangers 2026
+        </span>
+        <span className="min-w-0 text-[13px] leading-snug sm:truncate sm:text-sm">
+          <span className="hidden sm:inline">
+            Newron wins <strong className="font-semibold">Challenger</strong>, first place in the Startup category for BFSI
+          </span>
+          <span className="sm:hidden">
+            Newron wins <strong className="font-semibold">first place</strong>, Startup · BFSI
+          </span>
+        </span>
+        <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-fg px-3 py-1 text-xs font-semibold text-bg transition-[gap] group-hover:gap-2">
+          Read more <span aria-hidden>→</span>
+        </span>
       </Link>
     </div>
+  );
+}
+
+/** Award pill at the top of the homepage hero, so the win is seen even if the ribbon is missed. */
+export function AwardPill() {
+  return (
+    <Link
+      href={AWARD.href}
+      aria-label={AWARD.label}
+      className="group inline-flex max-w-full items-center gap-2 rounded-full border border-line-2 bg-s1 py-1 pl-1 pr-3 text-sm shadow-[0_6px_20px_-12px_rgb(0_0_0/0.35)] transition hover:border-fg/40"
+    >
+      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-cta px-2.5 py-1 text-xs font-semibold text-cta-fg">
+        <Trophy className="h-3.5 w-3.5" />
+        Winner
+      </span>
+      <span className="truncate text-fg-2">
+        <span className="text-fg">Nasscom AI Gamechangers 2026</span>
+        <span className="hidden sm:inline"> · First place, Startup · BFSI</span>
+      </span>
+      <span aria-hidden className="shrink-0 text-fg transition-transform group-hover:translate-x-0.5">
+        →
+      </span>
+    </Link>
   );
 }
 

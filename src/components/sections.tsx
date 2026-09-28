@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/reveal";
 import { Accent, Head, Num, PrimaryCTA, SecondaryCTA } from "@/components/kit";
+import { AwardPill } from "@/components/nav";
 import { CamRun } from "@/components/cam-run";
 import { LendingShowcase } from "@/components/lending-showcase";
 import { PhotoStage } from "@/components/photo-stage";
@@ -19,9 +20,9 @@ export function Hero() {
     <section className="relative overflow-hidden pt-16 pb-36 md:pt-24 md:pb-52">
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="rise label text-muted" style={{ animationDelay: "40ms" }}>
-            Applied AI · Bengaluru, India
-          </p>
+          <div className="rise" style={{ animationDelay: "40ms" }}>
+            <AwardPill />
+          </div>
           {/* No entrance animation on the headline: it's the LCP element and should paint at first render. */}
           <h1 className="mt-6 font-serif text-[3.2rem] leading-[0.95] tracking-[-0.045em] sm:text-7xl lg:text-[6.25rem]">
             The enterprise AI partner of choice for <Accent>regulated industries.</Accent>

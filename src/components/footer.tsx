@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/nav";
-import { CONTACT_HREF, footer } from "@/lib/site";
+import { CONTACT_HREF, footer, legal } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -45,9 +45,18 @@ export function Footer() {
           </div>
         ))}
       </div>
-      <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-4 border-t border-line px-5 py-6 font-mono text-[11px] text-muted md:px-8">
-        <span>© {new Date().getFullYear()} Newron AI Technologies Pvt. Ltd.</span>
-        <span>NVIDIA Inception Partner · ISO 27001 aligned · SOC 2 in progress · Bengaluru, India</span>
+      <div className="mx-auto max-w-7xl border-t border-line px-5 py-6 md:px-8">
+        <nav aria-label="Legal" className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          {legal.map((l) => (
+            <Link key={l.href} href={l.href} className="text-fg-2 underline-offset-4 transition-colors hover:text-fg hover:underline">
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="mt-5 flex flex-wrap justify-between gap-4 font-mono text-[11px] text-muted">
+          <span>© {new Date().getFullYear()} Newron AI Technologies Pvt. Ltd.</span>
+          <span>NVIDIA Inception Partner · ISO 27001 aligned · SOC 2 in progress · Bengaluru, India</span>
+        </div>
       </div>
     </footer>
   );

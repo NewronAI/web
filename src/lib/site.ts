@@ -41,14 +41,22 @@ export const footer = [
     ],
   },
   {
-    h: "Legal",
+    h: "Trust & legal",
     l: [
-      { href: "/privacy", label: "Privacy" },
-      { href: "/terms", label: "Terms" },
-      { href: "/security", label: "Security" },
+      { href: "/privacy", label: "Privacy policy" },
+      { href: "/security", label: "Security & compliance" },
       { href: "/responsible-ai", label: "Responsible AI" },
+      { href: "/terms", label: "Terms of service" },
     ],
   },
+];
+
+/** Repeated in the footer's bottom bar, next to the copyright. */
+export const legal = [
+  { href: "/privacy", label: "Privacy policy" },
+  { href: "/security", label: "Security & compliance" },
+  { href: "/responsible-ai", label: "Responsible AI" },
+  { href: "/terms", label: "Terms" },
 ];
 
 // Content mirrors newron.ai, trimmed for scanning. Customers are kept separate from partners.
