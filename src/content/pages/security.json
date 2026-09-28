@@ -4,6 +4,7 @@
   "hero": {
     "group": "Legal",
     "kicker": "Security",
+    "fact": "ISO 27001 aligned · SOC 2 in progress",
     "title": "Built to pass the *security review*.",
     "line": "Newron is designed for buyers whose procurement, risk and audit teams ask hard questions. We deploy inside your perimeter, encrypt everything, and leave a trail for every action.",
     "ctas": [

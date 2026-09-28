@@ -4,6 +4,7 @@
   "hero": {
     "group": "Company",
     "kicker": "Open source",
+    "fact": "3 public repositories",
     "title": "The tools we wish *existed*.",
     "line": "What we can release, we release — tooling built alongside our production work, under permissive licences. This is a small roster, not a portfolio: it lists what is actually public today.",
     "ctas": [

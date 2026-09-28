@@ -4,6 +4,7 @@
   "hero": {
     "group": "Company",
     "kicker": "Careers",
+    "fact": "7 open roles",
     "title": "Ship AI that *survives* contact with production.",
     "line": "We're a small team of ex-research and ex-platform engineers building systems for regulated industries. You'll ship into live deployments at banks, insurers and state bodies — where the feedback loop is a credit officer or an adjuster, not a leaderboard.",
     "ctas": [

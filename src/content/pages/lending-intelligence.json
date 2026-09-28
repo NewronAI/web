@@ -4,6 +4,7 @@
   "hero": {
     "group": "Solutions",
     "kicker": "Lending intelligence",
+    "fact": "66% reduction in TAT",
     "title": "The credit officer's *second brain.*",
     "line": "A modular suite for the loan origination lifecycle — from intake and statement parsing to CAM generation, deviation handling and verification. Configured to your policy, your format, your tier structure.",
     "ctas": [

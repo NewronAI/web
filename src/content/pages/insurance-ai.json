@@ -4,6 +4,7 @@
   "hero": {
     "group": "Solutions",
     "kicker": "Insurance AI",
+    "fact": "90s avg time to file",
     "title": "Settle claims *before* they're filed.",
     "line": "Newron's claims models inspect documents, parse policy language and predict denial risk the moment a claim is initiated — so adjusters spend their time on edge cases, not paperwork.",
     "ctas": [

@@ -8,12 +8,6 @@ import type { ContentPage, Cta, Section } from "@/content/types";
 
 const TONES = ["sheet-dark", "", "sheet-dawn", ""] as const;
 
-const groupHref: Record<string, string> = {
-  Solutions: "/lending-intelligence",
-  Industries: "/banks",
-  Company: "/about",
-};
-
 /** Renders any content page (solutions, industries, company, trust and legal) from its content file. */
 export function ContentPageView({
   page,
@@ -28,8 +22,8 @@ export function ContentPageView({
   return (
     <>
       <PageHero
-        crumb={{ href: groupHref[page.hero.group], label: page.hero.group }}
         kicker={page.hero.kicker}
+        fact={page.hero.fact}
         title={<Rich text={page.hero.title} accent />}
         line={page.hero.line}
         primary={primary ? { href: primary.href, label: primary.label } : null}

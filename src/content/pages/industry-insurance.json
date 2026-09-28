@@ -4,6 +4,7 @@
   "hero": {
     "group": "Industries",
     "kicker": "Newron for Insurance",
+    "fact": "4.2d observed TPA settlement SLA",
     "title": "Settle the clean claims *automatically*.",
     "line": "Insurers and TPAs drown in documents. Newron reads them, checks eligibility against the specific policy, and predicts denial risk — so adjusters focus on the genuine edge cases.",
     "ctas": [

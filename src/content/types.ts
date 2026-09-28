@@ -38,7 +38,8 @@ export type Section = {
 export type ContentPage = {
   slug: string;
   title: string;
-  hero: { group: string; kicker: string; title: string; line: string; ctas: Cta[] };
+  /** `fact`: one short, verified proof point shown next to the page name above the headline. */
+  hero: { group: string; kicker: string; fact?: string; title: string; line: string; ctas: Cta[] };
   sections: Section[];
   cta?: { kicker?: string; title?: string; line?: string; ctas: Cta[] };
 };

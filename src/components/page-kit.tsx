@@ -3,19 +3,19 @@ import { Reveal } from "@/components/reveal";
 import { PrimaryCTA, SecondaryCTA } from "@/components/kit";
 import { CONTACT_HREF } from "@/lib/site";
 
-/** Hero for inner pages: breadcrumb, kicker, headline, one line, CTAs and an optional visual. */
+/** Hero for inner pages: page name + one proof point, headline, one line, CTAs and an optional visual. */
 export function PageHero({
-  crumb,
   kicker,
+  fact,
   title,
   line,
   primary = { href: CONTACT_HREF, label: "Talk to Us" },
   secondary,
   children,
 }: {
-  /** Middle breadcrumb; without an href it renders as plain text. */
-  crumb?: { href?: string; label: string };
   kicker: React.ReactNode;
+  /** A short, verified proof point shown beside the page name. */
+  fact?: React.ReactNode;
   title: React.ReactNode;
   line?: React.ReactNode;
   primary?: { href: string; label: string } | null;
@@ -26,25 +26,10 @@ export function PageHero({
     <section className="relative pt-14 pb-36 md:pt-20 md:pb-48">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          <nav aria-label="Breadcrumb" className="rise label flex justify-center gap-2 text-muted">
-            <Link href="/" className="hover:text-fg">
-              Home
-            </Link>
-            {crumb && (
-              <>
-                <span aria-hidden>/</span>
-                {crumb.href ? (
-                  <Link href={crumb.href} className="hover:text-fg">
-                    {crumb.label}
-                  </Link>
-                ) : (
-                  <span>{crumb.label}</span>
-                )}
-              </>
-            )}
-            <span aria-hidden>/</span>
-            <span className="text-fg-2">{kicker}</span>
-          </nav>
+          <p className="rise inline-flex max-w-full flex-wrap items-center justify-center gap-x-2.5 gap-y-1 rounded-3xl border border-line-2 bg-s1 p-1 text-sm sm:flex-nowrap sm:rounded-full sm:pr-4">
+            <span className="label shrink-0 rounded-full bg-s3 px-3 py-1 text-fg">{kicker}</span>
+            {fact && <span className="px-2 pb-0.5 text-fg-2 sm:px-0 sm:pb-0">{fact}</span>}
+          </p>
           <h1 className="mt-6 text-balance font-serif text-[2.9rem] leading-[0.98] tracking-[-0.045em] sm:text-6xl lg:text-[5rem]">
             {title}
           </h1>
