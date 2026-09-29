@@ -1,6 +1,6 @@
 import { brand } from "@/content/site";
 import type { Link } from "@/content/pages/types";
-import { PillButton, Reveal, SmartLink } from "./ui";
+import { LogoMark, PillButton, Reveal, SmartLink } from "./ui";
 
 export type CtaProps = {
   status: string;
@@ -15,7 +15,10 @@ export function Cta({ status, title, body, primary, secondary }: CtaProps) {
     <section className="px-2 md:px-4">
       <div className="flex min-h-[720px] flex-col justify-between rounded-3xl bg-accent px-5 pt-14 pb-14 text-ink md:px-14">
         <div className="flex items-center justify-between gap-4">
-          <span className="text-[17px] font-bold tracking-[-0.03em]">{brand}</span>
+          <span className="inline-flex items-center gap-2.5 text-[17px] font-bold tracking-[-0.03em]">
+            <LogoMark className="h-[22px]" />
+            {brand}
+          </span>
           <span className="flex items-center gap-2 text-right text-[10px] tracking-[0.1em]">
             <span className="pulse-dot size-[5px] shrink-0 rounded-full bg-ink" />
             {status}

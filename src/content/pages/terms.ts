@@ -90,7 +90,7 @@ const page: PageContent = {
     title: ["Talk to", "Newron."],
     body: "Questions about these Terms? Reach us via our contact page.",
     primary: { label: "Let’s talk", href: BOOK },
-    secondary: { label: "Contact us", href: "/#contact" },
+    secondary: { label: "Contact us", href: "#contact" },
   },
 };
 

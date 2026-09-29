@@ -48,8 +48,8 @@ const page: PageContent = {
       title: ["Where we’re hiring."],
       body: "Don’t see your exact role? If you do work that’s relevant to regulated AI, write to us anyway.",
       items: [
-        { title: "AI Engineer", meta: "Bengaluru · On-site", href: "/#contact" },
-        { title: "Financial Data Curator — Internship", meta: "Bengaluru · On-site", href: "/#contact" },
+        { title: "AI Engineer", meta: "Bengaluru · On-site", href: "#contact" },
+        { title: "Financial Data Curator — Internship", meta: "Bengaluru · On-site", href: "#contact" },
       ],
     },
     {
@@ -108,7 +108,7 @@ const page: PageContent = {
     status: "Join us",
     title: ["Tell us what", "you’ve built."],
     body: "Send the role you want, a CV or LinkedIn, and one thing you’ve built that you can talk through in detail — a repo, a paper, a system in production. The last one carries the most weight.",
-    primary: { label: "Apply with your work", href: "/#contact" },
+    primary: { label: "Apply with your work", href: "#contact" },
     secondary: { label: "About Newron", href: "/about" },
   },
 };

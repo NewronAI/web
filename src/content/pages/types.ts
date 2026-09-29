@@ -1,5 +1,5 @@
 // Schema for every inner page. Each page is a hero, a list of blocks, and a closing CTA.
-// Blocks map 1:1 to section designs used on the home page.
+// Blocks are drawn by src/components/inner/InnerBlocks.tsx, a design separate from the home page.
 
 export type Link = { label: string; href: string };
 
@@ -33,7 +33,17 @@ export type Block =
   /** Row list (home "Work" design) for press items, roles, repositories, deployment options, etc. */
   | (Header & {
       type: "rows";
-      items: { title: string; meta?: string; detail?: string; body?: string; href?: string }[];
+      items: {
+        title: string;
+        meta?: string;
+        detail?: string;
+        body?: string;
+        href?: string;
+        /** Single-colour SVG in /public, previewed on a light and a dark tile (e.g. a logo). */
+        preview?: string;
+        /** Text shown in full under the row with a Copy button (e.g. a company boilerplate). */
+        copy?: string;
+      }[];
     })
   /** Long-form text for legal pages. */
   | { type: "prose"; updated?: string; sections: { heading: string; paragraphs: string[]; bullets?: string[] }[] };

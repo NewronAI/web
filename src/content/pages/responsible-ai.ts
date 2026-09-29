@@ -87,7 +87,7 @@ const page: PageContent = {
         {
           title: "Raising concerns",
           body: "If you believe a Newron system has behaved unfairly or harmfully, we want to know. Contact us via our contact page; concerns are routed to the team responsible for the relevant system and used to improve it.",
-          href: "/#contact",
+          href: "#contact",
         },
       ],
     },

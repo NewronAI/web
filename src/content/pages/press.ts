@@ -9,7 +9,7 @@ const page: PageContent = {
   hero: {
     title: ["The latest.", "From Newron."],
     body: "Company milestones, press resources and the stories behind our work. Everything you need to get to know Newron.",
-    primary: { label: "Media enquiries", href: "/#contact" },
+    primary: { label: "Media enquiries", href: "#contact" },
     secondary: { label: "View press resources", href: "#blocks" },
     steps: [
       { tag: "Company milestones", word: "Milestones" },
@@ -75,18 +75,19 @@ const page: PageContent = {
       title: ["Brand & media", "resources."],
       body: "Logos, the company description and approved imagery for editorial use.",
       items: [
-        { title: "Logo & wordmark", meta: "PNG", body: "Open in a new tab and save." },
-        { title: "Company boilerplate", body: "Printed in full below — copy it straight off this page." },
+        { title: "Logo & wordmark", meta: "SVG", href: "/artha.svg", preview: "/artha.svg", body: "The Artha mark as a vector file. Opens in a new tab — save it from there." },
+        {
+          title: "Company boilerplate",
+          meta: "Text",
+          copy: "Newron is an applied-AI company based in Bengaluru, building production systems for regulated industries — banks, NBFCs, insurers and state institutions. An NVIDIA Inception Partner, Newron deploys inside customer environments with full audit trails and data-residency commitments.",
+        },
         {
           title: "Imagery",
-          body: "Product and brand visuals released per request, so we can confirm the usage.",
+          meta: "On request",
+          href: "#contact",
+          body: "Product and brand visuals are released per request, so we can confirm the usage. Tell us your outlet and story.",
         },
       ],
-    },
-    {
-      type: "statement",
-      eyebrow: "Boilerplate",
-      text: "Newron is an applied-AI company based in Bengaluru, building production systems for regulated industries — banks, NBFCs, insurers and state institutions. An NVIDIA Inception Partner, Newron deploys inside customer environments with full audit trails and data-residency commitments.",
     },
     {
       type: "faq",
@@ -116,7 +117,7 @@ const page: PageContent = {
     status: "Media",
     title: ["Working on", "a story?"],
     body: "Tell us your angle and deadline and we’ll get you what you need — data, context or a spokesperson.",
-    primary: { label: "Contact the media team", href: "/#contact" },
+    primary: { label: "Contact the media team", href: "#contact" },
     secondary: { label: "About Newron", href: "/about" },
   },
 };

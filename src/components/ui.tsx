@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-/** Internal paths use client-side navigation; external URLs open in a new tab. */
+/** Internal pages use client-side navigation; external URLs and files (e.g. /artha.svg) open in a new tab. */
 export function SmartLink({
   href,
   className,
@@ -15,14 +15,15 @@ export function SmartLink({
   children: ReactNode;
   onClick?: () => void;
 }) {
-  if (href.startsWith("/")) {
+  const isFile = /^\/[^?#]*\.[a-z0-9]+$/i.test(href);
+  if (href.startsWith("/") && !isFile) {
     return (
       <Link href={href} className={className} onClick={onClick}>
         {children}
       </Link>
     );
   }
-  const external = /^https?:\/\//.test(href);
+  const external = /^https?:\/\//.test(href) || isFile;
   return (
     <a
       href={href}
@@ -78,6 +79,18 @@ export function Reveal({
     >
       {children}
     </div>
+  );
+}
+
+/** The Artha mark from /public/artha.svg, used as a mask so it takes the current text colour. */
+export function LogoMark({ className = "" }: { className?: string }) {
+  const mask = "url(/artha.svg) center / contain no-repeat";
+  return (
+    <span
+      aria-hidden
+      className={`inline-block aspect-[1106/714] shrink-0 bg-current ${className}`}
+      style={{ mask, WebkitMask: mask }}
+    />
   );
 }
 

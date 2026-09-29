@@ -2,10 +2,36 @@
 
 import { useEffect, useRef, useState } from "react";
 import { brand, nav, navCta } from "@/content/site";
-import { ArrowIcon, SmartLink } from "./ui";
+import { ArrowIcon, LogoMark, SmartLink } from "./ui";
 
-const linkCls =
-  "text-[10px] leading-[13px] font-semibold tracking-[0.12em] text-white/50 transition-colors hover:text-cream";
+// Home sits inside the dark hero card; inner pages use the light bar.
+const tones = {
+  dark: {
+    link: "text-white/50 hover:text-cream",
+    open: "text-cream",
+    bar: "border-white/10",
+    panel: "border-white/10 bg-ink-2 shadow-[0_20px_60px_rgba(0,0,0,0.45)]",
+    item: "text-cream/70 hover:bg-white/5 hover:text-cream",
+    cta: "border-white/15 text-cream hover:bg-cream hover:text-ink",
+    sheet: "border-white/10 bg-ink",
+    sheetLabel: "text-white/40",
+    sheetLink: "text-cream/80 hover:text-cream",
+    sheetCta: "bg-cream text-ink",
+  },
+  light: {
+    link: "text-ink/55 hover:text-ink",
+    open: "text-ink",
+    bar: "border-line",
+    panel: "border-line bg-cream shadow-[0_20px_50px_rgba(17,17,15,0.12)]",
+    item: "text-ink/70 hover:bg-black/[0.04] hover:text-ink",
+    cta: "border-ink bg-ink text-cream hover:bg-ink/85",
+    sheet: "border-line bg-paper",
+    sheetLabel: "text-muted",
+    sheetLink: "text-ink/80 hover:text-ink",
+    sheetCta: "bg-ink text-cream",
+  },
+};
+const linkBase = "text-[11px] leading-[14px] font-semibold tracking-[0.06em] transition-colors";
 
 function Chevron({ open }: { open: boolean }) {
   return (
@@ -22,7 +48,9 @@ function Chevron({ open }: { open: boolean }) {
   );
 }
 
-export function Nav() {
+export function Nav({ tone = "dark" }: { tone?: "dark" | "light" }) {
+  const t = tones[tone];
+  const linkCls = `${linkBase} ${t.link}`;
   const [open, setOpen] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const ref = useRef<HTMLElement>(null);
@@ -52,9 +80,10 @@ export function Nav() {
   return (
     <nav
       ref={ref}
-      className="relative z-20 flex items-center justify-between gap-4 border-b border-white/10 px-5 py-6 md:px-12 md:py-[34px]"
+      className={`relative z-20 flex items-center justify-between gap-4 border-b ${t.bar} px-5 py-4 md:px-12 md:py-5`}
     >
-      <SmartLink href="/" className="text-[16px] font-semibold tracking-[-0.035em]">
+      <SmartLink href="/" className="inline-flex items-center gap-2.5 text-[16px] font-semibold tracking-[-0.035em]">
+        <LogoMark className="h-[22px]" />
         {brand}
       </SmartLink>
 
@@ -73,7 +102,7 @@ export function Nav() {
                   type="button"
                   aria-expanded={open === item.label}
                   onClick={() => setOpen(open === item.label ? null : item.label)}
-                  className={`flex items-center gap-1.5 ${linkCls} ${open === item.label ? "text-cream" : ""}`}
+                  className={`flex items-center gap-1.5 ${linkCls} ${open === item.label ? t.open : ""}`}
                 >
                   {item.label}
                   <Chevron open={open === item.label} />
@@ -84,12 +113,12 @@ export function Nav() {
                     open === item.label ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
                   }`}
                 >
-                  <ul className="w-[240px] rounded-2xl border border-white/10 bg-ink-2 p-2 shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
+                  <ul className={`w-[240px] rounded-2xl border p-2 ${t.panel}`}>
                     {item.children.map((child) => (
                       <li key={child.label}>
                         <SmartLink
                           href={child.href}
-                          className="group flex items-center justify-between rounded-xl px-4 py-3 text-[12px] tracking-[-0.01em] text-cream/70 transition-colors hover:bg-white/5 hover:text-cream"
+                          className={`group flex items-center justify-between rounded-xl px-4 py-3 text-[13px] tracking-[-0.02em] transition-colors ${t.item}`}
                         >
                           {child.label}
                           <ArrowIcon className="opacity-50 transition-transform duration-300 group-hover:rotate-45 group-hover:opacity-100" />
@@ -110,7 +139,7 @@ export function Nav() {
         </ul>
         <SmartLink
           href={navCta.href}
-          className="group inline-flex h-9 items-center gap-2.5 rounded-full border border-white/15 px-4 text-[11px] tracking-[-0.01em] text-cream transition-colors hover:bg-cream hover:text-ink"
+          className={`group inline-flex h-9 items-center gap-2.5 rounded-full border px-4 text-[12px] tracking-[-0.02em] transition-colors ${t.cta}`}
         >
           {navCta.label}
           <ArrowIcon className="transition-transform duration-300 group-hover:rotate-45" />
@@ -127,19 +156,19 @@ export function Nav() {
         {mobileOpen ? "Close" : "Menu"}
       </button>
       <div
-        className={`absolute inset-x-0 top-full border-b border-white/10 bg-ink px-5 pb-6 transition-all duration-300 md:px-12 lg:hidden ${
+        className={`absolute inset-x-0 top-full border-b ${t.sheet} px-5 pb-6 transition-all duration-300 md:px-12 lg:hidden ${
           mobileOpen ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
         {nav.map((item) => (
-          <div key={item.label} className="border-t border-white/10 py-4 first:border-t-0">
+          <div key={item.label} className={`border-t ${t.bar} py-4 first:border-t-0`}>
             {item.children ? (
               <>
-                <p className="eyebrow text-white/40">{item.label}</p>
+                <p className={`eyebrow ${t.sheetLabel}`}>{item.label}</p>
                 <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2.5">
                   {item.children.map((child) => (
                     <li key={child.label}>
-                      <SmartLink href={child.href} className="text-[13px] text-cream/80 hover:text-cream">
+                      <SmartLink href={child.href} className={`text-[14px] tracking-[-0.02em] ${t.sheetLink}`}>
                         {child.label}
                       </SmartLink>
                     </li>
@@ -147,7 +176,7 @@ export function Nav() {
                 </ul>
               </>
             ) : (
-              <SmartLink href={item.href ?? "/"} onClick={() => setMobileOpen(false)} className="text-[13px] text-cream/80">
+              <SmartLink href={item.href ?? "/"} onClick={() => setMobileOpen(false)} className={`text-[14px] tracking-[-0.02em] ${t.sheetLink}`}>
                 {item.label}
               </SmartLink>
             )}
@@ -155,7 +184,7 @@ export function Nav() {
         ))}
         <SmartLink
           href={navCta.href}
-          className="mt-2 inline-flex h-10 items-center gap-2.5 rounded-full bg-cream px-5 text-[12px] text-ink"
+          className={`mt-2 inline-flex h-10 items-center gap-2.5 rounded-full px-5 text-[13px] tracking-[-0.02em] ${t.sheetCta}`}
         >
           {navCta.label}
           <ArrowIcon />

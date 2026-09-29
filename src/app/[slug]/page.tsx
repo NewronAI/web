@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Blocks } from "@/components/Blocks";
-import { Cta } from "@/components/Cta";
 import { Footer } from "@/components/Footer";
-import { Hero } from "@/components/Hero";
+import { InnerBlocks } from "@/components/inner/InnerBlocks";
+import { InnerCta } from "@/components/inner/InnerCta";
+import { InnerHero } from "@/components/inner/InnerHero";
 import { pages } from "@/content/pages";
 
 export const dynamicParams = false;
@@ -29,9 +29,10 @@ export default async function InnerPage({ params }: PageProps<"/[slug]">) {
 
   return (
     <main className="overflow-x-clip">
-      <Hero {...page.hero} crumbs={[page.group, page.name]} />
-      <Blocks blocks={page.blocks} />
-      <Cta {...page.cta} />
+      {/* Inner pages have their own design; the home sections live in src/app/page.tsx. */}
+      <InnerHero hero={page.hero} group={page.group} name={page.name} />
+      <InnerBlocks blocks={page.blocks} />
+      <InnerCta cta={page.cta} />
       <Footer />
     </main>
   );

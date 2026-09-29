@@ -92,7 +92,7 @@ const page: PageContent = {
     title: ["Talk to", "Newron."],
     body: "For any privacy question or request, reach our team through our contact page or write to our Data Protection point of contact in Bengaluru.",
     primary: { label: "Let’s talk", href: BOOK },
-    secondary: { label: "Contact us", href: "/#contact" },
+    secondary: { label: "Contact us", href: "#contact" },
   },
 };
 
