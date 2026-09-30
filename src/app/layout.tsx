@@ -51,13 +51,45 @@ export const metadata: Metadata = {
   verification: { google: "gDHc2fSVY7m97Lalh3bYA_jASW5bBvEQEb7mKTa6i0s" },
 };
 
+// Structured data for Google: who runs the site, its logo, and the site name shown in results.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Newron",
+      legalName: "NewronAI Technologies Pvt. Ltd.",
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png`, width: 512, height: 512 },
+      address: { "@type": "PostalAddress", addressLocality: "Bengaluru", addressCountry: "IN" },
+      sameAs: ["https://github.com/NewronAI"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: "ArthaLM",
+      alternateName: "ArthaLM by Newron",
+      url: SITE_URL,
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+  ],
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       className={`${inter.variable} ${geist.variable} ${geistMono.variable} antialiased`}
     >
-      <body>{children}</body>
+      <body>
+        <script
+          type="application/ld+json"
+          // Escape "<" so no string in the payload can close the script tag.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
