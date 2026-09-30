@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { InnerBlocks } from "@/components/inner/InnerBlocks";
@@ -12,13 +12,22 @@ export function generateStaticParams() {
   return Object.keys(pages).map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/[slug]">): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: PageProps<"/[slug]">,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
   const { slug } = await params;
   const page = pages[slug];
   if (!page) return {};
+  const title = `${page.name} — Newron`;
+  const description = page.metaDescription;
+  // Extend the root share metadata, so inner pages keep its image, site name and large card.
+  const { openGraph, twitter } = await parent;
   return {
-    title: `${page.name} — Newron`,
-    description: page.metaDescription,
+    title,
+    description,
+    openGraph: { ...openGraph, title, description, url: `/${slug}` },
+    twitter: { ...twitter, title, description },
   };
 }
 
