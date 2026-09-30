@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { SITE_URL } from "@/content/links";
 import "./globals.css";
 
 const inter = Inter({
@@ -33,7 +34,7 @@ const shareImage = {
 export const metadata: Metadata = {
   // Share previews (WhatsApp, LinkedIn, X) need absolute URLs, and og:url must be this
   // site: WhatsApp re-scrapes whatever page og:url names.
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.arthalm.com"),
+  metadataBase: new URL(SITE_URL),
   title,
   description,
   openGraph: {
