@@ -17,13 +17,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const title = "ArthaLM by Newron — The model of choice for BFSI & regulated industries";
+const title = "ArthaLM by Newron — The model of choice for BFSI";
 const description = "From fragmented data to actionable frontier intelligence which you can self host.";
 
 // A plain file, not app/opengraph-image.jpg: on Vercel preview deployments Next points
 // file-convention images at the *.vercel.app URL, and arthalm.com is served as a preview.
 const shareImage = {
-  url: "/og.jpg",
+  // Bump ?v= whenever og.jpg changes: WhatsApp and LinkedIn cache images by URL.
+  url: "/og.jpg?v=2",
   width: 1200,
   height: 630,
   alt: "ArthaLM by Newron: the model of choice for BFSI and regulated industries. A stack of loan documents resting on warm paper in soft daylight.",
