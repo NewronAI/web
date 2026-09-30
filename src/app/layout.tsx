@@ -47,6 +47,8 @@ export const metadata: Metadata = {
     images: [shareImage],
   },
   twitter: { card: "summary_large_image", title, description, images: [shareImage] },
+  // Google Search Console ownership (HTML tag method). Keep it, or the site is un-verified.
+  verification: { google: "gDHc2fSVY7m97Lalh3bYA_jASW5bBvEQEb7mKTa6i0s" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
