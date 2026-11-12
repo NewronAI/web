@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Geist_Mono, Inter, Instrument_Serif, Schibsted_Grotesk } from "next/font/google";
 import { Footer } from "@/components/footer";
 import { Nav } from "@/components/nav";
 import "./globals.css";
 
-// globals.css appends Arial, sans-serif → Geist, "Geist Fallback", Arial, sans-serif
-const geist = Geist({
-  variable: "--font-geist",
+// Same type as the Mannas site: Schibsted Grotesk for headlines, Inter for body text.
+const display = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin"],
-  style: ["normal", "italic"],
+  weight: ["400", "500"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
 });
 
 // Only used for small data labels; not preloaded so it doesn't compete with the headline fonts.
@@ -18,7 +23,7 @@ const geistMono = Geist_Mono({
   preload: false,
 });
 
-// Italic accent words in headlines — a high-contrast serif italic that pairs with Geist's neutral roman.
+// Italic accent words in headlines — a high-contrast serif italic that pairs with the grotesk headlines.
 const instrument = Instrument_Serif({
   variable: "--font-instrument",
   subsets: ["latin"],
@@ -43,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${geist.variable} ${geistMono.variable} ${instrument.variable} h-full antialiased`}
+      className={`${display.variable} ${inter.variable} ${geistMono.variable} ${instrument.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <a

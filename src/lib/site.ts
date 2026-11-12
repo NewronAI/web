@@ -62,6 +62,20 @@ export const legal = [
 // Content mirrors newron.ai, trimmed for scanning. Customers are kept separate from partners.
 export const customers = ["Aditya Birla Capital", "HDFC Credila", "Fedbank", "Niwas", "Fusion", "Government of Karnataka"];
 
+/**
+  Logos for the hero's trusted-by marquee, from each company's own website (Karnataka: the
+  state seal, public domain, Wikimedia Commons). w/h are the files' intrinsic sizes; h-class
+  balances their optical size in the row. bg: the file is white-only (as on fedfina.com), so it sits on the brand blue.
+*/
+export const customerLogos = [
+  { name: "Aditya Birla Capital", src: "/logos/aditya-birla-capital.svg", w: 159, h: 36, cls: "h-9" },
+  { name: "HDFC Credila", src: "/logos/credila.png", w: 442, h: 144, cls: "h-11" },
+  { name: "Fedbank", src: "/logos/fedbank.png", w: 677, h: 160, cls: "h-6", bg: "#004f9f" },
+  { name: "Niwas Housing Finance", src: "/logos/niwas.png", w: 79, h: 42, cls: "h-10" },
+  { name: "Fusion Finance", src: "/logos/fusion-finance.png", w: 336, h: 123, cls: "h-11" },
+  { name: "Government of Karnataka", src: "/logos/karnataka-seal.png", w: 133, h: 120, cls: "h-11", label: true },
+];
+
 export const partners = ["NVIDIA", "Google", "IISc", "Walmart", "Sattva", "Artpark"];
 
 export const lendingModules = [

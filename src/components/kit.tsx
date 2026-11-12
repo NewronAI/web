@@ -28,13 +28,23 @@ export function SmartLink({
   );
 }
 
+/** The label twice, stacked: on hover the first slides up and the copy takes its place (.roll in globals.css). */
+export function Roll({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="roll">
+      <span>{children}</span>
+      <span aria-hidden>{children}</span>
+    </span>
+  );
+}
+
 export function PrimaryCTA({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <SmartLink
       href={href}
-      className="inline-flex items-center rounded-xl border border-cta bg-cta px-5 py-3 text-sm font-medium text-cta-fg shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_1px_2px_rgb(0_0_0/0.08)] transition duration-200 hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_8px_20px_-8px_rgb(0_0_0/0.35)] active:translate-y-0"
+      className="group inline-flex items-center rounded-full bg-cta px-5 py-3.5 text-[15px] font-medium tracking-tight text-cta-fg transition-[filter] duration-300 hover:brightness-110"
     >
-      {children}
+      <Roll>{children}</Roll>
     </SmartLink>
   );
 }
@@ -43,9 +53,9 @@ export function SecondaryCTA({ href, children }: { href: string; children: React
   return (
     <SmartLink
       href={href}
-      className="inline-flex items-center rounded-xl border border-line-2 px-5 py-3 text-sm text-fg transition duration-200 hover:-translate-y-px hover:border-fg/40 hover:bg-s2 active:translate-y-0"
+      className="group inline-flex items-center rounded-full bg-s2 px-5 py-3.5 text-[15px] font-medium tracking-tight text-fg transition-colors duration-300 hover:bg-s3"
     >
-      {children}
+      <Roll>{children}</Roll>
     </SmartLink>
   );
 }

@@ -1,46 +1,109 @@
 import { Reveal } from "@/components/reveal";
-import { Accent, Head, PrimaryCTA, SecondaryCTA } from "@/components/kit";
+import { Accent, H2, Head, PrimaryCTA, SecondaryCTA } from "@/components/kit";
 import { AwardPill } from "@/components/nav";
-import { CamRun } from "@/components/cam-run";
+import { CountUp } from "@/components/count-up";
+import { GradientTiles } from "@/components/gradient-tiles";
 import { LendingShowcase } from "@/components/lending-showcase";
 import { PhotoStage } from "@/components/photo-stage";
 import Image from "next/image";
+import { Fragment } from "react";
 import { Check, Dot, Eighth, Frame } from "@/components/ui";
-import ctaPhoto from "@/assets/photos/og-image.jpg";
 import arthaPhoto from "@/assets/photos/artha.jpg";
 import governancePhoto from "@/assets/photos/governance.jpg";
-import heroBackdrop from "@/assets/photos/hero-backdrop.jpg";
 import insurancePhoto from "@/assets/photos/insurance.jpg";
-import { artha, CONTACT_HREF, customers, governance, insurance, partners, services } from "@/lib/site";
+import { artha, CONTACT_HREF, customerLogos, governance, insurance, partners, services } from "@/lib/site";
 
 /* ───────────────────────── Hero ───────────────────────── */
 
+/**
+  Customer logos scrolling right to left; the list is doubled so the loop is seamless. Pauses on hover.
+  Logos are in their original colours.
+*/
+function TrustedMarquee() {
+  const row = [...customerLogos, ...customerLogos];
+  return (
+    <div className="group mt-7 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+      <ul className="marquee flex w-max items-center group-hover:[animation-play-state:paused]">
+        {row.map((c, i) => (
+          <li key={i} aria-hidden={i >= customerLogos.length || undefined} className="flex shrink-0 items-center px-10 sm:px-14">
+            <span
+              className={`flex items-center gap-3 ${c.bg ? "rounded-md px-3.5 py-2.5" : ""}`}
+              style={c.bg ? { backgroundColor: c.bg } : undefined}
+            >
+              <Image src={c.src} alt={c.name} width={c.w} height={c.h} unoptimized className={`${c.cls} w-auto`} />
+              {c.label && (
+                <span className="font-serif text-xl leading-tight tracking-[-0.03em] whitespace-nowrap text-fg">
+                  Government
+                  <br />
+                  of Karnataka
+                </span>
+              )}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+// Headline words fade up one after another (after the Mannas hero); the last two are the serif accent.
+const LEAD = ["The", "enterprise", "AI", "partner", "of", "choice", "for"];
+const TAIL = ["regulated", "industries."];
+const word = (i: number) => ({ animationDelay: `${150 + i * 90}ms` });
+
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-16 pb-36 md:pt-24 md:pb-52">
-      <div className="relative mx-auto max-w-7xl px-5 md:px-8">
-        <div className="mx-auto max-w-4xl text-center">
-          <div className="rise" style={{ animationDelay: "40ms" }}>
+    // Pulled up under the sticky nav so the grey frame and the first panel start at the top of the page.
+    <section className="-mt-16 bg-s1 px-2 pt-[4.5rem] pb-[calc(var(--sheet-r)+0.5rem)]">
+      {/* Panel 1: the statement, framed by gradient tile columns */}
+      <div
+        className="relative flex min-h-[34rem] items-center justify-center overflow-hidden rounded-md bg-bg px-6 py-24 md:min-h-[calc(var(--col)*2.378+1rem)]"
+        style={{ "--col": "clamp(120px, 21.5vw, 310px)" } as React.CSSProperties}
+      >
+        <div className="absolute top-2 left-2 hidden w-[var(--col)] md:block">
+          <GradientTiles side="left" />
+        </div>
+        <div className="absolute top-2 right-2 hidden w-[var(--col)] md:block">
+          <GradientTiles side="right" />
+        </div>
+
+        <div className="relative -mt-6 w-full max-w-[46rem] text-center">
+          <div className="rise flex justify-center" style={{ animationDelay: "40ms" }}>
             <AwardPill />
           </div>
-          {/* No entrance animation on the headline: it's the LCP element and should paint at first render. */}
-          <h1 className="mt-6 font-serif text-[3rem] leading-[0.95] tracking-[-0.045em] sm:text-6xl lg:text-[5.5rem]">
-            The enterprise AI partner of choice for <Accent>regulated industries.</Accent>
+          <h1 className="mx-auto mt-7 max-w-[46rem] font-serif text-[clamp(2.4rem,4vw,3.6rem)] leading-[1.04] tracking-[-0.06em] text-balance">
+            {LEAD.map((w, i) => (
+              <Fragment key={w}>
+                <span className="rise inline-block" style={word(i)}>
+                  {w}
+                </span>{" "}
+              </Fragment>
+            ))}
+            <Accent>
+              {TAIL.map((w, i) => (
+                <Fragment key={w}>
+                  {i > 0 && " "}
+                  <span className="rise inline-block" style={word(LEAD.length + i)}>
+                    {w}
+                  </span>
+                </Fragment>
+              ))}
+            </Accent>
           </h1>
-          <p className="rise mx-auto mt-7 max-w-xl text-lg text-fg-2" style={{ animationDelay: "220ms" }}>
+          <p className="rise mx-auto mt-6 max-w-[40rem] text-[17px] leading-relaxed text-fg-2" style={{ animationDelay: "900ms" }}>
             Production AI for India&apos;s banks, NBFCs, insurers and Government.
           </p>
-          <div className="rise mt-9 flex flex-wrap justify-center gap-3" style={{ animationDelay: "320ms" }}>
+          <div className="rise mt-9 flex flex-wrap justify-center gap-3" style={{ animationDelay: "1050ms" }}>
             <PrimaryCTA href={CONTACT_HREF}>Talk to Us</PrimaryCTA>
             <SecondaryCTA href="/lending-intelligence">Explore the platform</SecondaryCTA>
           </div>
         </div>
+      </div>
 
-        <div className="rise mx-auto mt-16 max-w-6xl" style={{ animationDelay: "460ms" }}>
-          <PhotoStage src={heroBackdrop} priority>
-            <CamRun />
-          </PhotoStage>
-        </div>
+      {/* Panel 2: trusted-by marquee */}
+      <div className="rise mt-2 rounded-md bg-bg py-8 sm:py-10" style={{ animationDelay: "500ms" }}>
+        <p className="label text-center text-muted">Trusted by India&apos;s lenders, insurers and government</p>
+        <TrustedMarquee />
       </div>
     </section>
   );
@@ -49,7 +112,7 @@ export function Hero() {
 /* ───────────────────────── Proof ───────────────────────── */
 
 // Production figures published on newron.ai.
-const numbers: { n: React.ReactNode; l: string }[] = [
+const numbers: { n: string; l: string }[] = [
   { n: "66%", l: "Reduction in TAT" },
   { n: "200%", l: "Productivity uplift" },
   { n: "230k+", l: "Hours saved" },
@@ -60,15 +123,8 @@ export function Proof() {
   return (
     <section id="customers" className="sheet sheet-dark">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
-        <p className="label text-center text-fg-2">In production at India&apos;s lenders and in government</p>
-        <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-          {customers.map((c) => (
-            <li key={c} className="text-xl font-semibold tracking-tight whitespace-nowrap text-fg">
-              {c}
-            </li>
-          ))}
-        </ul>
-        <p className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-muted">
+        {/* Customers are in the hero's trusted-by marquee; this section leads with partners */}
+        <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-muted">
           <span className="label text-fg-2">Partners &amp; ecosystem</span>
           {partners.map((p) => (
             <span key={p}>{p}</span>
@@ -78,7 +134,9 @@ export function Proof() {
         <div className="mt-16 grid grid-cols-2 gap-y-10 border-y border-line py-12 lg:grid-cols-4 lg:divide-x lg:divide-line">
           {numbers.map((o, i) => (
             <Reveal key={o.l} delay={i * 80} className="text-center">
-              <p className="flex justify-center font-serif text-5xl tabular-nums tracking-[-0.04em] stat-num text-accent md:text-6xl">{o.n}</p>
+              <p className="flex justify-center font-serif text-5xl tabular-nums tracking-[-0.04em] stat-num text-accent md:text-6xl">
+                <CountUp value={o.n} />
+              </p>
               <p className="mt-2 text-sm text-muted">{o.l}</p>
             </Reveal>
           ))}
@@ -422,40 +480,66 @@ function DeployIcon({ kind }: { kind: (typeof deploys)[number]["icon"] }) {
   );
 }
 
+// What never leaves the perimeter (wording from the Security page).
+const stays = ["No calls to third-party model APIs", "No copy of your data kept outside your environment"];
+
 export function Deployment() {
   return (
     <section id="security" className="sheet">
-      <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
-        <Head
-          title={
-            <>
-              Your data stays <Accent>where regulators expect it.</Accent>
-            </>
-          }
-          line="API-first, with REST and webhooks."
-          more={{ href: "/security", label: "Security & compliance" }}
-        />
-        <div className="mx-auto mt-14 grid max-w-4xl gap-4 sm:grid-cols-3">
-          {deploys.map((d, i) => (
-            <Reveal key={d.t} delay={i * 90}>
-              <div className="flex h-full flex-col items-center rounded-3xl border border-line bg-s1 px-6 py-8 text-center">
-                <DeployIcon kind={d.icon} />
-                <p className="mt-5 text-lg font-medium">{d.t}</p>
-                <p className="mt-1 text-sm text-muted">{d.s}</p>
-              </div>
-            </Reveal>
-          ))}
+      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
+        <div>
+          <Head
+            align="left"
+            title={
+              <>
+                Your data stays <Accent>where regulators expect it.</Accent>
+              </>
+            }
+            line="API-first, with REST and webhooks."
+            more={{ href: "/security", label: "Security & compliance" }}
+          />
+          <Reveal className="mt-10 flex flex-wrap gap-2">
+            {[
+              ["ISO 27001 aligned", "ok"],
+              ["NVIDIA Inception Partner", "ok"],
+              ["SOC 2 · in progress", "open"],
+            ].map(([t, tone]) => (
+              <span key={t} className="flex items-center gap-2 rounded-full border border-line-2 px-4 py-2 text-sm">
+                <Dot tone={tone as "ok" | "open"} /> {t}
+              </span>
+            ))}
+          </Reveal>
         </div>
-        <Reveal className="mt-8 flex flex-wrap justify-center gap-2">
-          {[
-            ["ISO 27001 aligned", "ok"],
-            ["NVIDIA Inception Partner", "ok"],
-            ["SOC 2 · in progress", "open"],
-          ].map(([t, tone]) => (
-            <span key={t} className="flex items-center gap-2 rounded-full border border-line-2 px-4 py-2 text-sm">
-              <Dot tone={tone as "ok" | "open"} /> {t}
+
+        {/* The perimeter: everything Newron runs sits inside the customer's boundary */}
+        <Reveal delay={120}>
+          <div className="relative rounded-[1.75rem] border-2 border-dashed border-accent/40 bg-s1 p-3 sm:p-4">
+            <span className="absolute -top-3 left-6 rounded-full bg-accent px-3 py-1 font-mono text-[11px] tracking-[0.1em] text-white uppercase">
+              Your perimeter
             </span>
-          ))}
+            <ul className="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-bg">
+              {deploys.map((d) => (
+                <li key={d.t} className="flex items-center gap-5 px-5 py-5 sm:px-6">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-s2">
+                    <DeployIcon kind={d.icon} />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-lg font-medium">{d.t}</span>
+                    <span className="block text-sm text-muted">{d.s}</span>
+                  </span>
+                  <Check className="ml-auto" />
+                </li>
+              ))}
+            </ul>
+            <ul className="mt-3 grid gap-2 px-2 pb-1 sm:grid-cols-2">
+              {stays.map((t) => (
+                <li key={t} className="flex items-start gap-2 text-[13px] leading-snug text-fg-2">
+                  <span aria-hidden className="mt-0.5 font-mono text-accent">✕</span>
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
         </Reveal>
       </div>
     </section>
@@ -464,43 +548,45 @@ export function Deployment() {
 
 /* ───────────────────────── CTA ───────────────────────── */
 
+const PILOT = [
+  { when: "Day 1", t: "Sandbox", d: "Set up on a slice of your historical data." },
+  { when: "Day 5", t: "Working pilot", d: "Running on one of your real workflows." },
+  { when: "Next quarter", t: "Production rollout", d: "Inside your perimeter: your VPC, on-prem or air-gapped." },
+];
+
 export function CTA() {
   return (
     <section id="contact" className="sheet sheet-brand">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 pt-24 pb-40 md:px-8 md:pt-32 md:pb-56 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-        <Reveal>
-          <h2 className="text-balance font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
+      <div className="mx-auto max-w-6xl px-5 pt-24 pb-40 md:px-8 md:pt-32 md:pb-56">
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <h2 className={`text-balance ${H2}`}>
             A working pilot <Accent>on your own data,</Accent> inside a week.
           </h2>
-          <ol className="mt-10 space-y-4">
-            {[
-              ["Day 1", "Sandbox on a slice of your historical data"],
-              ["Day 5", "A working pilot on a real workflow"],
-              ["Next quarter", "Production rollout, inside your perimeter"],
-            ].map(([k, v]) => (
-              <li key={k} className="flex items-baseline gap-4 border-b border-line pb-4">
-                <span className="w-28 shrink-0 font-mono text-xs text-accent">{k}</span>
-                <span className="text-fg-2">{v}</span>
-              </li>
-            ))}
-          </ol>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <PrimaryCTA href={CONTACT_HREF}>Talk to Us</PrimaryCTA>
-            <SecondaryCTA href="/security">How we deploy</SecondaryCTA>
-          </div>
         </Reveal>
-        <Reveal delay={120}>
-          <div className="stage relative isolate aspect-[4/3] overflow-hidden rounded-[2rem]">
-            <Image
-              src={ctaPhoto}
-              alt=""
-              fill
-              placeholder="blur"
-              sizes="(min-width: 1024px) 560px, 100vw"
-              className="stage-photo -z-10 object-cover"
-              style={{ objectPosition: "75% 50%" }}
-            />
-          </div>
+
+        {/* Timeline: a rail with one node per step, each step a card */}
+        <ol className="relative mt-16 grid gap-4 md:mt-20 md:grid-cols-3 md:gap-5">
+          <li aria-hidden className="absolute top-[7px] right-[16.66%] left-[16.66%] hidden h-px list-none bg-gradient-to-r from-accent via-accent/60 to-line-2 md:block" />
+          {PILOT.map((p, i) => (
+            <li key={p.when} className="relative md:pt-10">
+              <span
+                aria-hidden
+                className={`absolute top-0 left-1/2 hidden h-[15px] w-[15px] -translate-x-1/2 rounded-full border-2 border-accent md:block ${
+                  i < 2 ? "bg-accent" : "bg-bg"
+                }`}
+              />
+              <Reveal delay={i * 120} className="h-full rounded-2xl border border-line bg-s1 p-6 md:p-7">
+                <p className="font-mono text-[11px] tracking-[0.1em] text-accent uppercase">{p.when}</p>
+                <p className="mt-4 font-serif text-2xl tracking-[-0.03em]">{p.t}</p>
+                <p className="mt-2 text-[15px] leading-relaxed text-fg-2">{p.d}</p>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
+
+        <Reveal delay={360} className="mt-12 flex flex-wrap justify-center gap-3 md:mt-14">
+          <PrimaryCTA href={CONTACT_HREF}>Talk to Us</PrimaryCTA>
+          <SecondaryCTA href="/security">How we deploy</SecondaryCTA>
         </Reveal>
       </div>
     </section>

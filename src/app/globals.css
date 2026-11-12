@@ -107,12 +107,13 @@
   --color-cta-fg: var(--cta-fg);
   --color-pop: var(--pop);
   --color-pop-fg: var(--pop-fg);
-  --font-sans: var(--font-geist), Arial, sans-serif;
-  --font-serif: var(--font-geist), Arial, sans-serif;
+  --font-sans: var(--font-inter), Arial, sans-serif;
+  /* Headlines (font-serif is the headline face here, not a serif) */
+  --font-serif: var(--font-schibsted), Arial, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
-/* Serif italic accent inside Geist headlines: nudged up so its x-height sits level with Geist */
+/* Serif italic accent inside the grotesk headlines: nudged up so its x-height sits level */
 .accent {
   font-family: var(--font-instrument), Georgia, serif;
   font-style: italic;
@@ -150,12 +151,13 @@ html {
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-geist), Arial, sans-serif;
+  font-family: var(--font-inter), Arial, sans-serif;
 }
 
+/* Regular weight, as on the Mannas site */
 h1,
 h2 {
-  font-weight: 500;
+  font-weight: 400;
 }
 
 ::selection {
@@ -164,7 +166,7 @@ h2 {
 }
 
 .label {
-  font-family: var(--font-geist), Arial, sans-serif;
+  font-family: var(--font-inter), Arial, sans-serif;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -276,6 +278,62 @@ blockquote {
 }
 
 /* Load-in stagger */
+/* Hero gradient tiles (after the Mannas hero): each tile rises in, then its gradient slowly drifts */
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+@keyframes tile-drift {
+  from {
+    background-position: 0% 25%;
+  }
+  to {
+    background-position: 100% 75%;
+  }
+}
+.tile-in {
+  animation: tile-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.tile-drift {
+  animation: tile-drift 16s ease-in-out infinite alternate;
+}
+
+/* Trusted-by marquee: the list is doubled, so moving it by half loops seamlessly */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  animation: marquee 32s linear infinite;
+}
+
+/* Label roll (buttons): the label slides up and an identical copy takes its place */
+.roll {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.roll > span {
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.roll > span + span {
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+}
+.group:hover .roll > span:first-child,
+.group:focus-visible .roll > span:first-child {
+  transform: translateY(-100%);
+}
+.group:hover .roll > span + span,
+.group:focus-visible .roll > span + span {
+  transform: none;
+}
+
 @keyframes rise {
   from {
     opacity: 0;
@@ -361,6 +419,9 @@ blockquote {
     animation: none;
     transition: none;
   }
+  .marquee,
+  .tile-in,
+  .tile-drift,
   .live-dot,
   .caret,
   .fade-in {

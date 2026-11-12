@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Roll } from "@/components/kit";
 import { CONTACT_HREF, nav } from "@/lib/site";
 
 export function Logo({ className = "" }: { className?: string }) {
@@ -68,31 +69,46 @@ export function AwardPill() {
 export function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  // After the Mannas navbar: full width at rest, narrower with a shadow while scrolling down, back on scroll up.
+  const [compact, setCompact] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y < 24) setCompact(false);
+      else if (Math.abs(y - last) > 4) setCompact(y > last);
+      last = y;
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   const isActive = (href: string) => !href.includes("#") && pathname === href;
 
   return (
-    <header className="sticky top-0 z-50 px-4 pt-4 md:px-8">
+    <header className="sticky top-0 z-50 px-2 pt-2">
       <nav
         aria-label="Main"
-        className={`mx-auto max-w-6xl rounded-2xl border border-line-2 bg-bg/85 backdrop-blur-xl backdrop-saturate-150 transition-[box-shadow] duration-300 ${
-          scrolled || open ? "shadow-[0_12px_32px_-16px_rgb(0_0_0/0.28)]" : "shadow-none"
+        className={`mx-auto rounded-md border bg-bg transition-[max-width,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          compact && !open
+            ? "max-w-[84rem] border-transparent shadow-[0_10px_40px_-20px_rgb(18_18_17/0.35)]"
+            : "max-w-full border-line"
         }`}
       >
-        <div className="flex h-16 items-center justify-between gap-6 pl-5 pr-2.5">
-          <Link href="/" aria-label="Newron home" onClick={() => setOpen(false)}>
+        <div className="flex h-14 items-center justify-between px-4 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr]">
+          <Link href="/" aria-label="Newron home" onClick={() => setOpen(false)} className="justify-self-start">
             <Logo />
           </Link>
 
-          <ul className="hidden items-center gap-0.5 lg:flex">
+          <ul className="hidden items-center gap-1 lg:flex">
             {nav.map((l) => {
               const on = isActive(l.href);
               return (
@@ -100,9 +116,7 @@ export function Nav() {
                   <Link
                     href={l.href}
                     aria-current={on ? "page" : undefined}
-                    className={`rounded-lg px-3 py-2 text-sm transition-colors hover:bg-s2 hover:text-fg ${
-                      on ? "bg-s2 text-fg" : "text-fg-2"
-                    }`}
+                    className={`rounded-full px-3.5 py-2 text-[15px] text-fg transition-colors hover:bg-s2 ${on ? "bg-s2" : ""}`}
                   >
                     {l.label}
                   </Link>
@@ -111,58 +125,65 @@ export function Nav() {
             })}
           </ul>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-end gap-3">
             <a
               href={CONTACT_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden rounded-xl border border-cta bg-cta px-4 py-2.5 text-sm font-medium text-cta-fg transition hover:brightness-95 sm:inline-block"
+              className="group relative hidden overflow-hidden rounded-full bg-cta px-5 py-2.5 text-sm font-medium text-cta-fg sm:inline-flex"
             >
-              Talk to Us
+              <Roll>Talk to Us</Roll>
             </a>
             <button
               type="button"
-              className="grid h-10 w-10 place-items-center lg:hidden"
+              className="grid h-10 w-10 place-items-center rounded-full border border-fg/20 lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
+              aria-controls="mobile-menu"
               onClick={() => setOpen((o) => !o)}
             >
-              <span className="relative block h-3 w-5">
-                <span className={`absolute left-0 h-[1.5px] w-5 bg-fg transition ${open ? "top-1.5 rotate-45" : "top-0"}`} />
-                <span className={`absolute left-0 h-[1.5px] w-5 bg-fg transition ${open ? "top-1.5 -rotate-45" : "top-3"}`} />
+              <span className="relative block h-3 w-4">
+                <span className={`absolute left-0 h-[1.5px] w-4 bg-fg transition ${open ? "top-1.5 rotate-45" : "top-0"}`} />
+                <span className={`absolute left-0 h-[1.5px] w-4 bg-fg transition ${open ? "top-1.5 -rotate-45" : "top-3"}`} />
               </span>
             </button>
           </div>
         </div>
 
-        {open && (
-          <ul className="border-t border-line px-5 pb-4 pt-1 lg:hidden">
-            {nav.map((l) => (
-              <li key={l.href}>
+        {/* Mobile menu: large links, each numbered */}
+        <div
+          id="mobile-menu"
+          className={`grid transition-[grid-template-rows,opacity] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
+            open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+          }`}
+        >
+          <ul className="overflow-hidden px-4 sm:px-6" inert={!open}>
+            {nav.map((l, i) => (
+              <li key={l.href} className="border-t border-line first:mt-2">
                 <Link
                   href={l.href}
                   onClick={() => setOpen(false)}
                   aria-current={isActive(l.href) ? "page" : undefined}
-                  className="flex items-center justify-between border-b border-line py-3.5 font-serif text-2xl"
+                  className="flex items-baseline justify-between py-4 font-serif text-4xl tracking-[-0.04em]"
                 >
                   {l.label}
-                  <span className="text-muted">→</span>
+                  <span className="font-mono text-[11px] tracking-[0.1em] text-accent">0{i + 1}</span>
                 </Link>
               </li>
             ))}
-            <li>
+            <li className="border-t border-line pt-5 pb-6">
               <a
                 href={CONTACT_HREF}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between py-3.5 font-serif text-2xl"
+                onClick={() => setOpen(false)}
+                className="inline-flex rounded-full bg-cta px-5 py-3 text-sm font-medium text-cta-fg"
               >
                 Talk to Us
-                <span className="text-muted">↗</span>
               </a>
             </li>
           </ul>
-        )}
+        </div>
       </nav>
     </header>
   );
