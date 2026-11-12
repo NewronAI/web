@@ -1,0 +1,429 @@
+@import "tailwindcss";
+
+/*
+  Palette (see colour research, Nov 2026): ~70% white and cool greys, #28282B text,
+  the logo's deep indigo for every dark section and #4F2CF5 for buttons and links,
+  and lime as the one pop colour, on the award badge only (never on text or buttons).
+  Every sheet re-declares the same tokens, so components re-theme by context.
+*/
+:root {
+  --bg: #ffffff;
+  --s1: #f7f7f8;
+  --s2: #f0f0f2;
+  --s3: #e6e6e9;
+  --line: rgb(40 40 43 / 0.09);
+  --line-2: rgb(40 40 43 / 0.2);
+  --fg: #28282b;
+  --fg-2: #4a4a4f;
+  --muted: #6e6e75;
+  --accent: #4f2cf5;
+  --ok: #157a46;
+  --warn: #b4530e;
+  --cta: #4f2cf5;
+  --cta-fg: #ffffff;
+  --pop: #c6f432;
+  --pop-fg: #28282b;
+  --sheet-r: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --sheet-r: 4.5rem;
+  }
+}
+
+/* One dark for the whole site: flat deep indigo from the logo */
+.sheet-dark,
+.sheet-brand {
+  --bg: #1d1550;
+  --s1: #251c5e;
+  --s2: #2d2369;
+  --s3: #372c76;
+  --line: rgb(255 255 255 / 0.14);
+  --line-2: rgb(255 255 255 / 0.28);
+  --fg: #ffffff;
+  --fg-2: #d9d4f5;
+  --muted: #a69fd0;
+  --accent: #b9adff;
+  --ok: #b8f5c9;
+  --warn: #ffd48a;
+  --cta: #ffffff;
+  --cta-fg: #1d1550;
+}
+
+/* A step deeper, so the footer still separates from a dark section above it */
+.sheet-deep {
+  --bg: #130e38;
+  --s1: #1b1446;
+  --s2: #231a52;
+  --s3: #2c2260;
+}
+
+/* Stat numbers: indigo on light sections, white on dark */
+.sheet-dark .stat-num,
+.sheet-brand .stat-num {
+  color: var(--fg);
+}
+
+.sheet-tint {
+  --bg: #f7f7f8;
+  --s1: #fbfbfc;
+  --s2: #efeff1;
+  --s3: #e6e6e9;
+  --line: rgb(40 40 43 / 0.09);
+  --line-2: rgb(40 40 43 / 0.2);
+  --fg: #28282b;
+  --fg-2: #4a4a4f;
+  --muted: #6b6b72;
+  --accent: #4f2cf5;
+  --ok: #136b3e;
+  --warn: #9a4508;
+}
+
+/* Stacked sheets: rounded top corners that slide over the previous section */
+.sheet {
+  position: relative;
+  margin-top: calc(var(--sheet-r) * -1);
+  border-top-left-radius: var(--sheet-r);
+  border-top-right-radius: var(--sheet-r);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-s1: var(--s1);
+  --color-s2: var(--s2);
+  --color-s3: var(--s3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-cta: var(--cta);
+  --color-cta-fg: var(--cta-fg);
+  --color-pop: var(--pop);
+  --color-pop-fg: var(--pop-fg);
+  --font-sans: var(--font-inter), Arial, sans-serif;
+  /* Headlines (font-serif is the headline face here, not a serif) */
+  --font-serif: var(--font-schibsted), Arial, sans-serif;
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Serif italic accent inside the grotesk headlines: nudged up so its x-height sits level */
+.accent {
+  font-family: var(--font-instrument), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+  line-height: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+  One offset for every #anchor jump: clears the sticky nav (~5.5rem) and leaves
+  room for the rounded top of the target sheet, so sections land fully in view.
+  Set as scroll-margin on the targets, not scroll-padding on <html>: Next.js reads
+  the root scroll-padding when deciding whether to scroll on navigation, and a
+  large value made it scroll new pages (e.g. /press) down past their hero.
+*/
+[id] {
+  scroll-margin-top: 8.5rem;
+}
+@media (min-width: 768px) {
+  [id] {
+    scroll-margin-top: 9.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+
+/* Regular weight, as on the Mannas site */
+h1,
+h2 {
+  font-weight: 400;
+}
+
+::selection {
+  background: #dcd3ff;
+  color: #28282b;
+}
+
+.label {
+  font-family: var(--font-inter), Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+p,
+li,
+blockquote {
+  text-wrap: pretty;
+}
+
+/* Keyboard focus that reads on every sheet */
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+  border-radius: 0.75rem;
+}
+
+/* Long-form (legal, policy) typography */
+.longform h2 {
+  margin-top: 3.5rem;
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.longform h3 {
+  margin-top: 2rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.longform p,
+.longform li {
+  color: var(--fg-2);
+  line-height: 1.75;
+}
+.longform p {
+  margin-top: 1rem;
+}
+.longform ul,
+.longform ol {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+}
+.longform ul {
+  list-style: disc;
+}
+.longform ol {
+  list-style: decimal;
+}
+.longform li + li {
+  margin-top: 0.5rem;
+}
+.longform a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 4px;
+}
+.longform strong {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+/* Photo stages: fine film grain over the photo, beneath the UI */
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -5;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Scroll-linked depth where supported: the photo settles as it enters, the UI lifts in */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stage-photo {
+      animation: stage-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+    .stage-ui {
+      animation: stage-lift linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 35%;
+    }
+  }
+}
+@keyframes stage-settle {
+  from {
+    transform: scale(1.14);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes stage-lift {
+  from {
+    transform: translateY(28px) scale(0.985);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Load-in stagger */
+/* Hero gradient tiles (after the Mannas hero): each tile rises in, then its gradient slowly drifts */
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+@keyframes tile-drift {
+  from {
+    background-position: 0% 25%;
+  }
+  to {
+    background-position: 100% 75%;
+  }
+}
+.tile-in {
+  animation: tile-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.tile-drift {
+  animation: tile-drift 16s ease-in-out infinite alternate;
+}
+
+/* Trusted-by marquee: the list is doubled, so moving it by half loops seamlessly */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  animation: marquee 32s linear infinite;
+}
+
+/* Label roll (buttons): the label slides up and an identical copy takes its place */
+.roll {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.roll > span {
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.roll > span + span {
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+}
+.group:hover .roll > span:first-child,
+.group:focus-visible .roll > span:first-child {
+  transform: translateY(-100%);
+}
+.group:hover .roll > span + span,
+.group:focus-visible .roll > span + span {
+  transform: none;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  opacity: 0;
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.1, 1) forwards;
+}
+
+/* Scroll reveal (toggled by <Reveal>) */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.1, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Tab auto-advance progress and panel swap */
+@keyframes grow {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+.progress {
+  animation: grow linear forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fade-in {
+  animation: fade-in 0.45s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+
+/* Live-state pulse for running / waiting indicators */
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, currentColor 55%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 7px transparent;
+  }
+}
+.live-dot {
+  animation: pulse-ring 1.4s ease-out infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.caret {
+  animation: blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+  .marquee,
+  .tile-in,
+  .tile-drift,
+  .live-dot,
+  .caret,
+  .fade-in {
+    animation: none;
+  }}

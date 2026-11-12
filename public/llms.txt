@@ -1,0 +1,39 @@
+# Newron
+
+> Newron is the applied-AI partner to India's banks, NBFCs, insurers and Government. It builds production AI systems for regulated industries — Lending Intelligence, Artha models, Insurance AI and Governance AI — self-hostable on your VPC, on-prem or fully air-gapped.
+
+Newron deploys inside the customer's perimeter, follows their policy to the clause, and leaves an audit trail for every decision. Customers include Aditya Birla Capital, HDFC Credila, Fedbank, Niwas, Fusion and the Government of Karnataka. Partners include NVIDIA, Google, IISc, Walmart, Sattva and Artpark.
+
+To talk to the team, book a call: https://calendar.app.google/LfJBqnSonqgrP6GUA
+
+## Solutions
+
+- [Lending intelligence](https://www.newron.ai/lending-intelligence): A modular suite for the loan origination lifecycle — CAM generation, statement analysis, Applicant 360°, Video PD and Policy Chat — configured to the lender's policy, format and tier structure.
+- [Artha](https://www.newron.ai/#artha): Newron's document models — classify, extract fields, tables and stamps, and map parties, zero-shot with no templates; about 3× faster than frontier models at roughly an eighth of the cost per document.
+- [Insurance AI](https://www.newron.ai/insurance-ai): Claims models that inspect documents, parse policy language and predict denial risk the moment a claim is initiated.
+- [Governance AI](https://www.newron.ai/governance-ai): Built with the Government of Karnataka — Kannada handwriting OCR, regional text-to-speech, grievance triage and policy discovery.
+- [Custom AI engineering](https://www.newron.ai/custom-ai-engineering): Ex-research and ex-platform engineers who embed with your team to build pipelines, evals, inference, custom foundational models and business automation.
+
+## Industries
+
+- [Banks](https://www.newron.ai/banks): AI deployed inside the bank's perimeter that follows credit policy and leaves an audit trail for every decision.
+- [NBFCs](https://www.newron.ai/nbfcs): Automates mechanical underwriting work so NBFCs can grow the book without growing the risk.
+- [Insurance](https://www.newron.ai/industry-insurance): For insurers and TPAs — reads documents, checks eligibility against the specific policy and predicts denial risk.
+- [Public sector](https://www.newron.ai/public-sector): Citizen services in their own language, running entirely inside government infrastructure.
+
+## Company
+
+- [About](https://www.newron.ai/about): Who Newron is and why it builds for regulated institutions.
+- [Careers](https://www.newron.ai/careers): Open roles on a small team shipping into live deployments at banks, insurers and state bodies.
+- [Press](https://www.newron.ai/press): Announcements, coverage and media resources.
+- [Open source](https://www.newron.ai/open-source): Tooling Newron has released under permissive licences.
+
+## Trust
+
+- [Security & compliance](https://www.newron.ai/security): Deployment inside your perimeter, encryption and audit trails for every action.
+- [Responsible AI](https://www.newron.ai/responsible-ai): Sourced answers, human decisions and the humility to say "I'm not sure."
+
+## Optional
+
+- [Privacy policy](https://www.newron.ai/privacy)
+- [Terms of service](https://www.newron.ai/terms)

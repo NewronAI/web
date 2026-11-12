@@ -1,0 +1,178 @@
+{
+  "slug": "governance-ai",
+  "title": "Governance AI — Newron",
+  "hero": {
+    "group": "Solutions",
+    "kicker": "Governance AI",
+    "fact": "Built with the Government of Karnataka",
+    "title": "Citizen services in *their* language.",
+    "line": "Built with the Government of Karnataka. Newron reads Kannada handwriting, speaks in regional dialects and surfaces policy answers from documents that were never indexed — so grievance redressal works at the speed of a phone call.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      },
+      {
+        "label": "Public sector",
+        "href": "/public-sector",
+        "variant": "ghost"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "capabilities",
+      "n": "01",
+      "kicker": "Capabilities",
+      "title": "The stack behind a *working* grievance desk.",
+      "line": "Language, voice, triage and knowledge — assembled into one workflow that meets citizens where they are.",
+      "cards": [
+        {
+          "bullets": [
+            "Handwriting + print",
+            "Ledger & form layouts",
+            "Field-note capture"
+          ],
+          "tag": "Language",
+          "n": "01",
+          "t": "Custom OCR · Kannada",
+          "d": "Reads Kannada handwriting and print — ledger forms, applications and field notes that were never digitised."
+        },
+        {
+          "bullets": [
+            "Dialect-aware",
+            "Low latency",
+            "Phone-line ready"
+          ],
+          "tag": "Voice",
+          "n": "02",
+          "t": "Regional TTS & ASR",
+          "d": "Natural regional voices with low latency, so citizens can speak and be answered in their own dialect."
+        },
+        {
+          "bullets": [
+            "Auto-classification",
+            "Officer routing",
+            "Draft responses"
+          ],
+          "tag": "Triage",
+          "n": "03",
+          "t": "Grievance triage",
+          "d": "Classifies, routes, summarises and drafts a response for every grievance — at the speed of a phone call."
+        },
+        {
+          "bullets": [
+            "Clause-level retrieval",
+            "Cited answers",
+            "Scales to archives"
+          ],
+          "tag": "Knowledge",
+          "n": "04",
+          "t": "Policy discovery",
+          "d": "Surfaces the exact clause from PDFs and circulars that were never indexed, with a citation."
+        }
+      ]
+    },
+    {
+      "id": "flow",
+      "n": "02",
+      "kicker": "A grievance, end to end",
+      "title": "From a voice note to a *resolved* case.",
+      "line": "Every step is logged and reviewable. Officers approve; Newron does the assembly.",
+      "steps": [
+        {
+          "label": "00:00",
+          "t": "Citizen speaks, in Kannada",
+          "d": "A voice note or call is transcribed and understood — no forms, no app, no English."
+        },
+        {
+          "label": "00:04",
+          "t": "Classified & routed",
+          "d": "Category, district and the right officer tier identified automatically."
+        },
+        {
+          "label": "00:09",
+          "t": "Policy retrieved",
+          "d": "The governing rule is surfaced with its clause and current status."
+        },
+        {
+          "label": "00:14",
+          "t": "Response drafted",
+          "d": "A reply is drafted in the citizen's language for officer approval."
+        },
+        {
+          "label": "SENT",
+          "t": "Spoken back",
+          "d": "The approved response is delivered as natural regional speech."
+        }
+      ]
+    },
+    {
+      "id": "impact",
+      "n": "03",
+      "kicker": "Why it matters",
+      "title": "Reach the citizens a form *never* could.",
+      "line": "Language and literacy are the real barriers to public services. Newron reduces the reliance on English-language forms and written applications.",
+      "stats": {
+        "kicker": "Measured in production",
+        "caption": "Across grievance categories in pilot",
+        "items": [
+          {
+            "n": "1",
+            "l": "Language in production · Kannada"
+          },
+          {
+            "n": "4:12",
+            "l": "Median response time (mm:ss)"
+          },
+          {
+            "n": "100%",
+            "l": "Cases audit-logged"
+          }
+        ]
+      }
+    },
+    {
+      "id": "faq",
+      "n": "04",
+      "kicker": "Questions",
+      "title": "Common questions.",
+      "faq": [
+        {
+          "q": "Which languages and dialects are supported?",
+          "a": "Kannada is in production, including handwriting recognition. No other language is in production today — the stack is built to extend to other Indian languages and regional dialects, but each one needs its own data and evaluation before we would call it supported."
+        },
+        {
+          "q": "Can it run inside government infrastructure?",
+          "a": "Yes. Newron deploys on-premise or air-gapped within state data centres, with explicit data-residency commitments and full audit trails."
+        },
+        {
+          "q": "Does an officer stay in the loop?",
+          "a": "Always. Newron drafts and routes; a human officer reviews and approves every response before it is sent."
+        },
+        {
+          "q": "How does it find answers in old circulars?",
+          "a": "Policy discovery indexes scanned PDFs and circulars and retrieves the exact governing clause with a citation, even when the source was never digitised."
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "kicker": "For the public sector",
+    "title": "Bring services to *every* citizen.",
+    "line": "We work with state bodies to scope a pilot on a single grievance category, on your own infrastructure, with the audit trail your compliance teams require.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      },
+      {
+        "label": "Public sector",
+        "href": "/public-sector",
+        "variant": "ghost"
+      }
+    ]
+  }
+}

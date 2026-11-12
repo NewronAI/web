@@ -1,0 +1,158 @@
+{
+  "slug": "insurance-ai",
+  "title": "Insurance AI — Newron",
+  "hero": {
+    "group": "Solutions",
+    "kicker": "Insurance AI",
+    "fact": "90s avg time to file",
+    "title": "Settle claims *before* they're filed.",
+    "line": "Newron's claims models inspect documents, parse policy language and predict denial risk the moment a claim is initiated — so adjusters spend their time on edge cases, not paperwork.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "pipeline",
+      "n": "01",
+      "kicker": "The claims pipeline",
+      "title": "Three checkpoints, fully automated.",
+      "line": "From first notice of loss to a TPA-ready packet, Newron handles the mechanical work and escalates only what needs a human.",
+      "cards": [
+        {
+          "bullets": [
+            "Sub-limit awareness",
+            "Document completeness",
+            "Pre-auth guidance"
+          ],
+          "tag": "Eligibility",
+          "n": "01",
+          "t": "Eligibility check, before submission",
+          "d": "Policy retrieval and document understanding flag missing artefacts and ineligible claims at intake — before they enter the queue."
+        },
+        {
+          "bullets": [
+            "TPA-ready packets",
+            "Auto-attached evidence",
+            "Status tracking"
+          ],
+          "tag": "Filing",
+          "n": "02",
+          "t": "Automated claim filing",
+          "d": "Forms, supporting documents and metadata assembled into TPA-ready packets in under 90 seconds."
+        },
+        {
+          "bullets": [
+            "Denial-reason model",
+            "Pre-emptive fixes",
+            "SLA forecasting"
+          ],
+          "tag": "Risk",
+          "n": "03",
+          "t": "Denial risk & remediation",
+          "d": "Predicts likely denial reasons against historical adjudication data and suggests remediation pre-emptively."
+        }
+      ]
+    },
+    {
+      "id": "outcomes",
+      "n": "02",
+      "kicker": "Impact",
+      "title": "Fewer denials, *faster* settlements.",
+      "line": "Measured across health and motor lines at insurers and TPAs running Newron in production. The settlement figure is the TPA turnaround we observe, not a Newron commitment.",
+      "stats": {
+        "kicker": "Measured in production",
+        "caption": "What claims teams see in production",
+        "items": [
+          {
+            "n": "90s",
+            "l": "Avg time to file"
+          },
+          {
+            "n": "4.2d",
+            "l": "Observed TPA settlement SLA"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lines",
+      "n": "03",
+      "kicker": "Lines & documents",
+      "title": "Built for messy, *real-world* claims.",
+      "line": "Newron reads discharge summaries, prescriptions, invoices, FIRs and policy schedules — printed or handwritten.",
+      "steps": [
+        {
+          "label": "INTAKE",
+          "t": "Document understanding",
+          "d": "Discharge summaries, bills, prescriptions and policy schedules parsed and cross-checked."
+        },
+        {
+          "label": "ELIGIBILITY",
+          "t": "Policy reasoning",
+          "d": "Sub-limits, waiting periods and exclusions evaluated against the specific policy schedule."
+        },
+        {
+          "label": "FILING",
+          "t": "Packet assembly",
+          "d": "A complete, TPA-ready packet with every required artefact attached and indexed."
+        },
+        {
+          "label": "ADJUDICATION",
+          "t": "Denial prediction",
+          "d": "Likely denial reasons surfaced with the historical evidence behind them."
+        },
+        {
+          "label": "SETTLEMENT",
+          "t": "Remediation loop",
+          "d": "Gaps closed before submission, shortening the back-and-forth with the TPA."
+        }
+      ]
+    },
+    {
+      "id": "faq",
+      "n": "04",
+      "kicker": "Questions",
+      "title": "Common questions.",
+      "faq": [
+        {
+          "q": "Which lines of business are supported?",
+          "a": "Health and motor are in production today. No other line is validated yet — the document and policy-reasoning stack is line-agnostic in design, so we scope additional lines case by case rather than claiming coverage up front."
+        },
+        {
+          "q": "Does it integrate with our TPA workflow?",
+          "a": "Yes. Newron produces TPA-ready packets and exposes REST + webhook APIs, so it slots into your existing claims platform and TPA handoffs."
+        },
+        {
+          "q": "How is denial risk calculated?",
+          "a": "The model is trained on historical adjudication outcomes and explains each prediction with the policy clauses and document evidence behind it — never an unexplained score."
+        },
+        {
+          "q": "Is patient data kept private?",
+          "a": "All processing runs inside your environment — VPC, on-prem or air-gapped — with full audit logging and data-residency commitments."
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "kicker": "Get started",
+    "title": "Run a pilot on *last quarter's claims*.",
+    "line": "We'll replay a slice of your historical claims through Newron and show you the denial-risk and time-to-file numbers before you commit.",
+    "ctas": [
+      {
+        "label": "Talk to Us",
+        "href": "https://calendar.app.google/LfJBqnSonqgrP6GUA",
+        "variant": "primary"
+      },
+      {
+        "label": "Read customer stories",
+        "href": "/#customers",
+        "variant": "ghost"
+      }
+    ]
+  }
+}
