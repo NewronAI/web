@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 /*
-  Palette: warm cream base with near-black, deep teal and lavender sheets.
+  Palette: pure white base with charcoal ink; indigo from the logo is the only accent.
   Every sheet re-declares the same tokens, so components re-theme by context.
 */
 :root {
-  --bg: #ffffeb;
-  --s1: #fbfbe2;
-  --s2: #f3f3d8;
-  --s3: #e9e9cd;
-  --line: rgb(26 26 26 / 0.1);
-  --line-2: rgb(26 26 26 / 0.22);
-  --fg: #1a1a1a;
-  --fg-2: #454540;
-  --muted: #6d6d62;
-  --accent: #034f46;
-  --ok: #1f6b3a;
-  --warn: #b0500c;
-  --cta: #f0d7ff;
-  --cta-fg: #1a1a1a;
+  --bg: #ffffff;
+  --s1: #f7f7f8;
+  --s2: #f0f0f2;
+  --s3: #e6e6e9;
+  --line: rgb(40 40 43 / 0.09);
+  --line-2: rgb(40 40 43 / 0.2);
+  --fg: #28282b;
+  --fg-2: #4a4a4f;
+  --muted: #6e6e75;
+  --accent: #3245d6;
+  --ok: #157a46;
+  --warn: #b4530e;
+  --cta: #28282b;
+  --cta-fg: #ffffff;
   --sheet-r: 2.5rem;
 }
 
@@ -28,50 +28,37 @@
   }
 }
 
-.sheet-dark {
-  --bg: #1a1a1a;
-  --s1: #222220;
-  --s2: #2a2a27;
-  --s3: #33332f;
-  --line: rgb(255 255 235 / 0.1);
-  --line-2: rgb(255 255 235 / 0.2);
-  --fg: #ffffeb;
-  --fg-2: #d6d6c2;
-  --muted: #9a9a8b;
-  --accent: #ffbcf2;
-  --ok: #a6e3a9;
-  --warn: #ffa946;
+.sheet-dark,
+.sheet-brand {
+  --bg: #28282b;
+  --s1: #303034;
+  --s2: #38383c;
+  --s3: #424247;
+  --line: rgb(255 255 255 / 0.1);
+  --line-2: rgb(255 255 255 / 0.2);
+  --fg: #ffffff;
+  --fg-2: #d4d4d8;
+  --muted: #9a9aa1;
+  --accent: #a5b1ff;
+  --ok: #86e0a8;
+  --warn: #f5c26b;
+  --cta: #ffffff;
+  --cta-fg: #28282b;
 }
 
-.sheet-teal {
-  --bg: #034f46;
-  --s1: #075a50;
-  --s2: #0c6358;
-  --s3: #136c60;
-  --line: rgb(255 255 235 / 0.13);
-  --line-2: rgb(255 255 235 / 0.25);
-  --fg: #ffffeb;
-  --fg-2: #d3e4d9;
-  --muted: #9cc2b5;
-  --accent: #ffa946;
-  --ok: #b8f0bf;
-  --warn: #ffc56e;
-}
-
-.sheet-dawn {
-  --bg: #f0d7ff;
-  --s1: #f5e4ff;
-  --s2: #ebd0fc;
-  --s3: #e1c2f5;
-  --line: rgb(26 26 26 / 0.1);
-  --line-2: rgb(26 26 26 / 0.22);
-  --fg: #1a1a1a;
-  --fg-2: #3f3548;
-  --muted: #6c5d78;
-  --accent: #7f1c34;
-  --ok: #1a5c12;
-  --warn: #8f4300;
-  --cta: #ffffeb;
+.sheet-tint {
+  --bg: #f7f7f8;
+  --s1: #fbfbfc;
+  --s2: #efeff1;
+  --s3: #e6e6e9;
+  --line: rgb(40 40 43 / 0.09);
+  --line-2: rgb(40 40 43 / 0.2);
+  --fg: #28282b;
+  --fg-2: #4a4a4f;
+  --muted: #6b6b72;
+  --accent: #3245d6;
+  --ok: #136b3e;
+  --warn: #9a4508;
 }
 
 /* Stacked sheets: rounded top corners that slide over the previous section */
@@ -152,8 +139,8 @@ h2 {
 }
 
 ::selection {
-  background: #f0d7ff;
-  color: #1a1a1a;
+  background: #e6e6e9;
+  color: #28282b;
 }
 
 .label {

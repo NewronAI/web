@@ -28,7 +28,7 @@ export default async function Image() {
             padding: "64px 72px",
             width: 720,
             height: "100%",
-            color: "#1a1a1a",
+            color: "#28282B",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
@@ -39,7 +39,7 @@ export default async function Image() {
           <div style={{ fontSize: 72, lineHeight: 1, letterSpacing: -3 }}>
             The enterprise AI partner for regulated industries.
           </div>
-          <div style={{ fontSize: 24, color: "#454540" }}>Banks · NBFCs · Insurers · Government</div>
+          <div style={{ fontSize: 24, color: "#4a4a4f" }}>Banks · NBFCs · Insurers · Government</div>
         </div>
       </div>
     ),

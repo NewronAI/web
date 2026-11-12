@@ -90,7 +90,7 @@ export function CamRun() {
               <li
                 key={s.t}
                 className={`grid grid-cols-[1.25rem_minmax(0,1fr)_auto] items-center gap-3 rounded-lg px-2.5 py-2.5 transition-colors duration-300 ${
-                  isWaiting ? "bg-warn/10" : state === "run" ? "bg-s3" : ""
+                  isWaiting ? "bg-accent/5" : state === "run" ? "bg-s3" : ""
                 }`}
               >
                 <StepIcon state={state} human={s.human} />

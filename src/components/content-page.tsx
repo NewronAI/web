@@ -6,7 +6,7 @@ import { Check } from "@/components/ui";
 import { Dated, Kit, Repos, Roles, Status } from "@/components/content-blocks";
 import type { ContentPage, Cta, Section } from "@/content/types";
 
-const TONES = ["sheet-dark", "", "sheet-dawn", ""] as const;
+const TONES = ["sheet-dark", "", "sheet-tint", ""] as const;
 
 /** Renders any content page (solutions, industries, company, trust and legal) from its content file. */
 export function ContentPageView({ page, visual }: { page: ContentPage; visual?: React.ReactNode }) {
@@ -55,7 +55,7 @@ export function ContentPageView({ page, visual }: { page: ContentPage; visual?: 
       )}
 
       {page.cta && (
-        <section className="sheet sheet-teal">
+        <section className="sheet sheet-brand">
           <Reveal className="mx-auto max-w-7xl px-5 pt-24 pb-40 text-center md:px-8 md:pt-32 md:pb-52">
             {page.cta.kicker && <p className="label text-accent">{page.cta.kicker}</p>}
             {page.cta.title && (

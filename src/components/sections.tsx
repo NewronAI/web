@@ -126,7 +126,7 @@ export function Lending() {
 
 export function Artha() {
   return (
-    <section id="artha" className="sheet sheet-teal">
+    <section id="artha" className="sheet sheet-brand">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
           kicker={<Num n="02" name="Artha Models" />}
@@ -283,7 +283,7 @@ export function ClaimFragment() {
 
 export function Governance() {
   return (
-    <section id="governance" className="sheet sheet-dawn">
+    <section id="governance" className="sheet sheet-tint">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
           kicker={<Num n="04" name="Governance AI" />}
@@ -472,7 +472,7 @@ export function Deployment() {
 
 export function CTA() {
   return (
-    <section id="contact" className="sheet sheet-teal">
+    <section id="contact" className="sheet sheet-brand">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 pt-24 pb-40 md:px-8 md:pt-32 md:pb-56 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
         <Reveal>
           <p className="label text-accent">One-week evaluation</p>
