@@ -24,7 +24,7 @@ export function Hero() {
             <AwardPill />
           </div>
           {/* No entrance animation on the headline: it's the LCP element and should paint at first render. */}
-          <h1 className="mt-6 font-serif text-[3.2rem] leading-[0.95] tracking-[-0.045em] sm:text-7xl lg:text-[6.25rem]">
+          <h1 className="mt-6 font-serif text-[3rem] leading-[0.95] tracking-[-0.045em] sm:text-6xl lg:text-[5.5rem]">
             The enterprise AI partner of choice for <Accent>regulated industries.</Accent>
           </h1>
           <p className="rise mx-auto mt-7 max-w-xl text-lg text-fg-2" style={{ animationDelay: "220ms" }}>
