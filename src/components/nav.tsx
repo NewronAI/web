@@ -116,7 +116,7 @@ export function Nav() {
               href={CONTACT_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="cta-btn hidden rounded-xl border border-cta bg-cta px-4 py-2.5 text-sm font-medium text-cta-fg transition hover:brightness-95 sm:inline-block"
+              className="hidden rounded-xl border border-cta bg-cta px-4 py-2.5 text-sm font-medium text-cta-fg transition hover:brightness-95 sm:inline-block"
             >
               Talk to Us
             </a>
