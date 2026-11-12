@@ -57,9 +57,8 @@ export function ContentPageView({ page, visual }: { page: ContentPage; visual?: 
       {page.cta && (
         <section className="sheet sheet-brand">
           <Reveal className="mx-auto max-w-7xl px-5 pt-24 pb-40 text-center md:px-8 md:pt-32 md:pb-52">
-            {page.cta.kicker && <p className="label text-accent">{page.cta.kicker}</p>}
             {page.cta.title && (
-              <h2 className="mx-auto mt-5 max-w-4xl text-balance font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
+              <h2 className="mx-auto max-w-4xl text-balance font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
                 <Rich text={page.cta.title} accent />
               </h2>
             )}
@@ -91,21 +90,12 @@ function CtaRow({ ctas, className = "" }: { ctas: Cta[]; className?: string }) {
 }
 
 function SectionBody({ s }: { s: Section }) {
-  const kicker = s.n ? (
-    <>
-      <span className="text-accent">{s.n}</span> · {s.kicker}
-    </>
-  ) : (
-    s.kicker
-  );
-
   // FAQ: heading on the left, collapsible answers on the right.
   if (s.faq) {
     return (
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
         <Reveal className="lg:sticky lg:top-32 lg:self-start">
-          <p className="label text-muted">{kicker}</p>
-          <h2 className="mt-5 font-serif text-5xl leading-[1] tracking-[-0.045em] md:text-6xl">
+          <h2 className="font-serif text-5xl leading-[1] tracking-[-0.045em] md:text-6xl">
             <Rich text={s.title ?? ""} accent />
           </h2>
         </Reveal>
@@ -149,7 +139,7 @@ function SectionBody({ s }: { s: Section }) {
 
   return (
     <>
-      <Head kicker={kicker} title={<Rich text={s.title ?? ""} accent />} line={s.line} />
+      <Head title={<Rich text={s.title ?? ""} accent />} line={s.line} />
       <div className="mt-14">
         {s.prose && (
           <Reveal className="mx-auto max-w-4xl text-center text-balance">

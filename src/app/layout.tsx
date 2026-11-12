@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { DESIGN_SCRIPT, DesignToggle } from "@/components/design-toggle";
 import { Footer } from "@/components/footer";
 import { Nav } from "@/components/nav";
 import "./globals.css";
@@ -43,8 +44,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
+      // DESIGN_SCRIPT may set data-design before hydration.
+      suppressHydrationWarning
       className={`${geist.variable} ${geistMono.variable} ${instrument.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: DESIGN_SCRIPT }} />
+      </head>
       <body className="min-h-full flex flex-col">
         <a
           href="#main"
@@ -52,6 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <DesignToggle />
         <Nav />
         <main id="main" className="flex-1">
           {children}

@@ -102,7 +102,7 @@ export function StatRow({ items }: { items: { n: React.ReactNode; l: string }[] 
     <div className="grid grid-cols-2 gap-y-10 border-y border-line py-12 lg:grid-flow-col lg:auto-cols-fr lg:divide-x lg:divide-line">
       {items.map((o, i) => (
         <Reveal key={o.l} delay={i * 80} className="px-4 text-center">
-          <p className="flex justify-center font-serif text-5xl tabular-nums tracking-[-0.04em] md:text-6xl">{o.n}</p>
+          <p className="flex justify-center font-serif text-5xl tabular-nums tracking-[-0.04em] stat-num text-accent md:text-6xl">{o.n}</p>
           <p className="mt-2 text-sm text-muted">{o.l}</p>
         </Reveal>
       ))}

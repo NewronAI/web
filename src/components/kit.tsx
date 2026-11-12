@@ -32,7 +32,7 @@ export function PrimaryCTA({ href, children }: { href: string; children: React.R
   return (
     <SmartLink
       href={href}
-      className="inline-flex items-center rounded-xl border border-cta bg-cta px-5 py-3 text-sm font-medium text-cta-fg shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_1px_2px_rgb(0_0_0/0.08)] transition duration-200 hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_8px_20px_-8px_rgb(0_0_0/0.35)] active:translate-y-0"
+      className="cta-btn inline-flex items-center rounded-xl border border-cta bg-cta px-5 py-3 text-sm font-medium text-cta-fg shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_1px_2px_rgb(0_0_0/0.08)] transition duration-200 hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_8px_20px_-8px_rgb(0_0_0/0.35)] active:translate-y-0"
     >
       {children}
     </SmartLink>
@@ -54,15 +54,13 @@ export const Accent = ({ children }: { children: React.ReactNode }) => <em class
 
 export const H2 = "font-serif text-5xl leading-[1] tracking-[-0.045em] md:text-[4.25rem]";
 
-/** Section head: kicker, headline and one short line. Centered by default. */
+/** Section head: headline and one short line. Centered by default. */
 export function Head({
-  kicker,
   title,
   line,
   more,
   align = "center",
 }: {
-  kicker: React.ReactNode;
   title: React.ReactNode;
   line?: React.ReactNode;
   /** Optional link to the section's full page. */
@@ -72,8 +70,7 @@ export function Head({
   const c = align === "center";
   return (
     <Reveal className={c ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
-      <p className="label text-muted">{kicker}</p>
-      <h2 className={`mt-5 text-balance ${H2}`}>{title}</h2>
+      <h2 className={`text-balance ${H2}`}>{title}</h2>
       {line && <p className={`mt-5 text-balance text-lg text-fg-2 ${c ? "mx-auto max-w-xl" : "max-w-xl"}`}>{line}</p>}
       {more && (
         <SmartLink
@@ -89,12 +86,6 @@ export function Head({
     </Reveal>
   );
 }
-
-export const Num = ({ n, name }: { n: string; name: string }) => (
-  <>
-    <span className="text-accent">{n}</span> · {name}
-  </>
-);
 
 /** Standard section wrapper: a stacked sheet with consistent padding. */
 export function Sheet({

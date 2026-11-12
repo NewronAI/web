@@ -47,7 +47,7 @@ export function AwardPill() {
       aria-label={AWARD.label}
       className="group inline-flex max-w-full items-center gap-2 rounded-full border border-line-2 bg-s1 py-1 pl-1 pr-3 text-sm shadow-[0_6px_20px_-12px_rgb(0_0_0/0.35)] transition hover:border-fg/40"
     >
-      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-cta px-2.5 py-1 text-xs font-semibold text-cta-fg">
+      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-pop px-2.5 py-1 text-xs font-semibold text-pop-fg">
         <Trophy className="h-3.5 w-3.5" />
         Winner
       </span>
@@ -116,7 +116,7 @@ export function Nav() {
               href={CONTACT_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden rounded-xl border border-cta bg-cta px-4 py-2.5 text-sm font-medium text-cta-fg transition hover:brightness-95 sm:inline-block"
+              className="cta-btn hidden rounded-xl border border-cta bg-cta px-4 py-2.5 text-sm font-medium text-cta-fg transition hover:brightness-95 sm:inline-block"
             >
               Talk to Us
             </a>

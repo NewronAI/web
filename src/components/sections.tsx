@@ -1,5 +1,5 @@
 import { Reveal } from "@/components/reveal";
-import { Accent, Head, Num, PrimaryCTA, SecondaryCTA } from "@/components/kit";
+import { Accent, Head, PrimaryCTA, SecondaryCTA } from "@/components/kit";
 import { AwardPill } from "@/components/nav";
 import { CamRun } from "@/components/cam-run";
 import { LendingShowcase } from "@/components/lending-showcase";
@@ -78,7 +78,7 @@ export function Proof() {
         <div className="mt-16 grid grid-cols-2 gap-y-10 border-y border-line py-12 lg:grid-cols-4 lg:divide-x lg:divide-line">
           {numbers.map((o, i) => (
             <Reveal key={o.l} delay={i * 80} className="text-center">
-              <p className="flex justify-center font-serif text-5xl tabular-nums tracking-[-0.04em] md:text-6xl">{o.n}</p>
+              <p className="flex justify-center font-serif text-5xl tabular-nums tracking-[-0.04em] stat-num text-accent md:text-6xl">{o.n}</p>
               <p className="mt-2 text-sm text-muted">{o.l}</p>
             </Reveal>
           ))}
@@ -105,7 +105,6 @@ export function Lending() {
     <section id="lending" className="sheet">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
-          kicker={<Num n="01" name="Lending Intelligence" />}
           title={
             <>
               The credit officer&apos;s <Accent>second brain.</Accent>
@@ -129,7 +128,6 @@ export function Artha() {
     <section id="artha" className="sheet sheet-brand">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
-          kicker={<Num n="02" name="Artha Models" />}
           title={
             <>
               The models <Accent>underneath</Accent> Indian credit.
@@ -213,7 +211,6 @@ export function Insurance() {
     <section id="insurance" className="sheet">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
-          kicker={<Num n="03" name="Insurance AI" />}
           title={
             <>
               Settle claims <Accent>before</Accent> they&apos;re filed.
@@ -286,7 +283,6 @@ export function Governance() {
     <section id="governance" className="sheet sheet-tint">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
-          kicker={<Num n="04" name="Governance AI" />}
           title={
             <>
               Citizen services in <Accent>their</Accent> language.
@@ -350,7 +346,6 @@ export function Services() {
     <section id="services" className="sheet sheet-dark">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
-          kicker={<Num n="05" name="Custom AI Services" />}
           title={
             <>
               When the product isn&apos;t enough, <Accent>we build it for you.</Accent>
@@ -432,7 +427,6 @@ export function Deployment() {
     <section id="security" className="sheet">
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-52">
         <Head
-          kicker="Deployment & security"
           title={
             <>
               Your data stays <Accent>where regulators expect it.</Accent>
@@ -475,8 +469,7 @@ export function CTA() {
     <section id="contact" className="sheet sheet-brand">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 pt-24 pb-40 md:px-8 md:pt-32 md:pb-56 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
         <Reveal>
-          <p className="label text-accent">One-week evaluation</p>
-          <h2 className="mt-5 text-balance font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
+          <h2 className="text-balance font-serif text-5xl leading-[0.98] tracking-[-0.045em] md:text-7xl">
             A working pilot <Accent>on your own data,</Accent> inside a week.
           </h2>
           <ol className="mt-10 space-y-4">

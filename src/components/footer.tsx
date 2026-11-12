@@ -4,7 +4,7 @@ import { CONTACT_HREF, footer, legal } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="sheet sheet-dark">
+    <footer className="sheet sheet-dark sheet-deep">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-2 md:px-8 lg:grid-cols-[1.5fr_repeat(4,1fr)]">
         <div>
           <Link href="/" aria-label="Newron home">
