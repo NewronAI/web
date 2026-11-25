@@ -1116,6 +1116,10 @@ header .shell { padding-right: clamp(16px, 2.6vw, 40px); }
   /* the inline links are gone at this width, so the menu is the only way
      to reach the sections — it must appear exactly where they disappear */
   .nav-toggle { display: inline-flex !important; }
+  /* a display:none item leaves the grid, so the CTA group would fall into
+     the empty 1fr column and leave the last column as dead space on the
+     right; span it to the end and pin it to the right edge instead */
+  .nav-cta { grid-column: 2 / -1; justify-self: end; }
 }
 
 /* menu button: two bars that cross into an X when open */
