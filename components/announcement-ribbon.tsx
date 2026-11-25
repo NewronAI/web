@@ -3,16 +3,17 @@
    Announcement ribbon — a single slim band above the nav.
    Currently: Nasscom AI Gamechangers 2026 — Challenger award, i.e. first
    place in the Startup category for the BFSI sector (24 Sep 2026).
-   Shows for one month, then hides itself; delete the component
-   usage in home.tsx / site-chrome.tsx once the window has passed.
+   Shows through the end of FY 2026-27, then hides itself; delete the
+   component usage in home.tsx / site-chrome.tsx once the window has passed.
    Height is exposed to CSS as --ribbon-h (see globals.css) so the
    hero, anchor offsets and the mobile menu account for it.
    ========================================================= */
 import React, { useEffect, useState } from "react";
 import { route } from "@/lib/route";
 
-/* Presented 24 Sep 2026 → runs through end of day 24 Oct 2026 (IST). */
-const RIBBON_UNTIL = Date.parse("2026-10-24T23:59:59+05:30");
+/* Presented 24 Sep 2026 → runs through end of FY 2026-27, i.e. end of
+   day 31 Mar 2027 (IST). */
+const RIBBON_UNTIL = Date.parse("2027-03-31T23:59:59+05:30");
 
 /* [left, top, size, animation-delay] */
 const SPARKLES: [string, string, number, string][] = [
